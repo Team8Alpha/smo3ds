@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class scr_title : MonoBehaviour {
-	private Animator anim;
+	public Animator anim;
 	private AudioSource snd_mTitle;
 	private Vector3 marioPos;
 	
@@ -23,6 +23,5 @@ public class scr_title : MonoBehaviour {
 			anim.Play("titleStart");
 		}
 		if(transform.position.x < 0) transform.Translate(new Vector3(0.1f,0,0));
-		if(UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A) || Input.GetKey(KeyCode.A)) anim.Play("titleEnd");
 	}
 }

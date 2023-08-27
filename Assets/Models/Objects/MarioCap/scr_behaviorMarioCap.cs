@@ -63,6 +63,7 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 			}
 			break;
 		case 1:
+			toggleCollision (true);
 			transformMario.GetChild (5).gameObject.SetActive (true);//handRball
 			transformMario.GetChild (4).gameObject.SetActive (false);//handRflat
 			fvar0 = 0;

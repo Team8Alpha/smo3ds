@@ -16,7 +16,7 @@ public class scr_devMenu: MonoBehaviour {
 	private int selectionSub = -1;
 	private int maxOption = 6;
 	private bool deb_fpsIsShowing = true;
-	private bool deb_enemyIsShowing = true;
+	private bool deb_enemyIsShowing = false;
 	private int height = 12;
 	private bool canSelect = false;
 

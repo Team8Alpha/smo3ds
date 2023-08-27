@@ -7,6 +7,9 @@ MINE
 secret-folder
 secret-folder
 
+.gitbuild
+.gitmain
+
 git_reset.bat
 out.cci
 out.cci.xml
