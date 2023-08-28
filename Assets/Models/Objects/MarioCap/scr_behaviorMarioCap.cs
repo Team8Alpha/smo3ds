@@ -30,8 +30,8 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 	private Vector3 tmp_pos;
 
 	void toggleCollision (bool state){
-		gameObject.GetComponents<Collider> ()[1].enabled = false;
-		gameObject.GetComponents<Collider> ()[0].enabled = false;
+		gameObject.GetComponents<Collider> ()[1].enabled = state;
+		gameObject.GetComponents<Collider> ()[0].enabled = state;
 	}
 
 	public void SetState(int state){

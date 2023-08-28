@@ -44,7 +44,7 @@ public class MarioController : MonoBehaviour
 		cappy.transform.localScale = new Vector3 (scaleCap, scaleCap, scaleCap);
 	}
 
-	void Start(){
+	void Awake(){
 		scr_gameInit.globalValues.GetComponent<AudioListener> ().enabled = false;
 		GetComponent<AudioListener> ().enabled = true;
 		jumpedHeight -= 0;
@@ -54,7 +54,7 @@ public class MarioController : MonoBehaviour
 		rb = GetComponent<Rigidbody> ();
 	}
 
-	public void setAnim(string animName, float transitionTime = 0.25f) {
+	public void setAnim(string animName, float transitionTime = 0.15f) {
 		if(isAnim(animName)) anim.CrossFade (animName, transitionTime);
 	}
 	public bool isAnim(string anmName) {
@@ -63,7 +63,7 @@ public class MarioController : MonoBehaviour
 
 	/*public void setAnim(int anmNum){
 		switch(anmNum){
-			case 0://wait
+			case 0://default
 				if(isMoving) anmNum = 1;
 				setAnim("default");
 				break;
@@ -141,8 +141,8 @@ public class MarioController : MonoBehaviour
 				if (v < 0f)	v = v * -1;
 				isMoving = true;
 			}
-			else { if (isMoving) {
-					setAnim ("wait");
+			else { if (isMoving) { Debug.Log ("tru"); 
+					setAnim ("default");
 					isMoving = false;
 				}
 			} // if h/v changes, he is moving. (for now)
@@ -186,7 +186,7 @@ public class MarioController : MonoBehaviour
 					jumpedTime = 0;
 				}
 				break;
-			case 2://wait
+			case 2://default
 				jumpedTime++;
 				velocity += 0.1f;
 				if (jumpedTime > 6 + fvar0 * 0.4f) {
@@ -194,15 +194,15 @@ public class MarioController : MonoBehaviour
 				}
 				break;
 			case 3://fall
-				if (isGrounded) { 
+				if (isGrounded) {
 					jumpAct = 0; 
 					jumpedTime = 0; 
 					if (isMoving) {
-						setAnim ("run");
+						setAnim ("run", 0.1f);
 					} else
-						setAnim ("wait");
+						setAnim ("default", 0.1f);
 				} else {
-					velocity = -0.6f;
+					velocity = -0.7f;
 				}
 				break;
 			}
