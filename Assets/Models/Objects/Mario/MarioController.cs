@@ -58,7 +58,11 @@ public class MarioController : MonoBehaviour
 		if(isAnim(animName)) anim.CrossFade (animName, transitionTime);
 	}
 	public bool isAnim(string anmName) {
-		return !anim.GetCurrentAnimatorStateInfo (0).IsName (anmName) && !anim.GetCurrentAnimatorStateInfo (1).IsName (anmName);
+		try {
+			return !anim.GetCurrentAnimatorStateInfo (0).IsName (anmName) && !anim.GetCurrentAnimatorStateInfo (1).IsName (anmName);
+		} catch(Exception e){
+			return !anim.GetCurrentAnimatorStateInfo (0).IsName (anmName);
+		}
 	}
 
 	/*public void setAnim(int anmNum){
@@ -141,7 +145,7 @@ public class MarioController : MonoBehaviour
 				if (v < 0f)	v = v * -1;
 				isMoving = true;
 			}
-			else { if (isMoving) { Debug.Log ("tru"); 
+			else { if (isMoving) {
 					setAnim ("default");
 					isMoving = false;
 				}
@@ -250,7 +254,7 @@ public class MarioController : MonoBehaviour
 							hasCaptured = true;
 							transform.position = cappy.capturedObject.transform.position;
 							cappy.capturedObject.SendMessage ("setState", 6);
-							for (int i = 0; i <= 7; i++) {
+							for (int i = 0; i <= 8; i++) {
 								transform.GetChild (i).gameObject.SetActive (false);
 							}
 						}
@@ -260,7 +264,7 @@ public class MarioController : MonoBehaviour
 				if(hasCaptured == true){
 					hasCaptured = false;
 					cappy.SetState(2);
-					for(int i = 0; i<=7; i++){
+					for(int i = 0; i<=8; i++){
 						transform.GetChild (i).gameObject.SetActive(true);
 					}
 					transform.GetChild (2).gameObject.SetActive(true);//hair

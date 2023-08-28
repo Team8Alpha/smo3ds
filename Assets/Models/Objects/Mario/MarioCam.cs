@@ -85,32 +85,27 @@ public class MarioCam : MonoBehaviour {
 		if (!isLocked) {
 
 			#if UNITY_EDITOR
-			cursorX += ((Input.GetAxis("Mouse X") * cursorSensitivity * Time.deltaTime * -1) * confStickXmax)*(invertCursorX?-1:1);
-			cursorY += ((Input.GetAxis("Mouse Y") * cursorSensitivity * Time.deltaTime * -1) * confStickYmax)*(invertCursorY?-1:1);
-			cursorY = Mathf.Clamp(cursorY, -20, 70f); // Clamp the Y axis to prevent camera flipping
+			cursorX += ((Input.GetAxis ("Mouse X") * cursorSensitivity * Time.deltaTime * -1) * confStickXmax) * (invertCursorX ? -1 : 1);
+			cursorY += ((Input.GetAxis ("Mouse Y") * cursorSensitivity * Time.deltaTime * -1) * confStickYmax) * (invertCursorY ? -1 : 1);
+			cursorY = Mathf.Clamp (cursorY, -20, 70f); // Clamp the Y axis to prevent camera flipping
 			#else
 			cStickX += ((UnityEngine.N3DS.GamePad.CirclePadPro.x * cursorSensitivity * Time.deltaTime * -1) * confStickXmax)*(invertCursorX?-1:1);
 			cStickY += ((UnityEngine.N3DS.GamePad.CirclePadPro.y * cursorSensitivity * Time.deltaTime * -1) * confStickYmax)*(invertCursorY?-1:1);
 			cStickY = Mathf.Clamp(cStickY, -20, 70f); // Clamp the Y axis to prevent camera flipping
 			#endif
 
-			cameraControl = new Vector2((cursorY + cStickY) / 2.2f, cursorX + cStickX);
+			cameraControl = new Vector2 ((cursorY + cStickY) / 2.2f, cursorX + cStickX);
 			if (confRotate && MarioController.marioObject.isMoving) {
-				float mAngleY = player.transform.eulerAngles.y;
+				float targetCameraRotation = player.transform.eulerAngles.y - target.eulerAngles.y;
 
-				// Calculate the target camera rotation based on the direction of movement
-				float targetCameraRotation = mAngleY + Mathf.Atan2(cameraControl.x, cameraControl.y) * Mathf.Rad2Deg;
-
-				// Determine the rotation speed factor based on whether the player is walking towards the camera
-				float rotationSpeedFactor = 1.0f;
-				if (Vector3.Dot(player.transform.forward, target.transform.forward) < 0) {
-					rotationSpeedFactor = 2.0f; // Double the rotation speed
-				}
+				if (targetCameraRotation > 180) targetCameraRotation -= 360;
+				if (targetCameraRotation < -180) targetCameraRotation += 360; //idk it suddenly changed numbers so i backfired and it worked.
+				if(targetCameraRotation > 170 || targetCameraRotation < -170) targetCameraRotation=0;
 
 				// Smoothly interpolate towards the target camera rotation
-				cameraRotation = Mathf.LerpAngle(cameraRotation, targetCameraRotation, Time.deltaTime * confRotateSpeed * rotationSpeedFactor);
+				cameraRotation = Mathf.LerpAngle (cameraRotation, cameraRotation+targetCameraRotation, Time.deltaTime * confRotateSpeed);
 			}
-			transform.localRotation = Quaternion.Euler(transform.localRotation.x + cameraControl.x, cameraRotation + cameraControl.y, transform.rotation.z + cameraControl.y * 2);
+			transform.rotation = Quaternion.Euler (transform.localRotation.x + cameraControl.x, cameraRotation + cameraControl.y, transform.rotation.z + cameraControl.y * 2);
 			//rotation controls
 
 			actualCamera.transform.localPosition = new Vector3 (0, 0, -cameraDistance);
@@ -118,19 +113,19 @@ public class MarioCam : MonoBehaviour {
 				float smoothSpeed = cameraDistance / 0.5f;
 				// ensure it takes half a second to move
 
-				transform.position = new Vector3(player.transform.position.x,//player x
-					targetedY,//smoothly calculate y position
-					player.transform.position.z);//player z
-				//move camera with player
+				transform.position = new Vector3 (player.transform.position.x, targetedY, player.transform.position.z);
+				//move camera with player									//smoothly calculate y position
 
 				RaycastHit hit;
-				if (Physics.Raycast(target.transform.position, actualCamera.transform.position - target.transform.position, out hit, cameraDistance) && hit.collider.tag == "camBlock") {
+				if (Physics.Raycast (target.transform.position, actualCamera.transform.position - target.transform.position, out hit, cameraDistance) && hit.collider.tag == "camBlock") {
 					actualCamera.transform.position = hit.point + hit.normal * 0.2f; // Don't peek into walls!
 				}
-				actualCamera.LookAt(target.transform); // Look at the camera target
+				actualCamera.LookAt (target.transform); // Look at the camera target
 			}
-			if (confSmooth) targetedY = Mathf.SmoothDamp(target.position.y, MarioController.marioObject.groundedPosition + camYOffset, ref velocity.y, smoothTime);
+			if (confSmooth)
+				targetedY = Mathf.SmoothDamp (target.position.y, MarioController.marioObject.groundedPosition + camYOffset, ref velocity.y, smoothTime);
+			else
+				targetedY = MarioController.marioObject.groundedPosition + camYOffset;
 		}
 	}
 }
-

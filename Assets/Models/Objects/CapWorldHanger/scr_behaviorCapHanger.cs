@@ -20,13 +20,10 @@ public class scr_behaviorCapHanger : MonoBehaviour {
 		Vector4 glassCol;
 		if (isWhite) {
 			glassCol = new Vector4 (1, 1, 1, 1);
-			//transform.GetChild (0).gameObject.GetComponent<Projector> ().material.color = Color.white;
 		} else {
 			glassCol = new Vector4 (1, 0.86f, 0.36f, 1);
-			//transform.GetChild (0).gameObject.GetComponent<Projector> ().material.color = Color.yellow;
 		}
-		material = transform.GetChild(1).gameObject.GetComponent<Renderer>().material;
-		//transform.GetChild(0).gameObject.SetActive(true);
+		material = transform.GetChild(0).gameObject.GetComponent<Renderer>().material;
 		material.SetVector("_Color", glassCol);
 		material.SetVector("_SpecColor", glassCol);
 	}
