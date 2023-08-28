@@ -14,11 +14,10 @@ public class scr_load : MonoBehaviour
 	}
     public void LoadResume(string sceneName)
     {
-		titleMario.anim.Play("titleEnd");
 		scr_loadScene._f.nextScene = "scn_capMain0";//button?
 		scr_gameInit.globalValues.focusOff();
 		scr_gameInit.globalValues.dbg_enemyCount=0;
 		SceneManager.LoadScene ("scn_loadRes", LoadSceneMode.Additive);
-		gameObject.SetActive(false);
+		titleMario.anim.Play("titleEnd");
     }
 }
