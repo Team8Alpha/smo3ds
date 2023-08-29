@@ -45,20 +45,20 @@ public class scr_behaviorMoon : MonoBehaviour {
 				scr_gameInit.globalValues.focusOff ();
 				anim.Play ("get");
 
-				MarioController.marioObject.transform.localRotation = Quaternion.Euler(MarioController.marioObject.transform.rotation.eulerAngles.x, MarioCam.marioCamera.target.transform.rotation.eulerAngles.y+90, MarioController.marioObject.transform.rotation.eulerAngles.z);
+				MarioController.marioObject.transform.localRotation = Quaternion.Euler(MarioController.marioObject.transform.rotation.eulerAngles.x, MarioCam.marioCamera.target.eulerAngles.y-180, MarioController.marioObject.transform.eulerAngles.z);
 				//MarioController.marioObject.transform.position = new Vector3(MarioController.marioObject.transform.position.x, transform.position.y, MarioController.marioObject.transform.position.z);
 				//MarioController.marioObject.GetComponent<Rigidbody>().useGravity = false;
 				MarioController.marioObject.gameObject.GetComponent<Animator> ().Play ("demoShineGet");
 				if (MarioController.marioObject.hasCaptured)
-					for (int i = 0; i <= 9; i++) {
+					for (int i = 0; i <= 8; i++) {
 						MarioController.marioObject.transform.GetChild (i).gameObject.SetActive (true);
 					}
 				transform.position = MarioController.marioObject.transform.position;
 				transform.Translate (0, 4, 0);
-				transform.LookAt (MarioCam.marioCamera.transform);
+				transform.LookAt (MarioCam.marioCamera.actualCamera.transform);
 				transform.Translate (0, -4, 0);
 
-				string t_date = System.DateTime.UtcNow.ToShortDateString();
+				string t_date = System.DateTime.UtcNow.ToShortDateString(); //even works on 3ds
 				scr_gameInit.globalValues.moonsCount++;
 				scr_gameInit.globalValues.transform.GetChild (2).transform.GetChild (0).gameObject.SetActive (true);
 				scr_gameInit.globalValues.transform.GetChild (2).transform.GetChild (0).GetChild (1).gameObject.GetComponent<Text> ().text = moonName;

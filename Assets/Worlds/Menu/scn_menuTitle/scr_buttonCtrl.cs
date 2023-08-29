@@ -10,20 +10,20 @@ public class scr_buttonCtrl : MonoBehaviour {
 	public GameObject iconSelect;//cappy icon
 	public GameObject marioOBJ;//yes, mario
 	public float iconOffset = 0; //how much to shift to left, since it would center in button.
-	public float iconMoveMax = 1; //maximal movement offset
-	public float iconMoveOffset = 0.001f;//movement offset for cappy per frame
-	
+
 	private int currentButton = 0; //number of current button
 	private bool buttonPressed = false; //if it was pressed once, it has to be 0 to be able to be pressed again, so it wont just go party with the buttons.
 	private Vector3 iconSelectPos; // set everytime new button selected, this is cuz he moves left and right.
-	private bool isIconSelLeft = false; //move left and right
+
+	void setPosition(Vector3 position){
+		iconSelect.transform.position = new Vector3 (position.x - iconOffset, position.y - 6, position.z);
+	}
+
 	void Start () {
 		EventSystem.current.SetSelectedGameObject(buttonRes);
-		iconSelectPos = buttonRes.transform.position;
-		iconSelectPos.x -= iconOffset;
-		iconSelectPos.y -= 2;
+		setPosition(buttonRes.transform.position);
 	}
-	
+
 	void Update () {
 		if(scr_gameInit.globalValues.isFocused){
 			float h = UnityEngine.N3DS.GamePad.CirclePad.y + Input.GetAxisRaw("Vertical");
@@ -34,36 +34,20 @@ public class scr_buttonCtrl : MonoBehaviour {
 				switch(currentButton){ //switch statement, :D
 					case 0:
 						EventSystem.current.SetSelectedGameObject(buttonRes);
-						iconSelectPos = buttonRes.transform.position;
+					setPosition(buttonRes.transform.position);
 						break;
 					case 1:
 						EventSystem.current.SetSelectedGameObject(buttonNew);
-						iconSelectPos = buttonNew.transform.position;
+					setPosition(buttonNew.transform.position);
 						break;
 					case 2:
 						EventSystem.current.SetSelectedGameObject(buttonOpt);
-						iconSelectPos = buttonOpt.transform.position;
+					setPosition(buttonOpt.transform.position);
 						break;
 				}
-				iconSelectPos.x -= iconOffset;
-				iconSelectPos.y -= 2;
-			} else if(h == 0) buttonPressed = false; 
-			
-			if(isIconSelLeft){
-				if(iconSelectPos.x+iconOffset-0.3>-iconMoveMax){
-					iconSelectPos.x -= iconMoveOffset/3; 
-				} else if(iconSelectPos.x+iconOffset>-iconMoveMax){
-					iconSelectPos.x -= iconMoveOffset/22; 
-				} else isIconSelLeft=false;
-			} else {
-				if(iconSelectPos.x+iconOffset<iconMoveMax){
-					iconSelectPos.x += iconMoveOffset;
-				} else isIconSelLeft=true;
-			}
-			iconSelect.transform.position = new Vector3(iconSelectPos.x, iconSelectPos.y, iconSelect.transform.position.z);
+			} else if(h == 0) buttonPressed = false;
 			
 			if(UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A) || Input.GetKey(KeyCode.Return)){
-				Destroy(iconSelect);
 				switch(currentButton){
 					case 0:
 						UnityEngine.UI.Button BbuttonRes = buttonRes.GetComponent<Button>();

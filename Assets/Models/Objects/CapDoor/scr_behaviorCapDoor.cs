@@ -10,8 +10,8 @@ public class scr_behaviorCapDoor : MonoBehaviour {
 	void Start () {
 		anim = GetComponent<Animator>();
 	}
-	void OnTriggerEnter(Collider collis){
-		if (collis.gameObject.name == "objMarioCap"&&MarioController.marioObject.cappy.isThrown){
+	public void OnTouch(int numType){
+		if (numType == 1) {
 			anim.Play("open");
 			transform.GetChild (5).gameObject.SetActive (false);
 		}

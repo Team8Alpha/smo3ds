@@ -40,7 +40,6 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 		gameObject.SetActive (true);
 		switch(state){
 		case 0:
-			toggleCollision (false);
 			sndSrc.clip = Resources.Load<AudioClip> ("Audio/Sounds/Cappy/snd_capSpin");
 			sndSrc.loop = true;
 			sndSrc.Play ();
@@ -150,7 +149,7 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 								SetState (4);
 								transform.GetChild (0).gameObject.transform.eulerAngles = Vector3.zero;
 								transform.GetChild (1).gameObject.transform.eulerAngles = Vector3.zero;
-								if(capturedObject.transform.GetChild(0).name == "Mustache") capturedObject.transform.GetChild (0).gameObject.SetActive (true); //if mustache, place it at index 0
+								if(capturedObject.transform.GetChild(0).name == "Mustache" || capturedObject.transform.GetChild(0).name == "Mustache__HairMT") capturedObject.transform.GetChild (0).gameObject.SetActive (true); //if mustache, place it at index 0
 								//collis.GetComponent<Collider>().enabled = false;
 								Debug.Log ("CAPMOUNT AT " + mountPoint.name);
 								isHacking = true;
@@ -208,6 +207,7 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 				transform.Translate (new Vector3 (0, 0, 0.8f));
 				transform.GetChild (0).gameObject.transform.Rotate (0, 30, 0); 
 				transform.GetChild (1).gameObject.transform.Rotate (0, 30, 0);
+				toggleCollision (false);
 				break;
 			case 1://spin after throw
 				transform.GetChild (0).gameObject.transform.Rotate (0, 50, 0); 

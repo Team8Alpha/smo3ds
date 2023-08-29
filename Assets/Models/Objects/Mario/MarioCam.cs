@@ -7,7 +7,7 @@ public class MarioCam : MonoBehaviour {
 
 	private GameObject player; // The Player object to follow
 	public Transform target; // The parent object for the camera
-	private Transform actualCamera; // The actual camera child object
+	public Transform actualCamera; // The actual camera child object
 
 	public bool invertCursorY = false; // Whether to invert the Y axis of the cursor movement
 	public bool invertCursorX = false; // Whether to invert the Y axis of the cursor movement
