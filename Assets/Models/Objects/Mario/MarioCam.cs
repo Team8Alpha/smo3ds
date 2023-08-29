@@ -26,11 +26,14 @@ public class MarioCam : MonoBehaviour {
 	private float cameraRotation = 0; // Holds mario's current cam rotation.
 	private Vector3 cameraControl; // Variable for controlled camera offset(cstick)
 	private float targetedY; //position camera wants to move to.
+	private Quaternion targetRot; //rotation smoothing
+	private Vector3 targetPos; //position smoothing
 
 	private float confStickXmax = 1;// * stick X movement
 	private float confStickYmax = 1;//same Y
 	private bool confRotate = true; // if false, then dont rotate.
-	private bool confSmooth = true; // if false, then dont smooth
+	private bool confSmooth = false; // if false, then dont smooth
+	private bool confSmoothY = true; // if true, all rotations are smoothed out.(normally useless, only for cutscenes)
 	private bool confWalk = true; // if false, dont follow walk
 	private int confMode = 0; // camera mode.
 	public float confRotateSpeed = 0.1f;
@@ -39,27 +42,32 @@ public class MarioCam : MonoBehaviour {
 
 	public void setState(int state, Vector3 tpos, Quaternion trot) {
 		confMode = state;
-		transform.rotation = trot;
-		transform.localPosition = tpos;
 		switch (confMode) {
 		case 0: // OW FREE
+			transform.rotation = trot;
+			transform.localPosition = tpos;
 			confRotate = true;
 			confWalk = true;
-			confSmooth = true;
+			confSmoothY = true;
+			confSmooth = false;
 			confStickXmax = 1;
 			confStickYmax = 1;
 			break;
 		case 1: // STATIC
+			targetRot = trot;
+			targetPos = tpos;
 			confRotate = false;
 			confWalk = false;
-			confSmooth = false;
+			confSmoothY = false;
+			confSmooth = true;
 			confStickXmax = 0;
 			confStickYmax = 0;
 			break;
 		case 2: // OW FREE+STATIC PATH
 			confRotate = false;
 			confWalk = true;
-			confSmooth = true;
+			confSmoothY = true;
+			confSmooth = false;
 			confStickXmax = 0;
 			confStickYmax = 0;
 			break;
@@ -98,17 +106,23 @@ public class MarioCam : MonoBehaviour {
 			if (confRotate && MarioController.marioObject.isMoving) {
 				float targetCameraRotation = player.transform.eulerAngles.y - target.eulerAngles.y;
 
-				if (targetCameraRotation > 180) targetCameraRotation -= 360;
-				if (targetCameraRotation < -180) targetCameraRotation += 360; //idk it suddenly changed numbers so i backfired and it worked.
-				if(targetCameraRotation > 170 || targetCameraRotation < -170) targetCameraRotation=0;
+				if (targetCameraRotation > 180)
+					targetCameraRotation -= 360;
+				if (targetCameraRotation < -180)
+					targetCameraRotation += 360; //idk it suddenly changed numbers so i backfired and it worked.
+				if (targetCameraRotation > 170 || targetCameraRotation < -170)
+					targetCameraRotation = 0;
 
 				// Smoothly interpolate towards the target camera rotation
-				cameraRotation = Mathf.LerpAngle (cameraRotation, cameraRotation+targetCameraRotation, Time.deltaTime * confRotateSpeed);
+				cameraRotation = Mathf.LerpAngle (cameraRotation, cameraRotation + targetCameraRotation, Time.deltaTime * confRotateSpeed);
 			}
-			transform.rotation = Quaternion.Euler (transform.localRotation.x + cameraControl.x, cameraRotation + cameraControl.y, transform.rotation.z + cameraControl.y * 2);
-			//rotation controls
+			if (!confSmooth){
+				transform.rotation = Quaternion.Euler (transform.localRotation.x + cameraControl.x, cameraRotation + cameraControl.y, transform.rotation.z + cameraControl.y * 2);
+				//rotation controls
+				actualCamera.transform.localPosition = new Vector3 (0, 0, -cameraDistance);
+				//actual camera offset
+			}
 
-			actualCamera.transform.localPosition = new Vector3 (0, 0, -cameraDistance);
 			if (confWalk) {
 				float smoothSpeed = cameraDistance / 0.5f;
 				// ensure it takes half a second to move
@@ -122,9 +136,13 @@ public class MarioCam : MonoBehaviour {
 				}
 				actualCamera.LookAt (target.transform); // Look at the camera target
 			}
-			if (confSmooth)
+			if (confSmoothY)
 				targetedY = Mathf.SmoothDamp (target.position.y, MarioController.marioObject.groundedPosition + camYOffset, ref velocity.y, smoothTime);
-			else
+			else if(confSmooth){
+				target.rotation = Quaternion.Slerp (target.rotation, targetRot, 1-smoothTime);
+				target.position = Vector3.Lerp (target.position, targetPos, smoothTime);
+				actualCamera.localRotation = Quaternion.Euler (0, 0, 0);
+			} else
 				targetedY = MarioController.marioObject.groundedPosition + camYOffset;
 		}
 	}

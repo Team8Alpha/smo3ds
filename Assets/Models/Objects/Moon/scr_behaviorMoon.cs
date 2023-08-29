@@ -12,9 +12,29 @@ public class scr_behaviorMoon : MonoBehaviour {
 	private float rotateAddition = 0;
 	private bool bvar0 = false;
 	private Vector3 tmpMpos;
+	public int color = 0;
+	SkinnedMeshRenderer mat_color;
+
+	void setColor(){
+		Color t_color = Color.white;
+		switch (color) {
+		case 0:
+			t_color = new Color (0.9490196078431372f, 0.8470588235294118f, 0.30980392156862746f, 1);
+			break;
+		case 1:
+			t_color = new Color (0.6823529411764706f, 0.8156862745098039f, 0.3686274509803922f, 1);
+			break;
+		case 2:
+			t_color = new Color (0.40784313725490196f, 0.803921568627451f, 0.796078431372549f, 1);
+			break;
+		}
+		mat_color.material.color = t_color;
+	}
 	void Start () {
 		tmpMpos.x -= 0;
 		anim = GetComponent<Animator>();
+		mat_color = transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
+		setColor ();
 	}
 	void OnTouch(int numType){
 		switch (numType) {
@@ -44,25 +64,25 @@ public class scr_behaviorMoon : MonoBehaviour {
 			if (!bvar0) {
 				scr_gameInit.globalValues.focusOff ();
 				anim.Play ("get");
-
-				MarioController.marioObject.transform.localRotation = Quaternion.Euler(MarioController.marioObject.transform.rotation.eulerAngles.x, MarioCam.marioCamera.target.eulerAngles.y-180, MarioController.marioObject.transform.eulerAngles.z);
-				//MarioController.marioObject.transform.position = new Vector3(MarioController.marioObject.transform.position.x, transform.position.y, MarioController.marioObject.transform.position.z);
-				//MarioController.marioObject.GetComponent<Rigidbody>().useGravity = false;
+				Transform player = MarioController.marioObject.transform;
+				player.localRotation = Quaternion.Euler(player.rotation.eulerAngles.x, MarioCam.marioCamera.target.eulerAngles.y-180, player.eulerAngles.z);
+				player.position = new Vector3(player.position.x, transform.position.y, player.position.z);
 				MarioController.marioObject.gameObject.GetComponent<Animator> ().Play ("demoShineGet");
 				if (MarioController.marioObject.hasCaptured)
 					for (int i = 0; i <= 8; i++) {
 						MarioController.marioObject.transform.GetChild (i).gameObject.SetActive (true);
 					}
-				transform.position = MarioController.marioObject.transform.position;
-				transform.Translate (0, 4, 0);
-				transform.LookAt (MarioCam.marioCamera.actualCamera.transform);
-				transform.Translate (0, -4, 0);
+				transform.position = player.position;
+				transform.rotation = player.rotation;
+				MarioCam.marioCamera.setState (1, new Vector3(player.position.x, player.position.y+2, player.position.z),
+					Quaternion.Euler(player.eulerAngles.x, player.eulerAngles.y+180, player.eulerAngles.z));
 
 				string t_date = System.DateTime.UtcNow.ToShortDateString(); //even works on 3ds
+				Transform globalCanvas = scr_gameInit.globalValues.transform.GetChild (2).transform.GetChild (0);
 				scr_gameInit.globalValues.moonsCount++;
-				scr_gameInit.globalValues.transform.GetChild (2).transform.GetChild (0).gameObject.SetActive (true);
-				scr_gameInit.globalValues.transform.GetChild (2).transform.GetChild (0).GetChild (1).gameObject.GetComponent<Text> ().text = moonName;
-				scr_gameInit.globalValues.transform.GetChild (2).transform.GetChild (0).GetChild (2).gameObject.GetComponent<Text> ().text = t_date;
+				globalCanvas.gameObject.SetActive (true);
+				globalCanvas.GetChild (1).gameObject.GetComponent<Text> ().text = moonName;
+				globalCanvas.GetChild (2).gameObject.GetComponent<Text> ().text = t_date;
 				bvar0 = true;
 					
 				currentState = 2;
@@ -72,7 +92,7 @@ public class scr_behaviorMoon : MonoBehaviour {
 			if (anim.GetCurrentAnimatorStateInfo (0).normalizedTime > 1) {
 				Destroy (gameObject);
 				scr_gameInit.globalValues.focusOn ();
-				MarioCam.marioCamera.setState (0, MarioCam.marioCamera.transform.position, MarioCam.marioCamera.transform.rotation);
+				MarioCam.marioCamera.setState (0, MarioCam.marioCamera.target.position, MarioCam.marioCamera.target.rotation);
 				MarioCam.marioCamera.isLocked = false;
 				MarioController.marioObject.gameObject.GetComponent<Animator> ().Play ("default");
 				scr_gameInit.globalValues.transform.GetChild (2).transform.GetChild (0).gameObject.SetActive (false);

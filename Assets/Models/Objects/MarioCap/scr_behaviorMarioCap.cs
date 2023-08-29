@@ -60,9 +60,9 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 				MarioController.marioObject.anim.Play ("spinCapJumpStart");
 				offsetYthrow = 1;
 			}
+			toggleCollision (true);
 			break;
 		case 1:
-			toggleCollision (true);
 			transformMario.GetChild (5).gameObject.SetActive (true);//handRball
 			transformMario.GetChild (4).gameObject.SetActive (false);//handRflat
 			fvar0 = 0;
@@ -207,7 +207,6 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 				transform.Translate (new Vector3 (0, 0, 0.8f));
 				transform.GetChild (0).gameObject.transform.Rotate (0, 30, 0); 
 				transform.GetChild (1).gameObject.transform.Rotate (0, 30, 0);
-				toggleCollision (false);
 				break;
 			case 1://spin after throw
 				transform.GetChild (0).gameObject.transform.Rotate (0, 50, 0); 

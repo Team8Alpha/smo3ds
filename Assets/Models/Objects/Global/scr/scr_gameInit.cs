@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class scr_gameInit : MonoBehaviour {
 
-	// Initialization script for Super Mario Odyssey for 3ds, made by Team Omega.
+	// Initialization script for Super Mario Odyssey for 3ds, made by Team Alpha.
 
 	//constants
 	public static scr_gameInit globalValues;

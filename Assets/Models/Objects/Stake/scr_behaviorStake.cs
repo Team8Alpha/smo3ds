@@ -31,7 +31,7 @@ public class scr_behaviorStake : MonoBehaviour {
 		gameObject.tag = "captureMe"; //only used for its-own-script identification, since i modified some stuff.
 		MarioController.marioObject.cappy.headHeight = 0f;
 		MarioController.marioObject.isHacking = false;
-		MarioController.marioObject.cappy.hackScale = 0.5f;
+		MarioController.marioObject.cappy.hackScale = 2f;
 		anim.Play ("pull");
 		bentH = scr_manageInput.AxisDir(-1).x;
 		bentV = scr_manageInput.AxisDir(-1).y;
