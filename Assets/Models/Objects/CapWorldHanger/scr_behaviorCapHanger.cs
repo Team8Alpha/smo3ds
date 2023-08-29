@@ -14,6 +14,7 @@ public class scr_behaviorCapHanger : MonoBehaviour {
 
 	void Start (){
 		if(isEnabled) myLight();
+		this.enabled = false;
 	}
 
 	void myLight(){

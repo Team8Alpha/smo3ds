@@ -11,6 +11,7 @@ public class scr_load : MonoBehaviour
 	public GameObject spr_shade;
 	Material mat_rotMap;
 	Material mat_shade;
+	bool bvar0 = false;
 
 	void Start(){
 		marioAudio = titleMario.GetComponent<AudioSource> ();
@@ -18,9 +19,10 @@ public class scr_load : MonoBehaviour
 		mat_shade = spr_shade.gameObject.GetComponent<MeshRenderer> ().material;
 	}
 	void LateUpdate(){
-		if (!marioAudio.isPlaying) {
+		if(!bvar0) if (!marioAudio.isPlaying&&GameObject.Find("objFader")==null) {
 			gameObject.GetComponent<Canvas> ().enabled = true;
 			transform.GetChild (0).gameObject.SetActive (true);
+			bvar0 = true;
 		}
 	}
 
@@ -47,7 +49,7 @@ public class scr_load : MonoBehaviour
 		scr_loadScene._f.nextScene = "scn_capMain0";//button?
 		scr_gameInit.globalValues.focusOff();
 		scr_gameInit.globalValues.dbg_enemyCount=0;
-		SceneManager.LoadScene ("scn_loadRes", LoadSceneMode.Additive);
+		SceneManager.LoadScene ("scn_loadShip", LoadSceneMode.Additive);
 		titleMario.anim.Play("titleEnd");
     }
 }

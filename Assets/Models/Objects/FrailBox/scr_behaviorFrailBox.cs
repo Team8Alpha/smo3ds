@@ -10,6 +10,7 @@ public class scr_behaviorFrailBox : MonoBehaviour {
 	int hitMax = 14;
 	void Start () {
 		anim = GetComponent<Animator> ();
+		this.enabled = false;
 	}
 	public void OnTouch(int num){
 		if (num == 1) {

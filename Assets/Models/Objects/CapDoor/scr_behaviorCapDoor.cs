@@ -16,5 +16,4 @@ public class scr_behaviorCapDoor : MonoBehaviour {
 			transform.GetChild (5).gameObject.SetActive (false);
 		}
 	}
-	// Update is called once per frame
 }

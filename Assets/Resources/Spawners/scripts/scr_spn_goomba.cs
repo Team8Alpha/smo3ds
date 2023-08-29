@@ -12,7 +12,7 @@ public class scr_spn_goomba : MonoBehaviour {
 		GameObject goombaStacked = scr_summon.f_summon.s_entity(0, transform.position, new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z));
 		scr_behaviorGoomba goombaSta = goombaStacked.GetComponent<scr_behaviorGoomba>();
 		goombaSta.isMoving = isMoving;
-		//goombaSta.stackAmount = stackAmount;
+		goombaSta.stackAmount = stackAmount;
 		goombaSta.currentState = currentState;
 		Destroy(gameObject);
 	}

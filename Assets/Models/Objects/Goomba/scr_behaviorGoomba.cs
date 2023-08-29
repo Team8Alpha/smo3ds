@@ -15,7 +15,6 @@ public class scr_behaviorGoomba : MonoBehaviour {
 	private float fvar0 = 0; //var to be used by states
 	private float fvar1 = 0; //var to be used by states
 	private float fvar2 = 0; //var to be used by states
-	private float fvar3 = 0; //var to be used by states
 	private scr_behaviorGoomba[] goombaSt = new scr_behaviorGoomba[20];
 	private bool isTop = true; //for stacked goomba stuff
 	/*
@@ -105,7 +104,6 @@ public class scr_behaviorGoomba : MonoBehaviour {
 	void Start () {
 		scr_gameInit.globalValues.dbg_enemyCount++;
 		anim = GetComponent<Animator> ();
-		setState (0);
 		if(stackAmount>1){
 			isTop = false;
 			float stackOffY = 3;
@@ -120,6 +118,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 				goombaSt[i-1].currentState=2;
 				goombaSt[i-1].stackedNum=i+1;
 				goombaSt[i-1].isTop = false;
+				goombaSt [i - 1].transform.parent = transform;
 			}
 			goombaSt[i].isTop = true;
 		}
@@ -163,8 +162,6 @@ public class scr_behaviorGoomba : MonoBehaviour {
 				if (anim.GetBool ("dead"))
 					Destroy (gameObject);
 			} else {
-				if (Input.GetKey (KeyCode.H))
-					setState (3);
 
 				switch (currentState) {
 				case 0: //wait
@@ -214,9 +211,9 @@ public class scr_behaviorGoomba : MonoBehaviour {
 						transform.rotation = controller.transform.rotation;
 					}
 					break;
-				case 3: //saw player 
-					if(isAnim("default")) setState(4);
-					break;
+				//case 3: //saw player 
+				//	if(isAnim("default")) setState(4);
+				//	break;
 
 				case 6: //controller, each enemy has 6 as its controlled state(for organization?)
 					transform.position = MarioController.marioObject.transform.position;

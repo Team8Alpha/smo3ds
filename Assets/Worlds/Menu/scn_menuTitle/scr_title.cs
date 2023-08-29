@@ -8,20 +8,26 @@ public class scr_title : MonoBehaviour {
 	private Vector3 marioPos;
 	
 	// Use this for initialization
-	void Start () {
-		anim = GetComponent<Animator>();
-		snd_mTitle = GetComponent<AudioSource>();
+	void Start(){
+		anim = GetComponent<Animator> ();
+		snd_mTitle = GetComponent<AudioSource> ();
 		marioPos = transform.position;
-		transform.position = new Vector3(-500,transform.position.y,transform.position.z);
-		snd_mTitle.Play();
+		transform.position = new Vector3 (-1000, transform.position.y, transform.position.z);
+		scr_fadefull._f.Run (true, 0, 0.05f);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(transform.position.x < -503.6f && transform.position.x > -503.7f){
-			transform.position = marioPos;
-			anim.Play("titleStart");
+		if (scr_fadefull._f.isDone) {
+			Debug.Log (transform.position.x);
+			if (transform.position.x == -1000)
+				snd_mTitle.Play ();
+			if (transform.position.x < -1004.5) {
+				transform.position = marioPos;
+				anim.Play ("titleStart");
+				this.enabled = false;
+			}
+			transform.Translate (new Vector3 (0.1f, 0, 0));
 		}
-		if(transform.position.x < 0) transform.Translate(new Vector3(0.1f,0,0));
 	}
 }

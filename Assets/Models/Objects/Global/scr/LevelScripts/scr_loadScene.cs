@@ -27,7 +27,7 @@ public class scr_loadScene : MonoBehaviour {
 				//wip
 			break;
 		case 2://cap fly transition
-			scr_gameInit.globalValues.transform.GetChild (2).transform.GetChild (2).gameObject.SetActive (true);
+			scr_gameInit.globalValues.transform.GetChild (2).transform.GetChild (1).gameObject.SetActive (true);
 				//wip
 			break;
 		//case 3://basic transition
