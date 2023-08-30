@@ -17,11 +17,12 @@ public class scr_load : MonoBehaviour
 		marioAudio = titleMario.GetComponent<AudioSource> ();
 		mat_rotMap = spr_rotMap.gameObject.GetComponent<MeshRenderer> ().material;
 		mat_shade = spr_shade.gameObject.GetComponent<MeshRenderer> ().material;
+		scr_gameInit.globalValues.focusOff ();
 	}
 	void LateUpdate(){
-		if(!bvar0) if (!marioAudio.isPlaying&&GameObject.Find("objFader")==null) {
-			gameObject.GetComponent<Canvas> ().enabled = true;
-			transform.GetChild (0).gameObject.SetActive (true);
+		if(!bvar0) if (!marioAudio.isPlaying&&scr_fadefull._f.isDone) {
+			scr_gameInit.globalValues.focusOn ();
+			for(int i = 0; i!=4; i++) transform.GetChild (i).gameObject.SetActive (true);
 			bvar0 = true;
 		}
 	}

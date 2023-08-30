@@ -9,6 +9,7 @@ public class scr_buttonCtrl : MonoBehaviour {
 	public GameObject buttonOpt;//options button
 	public GameObject iconSelect;//cappy icon
 	public GameObject marioOBJ;//yes, mario
+	private AudioSource marioTemp;
 	public float iconOffset = 0; //how much to shift to left, since it would center in button.
 
 	private int currentButton = 0; //number of current button
@@ -16,12 +17,13 @@ public class scr_buttonCtrl : MonoBehaviour {
 	private Vector3 iconSelectPos; // set everytime new button selected, this is cuz he moves left and right.
 
 	void setPosition(Vector3 position){
-		iconSelect.transform.position = new Vector3 (position.x - iconOffset, position.y - 6, position.z);
+		iconSelect.transform.position = new Vector3 (position.x - iconOffset, position.y - 6, -300);
 	}
 
 	void Start () {
 		EventSystem.current.SetSelectedGameObject(buttonRes);
 		setPosition(buttonRes.transform.position);
+		marioTemp = marioOBJ.GetComponent<AudioSource> ();
 	}
 
 	void Update () {

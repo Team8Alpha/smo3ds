@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: a36abc3a9ff60dc42bb140077e1d622d
-timeCreated: 1684433779
+guid: 26b2557419360124a9e3df1b205d0785
+timeCreated: 1682361251
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
@@ -8,68 +8,56 @@ ModelImporter:
     100000: AllRoot
     100002: Armature
     100004: ArmL1
-    100006: ArmL1Sub
-    100008: ArmL2
-    100010: ArmL2Sub
-    100012: ArmR1
-    100014: ArmR1Sub
-    100016: ArmR2
-    100018: ArmR2Sub
-    100020: FootL
-    100022: FootR
-    100024: HandL
-    100026: HandR
-    100028: Head
-    100030: Hip
-    100032: JointRoot
-    100034: LegL1
-    100036: LegL2
-    100038: LegR1
-    100040: LegR2
-    100042: Mario
-    100044: //RootNode
-    100046: nw4f_root
-    100048: pPyramid1
-    100050: ShoulderL
-    100052: ShoulderR
-    100054: Spine1
-    100056: Spine2
-    100058: ToeL
-    100060: ToeR
+    100006: ArmL2
+    100008: ArmR1
+    100010: ArmR2
+    100012: Cap
+    100014: FootL
+    100016: FootR
+    100018: HandL
+    100020: HandR
+    100022: Hip
+    100024: JointRoot
+    100026: LegL1
+    100028: LegL2
+    100030: LegR1
+    100032: LegR2
+    100034: //RootNode
+    100036: MarioHead
+    100038: nw4f_root
+    100040: ShoulderL
+    100042: ShoulderR
+    100044: small_placeholder
+    100046: Spine1
+    100048: Spine2
     400000: AllRoot
     400002: Armature
     400004: ArmL1
-    400006: ArmL1Sub
-    400008: ArmL2
-    400010: ArmL2Sub
-    400012: ArmR1
-    400014: ArmR1Sub
-    400016: ArmR2
-    400018: ArmR2Sub
-    400020: FootL
-    400022: FootR
-    400024: HandL
-    400026: HandR
-    400028: Head
-    400030: Hip
-    400032: JointRoot
-    400034: LegL1
-    400036: LegL2
-    400038: LegR1
-    400040: LegR2
-    400042: Mario
-    400044: //RootNode
-    400046: nw4f_root
-    400048: pPyramid1
-    400050: ShoulderL
-    400052: ShoulderR
-    400054: Spine1
-    400056: Spine2
-    400058: ToeL
-    400060: ToeR
-    2300000: pPyramid1
-    3300000: pPyramid1
-    4300000: pPyramid1
+    400006: ArmL2
+    400008: ArmR1
+    400010: ArmR2
+    400012: Cap
+    400014: FootL
+    400016: FootR
+    400018: HandL
+    400020: HandR
+    400022: Hip
+    400024: JointRoot
+    400026: LegL1
+    400028: LegL2
+    400030: LegR1
+    400032: LegR2
+    400034: //RootNode
+    400036: MarioHead
+    400038: nw4f_root
+    400040: ShoulderL
+    400042: ShoulderR
+    400044: small_placeholder
+    400046: Spine1
+    400048: Spine2
+    2300000: small_placeholder
+    3300000: small_placeholder
+    4300000: small_placeholder
     7400000: Take 001
     9500000: //RootNode
   materials:
@@ -80,7 +68,7 @@ ModelImporter:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
-    optimizeGameObjects: 0
+    optimizeGameObjects: 1
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -118,7 +106,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
   importAnimation: 1
-  copyAvatar: 0
+  copyAvatar: 1
   humanDescription:
     serializedVersion: 2
     human: []
@@ -135,7 +123,8 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 33aadd305244c8f42ba6e983d73d5eca,
+    type: 3}
   animationType: 2
   humanoidOversampling: 1
   additionalBone: 0

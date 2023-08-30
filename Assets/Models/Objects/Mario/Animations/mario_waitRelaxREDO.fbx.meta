@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 06e40cdf1b9adae4a990ee4a9b9474ae
-timeCreated: 1681041042
+guid: b9095573ea55d6046b842da31e8af32a
+timeCreated: 1684363097
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
@@ -8,56 +8,66 @@ ModelImporter:
     100000: AllRoot
     100002: Armature
     100004: ArmL1
-    100006: ArmL2
-    100008: ArmR1
-    100010: ArmR2
-    100012: Cap
-    100014: FootL
-    100016: FootR
-    100018: HandL
-    100020: HandR
-    100022: Hip
-    100024: JointRoot
-    100026: LegL1
-    100028: LegL2
-    100030: LegR1
-    100032: LegR2
-    100034: //RootNode
-    100036: MarioHead
-    100038: nw4f_root
-    100040: ShoulderL
-    100042: ShoulderR
-    100044: small_placeholder
-    100046: Spine1
-    100048: Spine2
+    100006: ArmL1Sub
+    100008: ArmL2
+    100010: ArmL2Sub
+    100012: ArmR1
+    100014: ArmR1Sub
+    100016: ArmR2
+    100018: ArmR2Sub
+    100020: FootL
+    100022: FootR
+    100024: HandL
+    100026: HandR
+    100028: Head
+    100030: Hip
+    100032: JointRoot
+    100034: LegL1
+    100036: LegL2
+    100038: LegR1
+    100040: LegR2
+    100042: //RootNode
+    100044: nw4f_root
+    100046: pPyramid1
+    100048: ShoulderL
+    100050: ShoulderR
+    100052: Spine1
+    100054: Spine2
+    100056: ToeL
+    100058: ToeR
     400000: AllRoot
     400002: Armature
     400004: ArmL1
-    400006: ArmL2
-    400008: ArmR1
-    400010: ArmR2
-    400012: Cap
-    400014: FootL
-    400016: FootR
-    400018: HandL
-    400020: HandR
-    400022: Hip
-    400024: JointRoot
-    400026: LegL1
-    400028: LegL2
-    400030: LegR1
-    400032: LegR2
-    400034: //RootNode
-    400036: MarioHead
-    400038: nw4f_root
-    400040: ShoulderL
-    400042: ShoulderR
-    400044: small_placeholder
-    400046: Spine1
-    400048: Spine2
-    2300000: small_placeholder
-    3300000: small_placeholder
-    4300000: small_placeholder
+    400006: ArmL1Sub
+    400008: ArmL2
+    400010: ArmL2Sub
+    400012: ArmR1
+    400014: ArmR1Sub
+    400016: ArmR2
+    400018: ArmR2Sub
+    400020: FootL
+    400022: FootR
+    400024: HandL
+    400026: HandR
+    400028: Head
+    400030: Hip
+    400032: JointRoot
+    400034: LegL1
+    400036: LegL2
+    400038: LegR1
+    400040: LegR2
+    400042: //RootNode
+    400044: nw4f_root
+    400046: pPyramid1
+    400048: ShoulderL
+    400050: ShoulderR
+    400052: Spine1
+    400054: Spine2
+    400056: ToeL
+    400058: ToeR
+    2300000: pPyramid1
+    3300000: pPyramid1
+    4300000: pPyramid1
     7400000: Take 001
     9500000: //RootNode
   materials:

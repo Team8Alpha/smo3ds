@@ -19,7 +19,6 @@ public class scr_title : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (scr_fadefull._f.isDone) {
-			Debug.Log (transform.position.x);
 			if (transform.position.x == -1000)
 				snd_mTitle.Play ();
 			if (transform.position.x < -1004.5) {

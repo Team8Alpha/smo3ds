@@ -8,15 +8,21 @@ public class scr_behaviorCoin : MonoBehaviour {
 	AudioSource sndSrc;
 	Animator anim;
 
+	GameObject childMesh; // Reference to the child mesh GameObject
+
 	void Start () {
-		sndSrc = GetComponent<AudioSource> ();
-		anim = GetComponent<Animator> ();
+		childMesh = transform.GetChild (0).gameObject;
+		sndSrc = childMesh.GetComponent<AudioSource> ();
+		anim = childMesh.GetComponent<Animator> ();
 		if (currentState == 1) anim.Play ("collect");
 		this.enabled = false;
 	}
+
 	void doKill(){
+		scr_gameInit.globalValues.coinsCount++;
 		Destroy (gameObject);
 	}
+
 	void OnTouch(int numType){
 		if(currentState==0) if(numType == 1 || numType == 2){
 			this.enabled = true;
@@ -24,11 +30,12 @@ public class scr_behaviorCoin : MonoBehaviour {
 			sndSrc.Play();
 			scr_manageEffect._f.Play("prt_coinSpark0", transform.position, transform.rotation, "prt_coinSpark1");
 			StartCoroutine (WaitKill ());
-			transform.GetComponent<MeshRenderer> ().enabled = false;
+			childMesh.GetComponent<MeshRenderer> ().enabled = false;
 		}
 	}
+
 	public IEnumerator WaitKill() {
-		yield return new WaitWhile(() => sndSrc.isPlaying);
-		Destroy(gameObject);
+		yield return new WaitWhile (() => sndSrc.isPlaying);
+		Destroy (gameObject);
 	}
 }

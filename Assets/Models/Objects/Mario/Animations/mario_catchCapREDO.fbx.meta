@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: f1c890d5280da524b91e039705f921d2
-timeCreated: 1681079544
+guid: 119b52e6323395848a283b6210ab371e
+timeCreated: 1682361248
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
@@ -82,85 +82,7 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: Take 001
-      takeName: Take 001
-      firstFrame: 0
-      lastFrame: 16
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 1
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask:
-      - path: 
-        weight: 1
-      - path: Armature
-        weight: 1
-      - path: Armature/nw4f_root
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot/Hip
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot/Hip/LegL1
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot/Hip/LegL1/LegL2
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot/Hip/LegL1/LegL2/FootL
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot/Hip/LegR1
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot/Hip/LegR1/LegR2
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot/Hip/LegR1/LegR2/FootR
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine1
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine1/Spine2
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine1/Spine2/MarioHead
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine1/Spine2/MarioHead/Cap
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine1/Spine2/ShoulderL
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine1/Spine2/ShoulderL/ArmL1
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine1/Spine2/ShoulderL/ArmL1/ArmL2
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine1/Spine2/ShoulderL/ArmL1/ArmL2/HandL
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine1/Spine2/ShoulderR
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine1/Spine2/ShoulderR/ArmR1
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine1/Spine2/ShoulderR/ArmR1/ArmR2
-        weight: 1
-      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine1/Spine2/ShoulderR/ArmR1/ArmR2/HandR
-        weight: 1
-      - path: small_placeholder
-        weight: 1
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
