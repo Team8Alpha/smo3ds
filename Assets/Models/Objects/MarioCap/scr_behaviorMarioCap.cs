@@ -26,6 +26,7 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 	private bool isHacking = false;
 	private Collider[] collider;
 	private Transform transformMario;
+	private Transform armature;
 	
 	private Vector3 tmp_pos;
 
@@ -69,14 +70,14 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 			if (MarioController.marioObject.isMoving)
 				MarioController.marioObject.setAnim ("runStart");
 			anim.Play ("stay");
-			transform.GetChild (0).gameObject.transform.eulerAngles = Vector3.zero;
+			armature.gameObject.transform.eulerAngles = Vector3.zero;
 			transform.GetChild (1).gameObject.transform.eulerAngles = Vector3.zero;
 			break;
 		case 2:
 			isHacking = false;
 			hackScale = 0;
 			transform.localScale = new Vector3 (1,1,1);
-			toggleCollision (true);
+			toggleCollision (false);
 			anim.Play ("default");
 			break;
 		case 3:
@@ -147,10 +148,10 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 								MarioController.marioObject.isHacking = true;
 								capturedObject.SendMessage ("OnCaptured"); //send OnCaptured event to object
 								SetState (4);
-								transform.GetChild (0).gameObject.transform.eulerAngles = Vector3.zero;
+								armature.eulerAngles = Vector3.zero;
 								transform.GetChild (1).gameObject.transform.eulerAngles = Vector3.zero;
-								if(capturedObject.transform.GetChild(0).name == "Mustache" || capturedObject.transform.GetChild(0).name == "Mustache__HairMT") capturedObject.transform.GetChild (0).gameObject.SetActive (true); //if mustache, place it at index 0
-								//collis.GetComponent<Collider>().enabled = false;
+								var Mustache = capturedObject.transform.GetChild(0);
+								if(Mustache.name == "Mustache" || Mustache.name == "Mustache__HairMT") Mustache.gameObject.SetActive (true); //if mustache, place it at index 0
 								Debug.Log ("CAPMOUNT AT " + mountPoint.name);
 								isHacking = true;
 							}
@@ -182,6 +183,7 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 		sndSrc = GetComponent<AudioSource> ();
 		collider = gameObject.GetComponents<Collider> ();
 		transformMario = MarioController.marioObject.transform;
+		armature = transform.GetChild(0);
 	}
 
 	// Update is called once per frame
@@ -199,25 +201,23 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 				}
 				break;
 			case 0://throw
-				if (Vector3.Distance (transform.position, tmp_pos) > 6 || isColliding) {
+				Debug.Log("ehehe");
+				if (Vector3.Distance (transform.position, tmp_pos) > 6) {
 					SetState (1);
 					transform.Translate (new Vector3 (0, 0, -0.6f));
 					break;
 				}
 				transform.Translate (new Vector3 (0, 0, 0.8f));
-				transform.GetChild (0).gameObject.transform.Rotate (0, 30, 0); 
-				transform.GetChild (1).gameObject.transform.Rotate (0, 30, 0);
+				armature.Rotate (0, 30, 0); 
 				break;
 			case 1://spin after throw
-				transform.GetChild (0).gameObject.transform.Rotate (0, 50, 0); 
-				transform.GetChild (1).gameObject.transform.Rotate (0, 50, 0);
+				armature.Rotate (0, 50, 0); 
 				fvar0 += 0.1f;
 				if (fvar0 > timeStaySpin && !UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.Y) && !UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.X) && !Input.GetKey (KeyCode.LeftShift))
 					SetState (2);
 				break;
 			case 2://go back
-				transform.GetChild (0).gameObject.transform.Rotate (0, 50, 0); 
-				transform.GetChild (1).gameObject.transform.Rotate (0, 50, 0);
+				armature.Rotate (0, 50, 0);
 				mPosTmp = transformMario.position;
 				transform.position = Vector3.MoveTowards (transform.position, new Vector3 (mPosTmp.x, mPosTmp.y + offsetYthrow, mPosTmp.z), 50 * Time.deltaTime);
 				if (transform.position == new Vector3 (mPosTmp.x, mPosTmp.y + offsetYthrow, mPosTmp.z)) {

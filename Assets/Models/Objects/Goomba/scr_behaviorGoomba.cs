@@ -108,19 +108,18 @@ public class scr_behaviorGoomba : MonoBehaviour {
 			isTop = false;
 			float stackOffY = 3;
 			int i = 1;
-			for(i=1; i<stackAmount; i++){
-				Debug.Log(i);
+			for(i=0; i<stackAmount; i++){
+				Debug.Log(i+2);
 				GameObject goombaStacked = scr_summon.f_summon.s_entity(0, new Vector3(transform.position.x, transform.position.y+(i*stackOffY), transform.position.z), new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z));
-				goombaSt[i-1] = goombaStacked.GetComponent<scr_behaviorGoomba>();
-				goombaSt[i-1].isMoving = false;
-				goombaSt[i-1].controller = gameObject;
-				goombaSt[i-1].stackAmount=1;
-				goombaSt[i-1].currentState=2;
-				goombaSt[i-1].stackedNum=i+1;
-				goombaSt[i-1].isTop = false;
-				goombaSt [i - 1].transform.parent = transform;
+				goombaSt[i] = goombaStacked.GetComponent<scr_behaviorGoomba>();
+				goombaSt[i].isMoving = false;
+				goombaSt[i].controller = gameObject;
+				goombaSt[i].stackAmount=1;
+				goombaSt[i].currentState=2;
+				goombaSt[i].stackedNum=i+1;
+				if(i!=stackAmount-2) goombaSt[i].isTop = false; else goombaSt[i].isTop = true;
+				goombaSt[i].transform.parent = transform;
 			}
-			goombaSt[i].isTop = true;
 		}
 	}
 	

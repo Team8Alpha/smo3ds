@@ -13,10 +13,11 @@ public class scr_behaviorAreaChanger : MonoBehaviour {
 			scr_gameInit.globalValues.nextSpawn = nextSpawn;
 			scr_gameInit.globalValues.focusOff ();
 			scr_loadScene._f.loadTransition (nextArea, transitionType);
-			PlayerWalkDoor ();
+			scr_gameInit.globalValues.transform.GetChild (3).GetChild (1).gameObject.SetActive (true); //cuz it was broken, wanted to sleep.
+			//PlayerWalkDoor ();
 		}
 	}
-	public void PlayerWalkDoor() {
+	/*public void PlayerWalkDoor() {
 		MarioController.marioObject.transform.Translate (0, 0, 4*Time.deltaTime);
-	}
+	}*/
 }

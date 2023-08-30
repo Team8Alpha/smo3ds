@@ -1,5 +1,6 @@
 ﻿using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.Collections;
 
@@ -27,44 +28,63 @@ public class scr_buttonCtrl : MonoBehaviour {
 	}
 
 	void Update () {
-		if(scr_gameInit.globalValues.isFocused){
-			float h = UnityEngine.N3DS.GamePad.CirclePad.y + Input.GetAxisRaw("Vertical");
-			if(!buttonPressed && h != 0){
+		if (scr_gameInit.globalValues.isFocused) {
+			float h = UnityEngine.N3DS.GamePad.CirclePad.y + Input.GetAxisRaw ("Vertical");
+			if (!buttonPressed && h != 0) {
 				buttonPressed = true;
-				if(h>0) if(currentButton<=0) currentButton=2; else currentButton--;
-				if(h<0) if(currentButton>=2) currentButton=0; else currentButton++;
-				switch(currentButton){ //switch statement, :D
-					case 0:
-						EventSystem.current.SetSelectedGameObject(buttonRes);
-					setPosition(buttonRes.transform.position);
-						break;
-					case 1:
-						EventSystem.current.SetSelectedGameObject(buttonNew);
-					setPosition(buttonNew.transform.position);
-						break;
-					case 2:
-						EventSystem.current.SetSelectedGameObject(buttonOpt);
-					setPosition(buttonOpt.transform.position);
-						break;
+				if (h > 0)
+				if (currentButton <= 0)
+					currentButton = 2;
+				else
+					currentButton--;
+				if (h < 0)
+				if (currentButton >= 2)
+					currentButton = 0;
+				else
+					currentButton++;
+				switch (currentButton) { //switch statement, :D
+				case 0:
+					EventSystem.current.SetSelectedGameObject (buttonRes);
+					setPosition (buttonRes.transform.position);
+					break;
+				case 1:
+					EventSystem.current.SetSelectedGameObject (buttonNew);
+					setPosition (buttonNew.transform.position);
+					break;
+				case 2:
+					EventSystem.current.SetSelectedGameObject (buttonOpt);
+					setPosition (buttonOpt.transform.position);
+					break;
 				}
-			} else if(h == 0) buttonPressed = false;
+			} else if (h == 0)
+				buttonPressed = false;
 			
-			if(UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A) || Input.GetKey(KeyCode.Return)){
-				switch(currentButton){
-					case 0:
-						UnityEngine.UI.Button BbuttonRes = buttonRes.GetComponent<Button>();
-						BbuttonRes.onClick.Invoke();
-						break;
-					case 1:
-						UnityEngine.UI.Button Bbutton = buttonNew.GetComponent<Button>();
-						Bbutton.onClick.Invoke();
-						break;
-					case 2:
-						UnityEngine.UI.Button Bbuttons = buttonOpt.GetComponent<Button>();
-						Bbuttons.onClick.Invoke();
-						break;
+			if (UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.A) || Input.GetKey (KeyCode.Return)) {
+				switch (currentButton) {
+				case 0:
+					LoadResume ();
+					break;
+				case 1:
+					LoadResume ();
+					break;
+				case 2:
+					LoadOptions ();
+					break;
 				}
 			}
 		}
+	}
+	public void LoadResume()
+	{
+		StartCoroutine (scr_title._f.ChangeEngineColour());
+		scr_loadScene._f.nextScene = "scn_capMain0";//button?
+		scr_gameInit.globalValues.focusOff();
+		scr_gameInit.globalValues.dbg_enemyCount=0;
+		SceneManager.LoadScene ("scn_loadShip", LoadSceneMode.Additive);
+		scr_title._f.GetComponent<Animator>().Play ("titleEnd");
+	}
+	public void LoadOptions()
+	{
+		Debug.Log ("have a little patience, wont ya?");
 	}
 }

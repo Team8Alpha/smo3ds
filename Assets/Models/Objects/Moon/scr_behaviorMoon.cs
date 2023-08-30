@@ -78,7 +78,7 @@ public class scr_behaviorMoon : MonoBehaviour {
 					Quaternion.Euler(player.eulerAngles.x, player.eulerAngles.y+180, player.eulerAngles.z));
 
 				string t_date = System.DateTime.UtcNow.ToShortDateString(); //even works on 3ds
-				Transform globalCanvas = scr_gameInit.globalValues.transform.GetChild (2).transform.GetChild (0);
+				Transform globalCanvas = scr_gameInit.globalValues.transform.GetChild (3).transform.GetChild (0);
 				scr_gameInit.globalValues.moonsCount++;
 				globalCanvas.gameObject.SetActive (true);
 				globalCanvas.GetChild (1).gameObject.GetComponent<Text> ().text = moonName;
