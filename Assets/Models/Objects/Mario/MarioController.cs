@@ -50,20 +50,15 @@ public class MarioController : MonoBehaviour
 		controller = GetComponent<CharacterController> ();
 	}
 
-	private void OnTriggerEnter(Collider collis)
-	{
-		try {
-			if (collis.gameObject.layer != scr_gameInit.lyr_def) {
-				if (collis.gameObject.layer == scr_gameInit.lyr_enemy || collis.gameObject.layer == scr_gameInit.lyr_obj) {
-					if (transform.position.y < collis.GetComponent<paramObj> ().bCenterY ()) {
-						collis.gameObject.SendMessage ("OnTouch", 2);
-					} else {
-						collis.gameObject.SendMessage ("OnTouch", 3);
-					}
-				}
+	void OnTriggerEnter(Collider collis){
+		Debug.Log ("AHA");
+		try{
+			if (collis.gameObject.layer != scr_gameInit.lyr_def)
+			if (collis.gameObject.layer == scr_gameInit.lyr_enemy || collis.gameObject.layer == scr_gameInit.lyr_obj) {
+				if(transform.position.y < collis.GetComponent<paramObj>().bCenterY()) collis.gameObject.SendMessage ("OnTouch", 2); else collis.gameObject.SendMessage ("OnTouch", 3);
 			}
-		} catch (Exception e) {
-			// Handle exceptions if needed
+		} catch(Exception e){
+			Debug.Log (" " + e);
 		}
 	}
 
