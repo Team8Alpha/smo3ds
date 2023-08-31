@@ -77,7 +77,6 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 			isHacking = false;
 			hackScale = 0;
 			transform.localScale = new Vector3 (1,1,1);
-			toggleCollision (false);
 			anim.Play ("default");
 			break;
 		case 3:

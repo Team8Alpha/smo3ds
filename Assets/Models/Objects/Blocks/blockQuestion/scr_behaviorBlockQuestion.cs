@@ -3,11 +3,11 @@
 public class scr_behaviorBlockQuestion : MonoBehaviour {
 
 	Animator anim;
-	public int timerFrame = 0;
+	int timerFrame = 0;
 	int hitCount = 0;
 	bool isActive = true;
 
-	int FrameLimit = 10; //10 * 30 = 300
+	public int FrameLimit = 10; //10 * 30 = 300
 	const int CoinInterval = 10;
 	private int CoinInvFrame = 0;
 

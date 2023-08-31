@@ -14,6 +14,7 @@ public class scr_behaviorMoon : MonoBehaviour {
 	private Vector3 tmpMpos;
 	public int color = 0;
 	SkinnedMeshRenderer mat_color;
+	Transform globalCanvas;
 
 	void setColor(){
 		Color t_color = Color.white;
@@ -35,6 +36,7 @@ public class scr_behaviorMoon : MonoBehaviour {
 		anim = GetComponent<Animator>();
 		mat_color = transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
 		setColor ();
+		globalCanvas = scr_gameInit.globalValues.transform.GetChild (3).transform.GetChild (0);
 	}
 	void OnTouch(int numType){
 		switch (numType) {
@@ -74,11 +76,8 @@ public class scr_behaviorMoon : MonoBehaviour {
 					}
 				transform.position = player.position;
 				transform.rotation = player.rotation;
-				MarioCam.marioCamera.setState (1, new Vector3(player.position.x, player.position.y+2, player.position.z),
-					Quaternion.Euler(player.eulerAngles.x, player.eulerAngles.y+180, player.eulerAngles.z));
 
 				string t_date = System.DateTime.UtcNow.ToShortDateString(); //even works on 3ds
-				Transform globalCanvas = scr_gameInit.globalValues.transform.GetChild (3).transform.GetChild (0);
 				scr_gameInit.globalValues.moonsCount++;
 				globalCanvas.gameObject.SetActive (true);
 				globalCanvas.GetChild (1).gameObject.GetComponent<Text> ().text = moonName;
@@ -92,10 +91,9 @@ public class scr_behaviorMoon : MonoBehaviour {
 			if (anim.GetCurrentAnimatorStateInfo (0).normalizedTime > 1) {
 				Destroy (gameObject);
 				scr_gameInit.globalValues.focusOn ();
-				MarioCam.marioCamera.setState (0, MarioCam.marioCamera.target.position, MarioCam.marioCamera.target.rotation);
 				MarioCam.marioCamera.isLocked = false;
 				MarioController.marioObject.gameObject.GetComponent<Animator> ().Play ("default");
-				scr_gameInit.globalValues.transform.GetChild (2).transform.GetChild (0).gameObject.SetActive (false);
+				globalCanvas.gameObject.SetActive (false);
 				MarioController.marioObject.GetComponent<Rigidbody> ().useGravity = true;
 				if (MarioController.marioObject.hasCaptured)
 					for (int i = 0; i <= 9; i++) {

@@ -9,12 +9,12 @@ public class scr_behaviorGoomba : MonoBehaviour {
 	private int statesState = 0; //for states in state, like is rotating while walking
 	public int stackAmount = 1;//if 1, its just one goomba.
 	public bool isMoving = false;//is moving
-	public GameObject controller;//not used if isMoving is true
 	public int stackedNum = 1;//2 is the first stacked goomba, 3 the second,  and only works with isMoving set to false and controller set to object.
 	private bool dead = false;//ded
 	private float fvar0 = 0; //var to be used by states
 	private float fvar1 = 0; //var to be used by states
 	private float fvar2 = 0; //var to be used by states
+	private int findTimer = 0; // til goomba is turnin over
 	private scr_behaviorGoomba[] goombaSt = new scr_behaviorGoomba[20];
 	private bool isTop = true; //for stacked goomba stuff
 	/*
@@ -22,7 +22,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 	1 walking
 	2 stacked goomba
 	*/
-	public float walkSpeed = 6;
+	public float[] walkSpeed = {6, 12};
 	public float rotationSpeed = 4;
 	public Animator anim;
 
@@ -73,12 +73,17 @@ public class scr_behaviorGoomba : MonoBehaviour {
 			setAnim ("walk");
 			break;
 		case 3:
-			setAnim ("find");
-			setEye (0);
-			transform.LookAt (MarioController.marioObject.transform);
-			transform.rotation = Quaternion.Euler (0, transform.eulerAngles.y, 0);
+			findTimer = 0;
+			Debug.Log ("goomba: hmm...");
+			setAnim ("wait");
 			break;
 		case 4:
+			Debug.Log ("goomba: GOCHA BI*CH");
+			setAnim ("find");
+			setEye (0);
+			break;
+		case 5:
+			Debug.Log ("YATATATTATATTATATATA");
 			setAnim ("dash", 1);
 			setEye (1);
 			break;
@@ -106,14 +111,13 @@ public class scr_behaviorGoomba : MonoBehaviour {
 		anim = GetComponent<Animator> ();
 		if(stackAmount>1){
 			isTop = false;
-			float stackOffY = 3;
+			float stackOffY = 2.5f;
 			int i = 1;
-			for(i=0; i<stackAmount; i++){
+			for(i=0; i<stackAmount-1; i++){
 				Debug.Log(i+2);
-				GameObject goombaStacked = scr_summon.f_summon.s_entity(0, new Vector3(transform.position.x, transform.position.y+(i*stackOffY), transform.position.z), new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z));
+				GameObject goombaStacked = scr_summon.f_summon.s_entity(0, new Vector3(transform.position.x, transform.position.y+(i+1*stackOffY), transform.position.z), new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z));
 				goombaSt[i] = goombaStacked.GetComponent<scr_behaviorGoomba>();
 				goombaSt[i].isMoving = false;
-				goombaSt[i].controller = gameObject;
 				goombaSt[i].stackAmount=1;
 				goombaSt[i].currentState=2;
 				goombaSt[i].stackedNum=i+1;
@@ -122,19 +126,32 @@ public class scr_behaviorGoomba : MonoBehaviour {
 			}
 		}
 	}
+
+	void RankBelowGoomba(){
+		RaycastHit hit;
+		if (Physics.Raycast (transform.position, Vector3.down, out hit, 1f)) {
+			scr_behaviorGoomba obj = hit.transform.gameObject.GetComponent<scr_behaviorGoomba> ();
+			obj.isTop = true;
+		} else
+			Debug.Log ("single.");
+	}
 	
 	public void OnTouch(int numType){
-		if (currentState != 6 && isTop == true) {
+		if (currentState != 6) {
 			switch (numType) {
 			case 3:
+				if (!isTop)
+					break; //spare his life
 				gameObject.tag = "Untagged";
 				setAnim ("pressDown");
 				dead = true;
 				scr_gameInit.globalValues.dbg_enemyCount--;
+				if (isMoving == false)
+					RankBelowGoomba ();
 				break;
 			case 2:
-				//kill mario
-				Debug.Log("wow");
+					//kill mario
+					Debug.Log("~YOU DIED~");
 				break;
 			}
 		}
@@ -147,7 +164,15 @@ public class scr_behaviorGoomba : MonoBehaviour {
 		gameObject.tag = "captureMe";
 		MarioController.marioObject.cappy.setHackData (1.525f, new Vector3 (0, 0.5f, 0), new Vector3(-6,0,0));
 	}
-	
+	public void OnSensorEnter(Collider col){
+		if (col.name == "mario" && isMoving)
+			setState (3); 
+	}
+	public void OnSensorExit(Collider col){
+		if (col.name == "mario" && isMoving)
+			setState (0);
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if(scr_gameInit.globalValues.isFocused){
@@ -181,7 +206,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 						}
 						if (fvar0 != fvar1) {
 							fvar0++; //walk the path
-							transform.Translate (new Vector3 (0, 0, walkSpeed * Time.deltaTime));
+							transform.Translate (new Vector3 (0, 0, walkSpeed[0] * Time.deltaTime));
 						} else {
 							setState (0);//end the path
 						}
@@ -195,7 +220,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 						if (fvar0 != fvar1) {
 							fvar0++;
 							walkRotation (rotationSpeed * fvar2);
-							transform.Translate (new Vector3 (0, 0, walkSpeed * Time.deltaTime));
+							transform.Translate (new Vector3 (0, 0, walkSpeed[0] * Time.deltaTime));
 						} else {
 							fvar0 = 0;
 							statesState = 1;
@@ -204,22 +229,34 @@ public class scr_behaviorGoomba : MonoBehaviour {
 					}
 					break;
 				case 2: //stacked goomba
-					//anim.Play ("wait"); //stacked goombas have been disabled temporary in scr_spn_goomba, because it crashes when the commented line is uncommented.
-					if (controller != null) {
-						transform.position = new Vector3 (controller.transform.position.x, controller.transform.position.y + ((stackedNum - 1) * 1.4f), controller.transform.position.z);
-						transform.rotation = controller.transform.rotation;
-					}
 					break;
-				//case 3: //saw player 
-				//	if(isAnim("default")) setState(4);
-				//	break;
+				case 3:
+					findTimer++;
+					if (findTimer >= 20)
+						setState (4);
+					break;
+				case 4: //saw player 
+					if (anim.GetCurrentAnimatorStateInfo (0).normalizedTime < 1)
+						setState (5);
+					break;
+				case 5: //ATTACK
+    				// Calculate the y rotation
+					Vector3 relativePos = MarioController.marioObject.transform.position - transform.position;
+					float yRotation = Mathf.Atan2 (relativePos.x, relativePos.z) * Mathf.Rad2Deg;
 
+    				// Rotate the object to face the target
+					transform.rotation = Quaternion.Euler (0, yRotation, 0);
+
+    				// Move the object towards the target
+					transform.position += transform.forward * walkSpeed[1] * Time.deltaTime;
+					break;
 				case 6: //controller, each enemy has 6 as its controlled state(for organization?)
 					transform.position = MarioController.marioObject.transform.position;
 					transform.rotation = MarioController.marioObject.transform.rotation;
 					break;
 				case 7: //confused state after leaving capture
-					if(isAnim("default")) setState(0);
+					if (isAnim ("default"))
+						setState (0);
 					break;
 				}
 			}

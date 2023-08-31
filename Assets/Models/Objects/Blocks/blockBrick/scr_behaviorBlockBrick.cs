@@ -3,11 +3,11 @@
 public class scr_behaviorBlockBrick : MonoBehaviour {
 
 	Animator anim;
-	public int timerFrame = 0;
+	int timerFrame = 0;
 	int hitCount = 0;
 	bool isActive = true;
 
-	int FrameLimit = 10; //10 * 30 = 300
+	public int FrameLimit = 10; //10 * 30 = 300
 	const int CoinInterval = 10;
 	private int CoinInvFrame = 0;
 
@@ -23,6 +23,7 @@ public class scr_behaviorBlockBrick : MonoBehaviour {
 
 	void DoIsEmpty(){
 		scr_summon.f_summon.s_object(9, transform.position, transform.eulerAngles);
+		anim.Play("brickUp");
 		Destroy(gameObject);
 	}
 
@@ -47,7 +48,7 @@ public class scr_behaviorBlockBrick : MonoBehaviour {
 			if (hitCount == 0) this.enabled = true;
 			if (timerFrame - CoinInvFrame >= CoinInterval || hitCount == 0 || !isActive) {
 				CoinInvFrame = timerFrame;
-				anim.Play("up");
+				anim.Play("brickUp");
 				SpawnCoins(1);
 				hitCount++;
 				if (!isActive)

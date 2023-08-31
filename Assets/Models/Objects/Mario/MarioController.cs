@@ -4,9 +4,8 @@ using System;
 
 public class MarioController : MonoBehaviour
 {
-
-	private float h=0;
-	private float v=0;
+	private float h = 0;
+	private float v = 0;
 	public Animator anim;
 	public float moveSpeed = 11f;
 	private float currentMoveSpeed = 0;
@@ -15,7 +14,7 @@ public class MarioController : MonoBehaviour
 	public Transform target; // Target which changes position based on floor collision
 	public scr_behaviorMarioCap cappy;
 
-	private CharacterController controller;
+	private Rigidbody rb; // Use Rigidbody instead of CharacterController
 	public float groundCheckDistance = 0.1f;
 	public bool isGrounded = false;
 	public float groundedPosition = 0; // latest floor position
@@ -41,45 +40,50 @@ public class MarioController : MonoBehaviour
 
 	private void Awake()
 	{
-		scr_gameInit.globalValues.GetComponent<AudioListener> ().enabled = false;
-		GetComponent<AudioListener> ().enabled = true;
+		scr_gameInit.globalValues.GetComponent<AudioListener>().enabled = false;
+		GetComponent<AudioListener>().enabled = true;
 		jumpedHeight -= 0;
-		hit.GetType ();
+		hit.GetType();
 		marioObject = this;
-		anim = GetComponent<Animator> ();
-		controller = GetComponent<CharacterController> ();
+		anim = GetComponent<Animator>();
+		rb = GetComponent<Rigidbody>();
 	}
 
-	void OnTriggerEnter(Collider collis){
-		Debug.Log ("AHA");
-		try{
+	void OnTriggerEnter(Collider collis)
+	{
+		try
+		{
 			if (collis.gameObject.layer != scr_gameInit.lyr_def)
-			if (collis.gameObject.layer == scr_gameInit.lyr_enemy || collis.gameObject.layer == scr_gameInit.lyr_obj) {
-				if(transform.position.y < collis.GetComponent<paramObj>().bCenterY()) collis.gameObject.SendMessage ("OnTouch", 2); else collis.gameObject.SendMessage ("OnTouch", 3);
+			if (collis.gameObject.layer == scr_gameInit.lyr_enemy || collis.gameObject.layer == scr_gameInit.lyr_obj)
+			{
+				if (transform.position.y < collis.GetComponent<paramObj>().bCenterY()) collis.gameObject.SendMessage("OnTouch", 2); else collis.gameObject.SendMessage("OnTouch", 3);
 			}
-		} catch(Exception e){
-			Debug.Log (" " + e);
+		}
+		catch (Exception e)
+		{
+			Debug.Log(" " + e);
 		}
 	}
 
 	private void FixedUpdate()
 	{
-		if (scr_gameInit.globalValues.isFocused) {
-
-			// Ground check using CharacterController's isGrounded
-			isGrounded = controller.isGrounded;
+		if (scr_gameInit.globalValues.isFocused)
+		{
+			// Ground check using Physics.Raycast
+			isGrounded = Physics.Raycast(new Vector3(transform.position.x, transform.position.y+1, transform.position.z), Vector3.down, out hit, 2);
 
 			// Get input values
 			#if UNITY_EDITOR
-			h = Input.GetAxisRaw ("Horizontal");
-			v = Input.GetAxisRaw ("Vertical");
+			h = Input.GetAxisRaw("Horizontal");
+			v = Input.GetAxisRaw("Vertical");
 			#else
 			h = UnityEngine.N3DS.GamePad.CirclePad.x;
 			v = UnityEngine.N3DS.GamePad.CirclePad.y;
 			#endif
 
 			// Check if Mario is blocked
-			if (isBlocked) {
+			if (isBlocked)
+			{
 				h = 0;
 				v = 0;
 				velocity = 0;
@@ -89,40 +93,47 @@ public class MarioController : MonoBehaviour
 			isMoving = h != 0 || v != 0;
 
 			// Handle movement
-			if (isMoving) {
-				HandleMovement ();
+			if (isMoving)
+			{
+				HandleMovement();
 				if (animLast == "wait")
-					setAnim ("runStart"); //yeah goodnight
+					setAnim("runStart"); //yeah goodnight
 			}
 
 			// Handle jumping
-			HandleJumping ();
+			HandleJumping();
 
 			// Handle falling
-			HandleFalling ();
+			HandleFalling();
 
 			// Handle Hacking
-			HandleHacking ();
+			HandleHacking();
 		}
 	}
 
 	private void HandleMovement()
 	{
 		float tmp_walkRotation = 0;
-		if (transform.rotation.y < 179 && transform.rotation.y > -179) {
+		if (transform.rotation.y < 179 && transform.rotation.y > -179)
+		{
 			// adjust angle
-			if (tmp_walkRotation < -90) {
+			if (tmp_walkRotation < -90)
+			{
 				tmp_walkRotation += 360;
-			} else if (tmp_walkRotation > 90) {
+			}
+			else if (tmp_walkRotation > 90)
+			{
 				tmp_walkRotation -= 360;
 			}
-					
+
 			walkRotation += tmp_walkRotation / 76;
-			tmp_walkRotation = Mathf.Atan2 (h, v) * Mathf.Rad2Deg;
-		} else {
-			tmp_walkRotation = 0; 
+			tmp_walkRotation = Mathf.Atan2(h, v) * Mathf.Rad2Deg;
 		}
-		transform.rotation = Quaternion.Euler (transform.eulerAngles.x, tmp_walkRotation + walkRotation + MarioCam.marioCamera.gameObject.transform.eulerAngles.y, transform.eulerAngles.z);
+		else
+		{
+			tmp_walkRotation = 0;
+		}
+		transform.rotation = Quaternion.Euler(transform.eulerAngles.x, tmp_walkRotation + walkRotation + MarioCam.marioCamera.gameObject.transform.eulerAngles.y, transform.eulerAngles.z);
 		if (currentMoveSpeed < moveSpeed)
 			currentMoveSpeed += 0.1f;
 		if (h < 0f)
@@ -134,10 +145,12 @@ public class MarioController : MonoBehaviour
 	private void HandleJumping()
 	{
 		// Jump if the jump button is pressed and the object is grounded
-		if (isGrounded) {
+		if (isGrounded)
+		{
 			groundedPosition = transform.position.y;
 			#if UNITY_EDITOR
-			if (!hasJumped && Input.GetKey (KeyCode.Space)) {
+			if (!hasJumped && Input.GetKey(KeyCode.Space))
+			{
 				jumpAct = 1;
 			}
 			#else
@@ -148,11 +161,14 @@ public class MarioController : MonoBehaviour
 			#endif
 		}
 
-		switch (jumpAct) {
+		switch (jumpAct)
+		{
 		case 0:
-			if (hasJumped) {
+			if (hasJumped)
+			{
 				#if UNITY_EDITOR
-				if (!Input.GetKey (KeyCode.Space)) {
+				if (!Input.GetKey(KeyCode.Space))
+				{
 					hasJumped = false;
 				}
 				#else
@@ -167,12 +183,14 @@ public class MarioController : MonoBehaviour
 		case 1:
 			hasJumped = true;
 			jumpedTime++;
-			if (jumpedTime == 1) {
+			if (jumpedTime == 1)
+			{
 				velocity = 0.8f;
-				setAnim ("jump");
+				setAnim("jump");
 			}
 			velocity += jumpForce;
-			if ((jumpedTime > maxJump && (!UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.A) && !Input.GetKey (KeyCode.Space) && !UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.B))) || jumpedTime > maxJump * 2) {
+			if ((jumpedTime > maxJump && (!UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A) && !Input.GetKey(KeyCode.Space) && !UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B))) || jumpedTime > maxJump * 2)
+			{
 				jumpAct = 2;
 				jumpedHeight = transform.position.y;
 				fvar0 = jumpedTime;
@@ -182,20 +200,27 @@ public class MarioController : MonoBehaviour
 		case 2:
 			jumpedTime++;
 			velocity += 0.1f;
-			if (jumpedTime > 6 + fvar0 * 0.4f) {
+			if (jumpedTime > 6 + fvar0 * 0.4f)
+			{
 				jumpAct = 3;
 			}
 			break;
 		case 3:
-			if (isGrounded) {
+			if (isGrounded)
+			{
 				jumpAct = 0;
 				jumpedTime = 0;
-				if (isMoving) {
-					setAnim ("run", 0.1f);
-				} else {
-					setAnim ("default", 0.1f);
+				if (isMoving)
+				{
+					setAnim("run", 0.1f);
 				}
-			} else {
+				else
+				{
+					setAnim("wait", 0.1f);
+				}
+			}
+			else
+			{
 				velocity = -0.7f;
 			}
 			break;
@@ -204,85 +229,106 @@ public class MarioController : MonoBehaviour
 
 	private void HandleFalling()
 	{
-		if (!isMoving && currentMoveSpeed > 0) {
+		if (!isMoving && currentMoveSpeed > 0)
+		{
 			currentMoveSpeed -= 0.2f;
 		}
 
 		// Calculate the movement vector based on the input and current speed
-		Vector3 movementVector = new Vector3 (0f, 0f, h + v) * currentMoveSpeed * Time.deltaTime;
+		Vector3 movementVector = new Vector3(0f, 0f, h + v) * currentMoveSpeed * Time.deltaTime;
 
-		// Move the character using the CharacterController
-		controller.Move ((transform.rotation * Vector3.forward) * movementVector.magnitude + new Vector3 (0, velocity * (Time.deltaTime * 6), 0));
+		// Move the character using the Rigidbody
+		rb.MovePosition(rb.position + (transform.rotation * Vector3.forward) * movementVector.magnitude + new Vector3(0, velocity * (Time.deltaTime * 6), 0));
 	}
+
 	private void HandleHacking()
-	{	
-		if (cappy != null) {
-			if (plsUnhack) {
+	{
+		if (cappy != null)
+		{
+			if (plsUnhack)
+			{
 				plsUnhack = false;
-			} else {
+			}
+			else
+			{
 				if (cappy.currentState == 3)
-				if (UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.Y) || UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.X) || Input.GetKey (KeyCode.LeftShift)) {
-					cappy.SetState (0); //cappy handles everything.
+				if (UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.Y) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.X) || Input.GetKey(KeyCode.LeftShift))
+				{
+					cappy.SetState(0); //cappy handles everything.
 				}
 			}
 		}
-		if (isHacking) {
-			if (hasCaptured) {
-				if (UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.L) || UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.R)
-				     || Input.GetKey (KeyCode.Y) || plsUnhack) {
+		if (isHacking)
+		{
+			if (hasCaptured)
+			{
+				if (UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.L) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.R)
+					|| Input.GetKey(KeyCode.Y) || plsUnhack)
+				{
 					plsUnhack = false;
-					transform.GetChild (2).gameObject.SetActive (false);//hair
-					transform.GetChild (1).gameObject.SetActive (true);//cap
-					setAnim ("default");
-					cappy.capturedObject.SendMessage ("setState", 7);
+					transform.GetChild(2).gameObject.SetActive(false);//hair
+					transform.GetChild(1).gameObject.SetActive(true);//cap
+					setAnim("wait");
+					cappy.capturedObject.SendMessage("setState", 7);
 					cappy.capturedObject.tag = "Untagged";
 					velocity = 4;
-					transform.Translate (0, 0, -2);
-					ResetSpeed ();
+					transform.Translate(0, 0, -2);
+					ResetSpeed();
 					isBlocked = false;
 					isBlockBlocked = false;
 					isHacking = false;
 					scr_gameInit.globalValues.capMountPoint = "missingno";
-					var Mustache = cappy.capturedObject.transform.GetChild (0);
-					if (Mustache.name == "Mustache" || Mustache.name == "Mustache__HairMT") 
-						Mustache.gameObject.SetActive (false); //if mustache, place it at index 0
+					var Mustache = cappy.capturedObject.transform.GetChild(0);
+					if (Mustache.name == "Mustache" || Mustache.name == "Mustache__HairMT")
+						Mustache.gameObject.SetActive(false); //if mustache, place it at index 0
 				}
-			} else {
-				if (!isCapturing) {
+			}
+			else
+			{
+				if (!isCapturing)
+				{
 					isCapturing = true;
 					isBlocked = true;
-					setAnim ("captureFly");
+					setAnim("captureFly");
 					jumpAct = 1;
-				} else {
-					if (anim.GetCurrentAnimatorStateInfo (2).IsName ("captureFly")) {
-						transform.position = Vector3.MoveTowards (transform.position, cappy.capturedObject.transform.position, 0.3f);
-					} else {
+				}
+				else
+				{
+					if (anim.GetCurrentAnimatorStateInfo(2).IsName("captureFly"))
+					{
+						transform.position = Vector3.MoveTowards(transform.position, cappy.capturedObject.transform.position, 0.3f);
+					}
+					else
+					{
 						isCapturing = false;
 						if (!isBlockBlocked)
 							isBlocked = false;
 						hasCaptured = true;
 						transform.position = cappy.capturedObject.transform.position;
-						cappy.capturedObject.SendMessage ("setState", 6);
-						for (int i = 0; i <= 8; i++) {
-							transform.GetChild (i).gameObject.SetActive (false);
+						cappy.capturedObject.SendMessage("setState", 6);
+						for (int i = 0; i <= 8; i++)
+						{
+							transform.GetChild(i).gameObject.SetActive(false);
 						}
 					}
 				}
 			}
-		} else {
-			if (hasCaptured == true) {
+		}
+		else
+		{
+			if (hasCaptured == true)
+			{
 				hasCaptured = false;
-				cappy.SetState (2);
-				for (int i = 0; i <= 8; i++) {
-					transform.GetChild (i).gameObject.SetActive (true);
+				cappy.SetState(2);
+				for (int i = 0; i <= 8; i++)
+				{
+					transform.GetChild(i).gameObject.SetActive(true);
 				}
-				transform.GetChild (2).gameObject.SetActive (true); // hair
-				transform.GetChild (1).gameObject.SetActive (false); // cap
+				transform.GetChild(2).gameObject.SetActive(true); // hair
+				transform.GetChild(1).gameObject.SetActive(false); // cap
 			}
 		}
 	}
-
-
 
 	public void ResetSpeed()
 	{
@@ -294,13 +340,14 @@ public class MarioController : MonoBehaviour
 	{
 		maxJump = _maxJump;
 		moveSpeed = _moveSpeed;
-		cappy.transform.localScale = new Vector3 (scaleCap, scaleCap, scaleCap);
+		cappy.transform.localScale = new Vector3(scaleCap, scaleCap, scaleCap);
 	}
 
 	public void setAnim(string animName, float transitionTime = 0.15f, float animSpeed = 1)
 	{
-		if (isAnim (animName)) {
-			anim.CrossFade (animName, transitionTime);
+		if (isAnim(animName))
+		{
+			anim.CrossFade(animName, transitionTime);
 			anim.speed = animSpeed;
 			animLast = animName;
 		}
@@ -308,11 +355,13 @@ public class MarioController : MonoBehaviour
 
 	public bool isAnim(string anmName)
 	{
-		try {
-			return !anim.GetCurrentAnimatorStateInfo (0).IsName (anmName) && !anim.GetCurrentAnimatorStateInfo (1).IsName (anmName);
-		} catch (Exception e) {
-			return !anim.GetCurrentAnimatorStateInfo (0).IsName (anmName);
+		try
+		{
+			return !anim.GetCurrentAnimatorStateInfo(0).IsName(anmName) && !anim.GetCurrentAnimatorStateInfo(1).IsName(anmName);
+		}
+		catch (Exception e)
+		{
+			return !anim.GetCurrentAnimatorStateInfo(0).IsName(anmName);
 		}
 	}
-
 }
