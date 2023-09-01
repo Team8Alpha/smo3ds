@@ -274,7 +274,9 @@ public class MarioController : MonoBehaviour
 					setAnim("wait");
 					cappy.capturedObject.SendMessage("setState", 7);
 					cappy.capturedObject.tag = "Untagged";
-					velocity = 4;
+                    if(cappy.capturedObject.GetComponent<BoxCollider>() != null)
+                        cappy.capturedObject.GetComponent<BoxCollider>().enabled = true;
+                    velocity = 4;
 					transform.Translate(0, 0, -2);
 					ResetSpeed();
 					isBlocked = false;
