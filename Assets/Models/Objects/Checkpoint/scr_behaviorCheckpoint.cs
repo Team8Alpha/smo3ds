@@ -29,7 +29,8 @@ public class scr_behaviorCheckpoint : MonoBehaviour {
 			f_take();
 			break;
 		case 2://mar
-			f_take();
+			f_take ();
+			//MarioController.marioObject.setAnim (" ");
 			break;
 		}
 	}

@@ -76,6 +76,11 @@ public class scr_behaviorMoon : MonoBehaviour {
 					}
 				transform.position = player.position;
 				transform.rotation = player.rotation;
+				MarioCam.marioCamera.confYOffset = 2+player.position.y - MarioController.marioObject.groundedPosition;
+				MarioCam.marioCamera.confRotate = false;
+				MarioCam.marioCamera.confStickXmax = 0;
+				MarioCam.marioCamera.confStickYmax = 0;
+				MarioCam.marioCamera.confSmoothTime = 0.3f;
 
 				string t_date = System.DateTime.UtcNow.ToShortDateString(); //even works on 3ds
 				scr_gameInit.globalValues.moonsCount++;
@@ -91,9 +96,13 @@ public class scr_behaviorMoon : MonoBehaviour {
 			if (anim.GetCurrentAnimatorStateInfo (0).normalizedTime > 1) {
 				Destroy (gameObject);
 				scr_gameInit.globalValues.focusOn ();
-				MarioCam.marioCamera.isLocked = false;
-				MarioController.marioObject.gameObject.GetComponent<Animator> ().Play ("default");
+				MarioController.marioObject.gameObject.GetComponent<Animator> ().Play ("wait");
 				globalCanvas.gameObject.SetActive (false);
+				MarioCam.marioCamera.confYOffset = 2;
+				MarioCam.marioCamera.confRotate = true;
+				MarioCam.marioCamera.confStickXmax = 1;
+				MarioCam.marioCamera.confStickYmax = 1;
+				MarioCam.marioCamera.confSmoothTime = 0.5f;
 				MarioController.marioObject.GetComponent<Rigidbody> ().useGravity = true;
 				if (MarioController.marioObject.hasCaptured)
 					for (int i = 0; i <= 9; i++) {

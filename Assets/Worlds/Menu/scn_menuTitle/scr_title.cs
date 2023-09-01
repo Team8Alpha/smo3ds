@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class scr_title : MonoBehaviour {
-	
+
 	private Animator anim;
 	private AudioSource snd_mTitle;
 	private Vector3 marioPos;
@@ -19,7 +20,7 @@ public class scr_title : MonoBehaviour {
 	public float speed;
 	public Color startColor, endColor;
 	public Color startColorShade, endColorShade;
-	float startTime;
+	public GameObject buttonRes;//resume button
 
 	public static scr_title _f;
 
@@ -45,26 +46,30 @@ public class scr_title : MonoBehaviour {
 		scr_fadefull._f.Run (true, 0, 0.05f);//fade in
 		mat_rotMap = spr_rotMap.gameObject.GetComponent<MeshRenderer> ().material;
 		mat_shade = spr_shade.gameObject.GetComponent<MeshRenderer> ().material;//get materials
-		//scr_gameInit.globalValues.focusOff ();
+		scr_gameInit.globalValues.focusOff ();
 		_f = this;
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (scr_fadefull._f.isDone) {
-			if (snd_mTitle.isPlaying) {
-				if (transform.position.x == -1000)
-					snd_mTitle.Play ();
-				if (transform.position.x < -1004.5) {
-					transform.position = marioPos;
-					anim.Play ("titleStart");
-				}
-				transform.Translate (new Vector3 (0.1f, 0, 0));
+		if (scr_fadefull._f.isDone || bvar0) {
+			if (!bvar0) {
+				snd_mTitle.Play ();
+				bvar0 = true;
 			} else {
-				scr_gameInit.globalValues.focusOn ();
-				for (int i = 0; i < 4; i++)
-					cnv_down.GetChild (i).gameObject.SetActive (true);
-				this.enabled = false;
+				if (snd_mTitle.isPlaying) {
+					if (transform.position.x < -1004.5) {
+						transform.position = marioPos;
+						anim.Play ("titleStart");
+					}
+					transform.Translate (new Vector3 (0.1f, 0, 0));
+				} else {
+					scr_gameInit.globalValues.focusOn ();
+					for (int i = 0; i < 4; i++)
+						cnv_down.GetChild (i).gameObject.SetActive (true);
+					EventSystem.current.SetSelectedGameObject (buttonRes);
+					this.enabled = false;
+				}
 			}
 		}
 	}

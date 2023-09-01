@@ -25,7 +25,7 @@ public class scr_behaviorCoin : MonoBehaviour {
 
 	void OnTouch(int numType){
 		if(currentState==0) if(numType == 1 || numType == 2){
-			this.enabled = true;
+			transform.GetComponent<Collider> ().enabled = false;
 			scr_gameInit.globalValues.coinsCount++;//add coin to global
 			sndSrc.Play();
 			scr_manageEffect._f.Play("prt_coinSpark0", transform.position, transform.rotation, "prt_coinSpark1");

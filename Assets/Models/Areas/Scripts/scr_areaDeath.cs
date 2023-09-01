@@ -10,7 +10,8 @@ public class scr_areaDeath : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col){
 		if (col.name == "Mario") {
-			MarioScene.
+			//MarioScene._f.PlayerDied(1);
+			Debug.Log ("AREA: death");
 		}
 	}
 }

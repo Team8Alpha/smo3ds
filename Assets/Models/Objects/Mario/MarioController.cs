@@ -37,6 +37,7 @@ public class MarioController : MonoBehaviour
 	public bool plsUnhack = false;
 	public int maxJump = 10;
 	public string animLast = "wait";
+	public float confSlipTime = 0.3f;
 
 	private void Awake()
 	{
@@ -67,23 +68,21 @@ public class MarioController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if (scr_gameInit.globalValues.isFocused)
-		{
+		if (scr_gameInit.globalValues.isFocused) {
 			// Ground check using Physics.Raycast
-			isGrounded = Physics.Raycast(new Vector3(transform.position.x, transform.position.y+1, transform.position.z), Vector3.down, out hit, 2);
+			isGrounded = Physics.Raycast (new Vector3 (transform.position.x, transform.position.y + 1, transform.position.z), Vector3.down, out hit, 2);
 
 			// Get input values
 			#if UNITY_EDITOR
-			h = Input.GetAxisRaw("Horizontal");
-			v = Input.GetAxisRaw("Vertical");
+			h = Input.GetAxisRaw ("Horizontal");
+			v = Input.GetAxisRaw ("Vertical");
 			#else
 			h = UnityEngine.N3DS.GamePad.CirclePad.x;
 			v = UnityEngine.N3DS.GamePad.CirclePad.y;
 			#endif
 
 			// Check if Mario is blocked
-			if (isBlocked)
-			{
+			if (isBlocked) {
 				h = 0;
 				v = 0;
 				velocity = 0;
@@ -93,21 +92,26 @@ public class MarioController : MonoBehaviour
 			isMoving = h != 0 || v != 0;
 
 			// Handle movement
-			if (isMoving)
-			{
-				HandleMovement();
-				if (animLast == "wait")
-					setAnim("runStart"); //yeah goodnight
+			if (isMoving) {
+				HandleMovement ();
+				if (animLast == "wait"){
+					if(currentMoveSpeed>0.2f) setAnim ("run");
+					else setAnim ("runStart");
+				}
+			} else {
+				if (animLast == "run" || animLast == "runStart")
+					setAnim ("wait");
 			}
+			Debug.Log ("M: animLast="+animLast);
 
 			// Handle jumping
-			HandleJumping();
+			HandleJumping ();
 
 			// Handle falling
-			HandleFalling();
+			HandleFalling ();
 
 			// Handle Hacking
-			HandleHacking();
+			HandleHacking ();
 		}
 	}
 
@@ -135,7 +139,7 @@ public class MarioController : MonoBehaviour
 		}
 		transform.rotation = Quaternion.Euler(transform.eulerAngles.x, tmp_walkRotation + walkRotation + MarioCam.marioCamera.gameObject.transform.eulerAngles.y, transform.eulerAngles.z);
 		if (currentMoveSpeed < moveSpeed)
-			currentMoveSpeed += 0.1f;
+			currentMoveSpeed += 0.2f;
 		if (h < 0f)
 			h = h * -1;
 		if (v < 0f)
@@ -229,13 +233,12 @@ public class MarioController : MonoBehaviour
 
 	private void HandleFalling()
 	{
-		if (!isMoving && currentMoveSpeed > 0)
-		{
-			currentMoveSpeed -= 0.2f;
+		if (!isMoving && currentMoveSpeed > 0) {
+			currentMoveSpeed -= confSlipTime * currentMoveSpeed;
 		}
 
 		// Calculate the movement vector based on the input and current speed
-		Vector3 movementVector = new Vector3(0f, 0f, h + v) * currentMoveSpeed * Time.deltaTime;
+		Vector3 movementVector = Vector3.forward * currentMoveSpeed * Time.deltaTime;
 
 		// Move the character using the Rigidbody
 		rb.MovePosition(rb.position + (transform.rotation * Vector3.forward) * movementVector.magnitude + new Vector3(0, velocity * (Time.deltaTime * 6), 0));
@@ -343,7 +346,7 @@ public class MarioController : MonoBehaviour
 		cappy.transform.localScale = new Vector3(scaleCap, scaleCap, scaleCap);
 	}
 
-	public void setAnim(string animName, float transitionTime = 0.15f, float animSpeed = 1)
+	public void setAnim(string animName, float transitionTime = 0.2f, float animSpeed = 1)
 	{
 		if (isAnim(animName))
 		{

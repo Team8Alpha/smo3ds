@@ -52,14 +52,13 @@ public class MarioCam : MonoBehaviour {
 	void Update() {
 
 		if (!isLocked) {
-
 			#if UNITY_EDITOR
-			cursorX += ((Input.GetAxis ("Mouse X") * cursorSensitivity * Time.deltaTime * -1) * confStickXmax) * (invertCursorX ? -1 : 1);
-			cursorY += ((Input.GetAxis ("Mouse Y") * cursorSensitivity * Time.deltaTime * -1) * confStickYmax) * (invertCursorY ? -1 : 1);
+			cursorX += ((Input.GetAxis ("Mouse X") * cursorSensitivity * Time.unscaledDeltaTime * -1) * confStickXmax) * (invertCursorX ? -1 : 1);
+			cursorY += ((Input.GetAxis ("Mouse Y") * cursorSensitivity * Time.unscaledDeltaTime * -1) * confStickYmax) * (invertCursorY ? -1 : 1);
 			cursorY = Mathf.Clamp (cursorY, -20, 70f); // Clamp the Y axis to prevent camera flipping
 			#else
-			cStickX += ((UnityEngine.N3DS.GamePad.CirclePadPro.x * cursorSensitivity * Time.deltaTime * -1) * confStickXmax)*(invertCursorX?-1:1);
-			cStickY += ((UnityEngine.N3DS.GamePad.CirclePadPro.y * cursorSensitivity * Time.deltaTime * -1) * confStickYmax)*(invertCursorY?-1:1);
+			cStickX += ((UnityEngine.N3DS.GamePad.CirclePadPro.x * cursorSensitivity * Time.unscaledDeltaTime * -1) * confStickXmax)*(invertCursorX?-1:1);
+			cStickY += ((UnityEngine.N3DS.GamePad.CirclePadPro.y * cursorSensitivity * Time.unscaledDeltaTime * -1) * confStickYmax)*(invertCursorY?-1:1);
 			cStickY = Mathf.Clamp(cStickY, -20, 70f); // Clamp the Y axis to prevent camera flipping
 			#endif
 
@@ -75,7 +74,7 @@ public class MarioCam : MonoBehaviour {
 					targetCameraRotation = 0;
 
 				// Smoothly interpolate towards the target camera rotation
-				cameraRotation = Mathf.LerpAngle (cameraRotation, cameraRotation + targetCameraRotation, Time.deltaTime * confRotateSpeed);
+				cameraRotation = Mathf.LerpAngle (cameraRotation, cameraRotation + targetCameraRotation, Time.unscaledDeltaTime * confRotateSpeed);
 			}
 			if (!confSmooth){
 				transform.rotation = Quaternion.Euler (transform.localRotation.x + cameraControl.x, cameraRotation + cameraControl.y, transform.rotation.z + cameraControl.y * 2);
@@ -98,13 +97,20 @@ public class MarioCam : MonoBehaviour {
 				actualCamera.LookAt (target.transform); // Look at the camera target
 			}
 			if (confSmoothY)
-				targetedY = Mathf.SmoothDamp (target.position.y, MarioController.marioObject.groundedPosition + confYOffset, ref velocity.y, confSmoothTime);
-			else if(confSmooth){
-				target.rotation = Quaternion.Slerp (target.rotation, targetRot, 1-confSmoothTime);
-				target.position = Vector3.Lerp (target.position, targetPos, confSmoothTime);
-				actualCamera.localRotation = Quaternion.Euler (0, 0, 0);
-			} else
+			{
+				targetedY = Mathf.SmoothDamp(target.position.y, MarioController.marioObject.groundedPosition + confYOffset, ref velocity.y, confSmoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
+			}
+			else if (confSmooth)
+			{
+				target.rotation = Quaternion.Slerp(target.rotation, targetRot, 1 - Time.unscaledTime * confSmoothTime);
+				target.position = Vector3.Lerp(target.position, targetPos, Time.unscaledTime * confSmoothTime);
+				actualCamera.localRotation = Quaternion.Euler(0, 0, 0);
+			}
+			else
+			{
 				targetedY = MarioController.marioObject.groundedPosition + confYOffset;
+			}
+
 		}
 	}
 }

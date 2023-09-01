@@ -9,8 +9,6 @@ public class scr_buttonCtrl : MonoBehaviour {
 	public GameObject buttonNew;//new game button
 	public GameObject buttonOpt;//options button
 	public GameObject iconSelect;//cappy icon
-	public GameObject marioOBJ;//yes, mario
-	private AudioSource marioTemp;
 	public float iconOffset = 0; //how much to shift to left, since it would center in button.
 
 	private int currentButton = 0; //number of current button
@@ -22,9 +20,7 @@ public class scr_buttonCtrl : MonoBehaviour {
 	}
 
 	void Start () {
-		EventSystem.current.SetSelectedGameObject(buttonRes);
 		setPosition(buttonRes.transform.position);
-		marioTemp = marioOBJ.GetComponent<AudioSource> ();
 	}
 
 	void Update () {
@@ -65,7 +61,7 @@ public class scr_buttonCtrl : MonoBehaviour {
 					LoadResume ();
 					break;
 				case 1:
-					LoadResume ();
+					LoadNew ();
 					break;
 				case 2:
 					LoadOptions ();
@@ -76,15 +72,25 @@ public class scr_buttonCtrl : MonoBehaviour {
 	}
 	public void LoadResume()
 	{
+		LoadScene ("scn_capMain0");
+	}
+	public void LoadNew(){
+		LoadScene ("scn_test0");
+	}
+	public void LoadOptions()
+	{
+		Debug.Log ("Wait, a bit, wont ya?");
+	}
+	void LoadScene(string name){
 		StartCoroutine (scr_title._f.ChangeEngineColour());
-		scr_loadScene._f.nextScene = "scn_capMain0";//button?
+		if (scr_loadScene._f.nextScene == name)
+			return;
+		scr_loadScene._f.nextScene = name;
 		scr_gameInit.globalValues.focusOff();
 		scr_gameInit.globalValues.dbg_enemyCount=0;
 		SceneManager.LoadScene ("scn_loadShip", LoadSceneMode.Additive);
 		scr_title._f.GetComponent<Animator>().Play ("titleEnd");
-	}
-	public void LoadOptions()
-	{
-		Debug.Log ("have a little patience, wont ya?");
+		transform.GetComponent<Canvas> ().enabled = false;
+		transform.GetChild (0).gameObject.SetActive (false);
 	}
 }

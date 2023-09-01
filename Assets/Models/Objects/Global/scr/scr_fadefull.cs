@@ -63,24 +63,24 @@ public class scr_fadefull : MonoBehaviour {
 					colUp.color = new Color (0, 0, 0, colUp.color.a - fadeSpeed);
 					colDown.color = new Color (0, 0, 0, colDown.color.a - fadeSpeed);
 					if (colDown.color.a <= 0) {
-						gameObject.SetActive (false);
 						isDone = true;
+						gameObject.SetActive (false);
 					}
 					break;
 				case 1:
 
 					colDown.color = new Color (0, 0, 0, colDown.color.a - fadeSpeed);
 					if (colDown.color.a <= 0) {
-						gameObject.SetActive (false);
 						isDone = true;
+						gameObject.SetActive (false);
 					}
 					break;
 				case 2:
 
 					colUp.color = new Color (0, 0, 0, colUp.color.a - fadeSpeed);
 					if (colUp.color.a <= 0) {
-						gameObject.SetActive (false);
 						isDone = true;
+						gameObject.SetActive (false);
 					}
 					break;
 				}
