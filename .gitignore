@@ -13,6 +13,7 @@ nya
 git_reset.bat
 out.cci
 out.cci.xml
+out.cia
 
 # This .gitignore file should be placed at the root of your Unity project directory
 #
