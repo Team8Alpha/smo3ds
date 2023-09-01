@@ -1,19 +1,9 @@
-MINE/
-MINE\
-secret-folder\
-secret-folder/
-MINE
-MINE
-secret-folder
-secret-folder
-nya
-.gitbuild
-.gitmain
-
 git_reset.bat
 out.cci
 out.cci.xml
 out.cia
+smo3ds-builds\
+smo3ds-builds/
 
 # This .gitignore file should be placed at the root of your Unity project directory
 #

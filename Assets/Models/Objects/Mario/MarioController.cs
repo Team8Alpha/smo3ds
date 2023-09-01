@@ -95,7 +95,7 @@ public class MarioController : MonoBehaviour
 			if (isMoving) {
 				HandleMovement ();
 				if (animLast == "wait"){
-					if(currentMoveSpeed>0.2f) setAnim ("run");
+					if(currentMoveSpeed>0.1f) setAnim ("run");
 					else setAnim ("runStart");
 				}
 			} else {
@@ -108,7 +108,7 @@ public class MarioController : MonoBehaviour
 			HandleJumping ();
 
 			// Handle falling
-			HandleFalling ();
+			HandlePosition ();
 
 			// Handle Hacking
 			HandleHacking ();
@@ -139,7 +139,7 @@ public class MarioController : MonoBehaviour
 		}
 		transform.rotation = Quaternion.Euler(transform.eulerAngles.x, tmp_walkRotation + walkRotation + MarioCam.marioCamera.gameObject.transform.eulerAngles.y, transform.eulerAngles.z);
 		if (currentMoveSpeed < moveSpeed)
-			currentMoveSpeed += 0.2f;
+			currentMoveSpeed += 1f;
 		if (h < 0f)
 			h = h * -1;
 		if (v < 0f)
@@ -216,11 +216,11 @@ public class MarioController : MonoBehaviour
 				jumpedTime = 0;
 				if (isMoving)
 				{
-					setAnim("run", 0.1f);
+					setAnim("run", 1);
 				}
 				else
 				{
-					setAnim("wait", 0.1f);
+					setAnim("wait", 1);
 				}
 			}
 			else
@@ -231,7 +231,7 @@ public class MarioController : MonoBehaviour
 		}
 	}
 
-	private void HandleFalling()
+	private void HandlePosition()
 	{
 		if (!isMoving && currentMoveSpeed > 0) {
 			currentMoveSpeed -= confSlipTime * currentMoveSpeed;
@@ -337,8 +337,8 @@ public class MarioController : MonoBehaviour
 
 	public void ResetSpeed()
 	{
-		maxJump = 10;
-		moveSpeed = 5.5f;
+		maxJump = 5;
+		moveSpeed = 8f;
 	}
 
 	public void SetSpeed(int _maxJump, float _moveSpeed, float scaleCap = 1)
@@ -348,11 +348,12 @@ public class MarioController : MonoBehaviour
 		cappy.transform.localScale = new Vector3(scaleCap, scaleCap, scaleCap);
 	}
 
-	public void setAnim(string animName, float transitionTime = 0.2f, float animSpeed = 1)
+	public void setAnim(string animName, float transitionTime = 2.5f, float animSpeed = 1)
 	{
 		if (isAnim(animName))
 		{
-			anim.CrossFade(animName, transitionTime);
+			// CrossFade the new animation with a negative fade duration to blend with the current animation
+			anim.CrossFade(animName, -transitionTime);
 			anim.speed = animSpeed;
 			animLast = animName;
 		}

@@ -138,7 +138,7 @@ public class scr_devMenu: MonoBehaviour {
 
 	void OnGUI(){
 		if(isOpen){
-			DoPrint (0, "SMO3DS DEV MENU - TEAM OMEGA", 1);
+			DoPrint (0, "SMO3DS DEV MENU - TEAM ALPHA", 1);
 			DoPrint (1, " ", 1);
 			if(submenu){
 				switch (selection - 3) {

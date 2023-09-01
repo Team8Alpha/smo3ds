@@ -92,5 +92,6 @@ public class scr_buttonCtrl : MonoBehaviour {
 		scr_title._f.GetComponent<Animator>().Play ("titleEnd");
 		transform.GetComponent<Canvas> ().enabled = false;
 		transform.GetChild (0).gameObject.SetActive (false);
+		this.enabled = false;
 	}
 }
