@@ -38,6 +38,8 @@ public class MarioController : MonoBehaviour
 	public int maxJump = 10;
 	public string animLast = "wait";
 	public float confSlipTime = 0.3f;
+    bool isCrouching = false;
+    bool hasLongJump = false; //Actually used if has made a Long jump
 
 	private void Awake()
 	{
@@ -62,7 +64,7 @@ public class MarioController : MonoBehaviour
 		}
 		catch (Exception e)
 		{
-			Debug.Log(" " + e);
+			Debug.Log(e.ToString());
 		}
 	}
 
@@ -112,7 +114,10 @@ public class MarioController : MonoBehaviour
 
 			// Handle Hacking
 			HandleHacking ();
-		}
+
+            //Handle Crouching (honestly, I think these comments are unnecesary af but whatev)
+            HandleCrouching();
+        }
 	}
 
 	private void HandleMovement()
@@ -138,9 +143,19 @@ public class MarioController : MonoBehaviour
 			tmp_walkRotation = 0;
 		}
 		transform.rotation = Quaternion.Euler(transform.eulerAngles.x, tmp_walkRotation + walkRotation + MarioCam.marioCamera.gameObject.transform.eulerAngles.y, transform.eulerAngles.z);
-		if (currentMoveSpeed < moveSpeed)
-			currentMoveSpeed += 1f;
-		if (h < 0f)
+        if (currentMoveSpeed < moveSpeed && !hasLongJump)
+        {
+            print("no lj");
+            moveSpeed = 8;
+            currentMoveSpeed += 0.1f;
+        }
+        else if (currentMoveSpeed < moveSpeed && hasLongJump)
+        {
+            print("long jumping dud");
+            moveSpeed = 13f;
+            currentMoveSpeed += 1.25f;
+        }
+        if (h < 0f)
 			h = h * -1;
 		if (v < 0f)
 			v = v * -1;
@@ -153,22 +168,34 @@ public class MarioController : MonoBehaviour
 		{
 			groundedPosition = transform.position.y;
 			#if UNITY_EDITOR
-			if (!hasJumped && Input.GetKey(KeyCode.Space))
+			if (!hasJumped && Input.GetKey(KeyCode.Space) && !isCrouching)
 			{
 				jumpAct = 1;
 			}
-			#else
-			if (!hasJumped && (UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B)))
-			{
-			jumpAct = 1;
-			}
-			#endif
-		}
 
-		switch (jumpAct)
+            if (!hasJumped && Input.GetKeyDown(KeyCode.Space) && isCrouching && !hasLongJump)
+            {
+                jumpAct = 4;
+            }
+#else
+			if (!hasJumped && !isCrouching && (UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B)))
+			{
+			    jumpAct = 1;
+			}
+            else if (!hasJumped && isCrouching && !hasLongJump && (UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B)))
+            {
+                jumpAct = 4;
+            }
+#endif
+            hasLongJump = false;
+        }
+
+        float jForce = 75f; //Jump force but another name cause there is another one lmao
+
+        switch (jumpAct)
 		{
 		case 0:
-			if (hasJumped)
+            if (hasJumped)
 			{
 				#if UNITY_EDITOR
 				if (!Input.GetKey(KeyCode.Space))
@@ -178,7 +205,7 @@ public class MarioController : MonoBehaviour
 				#else
 				if (!UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A) && !UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B))
 				{
-				hasJumped = false;
+				    hasJumped = false;
 				}
 				#endif
 			}
@@ -228,6 +255,11 @@ public class MarioController : MonoBehaviour
 				velocity = -0.7f;
 			}
 			break;
+            case 4: // Long Jump
+                rb.AddForce(/*transform.rotation * */Vector3.up * maxJump * jForce, ForceMode.Force);
+                hasLongJump = true;
+                jumpAct = 0;
+                break;
 		}
 	}
 
@@ -274,8 +306,8 @@ public class MarioController : MonoBehaviour
 					setAnim("wait");
 					cappy.capturedObject.SendMessage("setState", 7);
 					cappy.capturedObject.tag = "Untagged";
-                    if(cappy.capturedObject.GetComponent<BoxCollider>() != null)
-                        cappy.capturedObject.GetComponent<BoxCollider>().enabled = true;
+                    if(cappy.capturedObject.GetComponent<Collider>() != null)
+                        cappy.capturedObject.GetComponent<Collider>().enabled = true;
                     velocity = 4;
 					transform.Translate(0, 0, -2);
 					ResetSpeed();
@@ -335,7 +367,34 @@ public class MarioController : MonoBehaviour
 		}
 	}
 
-	public void ResetSpeed()
+    void HandleCrouching()
+    {
+#if UNITY_EDITOR
+        if(Input.GetKey(KeyCode.LeftControl) && isGrounded)
+        {
+            transform.localScale = new Vector3(1, 0.5f, 1);
+            isCrouching = true;
+        }
+        else
+        {
+            transform.localScale = new Vector3(1, 1f, 1);
+            isCrouching = false;
+        }
+#else
+        if (UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.L) && isGrounded)
+	    {
+            transform.localScale = new Vector3(1, 0.5f, 1);
+            isCrouching = true;
+		}
+        else
+        {
+            transform.localScale = new Vector3(1, 1f, 1);
+            isCrouching = false;
+        }
+#endif
+    }
+
+    public void ResetSpeed()
 	{
 		maxJump = 5;
 		moveSpeed = 8f;

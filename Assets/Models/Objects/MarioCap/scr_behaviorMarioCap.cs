@@ -144,8 +144,8 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 							} else if (!isHacking) {
 								Debug.Log ("crappy hav frund " + collis.gameObject.name);
 								capturedObject = collis.gameObject;
-                                if(collis.gameObject.GetComponent<BoxCollider>() != null)
-                                    collis.gameObject.GetComponent<BoxCollider>().enabled = false;
+                                if(collis.gameObject.GetComponent<Collider>() != null)
+                                    collis.gameObject.GetComponent<Collider>().enabled = false;
 								MarioController.marioObject.isHacking = true;
 								capturedObject.SendMessage ("OnCaptured"); //send OnCaptured event to object
 								SetState (4);

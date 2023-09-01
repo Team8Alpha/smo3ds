@@ -77,3 +77,8 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+Assets/GamepadExample/GamepadScript.cs
+Assets/GamepadExample/GamepadScript.cs.meta
+Assets/GamepadExample.meta
+Assets/GamepadExample/Scene.unity.meta
+Assets/GamepadExample/Scene.unity
