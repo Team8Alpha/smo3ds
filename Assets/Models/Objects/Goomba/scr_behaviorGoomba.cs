@@ -144,6 +144,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 					break; //spare his life
 				gameObject.tag = "Untagged";
 				setAnim ("pressDown");
+				GetComponent<Collider> ().enabled = false;
 				dead = true;
 				scr_gameInit.globalValues.dbg_enemyCount--;
 				if (isMoving == false)
@@ -165,11 +166,11 @@ public class scr_behaviorGoomba : MonoBehaviour {
 		MarioController.marioObject.cappy.setHackData (1.525f, new Vector3 (0, 0.5f, 0), new Vector3(-6,0,0));
 	}
 	public void OnSensorEnter(Collider col){
-		if (col.name == "mario" && isMoving)
+		if (col.name == "mario" && isMoving && !dead)
 			setState (3); 
 	}
 	public void OnSensorExit(Collider col){
-		if (col.name == "mario" && isMoving)
+		if (col.name == "mario" && isMoving && !dead)
 			setState (0);
 	}
 
