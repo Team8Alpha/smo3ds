@@ -14,7 +14,7 @@ public class scr_loadScene : MonoBehaviour {
 		scr_gameInit.globalValues.dbg_enemyCount = 0;
 		GetComponent<AudioListener> ().enabled = true;
 		if (MarioController.marioObject != null)
-			MarioController.marioObject.gameObject.GetComponent<AudioListener> ().enabled = false;
+//			MarioController.marioObject.gameObject.GetComponent<AudioListener> ().enabled = false;
 		Debug.Log ("nSCN: "+ nextScene);
 		switch (transition) {
 		case 0: //direct, no transition

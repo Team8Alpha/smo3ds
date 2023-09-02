@@ -39,7 +39,7 @@ public class MarioCam : MonoBehaviour {
 
 	public static MarioCam marioCamera;
 
-	void Awake() {
+	void Start() {
 		target = transform; // Set the camera parent to the script's transform
 		player = MarioController.marioObject.gameObject;
 		actualCamera = target.GetChild(0); // Assuming the camera is the first child of target

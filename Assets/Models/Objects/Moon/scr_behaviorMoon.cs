@@ -67,12 +67,14 @@ public class scr_behaviorMoon : MonoBehaviour {
 				scr_gameInit.globalValues.focusOff ();
 				anim.Play ("get");
 				Transform player = MarioController.marioObject.transform;
+
 				player.localRotation = Quaternion.Euler(player.rotation.eulerAngles.x, MarioCam.marioCamera.target.eulerAngles.y-180, player.eulerAngles.z);
 				player.position = new Vector3(player.position.x, transform.position.y, player.position.z);
 				MarioController.marioObject.gameObject.GetComponent<Animator> ().Play ("demoShineGet");
 				if (MarioController.marioObject.hasCaptured)
 					for (int i = 0; i <= 8; i++) {
-						MarioController.marioObject.transform.GetChild (i).gameObject.SetActive (true);
+						if (i != 2 && i != 5 && i != 7)
+							MarioController.marioObject.transform.GetChild (i).gameObject.SetActive (true);
 					}
 				transform.position = player.position;
 				transform.rotation = player.rotation;
@@ -105,8 +107,9 @@ public class scr_behaviorMoon : MonoBehaviour {
 				MarioCam.marioCamera.confSmoothTime = 0.5f;
 				MarioController.marioObject.GetComponent<Rigidbody> ().useGravity = true;
 				if (MarioController.marioObject.hasCaptured)
-					for (int i = 0; i <= 9; i++) {
-						MarioController.marioObject.transform.GetChild (i).gameObject.SetActive (false);
+					for (int i = 0; i <= 8; i++) {
+						if (i != 2 && i != 5 && i != 7)
+							MarioController.marioObject.transform.GetChild (i).gameObject.SetActive (false);
 					}
 			}
 			break;

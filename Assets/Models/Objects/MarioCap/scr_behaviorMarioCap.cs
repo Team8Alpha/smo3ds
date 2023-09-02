@@ -49,8 +49,8 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 			anim.Play ("default");
 			transformMario.GetChild (2).gameObject.SetActive (true);//hair
 			transformMario.GetChild (1).gameObject.SetActive (false);//cap
-			transformMario.GetChild (5).gameObject.SetActive (false);//handRball
-			transformMario.GetChild (4).gameObject.SetActive (true);//handRflat
+			MarioController.marioObject.SetHand(0, false);//handRball
+			MarioController.marioObject.SetHand(1, true);//handRflat
 			//transformMario.Find("Armature/nw4f_root/AllRoot/JointRoot/Spine1/Spine2/MarioHead/Cap 1/cappyEyes").gameObject.SetActive (false);//cappyeyes
 			tmp_pos = transformMario.position;
 			transform.rotation = transformMario.rotation;
@@ -64,11 +64,11 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 			toggleCollision (true);
 			break;
 		case 1:
-			transformMario.GetChild (5).gameObject.SetActive (true);//handRball
-			transformMario.GetChild (4).gameObject.SetActive (false);//handRflat
+			MarioController.marioObject.SetHand(0, true);//handRball
+			MarioController.marioObject.SetHand(1, false);//handRflat
 			fvar0 = 0;
 			if (MarioController.marioObject.isMoving)
-				MarioController.marioObject.setAnim ("runStart");
+				MarioController.marioObject.SetAnim ("run");
 			anim.Play ("stay");
 			armature.gameObject.transform.eulerAngles = Vector3.zero;
 			transform.GetChild (1).gameObject.transform.eulerAngles = Vector3.zero;
@@ -99,19 +99,17 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 				sndSrc.Play ();
 			}
 			transform.rotation = Quaternion.Euler (0, 0, 0);
-			transformMario.GetChild (5).gameObject.SetActive (true);//handRball
-			transformMario.GetChild (4).gameObject.SetActive (false);//handRflat
+			MarioController.marioObject.SetHand(0, true);//handRball
+			MarioController.marioObject.SetHand(1, false);//handRflat
 			isThrown = false;
 			break;
 		case 5:
 			toggleCollision (false);
 			transformMario.rotation = capturedObject.transform.rotation;
-			transformMario.GetChild (5).gameObject.SetActive (true);//handRball
-			transformMario.GetChild (4).gameObject.SetActive (false);//handRflat
+			MarioController.marioObject.SetHand(0, true);//handRball
+			MarioController.marioObject.SetHand(1, false);//handRflat
 			fvar0 = 0;
 			anim.Play ("hookStart");
-			if (MarioController.marioObject.isMoving)
-				MarioController.marioObject.setAnim ("runStart");
 			break;
 		}
 	}
@@ -144,8 +142,10 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 							} else if (!isHacking) {
 								Debug.Log ("crappy hav frund " + collis.gameObject.name);
 								capturedObject = collis.gameObject;
-                                if(collis.gameObject.GetComponent<Collider>() != null)
-                                    collis.gameObject.GetComponent<Collider>().enabled = false;
+								if(collis.gameObject.GetComponent<Collider>() != null)
+									collis.gameObject.GetComponent<Collider>().enabled = false;
+								if(collis.gameObject.GetComponent<Rigidbody>() != null)
+									collis.gameObject.GetComponent<Rigidbody>().useGravity = false;
 								MarioController.marioObject.isHacking = true;
 								capturedObject.SendMessage ("OnCaptured"); //send OnCaptured event to object
 								SetState (4);
@@ -202,7 +202,6 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 				}
 				break;
 			case 0://throw
-				Debug.Log("ehehe");
 				if (Vector3.Distance (transform.position, tmp_pos) > 6) {
 					SetState (1);
 					transform.Translate (new Vector3 (0, 0, -0.6f));
