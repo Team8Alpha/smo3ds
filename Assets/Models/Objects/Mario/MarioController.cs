@@ -24,7 +24,7 @@ public class MarioController : MonoBehaviour
 	public int mySubState = 0;
 	public int maxJump = 6;
 
-	public float jumpForce = 2f;
+	public float jumpForce = 2.5f;
 	public float moveSpeed = 5.0f;
 
 	public bool isGrounded = false;
@@ -70,8 +70,10 @@ public class MarioController : MonoBehaviour
 	public bool isBlockBlocked = false; // to prevent it from setting block to false, if it handles multiple blocks...
 	public bool plsUnhack = false;
 	public string animLast = "wait";
+    float prevJumpForce;
+    bool isJumping;
 
-	void Awake()
+    void Awake()
 	{
 		// Disable AudioListener for the global values
 		//scr_gameInit.globalValues.GetComponent<AudioListener>().enabled = false;
@@ -83,7 +85,8 @@ public class MarioController : MonoBehaviour
 		anim = GetComponent<Animator>();
 		rb = GetComponent<Rigidbody>();
 		marioObject = this;
-	}
+        prevJumpForce = jumpForce;
+    }
 
 	void Update()
 	{
@@ -99,35 +102,29 @@ public class MarioController : MonoBehaviour
 
 			HandleHack ();
 
-			// Update Mario's animation and movement based on states
-			switch (myState)
+            // Update Mario's animation and movement based on states
+            switch (myState)
 			{
 			case 0: // Standing still, wait
 				break;
 
 			case 2: // Jumping from land normal
-				float jumpedHeight = transform.position.y - groundedPosition;
-				switch (mySubState) {
-				case 0: //flying up
-					if (key_a && jumpedHeight > maxJump || (!key_a && jumpedHeight > maxJump / 2f))
-						mySubState++;
-					if (jumpVelocity == 0)
-						jumpVelocity = jumpForce;
-					jumpVelocity += 0.04f;
-					break;
-				case 1://loosing acceleration, until
-					if (jumpVelocity > 0.1f) {
-						jumpVelocity -= 0.1f;
-					} else {
-						mySubState++;
-						jumpVelocity = 0;
-					}
-					break;
-				case 2://leave blank
-					if (isGrounded)
-						SetState (3);
-					break;
-				}
+                    print(prevJumpForce);
+                    switch (mySubState)
+                    {
+                        case 0: //Adds the force
+                            rb.AddForce(Vector3.up * jumpForce * 500, ForceMode.Impulse);
+                            jumpForce = 0f;
+                            if (isGrounded)
+                                mySubState++;
+                            break;
+                        case 1:
+                            print("change");
+                            jumpForce = prevJumpForce;
+                            SetState(3);
+                            break;
+                    }
+                    
 				break;
 			
 			case 3: //land
@@ -224,11 +221,11 @@ public class MarioController : MonoBehaviour
 			break;
 
 		case 2:
-			SetAnim ("jump");
+            SetAnim ("jump");
 			break;
 
 		case 3:
-			SetAnim ("land");
+            SetAnim ("land");
 			break;
 
 		case 4: 
@@ -239,7 +236,7 @@ public class MarioController : MonoBehaviour
 		}
 	}
 
-	void HandleMove(){
+    void HandleMove(){
 		if (isMoving) {
 
 			if (!wasMoving || isFixWalk) {
