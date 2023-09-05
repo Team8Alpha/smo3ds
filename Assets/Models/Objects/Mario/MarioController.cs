@@ -4,19 +4,19 @@ using System;
 
 public enum MarioStates
 {
-    Wait,
-    Walking,
-    Jumping,
-    Landing,
-    CappyCatch,
-    Crouch,
-    GroundPound,
-    WallJump
+	Wait,
+	Walking,
+	Jumping,
+	Landing,
+	CappyCatch,
+	Crouch,
+	GroundPound,
+	WallJump
 }
 
 public class MarioController : MonoBehaviour
 {
-    public MarioStates myState;
+	public MarioStates myState;
 	public int mySubState = 0;
 	public int maxJump = 6;
 
@@ -66,9 +66,9 @@ public class MarioController : MonoBehaviour
 	public bool isBlockBlocked = false; // to prevent it from setting block to false, if it handles multiple blocks...
 	public bool plsUnhack = false;
 	public string animLast = "wait";
-    	bool hasJumped= false;
+	bool hasJumped= false;
 
-    void Awake()
+	void Awake()
 	{
 		// Disable AudioListener for the global values
 		//scr_gameInit.globalValues.GetComponent<AudioListener>().enabled = false;
@@ -80,7 +80,7 @@ public class MarioController : MonoBehaviour
 		anim = GetComponent<Animator>();
 		rb = GetComponent<Rigidbody>();
 		marioObject = this;
-    }
+	}
 
 	void Update()
 	{
@@ -100,8 +100,8 @@ public class MarioController : MonoBehaviour
 
 			HandleHack ();
 
-            // Update Mario's animation and movement based on states
-            switch (myState)
+			// Update Mario's animation and movement based on states
+			switch (myState)
 			{
 			case MarioStates.Wait: // Standing still, wait
 				break;
@@ -125,9 +125,9 @@ public class MarioController : MonoBehaviour
 					}
 					break;
 				}
-                    		break;
-			
-			
+				break;
+
+
 			case MarioStates.Landing: //land
 				SetState (MarioStates.Wait, 1);
 				break;
@@ -171,7 +171,7 @@ public class MarioController : MonoBehaviour
 		rb.MovePosition ((rb.position + (transform.rotation * Vector3.forward) * movementVector.magnitude) + Vector3.up * jumpVelocity + moveAdditional);
 	}
 
-void HandleInput(){
+	void HandleInput(){
 		#if UNITY_EDITOR
 		h = Input.GetAxisRaw("Horizontal");
 		v = Input.GetAxisRaw("Vertical");
@@ -197,7 +197,7 @@ void HandleInput(){
 			if (key_a || key_b) {
 				if (!lockJump) {
 					lockJump = true;
-                        		SetState(MarioStates.Jumping);
+					SetState(MarioStates.Jumping);
 				}
 			} else if (lockJump)
 				lockJump = false;
@@ -215,19 +215,19 @@ void HandleInput(){
 			switch (subState) {
 			case 0:
 				SetAnim ("wait");
-                		break;
+				break;
 			}
 			if (isMoving)
 				isFixWalk = true;
 			break;
 
 		case MarioStates.Jumping:
-            		SetAnim ("jump");
+			SetAnim ("jump");
 			break;
 
 		case MarioStates.Landing:
-            		SetAnim ("land", 0.2f, 1, false);
-            		break;
+			SetAnim ("land", 0.2f, 1, false);
+			break;
 
 		case MarioStates.CappyCatch: 
 			hackFlyStartTime = Time.time;
@@ -237,7 +237,7 @@ void HandleInput(){
 		}
 	}
 
-    void HandleMove(){
+	void HandleMove(){
 		if (isMoving) {
 
 			if ((!wasMoving || isFixWalk) && isGrounded) {
