@@ -67,6 +67,8 @@ public class MarioController : MonoBehaviour
 	public bool plsUnhack = false;
 	public string animLast = "wait";
 	bool hasJumped= false;
+	int jumpAfterTimer = 0; //timer till it refuses to execute double jump
+	int jumpType = 0;
 
 	void Awake()
 	{
@@ -101,9 +103,16 @@ public class MarioController : MonoBehaviour
 			HandleHack ();
 
 			// Update Mario's animation and movement based on states
-			switch (myState)
-			{
+			switch (myState) {
 			case MarioStates.Wait: // Standing still, wait
+				if (jumpAfterTimer > 0) {//maximal
+					if(jumpType > 2)/*triple jump WIP*/ jumpAfterTimer = 11;
+					if (jumpAfterTimer > 10) {
+						jumpAfterTimer = 0;
+						jumpType = 0;
+					}
+					jumpAfterTimer++;
+				}
 				break;
 
 			case MarioStates.Jumping: // Jumping from land normal
@@ -114,13 +123,17 @@ public class MarioController : MonoBehaviour
 					mySubState++;
 					break;
 				case 1:
-					if ((key_a && jumpedHeight > maxJump) || (!key_a && jumpedHeight > (maxJump / 2.5f))) { //TODO: or if touching ceiling
+					if ((key_a && jumpedHeight > maxJump + jumpType && jumpType != 3) 
+						|| (!key_a && jumpedHeight > (maxJump / 2.5f) + jumpType && jumpType != 3) 
+						|| (jumpedHeight > maxJump + jumpType && jumpType == 3)) { //TODO: or if touching ceiling, also more efficient...
 						rb.AddForce (Vector3.down * jumpForce * 69, ForceMode.Impulse);
-					} else if (jumpedHeight > 0.01f)
+					}
+					if (jumpedHeight > 0.01f)
 						hasJumped = true;
 					else if (isGrounded && hasJumped) {
 						hasJumped = false;
 						print ("change");
+						jumpAfterTimer = 1;
 						SetState (MarioStates.Landing);
 					}
 					break;
@@ -222,7 +235,22 @@ public class MarioController : MonoBehaviour
 			break;
 
 		case MarioStates.Jumping:
-			SetAnim ("jump");
+			jumpType++;
+			switch (jumpType) {
+			case 0:
+				SetAnim ("jump");
+				jumpType = 1;
+				break;
+			case 1:
+				SetAnim ("jump");
+				break;
+			case 2:
+				SetAnim ("jump2");
+				break;
+			case 3:
+				SetAnim ("jump3");
+				break;
+			}
 			break;
 
 		case MarioStates.Landing:
