@@ -114,10 +114,10 @@ public class MarioController : MonoBehaviour
 					mySubState++;
 					break;
 				case 1:
-					if ((key_a && jumpedHeight > maxJump) || (!key_a && jumpedHeight > (maxJump / 2.5f))) {
-						rb.AddForce (Vector3.down * jumpForce * 100, ForceMode.Impulse);
+					if ((key_a && jumpedHeight > maxJump) || (!key_a && jumpedHeight > (maxJump / 2.5f))) { //TODO: or if touching ceiling
+						rb.AddForce (Vector3.down * jumpForce * 69, ForceMode.Impulse);
+					} else if (jumpedHeight > 0.01f)
 						hasJumped = true;
-					}
 					else if (isGrounded && hasJumped) {
 						hasJumped = false;
 						print ("change");
