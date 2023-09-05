@@ -39,7 +39,7 @@ public class MarioController : MonoBehaviour
 
 
 	private bool bvar0 = false;
-	private float hackFlyLength;
+	private float hackFlyLength = 0.5f;
 	private float hackFlyStartTime;
 
 	private float h = 0;
@@ -66,8 +66,7 @@ public class MarioController : MonoBehaviour
 	public bool isBlockBlocked = false; // to prevent it from setting block to false, if it handles multiple blocks...
 	public bool plsUnhack = false;
 	public string animLast = "wait";
-    float prevJumpForce;
-    bool isJumping;
+    	bool hasJumped= false;
 
     void Awake()
 	{
@@ -81,7 +80,6 @@ public class MarioController : MonoBehaviour
 		anim = GetComponent<Animator>();
 		rb = GetComponent<Rigidbody>();
 		marioObject = this;
-        prevJumpForce = jumpForce;
     }
 
 	void Update()
@@ -90,7 +88,11 @@ public class MarioController : MonoBehaviour
 		{
 
 			// Ground check using Physics.Raycast
-			isGrounded = Physics.Raycast (new Vector3 (transform.position.x, transform.position.y + 1, transform.position.z), Vector3.down, out hit, 2);
+			if (Physics.Raycast (new Vector3 (transform.position.x, transform.position.y + 1, transform.position.z), Vector3.down, out hit, 2)) {
+				isGrounded = true;
+				groundedPosition = transform.position.y;
+			} else
+				isGrounded = false;
 
 			HandleInput ();
 
@@ -105,11 +107,26 @@ public class MarioController : MonoBehaviour
 				break;
 
 			case MarioStates.Jumping: // Jumping from land normal
-                    print(prevJumpForce);
-                    rb.AddForce(Vector3.up * jumpForce * 500, ForceMode.Impulse);
-                    jumpForce = 0f;
-                    StartCoroutine(CheckForGrounded(10f));
-                    break;
+				float jumpedHeight = transform.position.y - groundedPosition;
+				switch(mySubState){
+				case 0:
+					rb.AddForce (Vector3.up * jumpForce * 500, ForceMode.Impulse);
+					mySubState++;
+					break;
+				case 1:
+					if ((key_a && jumpedHeight > maxJump) || (!key_a && jumpedHeight > (maxJump / 2.5f))) {
+						rb.AddForce (Vector3.down * jumpForce * 100, ForceMode.Impulse);
+						hasJumped = true;
+					}
+					else if (isGrounded && hasJumped) {
+						hasJumped = false;
+						print ("change");
+						SetState (MarioStates.Landing);
+					}
+					break;
+				}
+                    		break;
+			
 			
 			case MarioStates.Landing: //land
 				SetState (MarioStates.Wait, 1);
@@ -121,7 +138,7 @@ public class MarioController : MonoBehaviour
 				float journeyFraction = distanceCovered / hackFlyLength;
 
 				// Calculate the current position along the Bezier curve
-				Vector3 targetPosition = Bezier(transform.position, cappy.capturedObject.transform.position + Vector3.up * 3 + (transform.position - cappy.capturedObject.transform.position).normalized * 1, cappy.capturedObject.transform.position, journeyFraction);
+				Vector3 targetPosition = Bezier (transform.position, cappy.capturedObject.transform.position + Vector3.up * 3 + (transform.position - cappy.capturedObject.transform.position).normalized * 1, cappy.capturedObject.transform.position, journeyFraction);
 
 				// Calculate the additional movement vector based on the target position
 				moveAdditional = targetPosition - transform.position;
@@ -154,17 +171,6 @@ public class MarioController : MonoBehaviour
 		rb.MovePosition ((rb.position + (transform.rotation * Vector3.forward) * movementVector.magnitude) + Vector3.up * jumpVelocity + moveAdditional);
 	}
 
-    IEnumerator CheckForGrounded(float millisecs)
-    {
-        yield return new WaitForSeconds(millisecs / 100);
-        if (isGrounded)
-        {
-            print("change");
-            jumpForce = prevJumpForce;
-            SetState(MarioStates.Landing);
-        }
-    }
-
 void HandleInput(){
 		#if UNITY_EDITOR
 		h = Input.GetAxisRaw("Horizontal");
@@ -191,7 +197,7 @@ void HandleInput(){
 			if (key_a || key_b) {
 				if (!lockJump) {
 					lockJump = true;
-                        SetState(MarioStates.Jumping);
+                        		SetState(MarioStates.Jumping);
 				}
 			} else if (lockJump)
 				lockJump = false;
@@ -209,19 +215,19 @@ void HandleInput(){
 			switch (subState) {
 			case 0:
 				SetAnim ("wait");
-                break;
+                		break;
 			}
 			if (isMoving)
 				isFixWalk = true;
 			break;
 
 		case MarioStates.Jumping:
-            SetAnim ("jump");
+            		SetAnim ("jump");
 			break;
 
 		case MarioStates.Landing:
-            SetAnim ("land");
-            break;
+            		SetAnim ("land", 0.2f, 1, false);
+            		break;
 
 		case MarioStates.CappyCatch: 
 			hackFlyStartTime = Time.time;
@@ -348,11 +354,11 @@ void HandleInput(){
 		cappy.transform.localScale = new Vector3 (scaleCap, scaleCap, scaleCap);
 	}
 
-	public void SetAnim(string animName, float transitionTime = 0, float animSpeed = 1)
+	public void SetAnim(string animName, float transitionTime = 0, float animSpeed = 1, bool isInstant = true)
 	{
 		if (isAnim (animName)) {
-			// CrossFade the new animation with a negative fade duration to blend with the current animation
-			anim.CrossFade (animName, transitionTime);
+			if(isInstant) anim.Play(animName);
+			else anim.CrossFade (animName, transitionTime);
 			anim.speed = animSpeed;
 			animLast = animName;
 		}

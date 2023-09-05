@@ -146,6 +146,7 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 									collis.gameObject.GetComponent<Collider>().enabled = false;
 								if(collis.gameObject.GetComponent<Rigidbody>() != null)
 									collis.gameObject.GetComponent<Rigidbody>().useGravity = false;
+								toggleCollision(false);
 								MarioController.marioObject.isHacking = true;
 								capturedObject.SendMessage ("OnCaptured"); //send OnCaptured event to object
 								SetState (4);

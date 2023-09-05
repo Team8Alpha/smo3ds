@@ -74,16 +74,13 @@ public class scr_behaviorGoomba : MonoBehaviour {
 			break;
 		case 3:
 			findTimer = 0;
-			Debug.Log ("goomba: hmm...");
 			setAnim ("wait");
 			break;
 		case 4:
-			Debug.Log ("goomba: GOCHA BI*CH");
 			setAnim ("find");
 			setEye (0);
 			break;
 		case 5:
-			Debug.Log ("YATATATTATATTATATATA");
 			setAnim ("dash", 1);
 			setEye (1);
 			break;
