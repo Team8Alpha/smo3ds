@@ -2,10 +2,9 @@
 using System.Collections;
 using System;
 
-public enum MarioStates
+public enum MarioState
 {
-	Wait,
-	Walking,
+	Ground,
 	Jumping,
 	Landing,
 	CappyCatch,
@@ -16,7 +15,7 @@ public enum MarioStates
 
 public class MarioController : MonoBehaviour
 {
-	public MarioStates myState;
+	public static MarioState myState;
 	public int mySubState = 0;
 	public int maxJump = 6;
 
@@ -32,10 +31,7 @@ public class MarioController : MonoBehaviour
 	public Animator anim;
 	public Rigidbody rb;
 
-	private bool key_a = false;
-	private bool key_b = false;
-	private bool key_x = false;
-	private bool key_y = false;
+	private bool key_jump = false;
 
 
 	private bool bvar0 = false;
@@ -90,7 +86,7 @@ public class MarioController : MonoBehaviour
 		{
 
 			// Ground check using Physics.Raycast
-			if (Physics.Raycast (new Vector3 (transform.position.x, transform.position.y + 1, transform.position.z), Vector3.down, out hit, 2)) {
+			if (Physics.Raycast (new Vector3 (transform.position.x, transform.position.y + 1, transform.position.z), Vector3.down, out hit, 3)) {
 				isGrounded = true;
 				groundedPosition = transform.position.y;
 			} else
@@ -104,10 +100,10 @@ public class MarioController : MonoBehaviour
 
 			// Update Mario's animation and movement based on states
 			switch (myState) {
-			case MarioStates.Wait: // Standing still, wait
+			case MarioState.Ground: // Standing still, wait
 				if (jumpAfterTimer > 0) {//maximal
 					if(jumpType > 2)/*triple jump WIP*/ jumpAfterTimer = 11;
-					if (jumpAfterTimer > 10) {
+					if (jumpAfterTimer > 5) {
 						jumpAfterTimer = 0;
 						jumpType = 0;
 					}
@@ -115,7 +111,7 @@ public class MarioController : MonoBehaviour
 				}
 				break;
 
-			case MarioStates.Jumping: // Jumping from land normal
+			case MarioState.Jumping: // Jumping from land normal
 				float jumpedHeight = transform.position.y - groundedPosition;
 				switch(mySubState){
 				case 0:
@@ -123,8 +119,8 @@ public class MarioController : MonoBehaviour
 					mySubState++;
 					break;
 				case 1:
-					if ((key_a && jumpedHeight > maxJump + jumpType && jumpType != 3) 
-						|| (!key_a && jumpedHeight > (maxJump / 2.5f) + jumpType && jumpType != 3) 
+					if ((key_jump && jumpedHeight > maxJump + jumpType && jumpType != 3) 
+						|| (!key_jump && jumpedHeight > (maxJump / 2.5f) + jumpType && jumpType != 3) 
 						|| (jumpedHeight > maxJump + jumpType && jumpType == 3)) { //TODO: or if touching ceiling, also more efficient...
 						rb.AddForce (Vector3.down * jumpForce * 69, ForceMode.Impulse);
 					}
@@ -134,18 +130,18 @@ public class MarioController : MonoBehaviour
 						hasJumped = false;
 						print ("change");
 						jumpAfterTimer = 1;
-						SetState (MarioStates.Landing);
+						SetState (MarioState.Landing);
 					}
 					break;
 				}
 				break;
 
 
-			case MarioStates.Landing: //land
-				SetState (MarioStates.Wait, 1);
+			case MarioState.Landing: //land
+				SetState (MarioState.Ground, 1);
 				break;
 
-			case MarioStates.CappyCatch: //flying to capture enemy
+			case MarioState.CappyCatch: //flying to capture enemy
 				// Calculate the current percentage of the journey completed
 				float distanceCovered = (Time.time - hackFlyStartTime) * hackFlyLength / 1;
 				float journeyFraction = distanceCovered / hackFlyLength;
@@ -161,7 +157,7 @@ public class MarioController : MonoBehaviour
 				{
 					// Ensure the object ends up at the final position
 					transform.position = cappy.capturedObject.transform.position;
-					SetState(MarioStates.Wait);
+					SetState(MarioState.Ground);
 					if (!isBlockBlocked)
 						isBlocked = false;
 					isCapturing = false;
@@ -189,11 +185,12 @@ public class MarioController : MonoBehaviour
 		h = Input.GetAxisRaw("Horizontal");
 		v = Input.GetAxisRaw("Vertical");
 
-		key_a = Input.GetKey(KeyCode.Space);
-		key_b = Input.GetKey(KeyCode.Space);
+		key_jump = Input.GetKey(KeyCode.Space);
 		#else
 		h = UnityEngine.N3DS.GamePad.CirclePad.x;
 		v = UnityEngine.N3DS.GamePad.CirclePad.y;
+
+		key_jump = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B);
 		#endif
 
 		// Check if Mario is blocked
@@ -206,11 +203,11 @@ public class MarioController : MonoBehaviour
 		}
 
 		switch (myState) {
-		case MarioStates.Wait:
-			if (key_a || key_b) {
+		case MarioState.Ground:
+			if (key_jump || key_jump) {
 				if (!lockJump) {
 					lockJump = true;
-					SetState(MarioStates.Jumping);
+					SetState(MarioState.Jumping);
 				}
 			} else if (lockJump)
 				lockJump = false;
@@ -218,13 +215,13 @@ public class MarioController : MonoBehaviour
 		}
 	}
 
-	public void SetState(MarioStates state, int subState = 0)
+	public void SetState(MarioState state, int subState = 0)
 	{
 		myState = state;
 		mySubState = subState;
 		switch (state)
 		{
-		case MarioStates.Wait:
+		case MarioState.Ground:
 			switch (subState) {
 			case 0:
 				SetAnim ("wait");
@@ -234,7 +231,7 @@ public class MarioController : MonoBehaviour
 				isFixWalk = true;
 			break;
 
-		case MarioStates.Jumping:
+		case MarioState.Jumping:
 			jumpType++;
 			switch (jumpType) {
 			case 0:
@@ -253,11 +250,11 @@ public class MarioController : MonoBehaviour
 			}
 			break;
 
-		case MarioStates.Landing:
+		case MarioState.Landing:
 			SetAnim ("land", 0.2f, 1, false);
 			break;
 
-		case MarioStates.CappyCatch: 
+		case MarioState.CappyCatch: 
 			hackFlyStartTime = Time.time;
 			SetAnim ("captureFly");
 			rb.useGravity = false;
@@ -316,7 +313,7 @@ public class MarioController : MonoBehaviour
 					plsUnhack = false;
 					transform.GetChild (2).gameObject.SetActive (false);//hair
 					transform.GetChild (1).gameObject.SetActive (true);//cap
-					SetState (MarioStates.Wait);
+					SetState (MarioState.Ground);
 					cappy.capturedObject.SendMessage ("setState", 7);
 					cappy.capturedObject.tag = "Untagged";
 					if (cappy.capturedObject.GetComponent<Collider> () != null)
@@ -335,7 +332,7 @@ public class MarioController : MonoBehaviour
 				if (!isCapturing) {
 					isCapturing = true;
 					isBlocked = true;
-					SetState (MarioStates.CappyCatch);
+					SetState (MarioState.CappyCatch);
 				}
 			}
 		} else {

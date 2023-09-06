@@ -121,7 +121,11 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider collis){
-		if (collis.gameObject.layer != scr_gameInit.lyr_player) isColliding = true;
+		Debug.Log (collis);
+		if (collis.gameObject.layer != scr_gameInit.lyr_player)
+			isColliding = true;
+		//else if(currentState == 1)
+		//	MarioController.marioObject.SetState (MarioState.Jumping); //problems with collision
 	}
 	void OnTriggerStay(Collider collis){
 		if (collis.gameObject.layer != scr_gameInit.lyr_player) {
