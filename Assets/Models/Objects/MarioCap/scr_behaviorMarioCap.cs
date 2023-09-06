@@ -55,7 +55,7 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 			tmp_pos = transformMario.position;
 			transform.rotation = transformMario.rotation;
 			transform.position = new Vector3 (tmp_pos.x, tmp_pos.y + offsetYthrow, tmp_pos.z);
-			if (MarioController.marioObject.jumpAct != 0) {
+			if (MarioController.myState == MarioState.Jumping) {
 				currentState = -1;
 				anim.Play ("throwJump");
 				MarioController.marioObject.anim.Play ("spinCapJumpStart");
@@ -121,7 +121,6 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider collis){
-		Debug.Log (collis);
 		if (collis.gameObject.layer != scr_gameInit.lyr_player)
 			isColliding = true;
 		//else if(currentState == 1)

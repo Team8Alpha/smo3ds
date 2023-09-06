@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class scr_sensor : MonoBehaviour {
+public class scr_sensorRadial : MonoBehaviour {
 
 	public float radius;
-	public Vector3 offset;
 	SphereCollider sensor;
 	public string funcEnter = "OnSensorEnter";
 	public string funcExit = "OnSensorExit";
@@ -15,15 +14,14 @@ public class scr_sensor : MonoBehaviour {
 		this.enabled = false;
 		sensor = gameObject.AddComponent<SphereCollider> ();
 		sensor.radius = radius;
-		sensor.center = offset;
 		sensor.isTrigger = true;
 	}
 
 	void OnTriggerEnter(Collider col){
-		transform.parent.gameObject.SendMessage (funcEnter, col);
+		if(funcEnter != "") transform.parent.gameObject.SendMessage (funcEnter, col);
 	}
 
 	void OnTriggerExit(Collider col){
-		transform.parent.gameObject.SendMessage (funcExit, col);
+		if(funcExit != "") transform.parent.gameObject.SendMessage (funcExit, col);
 	}
 }

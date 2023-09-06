@@ -22,7 +22,7 @@ public class MarioController : MonoBehaviour
 	public float jumpForce = 2.5f;
 	public float moveSpeed = 5.0f;
 
-	public bool isGrounded = false;
+	public bool isGrounded = true;
 	public bool isMoving = false;
 	public bool wasMoving = false;
 	public bool lockJump = false;
@@ -32,7 +32,6 @@ public class MarioController : MonoBehaviour
 	public Rigidbody rb;
 
 	private bool key_jump = false;
-
 
 	private bool bvar0 = false;
 	private float hackFlyLength = 0.5f;
@@ -49,14 +48,11 @@ public class MarioController : MonoBehaviour
 	public Vector3 moveAdditional = Vector3.zero;
 	public float groundCheckDistance = 0.1f;
 	public float groundedPosition = 0; // latest floor position
-	private float camYOffset = 4f;
 	private float walkRotation = 0f; // stores the walk rotation offset or something
-	private float walkRotationOffset = 3f; // rotates marios walking direction, so he runs in circles. (ITS OFFSET)
-	public int jumpAct = 0;
 	public bool hasCaptured = false;
 	private bool isCapturing = false;
 	private RaycastHit hit;
-	private float fvar0 = 0; // temporary var
+	//private float fvar0 = 0; // temporary var
 	public bool isBlocked = false;
 	public bool isHacking = false; // hack = modify/take control of object
 	public bool isBlockBlocked = false; // to prevent it from setting block to false, if it handles multiple blocks...
@@ -65,6 +61,8 @@ public class MarioController : MonoBehaviour
 	bool hasJumped= false;
 	int jumpAfterTimer = 0; //timer till it refuses to execute double jump
 	int jumpType = 0;
+	bool hasTouchedCeiling = false;
+	float lastGroundedPosition = 0;
 
 	void Awake()
 	{
@@ -85,13 +83,6 @@ public class MarioController : MonoBehaviour
 		if (scr_gameInit.globalValues.isFocused)
 		{
 
-			// Ground check using Physics.Raycast
-			if (Physics.Raycast (new Vector3 (transform.position.x, transform.position.y + 1, transform.position.z), Vector3.down, out hit, 3)) {
-				isGrounded = true;
-				groundedPosition = transform.position.y;
-			} else
-				isGrounded = false;
-
 			HandleInput ();
 
 			if(!isBlocked) HandleMove ();
@@ -103,7 +94,7 @@ public class MarioController : MonoBehaviour
 			case MarioState.Ground: // Standing still, wait
 				if (jumpAfterTimer > 0) {//maximal
 					if(jumpType > 2)/*triple jump WIP*/ jumpAfterTimer = 11;
-					if (jumpAfterTimer > 5) {
+					if (jumpAfterTimer > 8) {
 						jumpAfterTimer = 0;
 						jumpType = 0;
 					}
@@ -112,23 +103,23 @@ public class MarioController : MonoBehaviour
 				break;
 
 			case MarioState.Jumping: // Jumping from land normal
-				float jumpedHeight = transform.position.y - groundedPosition;
+				float jumpedHeight = transform.position.y - lastGroundedPosition;
 				switch(mySubState){
 				case 0:
 					rb.AddForce (Vector3.up * jumpForce * 500, ForceMode.Impulse);
 					mySubState++;
 					break;
 				case 1:
-					if ((key_jump && jumpedHeight > maxJump + jumpType && jumpType != 3) 
+					if ((key_jump && jumpedHeight > maxJump + jumpType && jumpType != 3 || hasTouchedCeiling) 
 						|| (!key_jump && jumpedHeight > (maxJump / 2.5f) + jumpType && jumpType != 3) 
 						|| (jumpedHeight > maxJump + jumpType && jumpType == 3)) { //TODO: or if touching ceiling, also more efficient...
-						rb.AddForce (Vector3.down * jumpForce * 69, ForceMode.Impulse);
+						rb.AddForce (Vector3.down * jumpForce * 100, ForceMode.Impulse);
+						hasTouchedCeiling = false;
 					}
-					if (jumpedHeight > 0.01f)
+					if (jumpedHeight > 0.1f || hasTouchedCeiling)
 						hasJumped = true;
 					else if (isGrounded && hasJumped) {
 						hasJumped = false;
-						print ("change");
 						jumpAfterTimer = 1;
 						SetState (MarioState.Landing);
 					}
@@ -171,11 +162,11 @@ public class MarioController : MonoBehaviour
 				break;
 			}
 		}
-		wasMoving = isMoving;
+		isGrounded = false;
 
+		wasMoving = isMoving;
 		// Calculate the movement vector based on the input and current speed
 		Vector3 movementVector = Vector3.forward * currentMoveSpeed * Time.deltaTime;
-
 		// Move the character using the Rigidbody
 		rb.MovePosition ((rb.position + (transform.rotation * Vector3.forward) * movementVector.magnitude) + Vector3.up * jumpVelocity + moveAdditional);
 	}
@@ -232,12 +223,9 @@ public class MarioController : MonoBehaviour
 			break;
 
 		case MarioState.Jumping:
+			lastGroundedPosition = groundedPosition;
 			jumpType++;
 			switch (jumpType) {
-			case 0:
-				SetAnim ("jump");
-				jumpType = 1;
-				break;
 			case 1:
 				SetAnim ("jump");
 				break;
@@ -246,6 +234,10 @@ public class MarioController : MonoBehaviour
 				break;
 			case 3:
 				SetAnim ("jump3");
+				break;
+			default:
+				SetAnim ("jump");
+				jumpType = 1;
 				break;
 			}
 			break;
@@ -364,6 +356,16 @@ public class MarioController : MonoBehaviour
 		catch (Exception e)
 		{
 			Debug.Log(" " + e);
+		}
+	}
+	void OnSensorTopEnter(Collider col){
+		if (myState == MarioState.Jumping)
+			hasTouchedCeiling = true;
+	}
+	void OnSensorBottomStay(Collider col){
+		if(col.gameObject.layer == LayerMask.NameToLayer("Default")){
+			isGrounded = true;
+			groundedPosition = transform.position.y;
 		}
 	}
 	public void ResetSpeed()
