@@ -30,8 +30,35 @@ public class scr_behaviorMoon : MonoBehaviour {
 		case 2:
 			t_color = new Color (0.11f, 0.25f, 0.9f, 1);
 			break;
+		case 3:
+			t_color = new Color (0.255f, 0.8f, 0.85f, 1);
+			break;
+		case 4:
+			t_color = new Color (0.24f, 0.87f, 0.4f, 1);
+			t_fresnelCol = new Color (0.91f, 0.9f, 0.2f, 1);
+			break;
+		case 5:
+			t_color = new Color (0.9f, 0.45f, 0.18f, 1);
+			t_fresnelCol = new Color (0.91f, 0.9f, 0.2f, 1);
+			break;
+		case 6:
+			t_color = new Color (0.82f, 0.165f, 0.192f, 1);
+			break;
+		case 7:
+			t_color = new Color (0.94f, 0.584f, 0.58f, 1);
+			t_fresnelCol = new Color (0.94f, 0.584f, 0.58f, 1);
+			break;
+		case 8:
+			t_color = new Color (0.74f, 0.48f, 0.945f, 1);
+			t_fresnelCol = new Color (0.74f, 0.48f, 0.945f, 1);
+			break;
+		case 9:
+			t_color = new Color (0.9f, 0.85f, 0.666f, 1);
+			t_fresnelCol = new Color (0.9f, 0.85f, 0.666f, 1);
+			break;
 		}
-		mat_color.material.color = t_color;
+		mat_color.material.SetColor("_Color", t_color);
+		mat_color.material.SetColor("_SpecColor", t_fresnelCol);
 	}
 	void Start () {
 		tmpMpos.x -= 0;
