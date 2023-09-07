@@ -15,8 +15,8 @@ public enum MarioState
 
 public class MarioController : MonoBehaviour
 {
-	[HideInInspector] public static MarioState myState;
-	[HideInInspector] public int mySubState = 0;
+	public static MarioState myState;
+	public int mySubState = 0;
 	public int maxJump = 6;
 
 	public float jumpForce = 2.5f;
@@ -43,22 +43,21 @@ public class MarioController : MonoBehaviour
 	private float currentMoveSpeed = 0;
 	private float jumpVelocity = 0;
 
-	public scr_behaviorMarioCap cappy;
-	public static MarioController marioObject;
+	[HideInInspector] public scr_behaviorMarioCap cappy;
+	[HideInInspector] public static MarioController marioObject;
 
-	public Vector3 moveAdditional = Vector3.zero;
-	public float groundCheckDistance = 0.1f;
-	public float groundedPosition = 0; // latest floor position
+	[HideInInspector] public Vector3 moveAdditional = Vector3.zero;
+	[HideInInspector] public float groundedPosition = 0; // latest floor position
 	private float walkRotation = 0f; // stores the walk rotation offset or something
-	public bool hasCaptured = false;
+	[HideInInspector] public bool hasCaptured = false;
 	private bool isCapturing = false;
 	private RaycastHit hit;
 	//private float fvar0 = 0; // temporary var
 	public bool isBlocked = false;
-	public bool isHacking = false; // hack = modify/take control of object
+	[HideInInspector] public bool isHacking = false; // hack = modify/take control of object
 	public bool isBlockBlocked = false; // to prevent it from setting block to false, if it handles multiple blocks...
-	public bool plsUnhack = false;
-	public string animLast = "wait";
+	[HideInInspector] public bool plsUnhack = false;
+	[HideInInspector] public string animLast = "wait";
 	bool hasJumped= false;
 	int jumpAfterTimer = 0; //timer till it refuses to execute double jump
 	int jumpType = 0;
@@ -70,10 +69,10 @@ public class MarioController : MonoBehaviour
     void Awake()
 	{
 		// Disable AudioListener for the global values
-		//scr_gameInit.globalValues.GetComponent<AudioListener>().enabled = false;
+		scr_gameInit.globalValues.GetComponent<AudioListener>().enabled = false;
 
 		// Enable AudioListener for Mario's object
-		//GetComponent<AudioListener>().enabled = true;
+		GetComponent<AudioListener>().enabled = true;
 
 		// Store references to Animator and Rigidbody components
 		anim = GetComponent<Animator>();
@@ -110,18 +109,18 @@ public class MarioController : MonoBehaviour
 				float jumpedHeight = transform.position.y - lastGroundedPosition;
 				switch(mySubState){
 				case 0:
-					rb.AddForce (Vector3.up * jumpForce * 500, ForceMode.Impulse);
+					rb.AddForce (Vector3.up * (jumpForce + (jumpType/3)) * 500, ForceMode.Impulse); //start accelerating up
 					mySubState++;
 					break;
 				case 1:
-					if ((key_jump && jumpedHeight > maxJump + jumpType && jumpType != 3 || hasTouchedCeiling) 
-						|| (!key_jump && jumpedHeight > (maxJump / 2.5f) + jumpType && jumpType != 3) 
+					if ((key_jump && jumpedHeight > maxJump + jumpType && jumpType != 3 || hasTouchedCeiling) //if condition(reached top), stop accelerating and start falling
+						|| (!key_jump && jumpedHeight > jumpType-1 && jumpType != 3) 
 						|| (jumpedHeight > maxJump + jumpType && jumpType == 3)) { //TODO: more efficient...
-						rb.AddForce (Vector3.down * jumpForce * 80, ForceMode.Impulse);
+						rb.AddForce (Vector3.down * jumpForce * 60, ForceMode.Impulse);
 						hasTouchedCeiling = false;
 					}
 					if (jumpedHeight > 0.1f || hasTouchedCeiling)
-						hasJumped = true;
+						hasJumped = true;//he has jumped, so isGrounded wont get in the way when starting to jump.
 					else if (isGrounded && hasJumped) {
 						hasJumped = false;
 						jumpAfterTimer = 1;
@@ -266,7 +265,7 @@ public class MarioController : MonoBehaviour
 			break;
 
 		    case MarioState.Landing:
-			    SetAnim ("land", 0.2f, 1, false);
+			    SetAnim ("land", 0.1f, 1, false);
 			    break;
 
 		    case MarioState.CappyCatch: 
@@ -393,7 +392,7 @@ public class MarioController : MonoBehaviour
 			hasTouchedCeiling = true;
 	}
 	void OnSensorBottomStay(Collider col){
-		if(col.gameObject.layer == LayerMask.NameToLayer("Default")){
+		if(col.gameObject.layer == 0){
 			isGrounded = true;
 			groundedPosition = transform.position.y;
 		}

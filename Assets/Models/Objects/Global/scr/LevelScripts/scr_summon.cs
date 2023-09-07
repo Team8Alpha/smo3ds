@@ -11,7 +11,7 @@ public class scr_summon : MonoBehaviour {
 	public GameObject s_player(Vector3 pos, Vector3 rot){
 		if (MarioController.marioObject == null)
         {
-			return GameObject.Instantiate(Resources.Load<GameObject>("Objects/objMario"),pos, Quaternion.Euler(rot));
+			return GameObject.Instantiate(Resources.Load<GameObject>("Objects/objMario"), pos, Quaternion.Euler(rot));
         }
 		return null;
 	}

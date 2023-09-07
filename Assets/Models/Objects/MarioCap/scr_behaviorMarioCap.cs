@@ -41,7 +41,7 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 		gameObject.SetActive (true);
 		switch(state){
 		case 0: //TODO: Fix all of this cause its broken af
-                sndSrc.clip = Resources.Load<AudioClip>("Audio/Sounds/Cappy/snd_capSpin");
+			sndSrc.clip = scr_manageAudio._f.ReturnAudioClip("Cappy/snd_capSpin");
 			sndSrc.loop = true;
 			sndSrc.Play ();
 			isThrown = true;
@@ -51,7 +51,6 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 			transformMario.GetChild (1).gameObject.SetActive (false);//cap
 			MarioController.marioObject.SetHand(0, false);//handRball
 			MarioController.marioObject.SetHand(1, true);//handRflat
-			//transformMario.Find("Armature/nw4f_root/AllRoot/JointRoot/Spine1/Spine2/MarioHead/Cap 1/cappyEyes").gameObject.SetActive (false);//cappyeyes
 			tmp_pos = transformMario.position;
 			transform.rotation = transformMario.rotation;
 			transform.position = new Vector3 (tmp_pos.x, tmp_pos.y + offsetYthrow, tmp_pos.z);
@@ -95,7 +94,7 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 				anim.Play ("capture");
 				sndSrc.Stop ();
 				sndSrc.loop = false;
-				sndSrc.clip = Resources.Load<AudioClip> ("Audio/Sounds/Cappy/snd_capTure");
+				sndSrc.clip = scr_manageAudio._f.ReturnAudioClip("Cappy/snd_capTure");
 				sndSrc.Play ();
 			}
 			transform.rotation = Quaternion.Euler (0, 0, 0);
@@ -180,8 +179,7 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 	}
 	
 	// Use this for initialization
-	void Start () {
-		gameObject.SetActive(false);
+	void Awake () {
 		MarioController.marioObject.cappy = this;
 		anim = GetComponent<Animator>();
 		tmp_pos = transform.position;
@@ -206,13 +204,13 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 				}
 				break;
 			case 0://throw
-				if (Vector3.Distance (transform.position, tmp_pos) > 6) {
+				if (Vector3.Distance (transform.position, tmp_pos) > 8) {
 					SetState (1);
 					transform.Translate (new Vector3 (0, 0, -0.6f));
 					break;
 				}
-				transform.Translate (new Vector3 (0, 0, 0.8f));
-				armature.Rotate (0, 30, 0); 
+				transform.Translate (new Vector3 (0, 0, 1f));
+				armature.Rotate (0, 40, 0); 
 				break;
 			case 1://spin after throw
 				armature.Rotate (0, 50, 0); 
