@@ -40,8 +40,8 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 		currentState = state;
 		gameObject.SetActive (true);
 		switch(state){
-		case 0:
-			sndSrc.clip = Resources.Load<AudioClip> ("Audio/Sounds/Cappy/snd_capSpin");
+		case 0: //TODO: Fix all of this cause its broken af
+                sndSrc.clip = Resources.Load<AudioClip>("Audio/Sounds/Cappy/snd_capSpin");
 			sndSrc.loop = true;
 			sndSrc.Play ();
 			isThrown = true;

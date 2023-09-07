@@ -32,7 +32,8 @@ public class MarioController : MonoBehaviour
 	public Rigidbody rb;
 
 	private bool key_jump = false;
-
+    bool keyCrouch = false;
+    
 	private bool bvar0 = false;
 	private float hackFlyLength = 0.5f;
 	private float hackFlyStartTime;
@@ -64,7 +65,9 @@ public class MarioController : MonoBehaviour
 	bool hasTouchedCeiling = false;
 	float lastGroundedPosition = 0;
 
-	void Awake()
+    float slidingForce = 375f;
+
+    void Awake()
 	{
 		// Disable AudioListener for the global values
 		//scr_gameInit.globalValues.GetComponent<AudioListener>().enabled = false;
@@ -92,7 +95,8 @@ public class MarioController : MonoBehaviour
 			// Update Mario's animation and movement based on states
 			switch (myState) {
 			case MarioState.Ground: // Standing still, wait
-				if (jumpAfterTimer > 0) {//maximal
+                moveSpeed = 8f;
+                if (jumpAfterTimer > 0) {//maximal
 					if(jumpType > 2)/*triple jump WIP*/ jumpAfterTimer = 11;
 					if (jumpAfterTimer > 8) {
 						jumpAfterTimer = 0;
@@ -125,7 +129,7 @@ public class MarioController : MonoBehaviour
 					}
 					break;
 				}
-				break;
+			    break;
 
 
 			case MarioState.Landing: //land
@@ -160,6 +164,16 @@ public class MarioController : MonoBehaviour
 					moveAdditional = Vector3.zero;
 				}
 				break;
+                case MarioState.Crouch:
+                    moveSpeed = 1.5f;
+                    if (slidingForce > 0f && currentMoveSpeed > 0.0001f)
+                    {
+                        rb.AddForce(transform.rotation * Vector3.forward * slidingForce, ForceMode.Impulse);
+                        slidingForce -= Time.deltaTime * 250f;
+                    }
+                    if (!keyCrouch)
+                        SetState(MarioState.Ground);
+                    break;
 			}
 		}
 		isGrounded = false;
@@ -167,25 +181,29 @@ public class MarioController : MonoBehaviour
 		wasMoving = isMoving;
 		// Calculate the movement vector based on the input and current speed
 		Vector3 movementVector = Vector3.forward * currentMoveSpeed * Time.deltaTime;
-		// Move the character using the Rigidbody
+        
+        // Move the character using the Rigidbody
 		rb.MovePosition ((rb.position + (transform.rotation * Vector3.forward) * movementVector.magnitude) + Vector3.up * jumpVelocity + moveAdditional);
-	}
+    }
 
-	void HandleInput(){
+    void HandleInput(){
+        
 		#if UNITY_EDITOR
 		h = Input.GetAxisRaw("Horizontal");
 		v = Input.GetAxisRaw("Vertical");
 
 		key_jump = Input.GetKey(KeyCode.Space);
-		#else
+        keyCrouch = Input.GetKey(KeyCode.LeftControl);
+#else
 		h = UnityEngine.N3DS.GamePad.CirclePad.x;
 		v = UnityEngine.N3DS.GamePad.CirclePad.y;
 
 		key_jump = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B);
-		#endif
+        keyCrouch = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.L);
+#endif
 
-		// Check if Mario is blocked
-		if (isBlocked) {
+        // Check if Mario is blocked
+        if (isBlocked) {
 			h = 0;
 			v = 0;
 			isMoving = false;
@@ -194,15 +212,20 @@ public class MarioController : MonoBehaviour
 		}
 
 		switch (myState) {
-		case MarioState.Ground:
-			if (key_jump || key_jump) {
-				if (!lockJump) {
-					lockJump = true;
-					SetState(MarioState.Jumping);
-				}
-			} else if (lockJump)
-				lockJump = false;
-			break;
+		    case MarioState.Ground:
+			    if (key_jump) {
+			    	if (!lockJump) {
+			    		lockJump = true;
+			    		SetState(MarioState.Jumping);
+			    	}
+			    } else if (lockJump)
+				    lockJump = false;
+
+                if (keyCrouch)
+                {
+                    SetState(MarioState.Crouch);
+                }
+			    break;
 		}
 	}
 
@@ -212,16 +235,16 @@ public class MarioController : MonoBehaviour
 		mySubState = subState;
 		switch (state)
 		{
-		case MarioState.Ground:
-			switch (subState) {
-			case 0:
-				SetAnim ("wait");
-				break;
-			}
-			if (isMoving)
-				isFixWalk = true;
-			break;
-
+		    case MarioState.Ground:
+			    switch (subState) {
+			    case 0:
+			    	SetAnim ("wait");
+			    	break;
+			    }
+			    if (isMoving)
+			    	isFixWalk = true;
+			    break;
+                
 		case MarioState.Jumping:
 			lastGroundedPosition = groundedPosition;
 			jumpType++;
@@ -242,16 +265,20 @@ public class MarioController : MonoBehaviour
 			}
 			break;
 
-		case MarioState.Landing:
-			SetAnim ("land", 0.2f, 1, false);
-			break;
+		    case MarioState.Landing:
+			    SetAnim ("land", 0.2f, 1, false);
+			    break;
 
-		case MarioState.CappyCatch: 
-			hackFlyStartTime = Time.time;
-			SetAnim ("captureFly");
-			rb.useGravity = false;
-			break;
+		    case MarioState.CappyCatch: 
+			    hackFlyStartTime = Time.time;
+			    SetAnim ("captureFly");
+			    rb.useGravity = false;
+			    break;
+            case MarioState.Crouch:
+                SetAnim("crouchStart");
+                break;
 		}
+
 	}
 
 	void HandleMove(){
@@ -278,6 +305,9 @@ public class MarioController : MonoBehaviour
 			if (currentMoveSpeed < moveSpeed) {
 				currentMoveSpeed += 0.5f;
 			}
+
+            if (currentMoveSpeed > moveSpeed)
+                currentMoveSpeed = moveSpeed;
 
 		} else {
 			if (currentMoveSpeed > 0) currentMoveSpeed = 0;
