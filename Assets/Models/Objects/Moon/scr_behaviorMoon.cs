@@ -18,15 +18,17 @@ public class scr_behaviorMoon : MonoBehaviour {
 
 	void setColor(){
 		Color t_color = Color.white;
+		Color t_fresnelCol = Color.white;
 		switch (color) {
 		case 0:
-			t_color = new Color (0.9490196078431372f, 0.8470588235294118f, 0.30980392156862746f, 1);
+			t_color = new Color (0.91f, 0.9f, 0.2f, 1);
+			t_fresnelCol = new Color (0.91f, 0.9f, 0.2f, 1);
 			break;
 		case 1:
-			t_color = new Color (0.6823529411764706f, 0.8156862745098039f, 0.3686274509803922f, 1);
+			t_color = new Color (0.6f, 0.33f, 0.26f, 1);
 			break;
 		case 2:
-			t_color = new Color (0.40784313725490196f, 0.803921568627451f, 0.796078431372549f, 1);
+			t_color = new Color (0.11f, 0.25f, 0.9f, 1);
 			break;
 		}
 		mat_color.material.color = t_color;

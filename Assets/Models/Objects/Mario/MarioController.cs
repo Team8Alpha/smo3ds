@@ -116,8 +116,8 @@ public class MarioController : MonoBehaviour
 				case 1:
 					if ((key_jump && jumpedHeight > maxJump + jumpType && jumpType != 3 || hasTouchedCeiling) 
 						|| (!key_jump && jumpedHeight > (maxJump / 2.5f) + jumpType && jumpType != 3) 
-						|| (jumpedHeight > maxJump + jumpType && jumpType == 3)) { //TODO: or if touching ceiling, also more efficient...
-						rb.AddForce (Vector3.down * jumpForce * 100, ForceMode.Impulse);
+						|| (jumpedHeight > maxJump + jumpType && jumpType == 3)) { //TODO: more efficient...
+						rb.AddForce (Vector3.down * jumpForce * 80, ForceMode.Impulse);
 						hasTouchedCeiling = false;
 					}
 					if (jumpedHeight > 0.1f || hasTouchedCeiling)
