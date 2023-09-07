@@ -8,31 +8,31 @@ public enum MarioState
 	Jumping,
 	Landing,
 	CappyCatch,
-	Crouch,
+	Squat,
 	GroundPound,
 	WallJump
 }
 
 public class MarioController : MonoBehaviour
 {
-	public static MarioState myState;
-	public int mySubState = 0;
+	[HideInInspector] public static MarioState myState;
+	[HideInInspector] public int mySubState = 0;
 	public int maxJump = 6;
 
 	public float jumpForce = 2.5f;
 	public float moveSpeed = 5.0f;
 
-	public bool isGrounded = true;
-	public bool isMoving = false;
-	public bool wasMoving = false;
-	public bool lockJump = false;
-	public bool isFixWalk = false; // fix run animation
+	[HideInInspector] public bool isGrounded = true;
+	[HideInInspector] public bool isMoving = false;
+	[HideInInspector] public bool wasMoving = false;
+	[HideInInspector] public bool lockJump = false;
+	[HideInInspector] public bool isFixWalk = false; // fix run animation
 
-	public Animator anim;
-	public Rigidbody rb;
+	[HideInInspector] public Animator anim;
+	[HideInInspector] public Rigidbody rb;
 
-	private bool key_jump = false;
-    bool keyCrouch = false;
+	[HideInInspector] private bool key_jump = false;
+	[HideInInspector] bool key_squat = false;
     
 	private bool bvar0 = false;
 	private float hackFlyLength = 0.5f;
@@ -164,14 +164,14 @@ public class MarioController : MonoBehaviour
 					moveAdditional = Vector3.zero;
 				}
 				break;
-                case MarioState.Crouch:
+                case MarioState.Squat:
                     moveSpeed = 1.5f;
                     if (slidingForce > 0f && currentMoveSpeed > 0.0001f)
                     {
                         rb.AddForce(transform.rotation * Vector3.forward * slidingForce, ForceMode.Impulse);
                         slidingForce -= Time.deltaTime * 250f;
                     }
-                    if (!keyCrouch)
+                    if (!key_squat)
                         SetState(MarioState.Ground);
                     break;
 			}
@@ -193,13 +193,13 @@ public class MarioController : MonoBehaviour
 		v = Input.GetAxisRaw("Vertical");
 
 		key_jump = Input.GetKey(KeyCode.Space);
-        keyCrouch = Input.GetKey(KeyCode.LeftControl);
+        key_squat = Input.GetKey(KeyCode.LeftControl);
 #else
 		h = UnityEngine.N3DS.GamePad.CirclePad.x;
 		v = UnityEngine.N3DS.GamePad.CirclePad.y;
 
 		key_jump = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B);
-        keyCrouch = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.L);
+        key_squat = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.L);
 #endif
 
         // Check if Mario is blocked
@@ -221,9 +221,9 @@ public class MarioController : MonoBehaviour
 			    } else if (lockJump)
 				    lockJump = false;
 
-                if (keyCrouch)
+                if (key_squat)
                 {
-                    SetState(MarioState.Crouch);
+                    SetState(MarioState.Squat);
                 }
 			    break;
 		}
@@ -274,7 +274,7 @@ public class MarioController : MonoBehaviour
 			    SetAnim ("captureFly");
 			    rb.useGravity = false;
 			    break;
-            case MarioState.Crouch:
+            case MarioState.Squat:
                 SetAnim("crouchStart");
                 break;
 		}
