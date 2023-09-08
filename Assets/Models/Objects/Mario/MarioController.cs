@@ -66,6 +66,9 @@ public class MarioController : MonoBehaviour
 
     float slidingForce = 375f;
 
+    CapsuleCollider capsColl1;
+    public CapsuleCollider capsColl2;
+
     void Awake()
 	{
 		// Disable AudioListener for the global values
@@ -77,7 +80,8 @@ public class MarioController : MonoBehaviour
 		// Store references to Animator and Rigidbody components
 		anim = GetComponent<Animator>();
 		rb = GetComponent<Rigidbody>();
-		marioObject = this;
+        capsColl1 = GetComponent<CapsuleCollider>();
+        marioObject = this;
 	}
 
 	void Update()
@@ -94,7 +98,13 @@ public class MarioController : MonoBehaviour
 			// Update Mario's animation and movement based on states
 			switch (myState) {
 			case MarioState.Ground: // Standing still, wait
-                moveSpeed = 8f;
+                    capsColl1.center = new Vector3(0, 0.8f, 0);
+                    capsColl1.height = 1.6f;
+
+                    capsColl2.center = new Vector3(0, 0.8f, 0);
+                    capsColl2.height = 1.6f; 
+
+                    moveSpeed = 8f;
                 if (jumpAfterTimer > 0) {//maximal
 					if(jumpType > 2)/*triple jump WIP*/ jumpAfterTimer = 11;
 					if (jumpAfterTimer > 8) {
@@ -164,6 +174,12 @@ public class MarioController : MonoBehaviour
 				}
 				break;
                 case MarioState.Squat:
+                    capsColl1.center = new Vector3(0, 0.47f, 0);
+                    capsColl1.height = 0.94f;
+
+                    capsColl2.center = new Vector3(0, 0.47f, 0);
+                    capsColl2.height = 0.94f;
+
                     moveSpeed = 1.5f;
                     if (slidingForce > 0f && currentMoveSpeed > 0.0001f)
                     {
@@ -171,7 +187,9 @@ public class MarioController : MonoBehaviour
                         slidingForce -= Time.deltaTime * 250f;
                     }
                     if (!key_squat)
+                    {
                         SetState(MarioState.Ground);
+                    }
                     break;
 			}
 		}
@@ -274,7 +292,7 @@ public class MarioController : MonoBehaviour
 			    rb.useGravity = false;
 			    break;
             case MarioState.Squat:
-                SetAnim("crouchStart");
+                SetAnim("squatStart");
                 break;
 		}
 
@@ -283,15 +301,19 @@ public class MarioController : MonoBehaviour
 	void HandleMove(){
 		if (isMoving) {
 
-			if ((!wasMoving || isFixWalk) && isGrounded) {
+			if ((!wasMoving || isFixWalk) && isGrounded && !key_squat) {
 				isFixWalk = false;
 				if (currentMoveSpeed < 3)
 					SetAnim ("runStart");
 				else
 					SetAnim ("run");
-			}
+			} else if ((!wasMoving || isFixWalk) && isGrounded && key_squat)
+            {
+                isFixWalk = false;
+                SetAnim("squatWalk");
+            }
 
-			float tmp_walkRotation = 0;
+                float tmp_walkRotation = 0;
 			if (transform.rotation.y < 179 && transform.rotation.y > -179) {
 
 				walkRotation += tmp_walkRotation / 76;
@@ -310,8 +332,10 @@ public class MarioController : MonoBehaviour
 
 		} else {
 			if (currentMoveSpeed > 0) currentMoveSpeed = 0;
-			if (wasMoving && isGrounded)
-				SetAnim ("wait");
+            if (wasMoving && isGrounded && !key_squat)
+                SetAnim("wait");
+            else if (wasMoving && isGrounded && key_squat)
+                SetAnim("squatWait");
 		}
 
 	}
