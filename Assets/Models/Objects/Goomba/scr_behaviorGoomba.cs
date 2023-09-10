@@ -16,7 +16,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 	private float fvar2 = 0; //var to be used by states
 	private int findTimer = 0; // til goomba is turnin over
 	private scr_behaviorGoomba[] goombaSt = new scr_behaviorGoomba[20];
-	private bool isTop = true; //for stacked goomba stuff
+	public bool isTop = true; //for stacked goomba stuff
 	/*
 	0 waiting
 	1 walking
@@ -119,7 +119,9 @@ public class scr_behaviorGoomba : MonoBehaviour {
 				goombaSt[i].currentState=2;
 				goombaSt[i].stackedNum=i+1;
 				if(i!=stackAmount-2) goombaSt[i].isTop = false; else goombaSt[i].isTop = true;
-				goombaSt[i].transform.parent = transform;
+                if (goombaSt[i].isTop)
+                    goombaSt[i].name = "goombaOnTop";
+                goombaSt[i].transform.parent = transform;
 			}
 		}
 	}

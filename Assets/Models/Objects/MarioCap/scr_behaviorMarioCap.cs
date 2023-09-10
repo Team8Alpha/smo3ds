@@ -40,14 +40,14 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 		currentState = state;
 		gameObject.SetActive (true);
 		switch(state){
-		case 0: //TODO: Fix all of this cause its broken af
+		case 0:
 			sndSrc.clip = scr_manageAudio._f.ReturnAudioClip("Cappy/snd_capSpin");
 			sndSrc.loop = true;
 			sndSrc.Play ();
 			isThrown = true;
 			MarioController.marioObject.anim.Play ("spinCapStart");
 			anim.Play ("default");
-			transformMario.GetChild (2).gameObject.SetActive (true);//hair
+            transformMario.GetChild (2).gameObject.SetActive (true);//hair
 			transformMario.GetChild (1).gameObject.SetActive (false);//cap
 			MarioController.marioObject.SetHand(0, false);//handRball
 			MarioController.marioObject.SetHand(1, true);//handRflat
@@ -143,7 +143,12 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 								capturedObject = null;
 							} else if (!isHacking) {
 								Debug.Log ("crappy hav frund " + collis.gameObject.name);
-								capturedObject = collis.gameObject;
+                                print(collis.gameObject.GetComponentInChildren<scr_behaviorGoomba>().name == "goombaOnTop");
+                                if (collis.gameObject.GetComponentInChildren<scr_behaviorGoomba>() != null && collis.gameObject.GetComponentInChildren<scr_behaviorGoomba>().isTop && collis.gameObject.GetComponent<scr_behaviorGoomba>().stackAmount > 0)
+                                    capturedObject = GameObject.Find("goombaOnTop");
+                                else
+                                    capturedObject = collis.gameObject;
+
 								if(collis.gameObject.GetComponent<Collider>() != null)
 									collis.gameObject.GetComponent<Collider>().enabled = false;
 								if(collis.gameObject.GetComponent<Rigidbody>() != null)
