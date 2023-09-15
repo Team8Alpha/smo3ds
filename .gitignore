@@ -2,6 +2,7 @@ git_reset.bat
 out.cci
 out.cci.xml
 out.cia
+out.standard.cia
 smo3ds-builds\
 smo3ds-builds/
 zz_start_unity.bat
