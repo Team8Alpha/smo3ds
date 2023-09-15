@@ -45,7 +45,7 @@ public class scr_gameInit : MonoBehaviour {
 	}
 	
 	void Start () {
-		Application.targetFrameRate = 30;
+		Application.targetFrameRate = 50;
 		QualitySettings.vSyncCount = 0;
 		//UnityEngine.N3DS.HomeButton.Enable ();
 
