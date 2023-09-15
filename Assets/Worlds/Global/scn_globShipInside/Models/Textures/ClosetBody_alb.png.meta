@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: eb6fff9dadc625044ae6a6d462900c01
-timeCreated: 1681398611
+guid: 03dc0de594725114586ea7bee55d0a38
+timeCreated: 1694787701
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName: {}
@@ -27,7 +27,7 @@ TextureImporter:
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
-    filterMode: 1
+    filterMode: 0
     aniso: -1
     mipBias: -1
     wrapMode: -1
@@ -66,17 +66,9 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: Android
-    maxTextureSize: 2048
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
   - buildTarget: Nintendo 3DS
     maxTextureSize: 256
-    textureFormat: 61
+    textureFormat: 60
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0

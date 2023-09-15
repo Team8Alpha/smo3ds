@@ -41,18 +41,21 @@ public class scr_behaviorBlockBrick : MonoBehaviour {
 		}
 	}
 
-	public void OnTouch() {
-		if (FrameLimit == 0) {
-			DoKill ();
-		} else {
-			if (hitCount == 0) this.enabled = true;
-			if (timerFrame - CoinInvFrame >= CoinInterval || hitCount == 0 || !isActive) {
-				CoinInvFrame = timerFrame;
-				anim.Play("brickUp");
-				SpawnCoins(1);
-				hitCount++;
-				if (!isActive)
-					DoIsEmpty();
+	public void OnTouch(int type) {
+		if (type == 1 || type == 4) {
+			if (FrameLimit == 0) {
+				DoKill ();
+			} else {
+				if (hitCount == 0)
+					this.enabled = true;
+				if (timerFrame - CoinInvFrame >= CoinInterval || hitCount == 0 || !isActive) {
+					CoinInvFrame = timerFrame;
+					anim.Play ("brickUp");
+					SpawnCoins (1);
+					hitCount++;
+					if (!isActive)
+						DoIsEmpty ();
+				}
 			}
 		}
 	}

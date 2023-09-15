@@ -35,15 +35,18 @@ public class scr_behaviorBlockQuestion : MonoBehaviour {
 		}
 	}
 
-	public void OnTouch() {
-		if (hitCount == 0) this.enabled = true;
-		if (timerFrame - CoinInvFrame >= CoinInterval || hitCount == 0 || !isActive) {
-			CoinInvFrame = timerFrame;
-			anim.Play("up");
-			SpawnCoins(1);
-			hitCount++;
-			if (!isActive)
-				DoIsEmpty();
+	public void OnTouch(int type) {
+		if (type == 1 || type == 4) {
+			if (hitCount == 0)
+				this.enabled = true;
+			if (timerFrame - CoinInvFrame >= CoinInterval || hitCount == 0 || !isActive) {
+				CoinInvFrame = timerFrame;
+				anim.Play ("up");
+				SpawnCoins (1);
+				hitCount++;
+				if (!isActive)
+					DoIsEmpty ();
+			}
 		}
 	}
 }

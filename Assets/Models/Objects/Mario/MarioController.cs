@@ -121,19 +121,20 @@ public class MarioController : MonoBehaviour
 				case 0:
 					rb.AddForce (Vector3.up * (jumpForce + (jumpType/3)) * 500, ForceMode.Impulse); //start accelerating up
 					mySubState++;
+					jumpAfterTimer = 1;
 					break;
 				case 1:
 					if ((key_jump && jumpedHeight > maxJump + jumpType && jumpType != 3 || hasTouchedCeiling) //if condition(reached top), stop accelerating and start falling
 						|| (!key_jump && jumpedHeight > jumpType-1 && jumpType != 3) 
 						|| (jumpedHeight > maxJump + jumpType && jumpType == 3)) { //TODO: more efficient...
-						rb.AddForce (Vector3.down * jumpForce * 60, ForceMode.Impulse);
-						hasTouchedCeiling = false;
+						rb.AddForce (Vector3.down * jumpForce * 56, ForceMode.Impulse);
+						if (hasTouchedCeiling)
+							jumpAfterTimer = 0;
 					}
-					if (jumpedHeight > 0.1f || hasTouchedCeiling)
+					if (transform.position.y - groundedPosition > 0.1f || hasTouchedCeiling)
 						hasJumped = true;//he has jumped, so isGrounded wont get in the way when starting to jump.
 					else if (isGrounded && hasJumped) {
 						hasJumped = false;
-						jumpAfterTimer = 1;
 						SetState (MarioState.Landing);
 					}
 					break;
@@ -193,6 +194,7 @@ public class MarioController : MonoBehaviour
                     break;
 			}
 		}
+		hasTouchedCeiling = false;
 		isGrounded = false;
 
 		wasMoving = isMoving;
@@ -400,9 +402,15 @@ public class MarioController : MonoBehaviour
 			if (collis.gameObject.layer != scr_gameInit.lyr_def)
 			if (collis.gameObject.layer == scr_gameInit.lyr_enemy || collis.gameObject.layer == scr_gameInit.lyr_obj)
 			{
+				if(collis.GetComponent<paramObj>() != null) if(!collis.GetComponent<paramObj>().isTouch) return;
+
+				if(hasTouchedCeiling){
+					collis.gameObject.SendMessage("OnTouch", 4);
+					return;
+				}
 				if (transform.position.y < collis.GetComponent<paramObj>().bCenterY())
 					collis.gameObject.SendMessage("OnTouch", 2);
-				else
+				else if(!hasTouchedCeiling)
 					collis.gameObject.SendMessage("OnTouch", 3);
 			}
 		}
@@ -412,8 +420,7 @@ public class MarioController : MonoBehaviour
 		}
 	}
 	void OnSensorTopEnter(Collider col){
-		if (myState == MarioState.Jumping)
-			hasTouchedCeiling = true;
+		hasTouchedCeiling = true;
 	}
 	void OnSensorBottomStay(Collider col){
 		if(col.gameObject.layer == 0){
