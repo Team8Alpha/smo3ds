@@ -4,6 +4,7 @@ out.cci.xml
 out.cia
 smo3ds-builds\
 smo3ds-builds/
+zz_start_unity.bat
 
 # This .gitignore file should be placed at the root of your Unity project directory
 #
