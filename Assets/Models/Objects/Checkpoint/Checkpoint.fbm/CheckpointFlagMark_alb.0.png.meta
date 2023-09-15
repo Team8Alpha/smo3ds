@@ -76,7 +76,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Nintendo 3DS
-    maxTextureSize: 512
+    maxTextureSize: 256
     textureFormat: 61
     textureCompression: 1
     compressionQuality: 50
