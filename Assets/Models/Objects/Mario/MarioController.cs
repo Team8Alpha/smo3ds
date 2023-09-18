@@ -57,7 +57,7 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] public bool isHacking = false; // hack = modify/take control of object
 	public bool isBlockBlocked = false; // to prevent it from setting block to false, if it handles multiple blocks...
 	[HideInInspector] public bool plsUnhack = false;
-	[HideInInspector] public string animLast = "wait";
+	[HideInInspector] public string animLast = "idle";
 	bool hasJumped= false;
 	int jumpAfterTimer = 0; //timer till it refuses to execute double jump
 	int jumpType = 0;
@@ -119,7 +119,7 @@ public class MarioController : MonoBehaviour
 				float jumpedHeight = transform.position.y - lastGroundedPosition;
 				switch(mySubState){
 				case 0:
-					rb.AddForce (Vector3.up * (jumpForce + (jumpType/3)) * 500, ForceMode.Impulse); //start accelerating up
+					rb.AddForce (Vector3.up * (jumpForce + (jumpType/3)) * 2000 * Time.deltaTime, ForceMode.Impulse); //start accelerating up
 					mySubState++;
 					jumpAfterTimer = 1;
 					break;
@@ -127,7 +127,7 @@ public class MarioController : MonoBehaviour
 					if ((key_jump && jumpedHeight > maxJump + jumpType && jumpType != 3 || hasTouchedCeiling) //if condition(reached top), stop accelerating and start falling
 						|| (!key_jump && jumpedHeight > jumpType-1 && jumpType != 3) 
 						|| (jumpedHeight > maxJump + jumpType && jumpType == 3)) { //TODO: more efficient...
-						rb.AddForce (Vector3.down * jumpForce * 56, ForceMode.Impulse);
+						rb.AddForce (Vector3.down * jumpForce * 200 * Time.deltaTime, ForceMode.Impulse);
 						if (hasTouchedCeiling)
 							jumpAfterTimer = 0;
 					}
@@ -257,7 +257,7 @@ public class MarioController : MonoBehaviour
 		    case MarioState.Ground:
 			    switch (subState) {
 			    case 0:
-			    	SetAnim ("wait");
+			    	SetAnim ("idle");
 			    	break;
 			    }
 			    if (isMoving)
@@ -300,15 +300,13 @@ public class MarioController : MonoBehaviour
 
 	}
 
+
 	void HandleMove(){
+		GetComponent<Animator>().SetFloat("Speed", currentMoveSpeed);
 		if (isMoving) {
 
 			if ((!wasMoving || isFixWalk) && isGrounded && !key_squat) {
 				isFixWalk = false;
-				if (currentMoveSpeed < 3)
-					SetAnim ("runStart");
-				else
-					SetAnim ("run");
 			} else if ((!wasMoving || isFixWalk) && isGrounded && key_squat)
             {
                 isFixWalk = false;
@@ -335,7 +333,7 @@ public class MarioController : MonoBehaviour
 		} else {
 			if (currentMoveSpeed > 0) currentMoveSpeed = 0;
             if (wasMoving && isGrounded && !key_squat)
-                SetAnim("wait");
+                SetAnim("idle");
             else if (wasMoving && isGrounded && key_squat)
                 SetAnim("squatWait");
 		}
@@ -416,7 +414,7 @@ public class MarioController : MonoBehaviour
 		}
 		catch (Exception e)
 		{
-			Debug.Log(" " + e);
+			Debug.Log(e.Message);
 		}
 	}
 	void OnSensorTopEnter(Collider col){

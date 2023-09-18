@@ -7,6 +7,13 @@ public class scr_menuSplashPress : MonoBehaviour {
 
 	[SerializeField] float t_timer = 5;
 	private bool t_exiting = false;
+
+
+	void Start(){
+		scr_fadefull._f.Run (true, 0, 0.04f);
+        StartCoroutine(Delay());
+    }
+	
 	void Confirm(){
 		Debug.Log ("Loading...");
 		//scr_loadScene._f.loadTransition ("scn_capMain0", 1);
@@ -14,15 +21,11 @@ public class scr_menuSplashPress : MonoBehaviour {
 		scr_manageData._f.Load ();
 	}
 
-	void Start(){
-		scr_fadefull._f.Run (true, 0, 0.04f);
-	}
-
-	void Update () {
+    /*void Update () {
 		t_timer -= 0.1f;
 		if(t_timer<=0){
 			if (t_exiting) {
-				Confirm();
+				
 			} else {
 				scr_fadefull._f.Run (false, 0, 0.08f);
 				t_timer = 2;
@@ -38,5 +41,11 @@ public class scr_menuSplashPress : MonoBehaviour {
 			} else t_timer = 0;
 		}
 		#endif
+	}*/
+
+    IEnumerator Delay()
+	{
+		yield return new WaitForSecondsRealtime(t_timer);
+		Confirm();
 	}
 }

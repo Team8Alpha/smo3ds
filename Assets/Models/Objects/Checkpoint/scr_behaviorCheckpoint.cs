@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class scr_behaviorCheckpoint : MonoBehaviour {
 
@@ -10,28 +8,20 @@ public class scr_behaviorCheckpoint : MonoBehaviour {
 
 	Animator anim;
 	// Use this for initialization
-	void Start () {
-		anim = GetComponent<Animator> ();
-		anim.Play ("before");
+	void Start() {
+		anim = GetComponent<Animator>();
+		anim.Play("before");
 	}
-	void f_take(){
-		if (!wasActivated){
+
+	void OnTriggerEnter(Collider collis)
+    {
+		if (!wasActivated && collis.tag == "Player"){
 			anim.Play("get");
 			transform.GetChild(2).gameObject.GetComponent<Renderer>().material = mat_after;
-			wasActivated = true;
 			scr_gameInit.globalValues.lastCheckpoint = numSpawnPoint;
-			scr_manageData._f.Save ();
-		}
-	}
-	void OnTouch(int numType){
-		switch (numType) {
-		case 1://cap
-			f_take();
-			break;
-		case 2://mar
-			f_take ();
+			scr_manageData._f.Save();
+			wasActivated = true;
 			//MarioController.marioObject.setAnim (" ");
-			break;
 		}
 	}
 }

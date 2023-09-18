@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
+﻿using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class scr_behaviorMarioCap : MonoBehaviour {
 	
@@ -66,8 +63,8 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 			MarioController.marioObject.SetHand(0, true);//handRball
 			MarioController.marioObject.SetHand(1, false);//handRflat
 			fvar0 = 0;
-			if (MarioController.marioObject.isMoving)
-				MarioController.marioObject.SetAnim ("run");
+			//if (MarioController.marioObject.isMoving)
+				//MarioController.marioObject.SetAnim ("run");
 			anim.Play ("stay");
 			armature.gameObject.transform.eulerAngles = Vector3.zero;
 			transform.GetChild (1).gameObject.transform.eulerAngles = Vector3.zero;
