@@ -9,33 +9,40 @@ public class MarioCam : MonoBehaviour {
 	public Transform target; // The parent object for the camera
 	public Transform actualCamera; // The actual camera child object
 
-	public bool invertCursorY = false; // Whether to invert the Y axis of the cursor movement
-	public bool invertCursorX = false; // Whether to invert the Y axis of the cursor movement
-	public float wallOffset = 0.1f; // The offset to move the camera back when it collides with a wall
-	public float cursorSensitivity = 10f; // The sensitivity of the cursor movement
-	public float CStickSensitivity = 10f; // The sensitivity of the C-Stick movement
-	//public bool isThirdPerson = true; // Whether the camera is in third-person view
-	public bool isLocked = false; //if cam is locked.
+	public bool invertCursorY 							= false; // Whether to invert the Y axis of the cursor movement
+	public bool invertCursorX							= false; // Whether to invert the Y axis of the cursor movement
+	[HideInInspector] private float wallOffset 			= 0.1f; // The offset to move the camera back when it collides with a wall
+	public float cursorSensitivity 						= 10f; // The sensitivity of the cursor movement
+	public float CStickSensitivity 						= 10f; // The sensitivity of the C-Stick movement
+	//public bool isThirdPerson 						= true; // Whether the camera is in third-person view
+	public bool isLocked 								= false; //if cam is locked.
 
 	private float cursorX, cursorY; // The current cursor position
 	private float cStickX, cStickY; // The current cursor position
-	private Vector3 velocity = Vector3.zero; // The current velocity of the camera
-	private float cameraRotation = 0; // Holds mario's current cam rotation.
+	private Vector3 velocity 							= Vector3.zero; // The current velocity of the camera
+	private float cameraRotation 						= 0; // Holds mario's current cam rotation.
 	private Vector3 cameraControl; // Variable for controlled camera offset(cstick)
 	private float targetedY; //position camera wants to move to.
 	private Quaternion targetRot; //rotation smoothing
 	private Vector3 targetPos; //position smoothing
+	private float targetCamDistance 					= 0;
 
-	public float confStickXmax = 1;// * stick X movement
-	public float confStickYmax = 1;//same Y
-	public bool confRotate = true; // if false, then dont rotate.
-	public bool confSmooth = false; // if false, then dont smooth
-	public bool confSmoothY = true; // if true, all rotations are smoothed out.(normally useless, only for cutscenes)
-	public bool confWalk = true; // if false, dont follow walk
-	public float confRotateSpeed = 0.1f;
-	public float confSmoothTime = 0.3f; // The duration of the camera smoothing
-	public float confCamDistance = 5f; // The distance between the camera and the target
-	public float confYOffset = 3;
+	public float confStickXmax 							= 1;// * stick X movement
+	public float confStickYmax 							= 1;//same Y
+	public bool confRotate 								= true; // if false, then dont rotate.
+	public bool confSmooth 								= false; // if false, then dont smooth
+	public bool confSmoothY 							= true; // if true, all rotations are smoothed out.(normally useless, only for cutscenes)
+	public bool confWalk 								= true; // if false, dont follow walk
+	public float confRotateSpeed 						= 0.1f;
+	public float confSmoothTime 						= 0.3f; // The duration of the camera smoothing
+	public float confCamDistance 						= 13f; // The distance between the camera and the target
+	public float confYOffset 							= 3;
+
+	//default values
+	[HideInInspector] public float defRotateSpeed 		= 0.1f;
+	[HideInInspector] public float defSmoothTime 		= 0.3f; // The duration of the camera smoothing
+	[HideInInspector] public float defCamDistance 		= 5f; // The distance between the camera and the target
+	[HideInInspector] public float defYOffset 			= 3;
 
 	public static MarioCam marioCamera;
 
@@ -46,6 +53,12 @@ public class MarioCam : MonoBehaviour {
 		cStickX = 0.0f; cStickY = 0.0f;
 		Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the screen
 		Cursor.visible = false; // Hide the cursor
+
+		defRotateSpeed = confRotateSpeed;
+		defSmoothTime = confSmoothTime;
+		defCamDistance = confCamDistance;
+		defYOffset = confYOffset;
+
 		marioCamera = this;
 	}
 
@@ -77,28 +90,28 @@ public class MarioCam : MonoBehaviour {
 				cameraRotation = Mathf.LerpAngle (cameraRotation, cameraRotation + targetCameraRotation, Time.unscaledDeltaTime * confRotateSpeed);
 			}
 			if (!confSmooth){
-				transform.rotation = Quaternion.Euler (transform.localRotation.x + cameraControl.x, cameraRotation + cameraControl.y, transform.rotation.z + cameraControl.y * 2);
+				target.rotation = Quaternion.Euler (target.localRotation.x + cameraControl.x, cameraRotation + cameraControl.y, target.rotation.z + cameraControl.y * 2);
 				//rotation controls
-				actualCamera.transform.localPosition = new Vector3 (0, 0, -confCamDistance);
-				//actual camera offset
 			}
+			actualCamera.transform.localPosition = new Vector3 (0, 0, -targetCamDistance);
+			//actual camera offset
 
 			if (confWalk) {
 				float smoothSpeed = confCamDistance / 0.5f;
 				// ensure it takes half a second to move
 
-				transform.position = new Vector3 (player.transform.position.x, targetedY, player.transform.position.z);
+				target.position = new Vector3 (player.transform.position.x, targetedY, player.transform.position.z);
 				//move camera with player									//smoothly calculate y position
 
 				RaycastHit hit;
-				if (Physics.Raycast (target.transform.position, actualCamera.transform.position - target.transform.position, out hit, confCamDistance) && hit.collider.tag == "camBlock") {
+				if (Physics.Raycast (target.transform.position, actualCamera.transform.position - target.position, out hit, confCamDistance) && hit.collider.tag == "camBlock") {
 					actualCamera.transform.position = hit.point + hit.normal * 0.2f; // Don't peek into walls!
 				}
 				actualCamera.LookAt (target.transform); // Look at the camera target
 			}
 			if (confSmoothY)
 			{
-				targetedY = Mathf.SmoothDamp(target.position.y, MarioController.marioObject.groundedPosition + confYOffset, ref velocity.y, confSmoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
+				targetedY = Mathf.SmoothDamp(targetedY, MarioController.marioObject.groundedPosition + confYOffset, ref velocity.y, confSmoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
 			}
 			else if (confSmooth)
 			{
@@ -110,7 +123,14 @@ public class MarioCam : MonoBehaviour {
 			{
 				targetedY = MarioController.marioObject.groundedPosition + confYOffset;
 			}
-
+			targetCamDistance = Mathf.SmoothDamp(targetCamDistance, confCamDistance, ref velocity.y, confSmoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
+			Debug.Log (targetedY);
 		}
+	}
+	public void ResetValue(){
+		confRotateSpeed = defRotateSpeed;
+		confSmoothTime = defSmoothTime;
+		confCamDistance = defCamDistance;
+		confYOffset = defYOffset;
 	}
 }
