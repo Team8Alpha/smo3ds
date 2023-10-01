@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class scr_levelInOdyssey : MonoBehaviour {
 
-	void Update () {
+	void LateUpdate () {
 		if (MarioController.marioObject != null) {
-			Destroy (transform.GetChild (0).gameObject); //destroy child
-			Destroy(gameObject);
+			MarioCam.marioCamera.gameObject.SetActive (false);
+			this.enabled = false;
 		}
 	}
 }

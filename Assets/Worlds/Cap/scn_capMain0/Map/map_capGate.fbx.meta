@@ -1,25 +1,32 @@
 fileFormatVersion: 2
-guid: d0c966445cff01d44a9ebb675149cff1
-timeCreated: 1681749277
+guid: ea9fa1feede4c92449e099a831a50d8c
+timeCreated: 1695574479
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: Ground
-    100004: Wall
-    400000: //RootNode
-    400002: Ground
-    400004: Wall
-    2300000: //RootNode
-    2300002: Ground
-    2300004: Wall
-    3300000: //RootNode
-    3300002: Ground
-    3300004: Wall
-    4300000: COL_0.001
-    4300002: Wall
-    4300004: Ground
+    100000: Armature
+    100002: //RootNode
+    100004: LampA42
+    100006: LampA42__MetalBlack00.001
+    100008: LampA42__MetalBlack01
+    100010: LampA42_end
+    100012: Plane
+    400000: Armature
+    400002: //RootNode
+    400004: LampA42
+    400006: LampA42__MetalBlack00.001
+    400008: LampA42__MetalBlack01
+    400010: LampA42_end
+    400012: Plane
+    2300000: Plane
+    3300000: Plane
+    4300000: LampA42__MetalBlack01
+    4300002: LampA42__MetalBlack00.001
+    4300004: Plane
+    9500000: //RootNode
+    13700000: LampA42__MetalBlack00.001
+    13700002: LampA42__MetalBlack01
   materials:
     importMaterials: 1
     materialName: 0
@@ -43,13 +50,13 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
     addColliders: 0
-    importBlendShapes: 0
+    importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -84,7 +91,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

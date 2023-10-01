@@ -126,7 +126,7 @@ public class scr_manageData : MonoBehaviour
 				globVar.hasLevelLoaded = true;
 				SaveData data = LoadManual ();
 				if (data != null) {
-					if (data.levelData [buildIndex].lastSpawn != null) {
+					if (data.levelData [buildIndex] != null) {
 						PrintLog ("N: load levelData");
 					} else {
 						PrintLog ("N: create levelData");

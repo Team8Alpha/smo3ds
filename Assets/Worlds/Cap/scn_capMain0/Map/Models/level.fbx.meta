@@ -10,23 +10,33 @@ ModelImporter:
     100004: Plane
     100006: Plane.001
     100008: Plane.002
+    100010: Floor
+    100012: Wall
     400000: Circle
     400002: //RootNode
     400004: Plane
     400006: Plane.001
     400008: Plane.002
+    400010: Floor
+    400012: Wall
     2300000: Circle
     2300002: Plane
     2300004: Plane.001
     2300006: Plane.002
+    2300008: Floor
+    2300010: Wall
     3300000: Circle
     3300002: Plane
     3300004: Plane.001
     3300006: Plane.002
+    3300008: Floor
+    3300010: Wall
     4300000: Plane
     4300002: Plane.001
     4300004: Plane.002
     4300006: Circle
+    4300008: Wall
+    4300010: Floor
   materials:
     importMaterials: 1
     materialName: 0

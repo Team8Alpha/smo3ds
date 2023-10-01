@@ -21,7 +21,6 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 	public Vector3 hackRot = Vector3.zero;
 	private bool isColliding = false;
 	private bool isHacking = false;
-	private Collider[] collider;
 	private Transform transformMario;
 	private Transform armature;
 	
@@ -186,7 +185,6 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 		anim = GetComponent<Animator>();
 		tmp_pos = transform.position;
 		sndSrc = GetComponent<AudioSource> ();
-		collider = gameObject.GetComponents<Collider> ();
 		transformMario = MarioController.marioObject.transform;
 		armature = transform.GetChild(0);
 	}

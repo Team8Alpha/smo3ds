@@ -29,6 +29,7 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] public bool lockJump			= false;
 	[HideInInspector] public bool isFixWalk 		= false; // fix run animation
 	[HideInInspector] public bool hasJumped 		= false;
+	[HideInInspector] public bool isJumpingSoon 	= false;
 
 	[HideInInspector] public Animator anim;
 	[HideInInspector] public Rigidbody rb;
@@ -38,7 +39,6 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] bool key_backR 				= false;
 	[HideInInspector] bool key_cap 					= false;
     
-	private bool bvar0 								= false;
 	private float hackFlyLength 					= 0.5f;
 	private float hackFlyStartTime 					= 0;
 
@@ -72,7 +72,7 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] float lastGroundedPosition 	= 0;
 
 	[HideInInspector] CapsuleCollider capsColl1;
-	//[HideInInspector] public CapsuleCollider capsColl2;
+	[HideInInspector] CapsuleCollider capsColl2;
 
     void Awake()
 	{
@@ -85,8 +85,11 @@ public class MarioController : MonoBehaviour
 		// Store references to Animator and Rigidbody components
 		anim = GetComponent<Animator>();
 		rb = GetComponent<Rigidbody>();
-        capsColl1 = GetComponent<CapsuleCollider>();
+		capsColl1 = GetComponents<CapsuleCollider>()[0];
+		capsColl2 = GetComponents<CapsuleCollider>()[1];
         marioObject = this;
+
+		groundedPosition = transform.position.y;
 	}
 
 	void Update()
@@ -104,9 +107,9 @@ public class MarioController : MonoBehaviour
 			switch (myState) {
 			case MarioState.Ground: // Standing still, wait
 
-				if (jumpAfterTimer > 0) {//maximal
-					if (jumpType > 2)/*triple jump WIP*/ jumpAfterTimer = 11;
-					if (jumpAfterTimer > 8) {
+				if (jumpAfterTimer > 0) {
+					if (jumpType > 2) jumpAfterTimer = 0;
+					if (jumpAfterTimer > 9) {//maximal
 						jumpAfterTimer = 0;
 						jumpType = 0;
 					}
@@ -119,7 +122,7 @@ public class MarioController : MonoBehaviour
 			case MarioState.Jumping: // Jumping from land normal
 				float jumpedHeight = transform.position.y - lastGroundedPosition;
 
-				if (jumpedHeight > 3) { //JUMPING HIGH CAM
+				if (jumpedHeight > 4) { //JUMPING HIGH CAM
 					groundedPosition = transform.position.y;
 					MarioCam.marioCamera.confSmoothTime = 0.2f;
 					MarioCam.marioCamera.confYOffset = 1;
@@ -132,20 +135,28 @@ public class MarioController : MonoBehaviour
 					jumpAfterTimer = 1;
 					break;
 				case 1:
-					if ((key_jump && jumpedHeight > maxJump + jumpType && jumpType != 3 || hasTouchedCeiling)//if condition(reached top), stop accelerating and start falling
-					    || (!key_jump && jumpedHeight > jumpType + 1 && jumpType != 3)
-					    || (jumpedHeight > maxJump + 1 && jumpType == 3)) { //TODO: more efficient...
+					//keep velocity x z
 
-						rb.AddForce (Vector3.down * (1 - (jumpedHeight / (maxJump / 0.1f))) * jumpForce * 140 * Time.deltaTime, ForceMode.VelocityChange);
+
+					//force down when height reached
+					float jumpingMax = (maxJump + (jumpType*2))/2f;
+					if ((key_jump && jumpedHeight > jumpingMax && jumpType != 3 || hasTouchedCeiling)//if condition(reached top), stop accelerating and start falling
+						|| (!key_jump && jumpedHeight > jumpingMax/2.4f && jumpType != 3)
+						|| (jumpedHeight > jumpingMax && jumpType == 3)) { //TODO: more efficient...
+
+						//force down
+						rb.AddForce (Vector3.down * ((1 - (jumpedHeight / (maxJump / 0.1f))) * jumpForce - (jumpType/2)) * 140 * Time.deltaTime, ForceMode.VelocityChange);
 
 						if (hasTouchedCeiling)
 							jumpAfterTimer = 0;
 						SetState (MarioState.Falling, 1); //substate 1, jumpfall
 					}
+					//once left ground, he jumped.
 					if (!isGrounded)
-						hasJumped = true;//once left ground, he jumped.
+						hasJumped = true;
+					//if clipped up without even starting the jumpfall, he landed.
 					if (isGrounded && hasJumped)
-						SetState (MarioState.Landing);//if clipped up without even starting the jumpfall, he landed.
+						SetState (MarioState.Landing);
 					
 					break;
 				}
@@ -155,7 +166,7 @@ public class MarioController : MonoBehaviour
 				case 0: //camera follow
 					groundedPosition = transform.position.y; 
 					if (transform.position.y < lastGroundedPosition - 3 && transform.position.y > lastGroundedPosition - 4)
-						MarioCam.marioCamera.confSmoothTime = 0;
+						MarioCam.marioCamera.confSmoothTime = 0.7f;
 					break;
 				case 1://jump fall
 					if (transform.position.y <= lastGroundedPosition)
@@ -213,7 +224,6 @@ public class MarioController : MonoBehaviour
 			}
 		}
 		hasTouchedCeiling = false;
-		isGrounded = false;
 
 		wasMoving = isMoving;
 		// Calculate the movement vector based on the input and current speed
@@ -226,13 +236,13 @@ public class MarioController : MonoBehaviour
     void HandleInput(){
         
 #if UNITY_EDITOR
-		h = Input.GetAxisRaw("Horizontal");
-		v = Input.GetAxisRaw("Vertical");
+		h = Input.GetAxisRaw ("Horizontal");
+		v = Input.GetAxisRaw ("Vertical");
 
-		key_jump = Input.GetKey(KeyCode.Space);
-		key_backL = Input.GetKey(KeyCode.LeftControl);
-		key_backR = Input.GetKey(KeyCode.RightControl);
-		key_cap = Input.GetKey(KeyCode.LeftShift);
+		key_jump = Input.GetKey (KeyCode.Space);
+		key_backL = Input.GetKey (KeyCode.LeftControl);
+		key_backR = Input.GetKey (KeyCode.RightControl);
+		key_cap = Input.GetKey (KeyCode.LeftShift);
 #else
 		h = UnityEngine.N3DS.GamePad.CirclePad.x;
 		v = UnityEngine.N3DS.GamePad.CirclePad.y;
@@ -243,26 +253,33 @@ public class MarioController : MonoBehaviour
 		key_cap = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.X) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.Y);
 #endif
 
-        // Check if Mario is blocked
+		// Check if Mario is blocked
 		if (isBlocked) {
 			h = 0;
 			v = 0;
 			isMoving = false;
 		} else {
 			isMoving = h != 0 || v != 0;
-
 			switch (myState) {
 			case MarioState.Ground:
-				if (key_jump) {
+				if (key_jump || isJumpingSoon) {
 					if (!lockJump) {
 						lockJump = true;
+						isJumpingSoon = false;
 						SetState (MarioState.Jumping);
-					}
+					} else if (!key_jump)
+						lockJump = false;
 				} else if (lockJump)
+				if (!key_jump)
 					lockJump = false;
 
 				if (key_backL)
 					SetState (MarioState.Squat);
+				break;
+
+			case MarioState.Jumping:
+				if (!key_jump)
+					lockJump = false;
 				break;
 
 			case MarioState.Squat:
@@ -283,7 +300,7 @@ public class MarioController : MonoBehaviour
 		case MarioState.Ground:
 			
 			//reset some data
-			SetCollHeight(1.6f);
+			SetCollider (1.6f);
 			ResetSpeed ();
 			ResetAnim ();
 
@@ -297,16 +314,17 @@ public class MarioController : MonoBehaviour
 			break;
                 
 		case MarioState.Jumping:
-			lastGroundedPosition = groundedPosition;
 			jumpType++;
 			switch (jumpType) {
-			case 1:
-				SetAnim ("jump");
-				break;
 			case 2:
 				SetAnim ("jump2");
 				break;
 			case 3:
+				if (currentMoveSpeed < 6) {
+					SetAnim ("jump");
+					jumpType = 1;
+					break;
+				}
 				SetAnim ("jump3");
 				break;
 			default:
@@ -314,6 +332,7 @@ public class MarioController : MonoBehaviour
 				jumpType = 1;
 				break;
 			}
+			lastGroundedPosition = groundedPosition;
 			break;
 
 		case MarioState.Falling:
@@ -322,7 +341,7 @@ public class MarioController : MonoBehaviour
 				lastGroundedPosition = groundedPosition;
 				MarioCam.marioCamera.confSmoothTime = 0.2f;
 				MarioCam.marioCamera.confYOffset = 0;
-				MarioCam.marioCamera.confCamDistance = MarioCam.marioCamera.defCamDistance-2;
+				MarioCam.marioCamera.confCamDistance = MarioCam.marioCamera.defCamDistance - 2;
 				break;
 			case 1://falling after jump, still above lastgroundedposition
 				break;
@@ -342,7 +361,7 @@ public class MarioController : MonoBehaviour
 			break;
 
 		case MarioState.Squat:
-			SetCollHeight(0.94f);
+			SetCollider (0.94f);
 			SetSpeed (maxJump, 1.4f);
 			if (isMoving)
 				SetAnim ("squatStart_w", 0.1f);
@@ -470,10 +489,18 @@ public class MarioController : MonoBehaviour
 		hasTouchedCeiling = true;
 	}
 	void OnSensorBottomStay(Collider col){
-		if(col.gameObject.layer == 0){
+		if(col.gameObject.layer == 20){
 			isGrounded = true;
 			groundedPosition = transform.position.y;
 		}
+	}
+	void OnSensorBottomExit(Collider col){
+		if (col.gameObject.layer == 20)
+			isGrounded = false;
+	}
+	void OnSensorBelowStay(Collider col){
+		if (rb.velocity.y < 0 && !isGrounded && key_jump && col.gameObject.layer == 20)
+			isJumpingSoon = true;
 	}
 
 	//RESET
@@ -511,11 +538,15 @@ public class MarioController : MonoBehaviour
 		transform.GetChild (4 + side).gameObject.SetActive (state);
 	}
 	public void SetAnim(string stand, string run, string runStart){
-		anim_runStart = anim_runStart; anim_run = run; anim_stand = stand;
+		anim_runStart = runStart; anim_run = run; anim_stand = stand;
 	}
-	public void SetCollHeight(float height1){
-		capsColl1.center = new Vector3 (0, height1/2, 0);
-		capsColl1.height = height1;
+	public void SetCollider(float height, float radius = 0.4f){
+		capsColl1.center = new Vector3 (0, height/2, 0);
+		capsColl1.radius = radius;
+		capsColl1.height = height;
+		capsColl2.center = new Vector3 (0, height/2, 0);
+		capsColl2.radius = radius;
+		capsColl2.height = height;
 	}
 
 	//CHECK
