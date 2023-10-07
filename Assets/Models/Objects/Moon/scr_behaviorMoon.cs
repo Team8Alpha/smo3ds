@@ -97,21 +97,22 @@ public class scr_behaviorMoon : MonoBehaviour {
 				anim.Play ("get");
 				Transform player = MarioController.marioObject.transform;
 
-				player.localRotation = Quaternion.Euler(player.rotation.eulerAngles.x, MarioCam.marioCamera.target.eulerAngles.y-180, player.eulerAngles.z);
+				MarioCam.marioCamera.confYOffset = 3+player.position.y - MarioController.marioObject.groundedPosition;
+				MarioCam.marioCamera.confRotate = false;
+				MarioCam.marioCamera.confStickXmax = 0;
+				MarioCam.marioCamera.confStickYmax = 0;
+				MarioCam.marioCamera.confSmoothTime = 0.3f;
+				player.rotation = Quaternion.Euler(player.eulerAngles.x, MarioCam.marioCamera.transform.eulerAngles.y+180, player.eulerAngles.z);
 				player.position = new Vector3(player.position.x, transform.position.y, player.position.z);
+				transform.position = player.position;
+				transform.rotation = player.rotation;
+
 				MarioController.marioObject.gameObject.GetComponent<Animator> ().Play ("demoShineGet");
 				if (MarioController.marioObject.hasCaptured)
 					for (int i = 0; i <= 8; i++) {
 						if (i != 2 && i != 5 && i != 7)
 							MarioController.marioObject.transform.GetChild (i).gameObject.SetActive (true);
 					}
-				transform.position = player.position;
-				transform.rotation = player.rotation;
-				MarioCam.marioCamera.confYOffset = 2+player.position.y - MarioController.marioObject.groundedPosition;
-				MarioCam.marioCamera.confRotate = false;
-				MarioCam.marioCamera.confStickXmax = 0;
-				MarioCam.marioCamera.confStickYmax = 0;
-				MarioCam.marioCamera.confSmoothTime = 0.3f;
 
 				string t_date = System.DateTime.UtcNow.ToShortDateString(); //even works on 3ds
 				scr_gameInit.globalValues.moonsCount++;
@@ -127,7 +128,8 @@ public class scr_behaviorMoon : MonoBehaviour {
 			if (anim.GetCurrentAnimatorStateInfo (0).normalizedTime > 1) {
 				Destroy (gameObject);
 				scr_gameInit.globalValues.focusOn ();
-				MarioController.marioObject.gameObject.GetComponent<Animator> ().Play ("wait");
+				MarioController.marioObject.SetAnim ("wait", 0.1f, 1, false);
+				MarioController.marioObject.SetState (MarioState.Falling);
 				globalCanvas.gameObject.SetActive (false);
 				MarioCam.marioCamera.confYOffset = 2;
 				MarioCam.marioCamera.confRotate = true;

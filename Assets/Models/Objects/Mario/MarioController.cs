@@ -122,9 +122,9 @@ public class MarioController : MonoBehaviour
 			case MarioState.Jumping: // Jumping from land normal
 				float jumpedHeight = transform.position.y - lastGroundedPosition;
 
-				if (jumpedHeight > 4) { //JUMPING HIGH CAM
+				if (jumpedHeight > 5) { //JUMPING HIGH CAM
 					groundedPosition = transform.position.y;
-					MarioCam.marioCamera.confSmoothTime = 0.2f;
+					MarioCam.marioCamera.confSmoothTime = 0.14f;
 					MarioCam.marioCamera.confYOffset = 1;
 				}
 				
@@ -145,7 +145,7 @@ public class MarioController : MonoBehaviour
 						|| (jumpedHeight > jumpingMax && jumpType == 3)) { //TODO: more efficient...
 
 						//force down
-						rb.AddForce (Vector3.down * ((1 - (jumpedHeight / (maxJump / 0.1f))) * jumpForce - (jumpType/2)) * 140 * Time.deltaTime, ForceMode.VelocityChange);
+						rb.AddForce (Vector3.down * ((1 - (jumpedHeight / (maxJump / 0.1f))) * jumpForce - (jumpType/2)) * 130 * Time.deltaTime, ForceMode.VelocityChange);
 
 						if (hasTouchedCeiling)
 							jumpAfterTimer = 0;
@@ -489,17 +489,17 @@ public class MarioController : MonoBehaviour
 		hasTouchedCeiling = true;
 	}
 	void OnSensorBottomStay(Collider col){
-		if(col.gameObject.layer == 20){
+		if(col.gameObject.layer != 20){ // 20 = WALL LAYER
 			isGrounded = true;
 			groundedPosition = transform.position.y;
 		}
 	}
 	void OnSensorBottomExit(Collider col){
-		if (col.gameObject.layer == 20)
+		if (col.gameObject.layer != 20)
 			isGrounded = false;
 	}
 	void OnSensorBelowStay(Collider col){
-		if (rb.velocity.y < 0 && !isGrounded && key_jump && col.gameObject.layer == 20)
+		if (rb.velocity.y < 0 && !isGrounded && key_jump && col.gameObject.layer != 20)
 			isJumpingSoon = true;
 	}
 
