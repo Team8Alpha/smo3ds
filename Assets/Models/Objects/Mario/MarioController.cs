@@ -115,7 +115,7 @@ public class MarioController : MonoBehaviour
 					}
 					jumpAfterTimer++;
 				}
-				if (transform.position.y < lastGroundedPosition-1)
+				if (transform.position.y < groundedPosition - 3)
 					SetState (MarioState.Falling);
 				break;
 
@@ -165,11 +165,15 @@ public class MarioController : MonoBehaviour
 				switch (mySubState) {
 				case 0: //camera follow
 					groundedPosition = transform.position.y; 
-					if (transform.position.y < lastGroundedPosition - 3 && transform.position.y > lastGroundedPosition - 4)
-						MarioCam.marioCamera.confSmoothTime = 0.7f;
+					if (transform.position.y < lastGroundedPosition - 4) {
+						if (transform.position.y > lastGroundedPosition - 5) {
+							MarioCam.marioCamera.confSmoothTime = 10f;
+
+						}
+					}
 					break;
 				case 1://jump fall
-					if (transform.position.y <= lastGroundedPosition)
+					if (transform.position.y < lastGroundedPosition - 3)
 						SetState (myState, 0);
 					break;
 				}
@@ -340,8 +344,8 @@ public class MarioController : MonoBehaviour
 			case 0://falling, below lastgroundedposition
 				lastGroundedPosition = groundedPosition;
 				MarioCam.marioCamera.confSmoothTime = 0.2f;
-				MarioCam.marioCamera.confYOffset = 0;
-				MarioCam.marioCamera.confCamDistance = MarioCam.marioCamera.defCamDistance - 2;
+				MarioCam.marioCamera.confYOffset = 1;
+				MarioCam.marioCamera.confCamDistance = MarioCam.marioCamera.defCamDistance - 1;
 				break;
 			case 1://falling after jump, still above lastgroundedposition
 				break;
