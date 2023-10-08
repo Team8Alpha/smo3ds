@@ -4,7 +4,6 @@ using UnityEngine;
 public class scr_behaviorMarioCap : MonoBehaviour {
 	
 	private Animator anim;
-	string prefixSND = "Sound/Entity/Cappy/";
 	private Transform transformMario;
 	private Transform armature;
 	public int currentState = 1;
@@ -24,8 +23,12 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 	public Vector3 hackRot = Vector3.zero;
 	private bool isColliding = false;
 	private bool isHacking = false;
-	
 	private Vector3 tmp_pos;
+
+	string prefixSND = "Sound/Entity/Cappy/";
+	AudioClip snd_capHackStart;
+	AudioClip snd_capSpin;
+
 
 	void toggleCollision (bool state){
 		gameObject.GetComponents<Collider> ()[1].enabled = state;
@@ -38,7 +41,7 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 		gameObject.SetActive (true);
 		switch(state){
 		case 0:
-			sndSrc.clip = scr_manageAudio._f.GetClip (prefixSND + "snd_capSpin");
+			sndSrc.clip = snd_capSpin;
 			sndSrc.loop = true;
 			sndSrc.Play ();
 			isThrown = true;
@@ -91,7 +94,7 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 				anim.Play ("capture");
 				sndSrc.Stop ();
 				sndSrc.loop = false;
-				sndSrc.clip = scr_manageAudio._f.GetClip(prefixSND+"snd_capHackStart");
+				sndSrc.clip = snd_capHackStart;
 				sndSrc.Play ();
 			}
 			transform.rotation = Quaternion.Euler (0, 0, 0);
@@ -188,6 +191,9 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 		sndSrc = GetComponent<AudioSource> ();
 		transformMario = MarioController.marioObject.transform;
 		armature = transform.GetChild(0);
+
+		snd_capHackStart = scr_manageAudio._f.GetClip(prefixSND+"snd_capHackStart");
+		snd_capSpin = snd_capSpin = scr_manageAudio._f.GetClip (prefixSND + "snd_capSpin");
 	}
 
 	// Update is called once per frame

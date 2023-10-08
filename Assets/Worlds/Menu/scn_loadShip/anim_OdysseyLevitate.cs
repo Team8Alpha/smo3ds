@@ -11,18 +11,15 @@ public class anim_OdysseyLevitate : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (!isExiting) {
-			transform.Translate (0, -0.2f * Time.unscaledTime, 0);
-			if (transform.position.x > -400 && !hasLoaded) {
-				hasLoaded = true;
-				SceneManager.LoadScene (scr_loadScene._f.nextScene, LoadSceneMode.Additive);
-			}
+			transform.Translate (0, -0.17f * Time.unscaledTime, 0);
 			if (transform.position.x > -100) {
-				scr_fadefull._f.Run (false, 0, 0.08f, true, true, true);
+				hasLoaded = true;
 				scr_manageAudio._f.AudioFadeOut (1);
+				scr_fadefull._f.Run (false, 0, 0.09f, true, true, true);
 				isExiting = true;
 			}
 		} else if (scr_fadefull._f.isDone) {
-			scr_gameInit.globalValues.focusOn ();
+			SceneManager.LoadScene (scr_loadScene._f.nextScene, LoadSceneMode.Additive);
 			var gos = GameObject.FindGameObjectsWithTag ("loading");
 			foreach (GameObject go in gos)
 				Destroy (go);

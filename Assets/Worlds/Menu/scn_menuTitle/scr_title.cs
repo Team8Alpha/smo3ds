@@ -41,7 +41,7 @@ public class scr_title : MonoBehaviour {
 		anim = GetComponent<Animator> ();
 		marioPos = transform.position; // to move him back later
 		transform.position = new Vector3 (-1000, transform.position.y, transform.position.z); //move to waitzone, works like a timer.
-		scr_fadefull._f.Run (true, 0, 0.03f);//fade in
+		scr_fadefull._f.Run (true, 0, 0.02f);//fade in
 		mat_rotMap = spr_rotMap.gameObject.GetComponent<MeshRenderer> ().material;
 		mat_shade = spr_shade.gameObject.GetComponent<MeshRenderer> ().material;//get materials
 		scr_gameInit.globalValues.focusOff ();
@@ -56,7 +56,7 @@ public class scr_title : MonoBehaviour {
 				bvar0 = true;
 			} else {
 				if (scr_manageAudio._f.isPlaying()) {
-					if (transform.position.x < -1006.5f) {
+					if (transform.position.x < -1008f) {
 						transform.position = marioPos;
 						anim.Play ("titleStart");
 					}

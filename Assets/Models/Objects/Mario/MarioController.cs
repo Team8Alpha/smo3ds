@@ -16,10 +16,10 @@ public enum MarioState
 
 public class MarioController : MonoBehaviour
 {
-	public static MarioState myState;
-	public int mySubState = 0;
-	public int maxJump = 6;
+	[HideInInspector] public static MarioState myState;
+	[HideInInspector] public int mySubState = 0;
 
+	public int maxJump = 6;
 	public float jumpForce = 2.5f;
 	public float moveSpeed = 5.0f;
 
@@ -145,7 +145,7 @@ public class MarioController : MonoBehaviour
 						|| (jumpedHeight > jumpingMax && jumpType == 3)) { //TODO: more efficient...
 
 						//force down
-						rb.AddForce (Vector3.down * ((1 - (jumpedHeight / (maxJump / 0.1f))) * jumpForce - (jumpType/2)) * 130 * Time.deltaTime, ForceMode.VelocityChange);
+						rb.AddForce (Vector3.down * ((1 - (jumpedHeight / (maxJump / 0.1f))) * jumpForce - (jumpType/2)) * 100 * Time.deltaTime, ForceMode.Impulse);
 
 						if (hasTouchedCeiling)
 							jumpAfterTimer = 0;

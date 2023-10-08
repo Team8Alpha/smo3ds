@@ -48,11 +48,16 @@ public class scr_fadefull : MonoBehaviour {
 		return this;
 
 	}
-	void Start () {
-		if (scr_fadefull._f == null)
-			_f = this;
-		else
-			Destroy (gameObject);
+	void Awake () {
+		try{
+			if (scr_fadefull._f == null)
+				scr_fadefull._f = this;
+			else
+				Destroy (gameObject);
+
+			} catch(System.Exception e){
+				Debug.Log (" " + e);
+		}
 		if (isDone) {
 			colUp.color = new Color (0, 0, 0, 0);
 			colDown.color = new Color (0, 0, 0, 0);

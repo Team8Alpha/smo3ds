@@ -58,10 +58,10 @@ public class scr_buttonCtrl : MonoBehaviour {
 			if (UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.A) || Input.GetKey (KeyCode.Return)) {
 				switch (currentButton) {
 				case 0:
-					LoadResume ();
+					LoadScene ("scn_capMain0");
 					break;
 				case 1:
-					LoadNew ();
+					LoadScene ("scn_test0");
 					break;
 				case 2:
 					LoadOptions ();
@@ -69,13 +69,6 @@ public class scr_buttonCtrl : MonoBehaviour {
 				}
 			}
 		}
-	}
-	public void LoadResume()
-	{
-		LoadScene ("scn_capMain0");
-	}
-	public void LoadNew(){
-		LoadScene ("scn_test0");
 	}
 	public void LoadOptions()
 	{

@@ -18,6 +18,23 @@ public class scr_behaviorFrailBox : MonoBehaviour {
 			if (hitCount == hitMax) toBreak ();
 		}
 	}
+
+	void Update(){
+		transform.Translate (0, -0.2f, 0);
+	}
+	void OnSensorGroundEnter(Collider coll){
+		if (coll.gameObject.layer != 20)
+			this.enabled = false;
+	}
+	void OnSensorGroundExit(Collider coll){
+		if (coll.gameObject.layer != 20)
+			this.enabled = true;
+	}
+	void OnSensorInsideStay(Collider coll){
+		if (coll.gameObject.layer != 20)
+			transform.Translate (0, 0.3f, 0);
+	}
+
 	void toBreak(){
 		hitCount = 0;
 		anim.CrossFade ("damage", 0.1f);

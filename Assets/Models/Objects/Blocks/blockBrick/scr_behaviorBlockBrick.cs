@@ -14,6 +14,7 @@ public class scr_behaviorBlockBrick : MonoBehaviour {
 	void Start() {
 		anim = GetComponent<Animator> ();
 		FrameLimit *= 30;
+		this.enabled = false;
 	}
 
 	void DoKill(){

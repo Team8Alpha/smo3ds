@@ -7,13 +7,14 @@ public class scr_behaviorBlockQuestion : MonoBehaviour {
 	int hitCount = 0;
 	bool isActive = true;
 
-	public int FrameLimit = 10; //10 * 30 = 300
+	public int FrameLimit = 30; //10 * 30 = 300
 	const int CoinInterval = 10;
 	private int CoinInvFrame = 0;
 
 	void Start() {
 		anim = GetComponent<Animator> ();
 		FrameLimit *= 30;
+		this.enabled = false;
 	}
 
 	void DoIsEmpty(){

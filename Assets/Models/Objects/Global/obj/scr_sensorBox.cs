@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class scr_sensorBox : MonoBehaviour {
 
-	public Vector3 size;
 	BoxCollider sensor;
 	public string funcEnter = "OnSensorEnter";
 	public string funcStay = "OnSensorStay";
@@ -13,20 +12,21 @@ public class scr_sensorBox : MonoBehaviour {
 
 	void Start () {
 		this.enabled = false;
-		sensor = gameObject.AddComponent<BoxCollider> ();
-		sensor.size = size;
+		sensor = gameObject.GetComponent<BoxCollider> ();
 		sensor.isTrigger = true;
 	}
 
-	void OnTriggerEnter(Collider col){
-		if(funcEnter != "") transform.parent.gameObject.SendMessage (funcEnter, col);
+	void OnTriggerEnter(Collider coll){
+		DoCall (coll, funcEnter);
+	}
+	void OnTriggerStay(Collider coll){
+		DoCall (coll, funcStay);
+	}
+	void OnTriggerExit(Collider coll){
+		DoCall (coll, funcExit);
 	}
 
-	void OnTriggerStay(Collider col){
-		if(funcStay != "") transform.parent.gameObject.SendMessage (funcStay, col);
-	}
-
-	void OnTriggerExit(Collider col){
-		if(funcExit != "") transform.parent.gameObject.SendMessage (funcExit, col);
+	void DoCall(Collider coll, string func){
+		if(func != "" && coll.gameObject != transform.parent.gameObject) transform.parent.gameObject.SendMessage (func, coll);
 	}
 }
