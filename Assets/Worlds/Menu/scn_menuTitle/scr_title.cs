@@ -7,7 +7,6 @@ using UnityEngine.EventSystems;
 public class scr_title : MonoBehaviour {
 
 	private Animator anim;
-	private AudioSource snd_mTitle;
 	private Vector3 marioPos;
 
 	public GameObject spr_rotMap;
@@ -40,10 +39,9 @@ public class scr_title : MonoBehaviour {
 	// Use this for initialization
 	void Start(){
 		anim = GetComponent<Animator> ();
-		snd_mTitle = GetComponent<AudioSource> ();
 		marioPos = transform.position; // to move him back later
 		transform.position = new Vector3 (-1000, transform.position.y, transform.position.z); //move to waitzone, works like a timer.
-		scr_fadefull._f.Run (true, 0, 0.05f);//fade in
+		scr_fadefull._f.Run (true, 0, 0.03f);//fade in
 		mat_rotMap = spr_rotMap.gameObject.GetComponent<MeshRenderer> ().material;
 		mat_shade = spr_shade.gameObject.GetComponent<MeshRenderer> ().material;//get materials
 		scr_gameInit.globalValues.focusOff ();
@@ -54,11 +52,11 @@ public class scr_title : MonoBehaviour {
 	void Update () {
 		if (scr_fadefull._f.isDone || bvar0) {
 			if (!bvar0) {
-				snd_mTitle.Play ();
+				scr_manageAudio._f.AudioStart ("Sound/Entity/Mario/snd_MarioTitleName", false);
 				bvar0 = true;
 			} else {
-				if (snd_mTitle.isPlaying) {
-					if (transform.position.x < -1004.5) {
+				if (scr_manageAudio._f.isPlaying()) {
+					if (transform.position.x < -1006.5f) {
 						transform.position = marioPos;
 						anim.Play ("titleStart");
 					}
@@ -68,6 +66,7 @@ public class scr_title : MonoBehaviour {
 					for (int i = 0; i < 4; i++)
 						cnv_down.GetChild (i).gameObject.SetActive (true);
 					EventSystem.current.SetSelectedGameObject (buttonRes);
+					scr_manageAudio._f.AudioStart ("Music/Bgm/snd_BgmTitle");
 					this.enabled = false;
 				}
 			}

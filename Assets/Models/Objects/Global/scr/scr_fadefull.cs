@@ -9,35 +9,33 @@ public class scr_fadefull : MonoBehaviour {
 	private int conf = 0;
 	private float fadeSpeed = 0.01f;
 	public bool isDone = false;
-	private SpriteRenderer colUp;
-	private SpriteRenderer colDown;
+	private bool isFocusOnExit = false;
+	private bool isReverseOnExit = false;
+	private bool isKillOnExit = false;
+	[SerializeField] private SpriteRenderer colUp;
+	[SerializeField] private SpriteRenderer colDown;
 
-	public scr_fadefull Run(bool fadeIn=true, int conf=0, float fadeSpeed = 0.01f) {
+	public scr_fadefull Run(bool fadeIn=true, int conf=0, float fadeSpeed = 0.01f, bool isKillOnExit = false, bool isFocusOnExit = false, bool isReverseOnExit = false) {
 		isDone = false;
 		gameObject.SetActive(true);
 		this.fadeIn = fadeIn;
 		this.conf = conf;
 		this.fadeSpeed = fadeSpeed;
-		colUp = transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>();
-		colDown = transform.GetChild(3).gameObject.GetComponent<SpriteRenderer>();
+		this.isFocusOnExit = isFocusOnExit;
+		this.isReverseOnExit = isReverseOnExit;
+		this.isKillOnExit = isKillOnExit;
 		switch(conf){
 		case 0://full
-			transform.GetChild(0).gameObject.SetActive(true);
-			transform.GetChild(1).gameObject.SetActive(true);
-			transform.GetChild(2).gameObject.SetActive(true);
-			transform.GetChild(3).gameObject.SetActive(true);
+			colUp.gameObject.SetActive(true);
+			colDown.gameObject.SetActive(true);
 			break;
 		case 1://top
-			transform.GetChild(0).gameObject.SetActive(true);
-			transform.GetChild(1).gameObject.SetActive(true);
-			transform.GetChild(2).gameObject.SetActive(false);
-			transform.GetChild(3).gameObject.SetActive(false);
+			colUp.gameObject.SetActive(true);
+			colDown.gameObject.SetActive(false);
 			break;
 		case 2://bottom
-			transform.GetChild(0).gameObject.SetActive(false);
-			transform.GetChild(1).gameObject.SetActive(false);
-			transform.GetChild(2).gameObject.SetActive(true);
-			transform.GetChild(3).gameObject.SetActive(true);
+			colUp.gameObject.SetActive(false);
+			colDown.gameObject.SetActive(true);
 			break;
 		}
 		if (fadeIn) {
@@ -50,9 +48,16 @@ public class scr_fadefull : MonoBehaviour {
 		return this;
 
 	}
-	void Awake () {
-		_f = this;
-		gameObject.SetActive (false);
+	void Start () {
+		if (scr_fadefull._f == null)
+			_f = this;
+		else
+			Destroy (gameObject);
+		if (isDone) {
+			colUp.color = new Color (0, 0, 0, 0);
+			colDown.color = new Color (0, 0, 0, 0);
+			gameObject.SetActive (false);
+		}
 	}
 
 	void Update () {
@@ -64,7 +69,6 @@ public class scr_fadefull : MonoBehaviour {
 					colDown.color = new Color (0, 0, 0, colDown.color.a - fadeSpeed);
 					if (colDown.color.a <= 0) {
 						isDone = true;
-						gameObject.SetActive (false);
 					}
 					break;
 				case 1:
@@ -72,7 +76,6 @@ public class scr_fadefull : MonoBehaviour {
 					colDown.color = new Color (0, 0, 0, colDown.color.a - fadeSpeed);
 					if (colDown.color.a <= 0) {
 						isDone = true;
-						gameObject.SetActive (false);
 					}
 					break;
 				case 2:
@@ -80,7 +83,6 @@ public class scr_fadefull : MonoBehaviour {
 					colUp.color = new Color (0, 0, 0, colUp.color.a - fadeSpeed);
 					if (colUp.color.a <= 0) {
 						isDone = true;
-						gameObject.SetActive (false);
 					}
 					break;
 				}
@@ -107,6 +109,14 @@ public class scr_fadefull : MonoBehaviour {
 					break;
 				}
 			}
+		} else {
+			if (isFocusOnExit)
+				scr_gameInit.globalValues.focusOn ();
+			if (isReverseOnExit) {
+				Run (!fadeIn, conf, fadeSpeed, isFocusOnExit, false);
+			} else if (isKillOnExit)
+				Destroy (gameObject);
+			else if(fadeIn) gameObject.SetActive (false);
 		}
 	}
 }

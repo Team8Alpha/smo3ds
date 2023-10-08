@@ -39,12 +39,13 @@ public class scr_gameInit : MonoBehaviour {
 			Debug.Log("INITIALIZE SUPER MARIO ODYSSEY - 3DS REMAKE");
 			globalValues = this;
 			DontDestroyOnLoad(gameObject);
+			Init ();
 			return;
 		}
 		Destroy(gameObject);
 	}
 	
-	void Start () {
+	void Init () {
 		Application.targetFrameRate = 50;
 		QualitySettings.vSyncCount = 0;
 		//UnityEngine.N3DS.HomeButton.Enable ();

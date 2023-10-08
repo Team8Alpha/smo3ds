@@ -5,12 +5,11 @@ using UnityEngine;
 
 public class scr_menuSplashPress : MonoBehaviour {
 
-	[SerializeField] float t_timer = 5;
-	private bool t_exiting = false;
-
+	[SerializeField] float timer = 5;
+	//private bool exiting = false;
 
 	void Start(){
-		scr_fadefull._f.Run (true, 0, 0.04f);
+		//scr_fadefull._f.Run (true, 0, 0.04f);
         StartCoroutine(Delay());
     }
 	
@@ -22,30 +21,30 @@ public class scr_menuSplashPress : MonoBehaviour {
 	}
 
     /*void Update () {
-		t_timer -= 0.1f;
-		if(t_timer<=0){
-			if (t_exiting) {
+		timer -= 0.1f;
+		if(timer<=0){
+			if (exiting) {
 				
 			} else {
 				scr_fadefull._f.Run (false, 0, 0.08f);
-				t_timer = 2;
-				t_exiting = true;
+				timer = 2;
+				exiting = true;
 			}
 		}
 		#if UNITY_EDITOR
-		if(!t_exiting && Input.GetKey(KeyCode.Return)) t_timer = 0;
+		if(!exiting && Input.GetKey(KeyCode.Return)) timer = 0;
 		#else
-		if(!t_exiting && UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A)){ 
+		if(!exiting && UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A)){ 
 			if(scr_gameInit.globalValues != null){
-			if(scr_gameInit.globalValues.isFocused) t_timer = 0;
-			} else t_timer = 0;
+			if(scr_gameInit.globalValues.isFocused) timer = 0;
+			} else timer = 0;
 		}
 		#endif
 	}*/
 
     IEnumerator Delay()
 	{
-		yield return new WaitForSecondsRealtime(t_timer);
+		yield return new WaitForSecondsRealtime(timer);
 		Confirm();
 	}
 }

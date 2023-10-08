@@ -4,6 +4,9 @@ using UnityEngine;
 public class scr_behaviorMarioCap : MonoBehaviour {
 	
 	private Animator anim;
+	string prefixSND = "Sound/Entity/Cappy/";
+	private Transform transformMario;
+	private Transform armature;
 	public int currentState = 1;
 	public bool activated = true;
 	private float fvar0 = 0;//another var used by states.
@@ -21,8 +24,6 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 	public Vector3 hackRot = Vector3.zero;
 	private bool isColliding = false;
 	private bool isHacking = false;
-	private Transform transformMario;
-	private Transform armature;
 	
 	private Vector3 tmp_pos;
 
@@ -37,7 +38,7 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 		gameObject.SetActive (true);
 		switch(state){
 		case 0:
-			sndSrc.clip = scr_manageAudio._f.ReturnAudioClip("Cappy/snd_capSpin");
+			sndSrc.clip = scr_manageAudio._f.GetClip (prefixSND + "snd_capSpin");
 			sndSrc.loop = true;
 			sndSrc.Play ();
 			isThrown = true;
@@ -90,7 +91,7 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 				anim.Play ("capture");
 				sndSrc.Stop ();
 				sndSrc.loop = false;
-				sndSrc.clip = scr_manageAudio._f.ReturnAudioClip("Cappy/snd_capTure");
+				sndSrc.clip = scr_manageAudio._f.GetClip(prefixSND+"snd_capHackStart");
 				sndSrc.Play ();
 			}
 			transform.rotation = Quaternion.Euler (0, 0, 0);
