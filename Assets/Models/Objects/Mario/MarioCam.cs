@@ -70,14 +70,16 @@ public class MarioCam : MonoBehaviour {
 			cursorX += ((Input.GetAxis ("Mouse X") * cursorSensitivity * Time.deltaTime * -1) * confStickXmax) * (invertCursorX ? -1 : 1);
 			cursorY += ((Input.GetAxis ("Mouse Y") * cursorSensitivity * Time.deltaTime * -1) * confStickYmax) * (invertCursorY ? -1 : 1);
 			#else
-			if(UnityEngine.N3DS.GamePad.IsCirclePadProConnected()){
+			if(UnityEngine.N3DS.GamePad.IsCirclePadProConnected())
+			{
 				cursorX += ((UnityEngine.N3DS.GamePad.CirclePadPro.x * cursorSensitivity * Time.deltaTime * -1) * confStickXmax) * (invertCursorX ? -1 : 1);
 				cursorY += ((UnityEngine.N3DS.GamePad.CirclePadPro.y * cursorSensitivity * Time.deltaTime * -1) * confStickYmax) * (invertCursorY ? -1 : 1);
-				if(cursorX > 0.1f) cursorX = 1; if(cursorY > 0.1f) cursorY = 1; //roughen camera sensitivity
-			} else {
-				cursorX = Input.GetAxisRaw("Horizontal");
-				cursorY = Input.GetAxisRaw("Vertical");
+			} else if(UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.L)) 
+			{
+				cursorX += ((UnityEngine.N3DS.GamePad.CirclePad.x * cursorSensitivity * Time.deltaTime * -1) * confStickXmax) * (invertCursorX ? -1 : 1);
+				cursorY += ((UnityEngine.N3DS.GamePad.CirclePad.y * cursorSensitivity * Time.deltaTime * -1) * confStickYmax) * (invertCursorY ? -1 : 1);
 			}
+			if(cursorX > 0f) cursorX = 1; if(cursorY > 0f) cursorY = 1; //roughen camera sensitivity
 			#endif
 			cursorY = Mathf.Clamp (cursorY, -20, 70f); // Clamp the Y axis to prevent camera flipping
 
