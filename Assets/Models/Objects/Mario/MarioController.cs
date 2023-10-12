@@ -98,8 +98,7 @@ public class MarioController : MonoBehaviour
 
 			HandleInput ();
 
-			if (!isBlocked || !key_backL)
-				HandleMove ();
+			HandleMove ();
 
 			HandleHack ();
 
@@ -239,30 +238,32 @@ public class MarioController : MonoBehaviour
 
     void HandleInput(){
         
-#if UNITY_EDITOR
-		h = Input.GetAxisRaw ("Horizontal");
-		v = Input.GetAxisRaw ("Vertical");
-
-		key_jump = Input.GetKey (KeyCode.Space);
-		key_backL = Input.GetKey (KeyCode.LeftControl);
-		key_backR = Input.GetKey (KeyCode.RightControl);
-		key_cap = Input.GetKey (KeyCode.LeftShift);
-#else
-		h = UnityEngine.N3DS.GamePad.CirclePad.x;
-		v = UnityEngine.N3DS.GamePad.CirclePad.y;
-
-		key_jump = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B);
-		key_backL = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.L);
-		key_backR = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.R);
-		key_cap = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.X) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.Y);
-#endif
-
 		// Check if Mario is blocked or pressing L to move the camera
 		if (isBlocked || key_backL) {
 			h = 0;
 			v = 0;
 			isMoving = false;
+
 		} else {
+			
+			#if UNITY_EDITOR
+			h = Input.GetAxisRaw ("Horizontal");
+			v = Input.GetAxisRaw ("Vertical");
+
+			key_jump = Input.GetKey (KeyCode.Space);
+			key_backL = Input.GetKey (KeyCode.LeftControl);
+			key_backR = Input.GetKey (KeyCode.RightControl);
+			key_cap = Input.GetKey (KeyCode.LeftShift);
+			#else
+			h = UnityEngine.N3DS.GamePad.CirclePad.x;
+			v = UnityEngine.N3DS.GamePad.CirclePad.y;
+
+			key_jump = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B);
+			key_backL = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.L);
+			key_backR = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.R);
+			key_cap = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.X) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.Y);
+			#endif
+
 			isMoving = h != 0 || v != 0;
 			switch (myState) {
 			case MarioState.Ground:
@@ -426,7 +427,7 @@ public class MarioController : MonoBehaviour
 		}
 		if (isHacking) {
 			if (hasCaptured) {
-				if (key_backL || key_backR || plsUnhack) {
+				if (key_backR || plsUnhack) {
 					transform.GetChild (2).gameObject.SetActive (false);//hair
 					transform.GetChild (1).gameObject.SetActive (true);//cap
 					SetState (MarioState.Ground);

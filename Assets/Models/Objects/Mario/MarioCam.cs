@@ -9,8 +9,8 @@ public class MarioCam : MonoBehaviour {
 	public Transform target; // The parent object for the camera
 	public Transform actualCamera; // The actual camera child object
 
-	public bool invertCursorY 							= false; // Whether to invert the Y axis of the cursor movement
-	public bool invertCursorX							= false; // Whether to invert the Y axis of the cursor movement
+	public bool isInvertCursorY 							= false; // Whether to invert the Y axis of the cursor movement
+	public bool isInvertCursorX							= false; // Whether to invert the Y axis of the cursor movement
 	public float cursorSensitivity 						= 10f; // The sensitivity of the cursor movement
 	public float CStickSensitivity 						= 10f; // The sensitivity of the C-Stick movement
 	//public bool isThirdPerson 						= true; // Whether the camera is in third-person view
@@ -66,22 +66,33 @@ public class MarioCam : MonoBehaviour {
 	void Update() {
 
 		if (!isLocked) {
+			float cursorXtemp;
+			float cursorYtemp;
 			#if UNITY_EDITOR
-			cursorX += ((Input.GetAxis ("Mouse X") * cursorSensitivity * Time.deltaTime * -1) * confStickXmax) * (invertCursorX ? -1 : 1);
-			cursorY += ((Input.GetAxis ("Mouse Y") * cursorSensitivity * Time.deltaTime * -1) * confStickYmax) * (invertCursorY ? -1 : 1);
+				cursorXtemp = ((Input.GetAxis ("Mouse X") * cursorSensitivity * Time.deltaTime));
+				cursorYtemp = ((Input.GetAxis ("Mouse Y") * cursorSensitivity * Time.deltaTime));
 			#else
 			if(UnityEngine.N3DS.GamePad.IsCirclePadProConnected())
 			{
-				cursorX += ((UnityEngine.N3DS.GamePad.CirclePadPro.x * cursorSensitivity * Time.deltaTime * -1) * confStickXmax) * (invertCursorX ? -1 : 1);
-				cursorY += ((UnityEngine.N3DS.GamePad.CirclePadPro.y * cursorSensitivity * Time.deltaTime * -1) * confStickYmax) * (invertCursorY ? -1 : 1);
-			} else if(UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.L)) 
-			{
-				cursorX += ((UnityEngine.N3DS.GamePad.CirclePad.x * cursorSensitivity * Time.deltaTime * -1) * confStickXmax) * (invertCursorX ? -1 : 1);
-				cursorY += ((UnityEngine.N3DS.GamePad.CirclePad.y * cursorSensitivity * Time.deltaTime * -1) * confStickYmax) * (invertCursorY ? -1 : 1);
+				cursorXtemp = ((UnityEngine.N3DS.GamePad.CirclePadPro.x * cursorSensitivity * Time.deltaTime));
+				cursorYtemp = ((UnityEngine.N3DS.GamePad.CirclePadPro.y * cursorSensitivity * Time.deltaTime));
+				if(cursorX > 0f) cursorX = 1; if(cursorY > 0f) cursorY = 1; //roughen camera sensitivity
 			}
-			if(cursorX > 0f) cursorX = 1; if(cursorY > 0f) cursorY = 1; //roughen camera sensitivity
+			if(UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.L)) 
+			{
+				cursorXtemp = ((UnityEngine.N3DS.GamePad.CirclePad.x * cursorSensitivity * Time.deltaTime));
+				cursorYtemp = ((UnityEngine.N3DS.GamePad.CirclePad.y * cursorSensitivity * Time.deltaTime));
+			}
 			#endif
-			cursorY = Mathf.Clamp (cursorY, -20, 70f); // Clamp the Y axis to prevent camera flipping
+			if (isInvertCursorX)
+				cursorXtemp = -cursorXtemp;
+			if (isInvertCursorY)
+				cursorYtemp = -cursorYtemp;
+			
+			cursorY += cursorYtemp;
+			cursorX += cursorXtemp;
+
+			cursorY = Mathf.Clamp (cursorY, -10, 100); // Clamp the Y axis to prevent camera flipping
 
 			cameraControl = new Vector2 (cursorY / 2.2f, cursorX);
 			if (confRotate && MarioController.marioObject.isMoving) {
