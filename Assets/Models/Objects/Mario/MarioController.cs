@@ -98,7 +98,7 @@ public class MarioController : MonoBehaviour
 
 			HandleInput ();
 
-			if (!isBlocked)
+			if (!isBlocked || !key_backL)
 				HandleMove ();
 
 			HandleHack ();
@@ -257,8 +257,8 @@ public class MarioController : MonoBehaviour
 		key_cap = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.X) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.Y);
 #endif
 
-		// Check if Mario is blocked
-		if (isBlocked) {
+		// Check if Mario is blocked or pressing L to move the camera
+		if (isBlocked || key_backL) {
 			h = 0;
 			v = 0;
 			isMoving = false;
@@ -277,7 +277,7 @@ public class MarioController : MonoBehaviour
 				if (!key_jump)
 					lockJump = false;
 
-				if (key_backL)
+				if (key_backR)
 					SetState (MarioState.Squat);
 				break;
 
@@ -287,7 +287,7 @@ public class MarioController : MonoBehaviour
 				break;
 
 			case MarioState.Squat:
-				if (!key_backL) {
+				if (!key_backR) {
 					moveAdditional = Vector3.zero;
 					SetState (MarioState.Ground);
 				}
