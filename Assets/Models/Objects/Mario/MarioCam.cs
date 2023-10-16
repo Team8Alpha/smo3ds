@@ -66,8 +66,8 @@ public class MarioCam : MonoBehaviour {
 	void Update() {
 
 		if (!isLocked) {
-			float cursorXtemp;
-			float cursorYtemp;
+			float cursorXtemp=0;
+			float cursorYtemp=0;
 			#if UNITY_EDITOR
 				cursorXtemp = ((Input.GetAxis ("Mouse X") * cursorSensitivity * Time.deltaTime));
 				cursorYtemp = ((Input.GetAxis ("Mouse Y") * cursorSensitivity * Time.deltaTime));

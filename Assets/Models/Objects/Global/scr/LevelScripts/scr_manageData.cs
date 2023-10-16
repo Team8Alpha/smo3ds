@@ -49,6 +49,8 @@ public class scr_manageData : MonoBehaviour
 
 	public void Save()
 	{
+		scr_gameInit.globalValues.focusOff ();
+		scr_gameInit.globalValues.transform.GetChild (2).GetChild (1).gameObject.SetActive (true);
 		PrintLog ("N: saving data");
 		string filePath = Path.Combine (Application.persistentDataPath, SAVE_FILE_NAME);
 		try {
@@ -82,6 +84,9 @@ public class scr_manageData : MonoBehaviour
 		{
 			PrintLog("Error saving data: {e.Message}");
 		}
+
+		scr_gameInit.globalValues.transform.GetChild (2).GetChild (1).gameObject.SetActive (false);
+		scr_gameInit.globalValues.focusOn ();
 	}
 
 
