@@ -9,7 +9,7 @@ public class scr_buttonCtrl : MonoBehaviour {
 	public GameObject buttonNew;//new game button
 	public GameObject buttonOpt;//options button
 	public GameObject iconSelect;//cappy icon
-	public float iconOffset = 0; //how much to shift to left, since it would center in button.
+	public float iconOffset = 82; //how much to shift to left, since it would center in button.
 
 	private int currentButton = 0; //number of current button
 	private bool buttonPressed = false; //if it was pressed once, it has to be 0 to be able to be pressed again, so it wont just go party with the buttons.
@@ -30,11 +30,11 @@ public class scr_buttonCtrl : MonoBehaviour {
 				buttonPressed = true;
 				if (h > 0)
 				if (currentButton <= 0)
-					currentButton = 2;
+					currentButton = 1; //HERE MAXIMAL BUTTON NUMBER
 				else
 					currentButton--;
 				if (h < 0)
-				if (currentButton >= 2)
+				if (currentButton >= 1) //HERE MAXIMAL BUTTON NUMBER
 					currentButton = 0;
 				else
 					currentButton++;

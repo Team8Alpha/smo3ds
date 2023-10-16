@@ -78,9 +78,12 @@ public class MarioController : MonoBehaviour
 
 	[HideInInspector] CapsuleCollider capsColl1;
 	[HideInInspector] CapsuleCollider capsColl2;
-	[HideInInspector] private float[] jumpForces 	= {7.94f, 8.73f, 11.57f, 1.05f, 1.365f, 3.75f};
-	// various speeds for different jumps=         	   j1-l   j2-l   j3-l    j1-h   j2-h    j3-h
-	//j=jump, s=short, l=long, h=minimal height
+	private float[,] jumpForces = new float[3, 3] {
+		{ 7.94f, 1.05f, 2.58f }, // Jump 1
+		{ 8.73f, 1.365f, 3.12f }, // Jump 2
+		{ 11.57f, 3.75f, 5.5f } // Jump 3
+	};
+	//jump force max,  jump height min,  jump height max
 
     void Awake()
 	{
@@ -130,19 +133,24 @@ public class MarioController : MonoBehaviour
 			case MarioState.Jumping: // Jumping from land normal
 				float jumpedHeight = transform.position.y - lastGroundedPosition;
 
-				if (jumpedHeight > 5) { //JUMPING HIGH CAM
+				if (jumpedHeight > 4.5f) { //JUMPING HIGH CAM
 					groundedPosition = transform.position.y;
-					MarioCam.marioCamera.confSmoothTime = 0.14f;
+					MarioCam.marioCamera.confSmoothTime = 0.13f;
 					MarioCam.marioCamera.confYOffset = 1;
 				}
 
-				if ((jumpedHeight > jumpForces [jumpType + 2] && !key_jump) || hasTouchedCeiling) {
-					rb.AddForce (Vector3.down * jumpForces [jumpType] /2f, ForceMode.Impulse);
+				if ((jumpedHeight > jumpForces[jumpType-1, 1] && !key_jump)
+					|| (jumpedHeight > jumpForces[jumpType-1, 2] && key_jump)
+					|| hasTouchedCeiling) {
+
+					rb.AddForce (Vector3.down * jumpForces [jumpType-1, 0] /2f, ForceMode.Impulse);
 					if (hasTouchedCeiling) {
 						rb.velocity = new Vector3 (rb.velocity.x, 0, rb.velocity.z); 
 						jumpAfterTimer = 0;
 					}
+					Debug.Log ("ssshsshshshuohados");
 					SetState (MarioState.Falling, 1); //substate 1, jumpfall
+					
 				}
 				//once left ground, he jumped.
 				if (!isGrounded)
@@ -374,7 +382,7 @@ public class MarioController : MonoBehaviour
 			}
 			lastGroundedPosition = groundedPosition;
 
-			rb.AddForce (jumpForces[jumpType-1] * Vector3.up, ForceMode.Impulse);
+			rb.AddForce (jumpForces[jumpType-1,0] * Vector3.up, ForceMode.Impulse);
 			break;
 
 		case MarioState.Falling:
@@ -430,21 +438,26 @@ public class MarioController : MonoBehaviour
 				isRotate = false;
 				isMovingAir = true;
 			}
-			rb.MovePosition(rb.position - directionAir);
+			rb.MovePosition (rb.position - directionAir);
 		}
 
 		if (isMoving) {
-
-			if (isFixWalk || !wasMoving)
-				SetAnim (anim_run);
-			if ((!wasMoving || isFixWalk) && isGrounded) {
-				isFixWalk = false;
+			if (isGrounded) {
+				if (isFixWalk) {
+					SetAnim (anim_run);
+					isFixWalk = false;
+				}
+				if (!wasMoving) {
+					if (currentMoveSpeed > 1)
+						SetAnim (anim_run);
+					else
+						SetAnim (anim_runStart);
+				}
 			}
 
 			if (isRotate) {
 				float tmp_walkRotation = 0;
 				if (transform.rotation.y < 179 && transform.rotation.y > -179) {
-
 					walkRotation += tmp_walkRotation / 76;
 					tmp_walkRotation = Mathf.Atan2 (h, v) * Mathf.Rad2Deg;
 				} else {
@@ -457,14 +470,20 @@ public class MarioController : MonoBehaviour
 				currentMoveSpeed += 0.3f;
 			}
 
-            if (currentMoveSpeed > moveSpeed)
-                currentMoveSpeed = moveSpeed;
+			if (currentMoveSpeed > moveSpeed)
+				currentMoveSpeed = moveSpeed;
 
 
 		} else {
-			if (currentMoveSpeed > 0) currentMoveSpeed = 0;
-            if (wasMoving && isGrounded)
-                SetAnim(anim_stand);
+			if (isGrounded) {
+				if (currentMoveSpeed > 0) {
+					currentMoveSpeed -= 0.5f;
+					SetAnim ("dashBrake", 0.4f);
+				} else if (animLast != "idle") {
+					currentMoveSpeed = 0;
+					SetAnim (anim_stand, 0.5f);
+				}
+			}
 		}
 
 	}
@@ -620,11 +639,12 @@ public class MarioController : MonoBehaviour
 	//CHECK
 	public bool isAnim(string anmName)
 	{
-		try {
+		/*try {
 			return anim.GetCurrentAnimatorStateInfo (0).IsName (anmName);
 		} catch (Exception e) {
 			return anim.GetCurrentAnimatorStateInfo (0).IsName (anmName);
-		}
+		}*/
+		return animLast == anmName;
 	}
 
 	// Bezier function (same as before)
