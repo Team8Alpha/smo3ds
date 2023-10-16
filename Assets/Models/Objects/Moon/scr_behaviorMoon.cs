@@ -130,7 +130,7 @@ public class scr_behaviorMoon : MonoBehaviour {
 			if (!scr_manageAudio._f.isPlaying()) {
 				Destroy (gameObject);
 				scr_gameInit.globalValues.focusOn ();
-				MarioController.marioObject.SetAnim ("wait", 0.1f, 1, false);
+				MarioController.marioObject.SetAnim ("wait", 0.1f);
 				MarioController.marioObject.SetState (MarioState.Falling);
 				globalCanvas.gameObject.SetActive (false);
 				MarioCam.marioCamera.confYOffset = 2;

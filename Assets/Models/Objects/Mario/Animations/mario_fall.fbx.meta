@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: d9a01be4adfc6af4f879179f2777a538
-timeCreated: 1693517194
+guid: c1fe450f91295c44b8ec9937a0412d8d
+timeCreated: 1697471551
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
@@ -18,11 +18,11 @@ ModelImporter:
     100020: HandR
     100022: Hip
     100024: JointRoot
-    100026: //RootNode
-    100028: LegL1
-    100030: LegL2
-    100032: LegR1
-    100034: LegR2
+    100026: LegL1
+    100028: LegL2
+    100030: LegR1
+    100032: LegR2
+    100034: //RootNode
     100036: MarioHead
     100038: nw4f_root
     100040: ShoulderL
@@ -43,11 +43,11 @@ ModelImporter:
     400020: HandR
     400022: Hip
     400024: JointRoot
-    400026: //RootNode
-    400028: LegL1
-    400030: LegL2
-    400032: LegR1
-    400034: LegR2
+    400026: LegL1
+    400028: LegL2
+    400030: LegR1
+    400032: LegR2
+    400034: //RootNode
     400036: MarioHead
     400038: nw4f_root
     400040: ShoulderL
@@ -77,9 +77,9 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     animationCompression: 1
-    animationRotationError: 10
-    animationPositionError: 10
-    animationScaleError: 10
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
     clipAnimations:
@@ -94,8 +94,8 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -161,13 +161,13 @@ ModelImporter:
       maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 3
+    meshCompression: 0
     addColliders: 0
-    importBlendShapes: 0
+    importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
