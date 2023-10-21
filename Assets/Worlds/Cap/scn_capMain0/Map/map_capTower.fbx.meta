@@ -1,0 +1,163 @@
+fileFormatVersion: 2
+guid: f5bfbd368431f384db95e3cd4b34dba6
+timeCreated: 1697913866
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Armature
+    100002: //RootNode
+    100004: TowerTop
+    100006: TowerTop__CommonGateBlack00
+    100008: TowerTop__DazzleCamouflage03Color
+    100010: TowerTop__DazzleCamouflageSingleLayer
+    100012: TowerTop__DazzleCamouflageSingleLayer2
+    100014: TowerTop__FeltPlainHair01
+    100016: TowerTop__FeltPlainHair01DifferentLight
+    100018: TowerTop__GroundCover00
+    100020: TowerTop__MetalGold00
+    100022: TowerTop__MetalGold01
+    100024: TowerTop__WallBrick00
+    100026: TowerTop__WallPlaster00
+    100028: TowerTop_end
+    400000: Armature
+    400002: //RootNode
+    400004: TowerTop
+    400006: TowerTop__CommonGateBlack00
+    400008: TowerTop__DazzleCamouflage03Color
+    400010: TowerTop__DazzleCamouflageSingleLayer
+    400012: TowerTop__DazzleCamouflageSingleLayer2
+    400014: TowerTop__FeltPlainHair01
+    400016: TowerTop__FeltPlainHair01DifferentLight
+    400018: TowerTop__GroundCover00
+    400020: TowerTop__MetalGold00
+    400022: TowerTop__MetalGold01
+    400024: TowerTop__WallBrick00
+    400026: TowerTop__WallPlaster00
+    400028: TowerTop_end
+    2300000: TowerTop__CommonGateBlack00
+    2300002: TowerTop__DazzleCamouflage03Color
+    2300004: TowerTop__DazzleCamouflageSingleLayer
+    2300006: TowerTop__DazzleCamouflageSingleLayer2
+    2300008: TowerTop__FeltPlainHair01
+    2300010: TowerTop__FeltPlainHair01DifferentLight
+    2300012: TowerTop__GroundCover00
+    2300014: TowerTop__MetalGold00
+    2300016: TowerTop__MetalGold01
+    2300018: TowerTop__WallBrick00
+    2300020: TowerTop__WallPlaster00
+    3300000: TowerTop__CommonGateBlack00
+    3300002: TowerTop__DazzleCamouflage03Color
+    3300004: TowerTop__DazzleCamouflageSingleLayer
+    3300006: TowerTop__DazzleCamouflageSingleLayer2
+    3300008: TowerTop__FeltPlainHair01
+    3300010: TowerTop__FeltPlainHair01DifferentLight
+    3300012: TowerTop__GroundCover00
+    3300014: TowerTop__MetalGold00
+    3300016: TowerTop__MetalGold01
+    3300018: TowerTop__WallBrick00
+    3300020: TowerTop__WallPlaster00
+    4300000: TowerTop__CommonGateBlack00
+    4300002: TowerTop__DazzleCamouflage03Color
+    4300004: TowerTop__DazzleCamouflageSingleLayer
+    4300006: TowerTop__DazzleCamouflageSingleLayer2
+    4300008: TowerTop__FeltPlainHair01
+    4300010: TowerTop__FeltPlainHair01DifferentLight
+    4300012: TowerTop__GroundCover00
+    4300014: TowerTop__MetalGold00
+    4300016: TowerTop__MetalGold01
+    4300018: TowerTop__WallBrick00
+    4300020: TowerTop__WallPlaster00
+    6400000: TowerTop__CommonGateBlack00
+    6400002: TowerTop__DazzleCamouflage03Color
+    6400004: TowerTop__DazzleCamouflageSingleLayer
+    6400006: TowerTop__DazzleCamouflageSingleLayer2
+    6400008: TowerTop__FeltPlainHair01
+    6400010: TowerTop__FeltPlainHair01DifferentLight
+    6400012: TowerTop__GroundCover00
+    6400014: TowerTop__MetalGold00
+    6400016: TowerTop__MetalGold01
+    6400018: TowerTop__WallBrick00
+    6400020: TowerTop__WallPlaster00
+    9500000: //RootNode
+    13700000: TowerTop__CommonGateBlack00
+    13700002: TowerTop__DazzleCamouflage03Color
+    13700004: TowerTop__DazzleCamouflageSingleLayer
+    13700006: TowerTop__DazzleCamouflageSingleLayer2
+    13700008: TowerTop__FeltPlainHair01
+    13700010: TowerTop__FeltPlainHair01DifferentLight
+    13700012: TowerTop__GroundCover00
+    13700014: TowerTop__MetalGold00
+    13700016: TowerTop__MetalGold01
+    13700018: TowerTop__WallBrick00
+    13700020: TowerTop__WallPlaster00
+  materials:
+    importMaterials: 0
+    materialName: 2
+    materialSearch: 2
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 100
+    meshCompression: 2
+    addColliders: 1
+    importBlendShapes: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

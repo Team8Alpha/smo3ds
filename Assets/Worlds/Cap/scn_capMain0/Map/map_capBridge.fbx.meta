@@ -1,76 +1,36 @@
 fileFormatVersion: 2
-guid: 572079625ace32f489defcb9f8b09769
-timeCreated: 1681765011
+guid: a9aef1345fc3f6a42ac1543cd81c69d0
+timeCreated: 1697912721
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: COL_0.003
-    100002: COL_0.004
-    100004: COL_1.002
-    100006: COL_1.003
-    100008: COL_2.002
-    100010: COL_2.003
-    100012: COL_3.001
-    100014: COL_3.002
-    100016: COL_4.001
-    100018: COL_4.002
-    100020: //RootNode
-    400000: COL_0.003
-    400002: COL_0.004
-    400004: COL_1.002
-    400006: COL_1.003
-    400008: COL_2.002
-    400010: COL_2.003
-    400012: COL_3.001
-    400014: COL_3.002
-    400016: COL_4.001
-    400018: COL_4.002
-    400020: //RootNode
-    2300000: COL_0.003
-    2300002: COL_0.004
-    2300004: COL_1.002
-    2300006: COL_1.003
-    2300008: COL_2.002
-    2300010: COL_2.003
-    2300012: COL_3.001
-    2300014: COL_3.002
-    2300016: COL_4.001
-    2300018: COL_4.002
-    3300000: COL_0.003
-    3300002: COL_0.004
-    3300004: COL_1.002
-    3300006: COL_1.003
-    3300008: COL_2.002
-    3300010: COL_2.003
-    3300012: COL_3.001
-    3300014: COL_3.002
-    3300016: COL_4.001
-    3300018: COL_4.002
-    4300000: COL_0.003
-    4300002: COL_1.002
-    4300004: COL_2.002
-    4300006: COL_3.001
-    4300008: COL_4.001
-    4300010: COL_0.004
-    4300012: COL_1.003
-    4300014: COL_4.002
-    4300016: COL_2.003
-    4300018: COL_3.002
-    6400000: COL_0.003
-    6400002: COL_0.004
-    6400004: COL_1.002
-    6400006: COL_1.003
-    6400008: COL_2.002
-    6400010: COL_2.003
-    6400012: COL_3.001
-    6400014: COL_3.002
-    6400016: COL_4.001
-    6400018: COL_4.002
+    100000: border
+    100002: fence
+    100004: ground
+    100006: //RootNode
+    100008: wall
+    400000: border
+    400002: fence
+    400004: ground
+    400006: //RootNode
+    400008: wall
+    2300000: border
+    2300002: fence
+    2300004: ground
+    2300006: wall
+    3300000: border
+    3300002: fence
+    3300004: ground
+    3300006: wall
+    4300000: ground
+    4300002: wall
+    4300004: border
+    4300006: fence
   materials:
     importMaterials: 1
-    materialName: 1
-    materialSearch: 0
+    materialName: 0
+    materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -90,12 +50,12 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
-    meshCompression: 0
-    addColliders: 1
+    globalScale: 100
+    meshCompression: 3
+    addColliders: 0
     importBlendShapes: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
