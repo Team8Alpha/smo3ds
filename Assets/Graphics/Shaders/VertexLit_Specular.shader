@@ -4,7 +4,7 @@
     {
         _Color ("Color", Color) = (1, 1, 1, 1)
         _MainTex ("Texture", 2D) = "white" {}
-        _Shininess ("Shininess", float) = 0 // Adjust the range and default value as needed
+        _Shininess ("Shininess", Range(0, 10)) = 1.2
         _Light ("Light Direction", Vector) = (1, -1, 1)
     }
 
@@ -19,8 +19,9 @@
 
             #pragma vertex vert
             #pragma fragment frag
-            #pragma target 3.0
+            #pragma target 2.0
 
+            #include "Lighting.cginc"
             #include "UnityCG.cginc"
 
             struct VertexIn
@@ -32,7 +33,7 @@
 
             struct VertexOut
             {
-                float4 vertex : SV_POSITION;
+                float4 vertex : POSITION;
                 float2 uv_TexA : TEXCOORD0;
                 float4 color : COLOR;
             };
@@ -54,14 +55,14 @@
                 // Calculate diffuse intensity
                 float3 light = max(0, dot(worldNormal, -normalize(_Light)));
 
-                // Calculate specular intensity with a fixed shininess value
-                float3 viewDirection = normalize(i.vertex.xyz);
-                float3 halfwayDir = normalize(normalize(_Light) + viewDirection);
+                // Calculate specular intensity
+                float3 halfwayDir = normalize(normalize(_Light) + normalize(i.vertex.xyz));
                 float specular = pow(max(0, dot(worldNormal, halfwayDir)), 1);
 
                 // Finalize light color with shininess
+                float4 diffuse = float4(light * _Color.rgb, 1);
                 float4 specularColor = float4(specular, specular, specular, 1);
-                o.color = clamp(float4(light * _Color.rgb, 1) + specularColor, 0, 1);
+                o.color = clamp(diffuse + specularColor, 0, 1);
 
                 return o;
             }
