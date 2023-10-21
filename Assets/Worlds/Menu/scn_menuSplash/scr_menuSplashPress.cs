@@ -15,7 +15,7 @@ public class scr_menuSplashPress : MonoBehaviour {
 	
 	void Confirm(){
 		Debug.Log ("Loading...");
-		//scr_loadScene._f.loadTransition ("scn_capMain0", 1);
+		//scr_loadScene._f.StartScene ("scn_capMain0", 1);
 		UnityEngine.SceneManagement.SceneManager.LoadScene("scn_menuTitle");
 		scr_manageData._f.Load ();
 	}

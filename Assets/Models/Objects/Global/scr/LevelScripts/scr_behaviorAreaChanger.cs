@@ -12,7 +12,7 @@ public class scr_behaviorAreaChanger : MonoBehaviour {
 		if (num == 2) {
 			scr_gameInit.globalValues.nextSpawn = nextSpawn;
 			scr_gameInit.globalValues.focusOff ();
-			scr_loadScene._f.loadTransition (nextArea, transitionType);
+			scr_loadScene._f.StartScene (nextArea, transitionType);
 			scr_gameInit.globalValues.transform.GetChild (1).GetChild (1).gameObject.SetActive (true); //cuz it was broken, wanted to sleep.
 			//PlayerWalkDoor ();
 		}

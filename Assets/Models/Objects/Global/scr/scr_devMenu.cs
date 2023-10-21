@@ -83,8 +83,10 @@ public class scr_devMenu: MonoBehaviour {
 								tmpLvName = "scn_capExTower";
 								break;
 							}
-							ResetVal ();
-							scr_loadScene._f.loadTransition (tmpLvName, 0);
+							if (SceneManager.GetActiveScene ().name != tmpLvName) {
+								ResetVal ();
+								scr_loadScene._f.StartScene (tmpLvName, 0);
+							}
 						}
 						maxOption = 8;
 						canSelect = true;
@@ -146,8 +148,8 @@ public class scr_devMenu: MonoBehaviour {
 					DoPrint (selectionSub, " > ", 1, 40);
 					DoPrint (2, "Map Select", 1);
 					DoPrint (3, "TestMap0-Basic", 15);
-					DoPrint (4, "TestMap1-SandPyramid", 15);
-					DoPrint (5, "WorldCap-Main0", 15);
+					DoPrint (4, "TestMap1-Camera", 15);
+					DoPrint (5, "WorldCap-Main", 15);
 					DoPrint (6, "Global-InOdyssey", 15);
 					DoPrint (7, "WorldFalls-Main0", 15);
 					DoPrint (8, "WorldCap-ExTower", 15);

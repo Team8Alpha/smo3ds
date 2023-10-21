@@ -7,11 +7,19 @@ public class anim_OdysseyLevitate : MonoBehaviour {
 
 	bool hasLoaded = false;
 	bool isExiting = false;
+	bool hasStarted= false;
 
+	void Start(){
+		Application.backgroundLoadingPriority = ThreadPriority.BelowNormal;
+	}
 	// Update is called once per frame
 	void Update () {
 		if (!isExiting) {
 			transform.Translate (0, -0.17f * Time.unscaledTime, 0);
+			if (!hasStarted) {
+				hasStarted = true;
+				scr_loadScene._f.StartScene (scr_loadScene._f.nextScene, 3);
+			}
 			if (transform.position.x > -100) {
 				hasLoaded = true;
 				scr_manageAudio._f.AudioFadeOut (1);
@@ -19,8 +27,8 @@ public class anim_OdysseyLevitate : MonoBehaviour {
 				isExiting = true;
 			}
 		} else if (scr_fadefull._f.isDone) {
-			SceneManager.LoadScene (scr_loadScene._f.nextScene, LoadSceneMode.Additive);
 			var gos = GameObject.FindGameObjectsWithTag ("loading");
+			scr_loadScene._f.SetSceneActive ();
 			foreach (GameObject go in gos)
 				Destroy (go);
 		}
