@@ -145,7 +145,7 @@ public class MarioController : MonoBehaviour
 					|| (jumpedHeight > jumpForces[jumpType-1, 2] && key_jump)
 					|| hasTouchedCeiling) {
 
-					rb.AddForce (Vector3.down * jumpForces [jumpType-1, 0] /2f, ForceMode.Impulse);
+					rb.AddForce (Vector3.down * jumpForces [jumpType-1, 0] /2f, ForceMode.VelocityChange);
 					if (hasTouchedCeiling) {
 						rb.velocity = new Vector3 (rb.velocity.x, 0, rb.velocity.z); 
 						jumpAfterTimer = 0;

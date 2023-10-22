@@ -92,7 +92,7 @@ public class MarioCam : MonoBehaviour {
 			cursorY += cursorYtemp;
 			cursorX += cursorXtemp;
 
-			cursorY = Mathf.Clamp (cursorY, -20, 160); // Clamp the Y axis to prevent camera flipping
+			cursorY = Mathf.Clamp (cursorY, -180, 180); // Clamp the Y axis to prevent camera flipping
 
 			cameraControl = new Vector2 (cursorY / 2.2f, cursorX);
 			if (confRotate && MarioController.marioObject.isMoving) {

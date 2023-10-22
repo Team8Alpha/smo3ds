@@ -37,6 +37,11 @@ ModelImporter:
     4300006: Circle
     4300008: Wall
     4300010: Floor
+    6400000: Floor
+    6400002: Plane
+    6400004: Plane.001
+    6400006: Plane.002
+    6400008: Wall
   materials:
     importMaterials: 0
     materialName: 0
@@ -64,8 +69,8 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 3
-    addColliders: 0
+    meshCompression: 2
+    addColliders: 1
     importBlendShapes: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -81,7 +86,7 @@ ModelImporter:
   tangentSpace:
     normalSmoothAngle: 70
     normalImportMode: 0
-    tangentImportMode: 0
+    tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
