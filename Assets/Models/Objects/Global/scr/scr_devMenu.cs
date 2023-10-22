@@ -17,8 +17,17 @@ public class scr_devMenu: MonoBehaviour {
 	private int maxOption = 6;
 	private bool deb_fpsIsShowing = true;
 	private bool deb_enemyIsShowing = false;
+	private bool deb_cmdIsShowing = true;
 	private int height = 12;
 	private bool canSelect = false;
+	static public string txt_cmdOut = "Command Output";
+
+	void Start(){
+		if (false) {
+			this.enabled = false;
+			txt_cmdOut = null;
+		}
+	}
 
 	void ResetVal () {
 		canSelect = false;
@@ -26,7 +35,7 @@ public class scr_devMenu: MonoBehaviour {
 		noButtonPressed = true;
 		submenu = false;
 		selectionSub = -1;
-		scr_gameInit.globalValues.focusOn();
+		scr_main._f.focusOn();
 	}
 
 	void Update () {
@@ -34,11 +43,11 @@ public class scr_devMenu: MonoBehaviour {
 			isOpen = true;
 			maxOption = 6;
 			ResetVal ();
-			scr_gameInit.globalValues.focusOff();
+			scr_main._f.focusOff();
 		} else if (UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.R) && UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.Start) || Input.GetKey(KeyCode.Escape) && Input.GetKey(KeyCode.LeftShift)) {
 			isOpen = false;
 			ResetVal ();
-			scr_gameInit.globalValues.focusOn();
+			scr_main._f.focusOn();
 		}
 		if(isOpen){
 			if(noButtonPressed){
@@ -49,7 +58,7 @@ public class scr_devMenu: MonoBehaviour {
 				} else {
 					if(Input.GetKeyDown(KeyCode.UpArrow)) selection--;
 					if(Input.GetKeyDown(KeyCode.DownArrow)) selection++;
-					if(Input.GetKeyDown(KeyCode.Escape) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B)){ scr_gameInit.globalValues.focusOn(); isOpen = false;}
+					if(Input.GetKeyDown(KeyCode.Escape) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B)){ scr_main._f.focusOn(); isOpen = false;}
 				}
 				if(Input.GetKeyDown(KeyCode.Return) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A)){
 					switch(selection-3){
@@ -100,8 +109,11 @@ public class scr_devMenu: MonoBehaviour {
 						case 1:
 							if(deb_enemyIsShowing) deb_enemyIsShowing=false; else deb_enemyIsShowing=true;
 							break;
+						case 2:
+							if(deb_cmdIsShowing) deb_cmdIsShowing=false; else deb_cmdIsShowing=true;
+							break;
 						}
-						maxOption = 4;
+						maxOption = 5;
 						break;
 					case 3:
 						scr_manageData._f.Save ();
@@ -135,7 +147,7 @@ public class scr_devMenu: MonoBehaviour {
 	}
 
 	void DoPrint(int posN = 10, string text = "ERROR", int xOffSet = 15, int _width = 500){
-		GUI.Label(new Rect(xOffSet+xoffset, ypos*posN, _width, height), text, scr_gameInit.stl_debug);
+		GUI.Label(new Rect(xOffSet+xoffset, ypos*posN, _width, height), text, scr_main.stl_debug);
 	}
 
 	void OnGUI(){
@@ -159,6 +171,7 @@ public class scr_devMenu: MonoBehaviour {
 					DoPrint (2, "Toggle Debug", 1);
 					DoPrint (3, "Toggle FPS: " + deb_fpsIsShowing, 15);
 					DoPrint (4, "Toggle ENEMY: " + deb_enemyIsShowing, 15);
+					DoPrint (5, "Toggle CMD: " + deb_cmdIsShowing, 15);
 					break;
 				default:
 					submenu = false;
@@ -174,11 +187,13 @@ public class scr_devMenu: MonoBehaviour {
 			}
 		} else {
 			if(deb_fpsIsShowing) DoPrint (0, "FPS: "+1/Time.deltaTime, 1, 50);
-			if(deb_enemyIsShowing) DoPrint (1, "ENEMY: "+scr_gameInit.globalValues.dbg_enemyCount, 1, 50);
+			if(deb_enemyIsShowing) DoPrint (1, "ENEMY: "+scr_main._f.dbg_enemyCount, 1, 50);
 			if(MarioController.marioObject != null){
-				DoPrint (4, "COIN: "+scr_gameInit.globalValues.coinsCount, 1, 50);
-				DoPrint (5, "MOON: "+scr_gameInit.globalValues.moonsCount, 1, 50);
+				DoPrint (4, "COIN: "+scr_main._f.coinsCount, 1, 50);
+				DoPrint (5, "MOON: "+scr_main._f.moonsCount, 1, 50);
 			}
 		}
+		if (deb_cmdIsShowing && txt_cmdOut != "")
+			DoPrint (16, txt_cmdOut, -5, 1000);
 	}
 }

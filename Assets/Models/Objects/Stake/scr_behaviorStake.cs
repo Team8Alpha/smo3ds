@@ -25,7 +25,7 @@ public class scr_behaviorStake : MonoBehaviour {
 	}
 
 	public void OnCapture(){
-		scr_gameInit.globalValues.capMountPoint = capMount;
+		scr_main._f.capMountPoint = capMount;
 	}
 	public void OnCaptured(){
 		gameObject.tag = "captureMe"; //only used for its-own-script identification, since i modified some stuff.
@@ -38,14 +38,14 @@ public class scr_behaviorStake : MonoBehaviour {
 	}
 
 	void Update () {
-		if (scr_gameInit.globalValues.isFocused) {
+		if (scr_main._f.isFocused) {
 			if (tag == "captureMe") {
 				if (bentAmount < bentAmountMax && bentAmount != -0.1f)
 					bentAmount += 0.5f;
 				else if (bentAmount != -0.1f) {
 					GetComponent<Collider> ().enabled = false;
 					anim.Play ("pullOut");
-					scr_gameInit.globalValues.capMountPoint = "missingno";
+					scr_main._f.capMountPoint = "missingno";
 					MarioController.marioObject.cappy.SetState (2);
 					bentAmount = -0.1f;
 				} else if (anim.GetBool ("isDead")) {
@@ -59,7 +59,7 @@ public class scr_behaviorStake : MonoBehaviour {
 				boneBend2.transform.localEulerAngles = tmp_001;
 
 				capBone.localRotation = Quaternion.LookRotation (Vector3.up, capBone.up);
-				//Debug.Log (capBone.localEulerAngles);
+				//scr_main._f.SetCMD (capBone.localEulerAngles);
 				capBone.localEulerAngles = new Vector3 (-capBone.localEulerAngles.y, 0, 90);
 			}
 		}

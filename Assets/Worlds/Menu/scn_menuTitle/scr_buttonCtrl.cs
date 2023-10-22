@@ -24,7 +24,7 @@ public class scr_buttonCtrl : MonoBehaviour {
 	}
 
 	void Update () {
-		if (scr_gameInit.globalValues.isFocused) {
+		if (scr_main._f.isFocused) {
 			float h = UnityEngine.N3DS.GamePad.CirclePad.y + Input.GetAxisRaw ("Vertical");
 			if (!buttonPressed && h != 0) {
 				buttonPressed = true;
@@ -72,15 +72,15 @@ public class scr_buttonCtrl : MonoBehaviour {
 	}
 	public void LoadOptions()
 	{
-		Debug.Log ("Wait, a bit, wont ya?");
+		scr_main._f.SetCMD ("Wait, a bit, wont ya?");
 	}
 	void LoadScene(string name){
 		StartCoroutine (scr_title._f.ChangeEngineColour());
 		if (scr_loadScene._f.nextScene == name)
 			return;
 		scr_loadScene._f.nextScene = name;
-		scr_gameInit.globalValues.focusOff();
-		scr_gameInit.globalValues.dbg_enemyCount=0;
+		scr_main._f.focusOff();
+		scr_main._f.dbg_enemyCount=0;
 		SceneManager.LoadScene ("scn_loadShip", LoadSceneMode.Additive);
 		scr_title._f.GetComponent<Animator>().Play ("titleEnd");
 		transform.GetComponent<Canvas> ().enabled = false;

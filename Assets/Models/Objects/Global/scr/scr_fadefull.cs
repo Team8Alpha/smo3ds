@@ -56,7 +56,7 @@ public class scr_fadefull : MonoBehaviour {
 				Destroy (gameObject);
 
 			} catch(System.Exception e){
-				Debug.Log (" " + e);
+				scr_main._f.SetCMD (" " + e);
 		}
 		if (isDone) {
 			colUp.color = new Color (0, 0, 0, 0);
@@ -116,7 +116,7 @@ public class scr_fadefull : MonoBehaviour {
 			}
 		} else {
 			if (isFocusOnExit)
-				scr_gameInit.globalValues.focusOn ();
+				scr_main._f.focusOn ();
 			if (isReverseOnExit) {
 				Run (!fadeIn, conf, fadeSpeed, isFocusOnExit, false);
 			} else if (isKillOnExit)

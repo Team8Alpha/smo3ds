@@ -6,7 +6,7 @@ public class scr_globalLoad : MonoBehaviour {
 	[RuntimeInitializeOnLoadMethod]
 	void Start () {
 		GameObject sum_globinit = Resources.Load<GameObject> ("Objects/objGlobal");
-		if (FindObjectOfType<scr_gameInit>() == null) { 
+		if (FindObjectOfType<scr_main>() == null) { 
 			GameObject.Instantiate (sum_globinit); 
 		}
 		scr_manageData._f.LoadLevel();

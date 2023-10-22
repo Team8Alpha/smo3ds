@@ -44,7 +44,7 @@ public class scr_title : MonoBehaviour {
 		scr_fadefull._f.Run (true, 0, 0.02f);//fade in
 		mat_rotMap = spr_rotMap.gameObject.GetComponent<MeshRenderer> ().material;
 		mat_shade = spr_shade.gameObject.GetComponent<MeshRenderer> ().material;//get materials
-		scr_gameInit.globalValues.focusOff ();
+		scr_main._f.focusOff ();
 		_f = this;
 	}
 
@@ -62,7 +62,7 @@ public class scr_title : MonoBehaviour {
 					}
 					transform.Translate (new Vector3 (0.1f, 0, 0));
 				} else {
-					scr_gameInit.globalValues.focusOn ();
+					scr_main._f.focusOn ();
 					for (int i = 0; i < 4; i++)
 						cnv_down.GetChild (i).gameObject.SetActive (true);
 					EventSystem.current.SetSelectedGameObject (buttonRes);

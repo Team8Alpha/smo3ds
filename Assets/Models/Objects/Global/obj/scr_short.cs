@@ -13,7 +13,7 @@ public class scr_short : MonoBehaviour
 		Destroy (transform.parent.gameObject);
 	}
 	void CoinUp(){
-		scr_gameInit.globalValues.coinsCount++;
+		scr_main._f.coinsCount++;
 	}
 }
 

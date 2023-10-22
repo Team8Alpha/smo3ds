@@ -65,7 +65,7 @@ public class scr_behaviorMoon : MonoBehaviour {
 		anim = GetComponent<Animator>();
 		mat_color = transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
 		setColor ();
-		globalCanvas = scr_gameInit.globalValues.transform.GetChild (1).transform.GetChild (0);
+		globalCanvas = scr_main._f.transform.GetChild (1).transform.GetChild (0);
 	}
 	void OnTouch(int numType){
 		switch (numType) {
@@ -93,7 +93,7 @@ public class scr_behaviorMoon : MonoBehaviour {
 			break;
 		case 1://collected
 			if (!bvar0) {
-				scr_gameInit.globalValues.focusOff ();
+				scr_main._f.focusOff ();
 				anim.Play ("get");
 				Transform player = MarioController.marioObject.transform;
 
@@ -117,7 +117,7 @@ public class scr_behaviorMoon : MonoBehaviour {
 				scr_manageAudio._f.AudioStart ("Music/Jingle/snd_JingleMoonCollect", false);
 
 				string t_date = System.DateTime.UtcNow.ToShortDateString(); //even works on 3ds
-				scr_gameInit.globalValues.moonsCount++;
+				scr_main._f.moonsCount++;
 				globalCanvas.gameObject.SetActive (true);
 				globalCanvas.GetChild (1).gameObject.GetComponent<Text> ().text = moonName;
 				globalCanvas.GetChild (2).gameObject.GetComponent<Text> ().text = t_date;
@@ -129,7 +129,7 @@ public class scr_behaviorMoon : MonoBehaviour {
 		case 2://finishing
 			if (!scr_manageAudio._f.isPlaying()) {
 				Destroy (gameObject);
-				scr_gameInit.globalValues.focusOn ();
+				scr_main._f.focusOn ();
 				MarioController.marioObject.SetAnim ("wait", 0.1f);
 				MarioController.marioObject.SetState (MarioState.Falling);
 				globalCanvas.gameObject.SetActive (false);

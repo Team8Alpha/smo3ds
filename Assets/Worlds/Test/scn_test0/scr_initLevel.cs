@@ -5,6 +5,6 @@ using UnityEngine;
 public class scr_initscene02 : MonoBehaviour {
 
 	void Start () {
-		Debug.Log("Map loading!");
+		scr_main._f.SetCMD("Map loading!");
 	}
 }

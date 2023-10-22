@@ -104,14 +104,13 @@ public class scr_behaviorGoomba : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		scr_gameInit.globalValues.dbg_enemyCount++;
+		scr_main._f.dbg_enemyCount++;
 		anim = GetComponent<Animator> ();
 		if(stackAmount>1){
 			isTop = false;
 			float stackOffY = 2.5f;
 			int i = 1;
 			for(i=0; i<stackAmount-1; i++){
-				Debug.Log(i+2);
 				GameObject goombaStacked = scr_summon.f_summon.s_entity(0, new Vector3(transform.position.x, transform.position.y+(i+1*stackOffY), transform.position.z), new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z));
 				goombaSt[i] = goombaStacked.GetComponent<scr_behaviorGoomba>();
 				goombaSt[i].isMoving = false;
@@ -132,7 +131,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 			scr_behaviorGoomba obj = hit.transform.gameObject.GetComponent<scr_behaviorGoomba> ();
 			obj.isTop = true;
 		} else
-			Debug.Log ("single.");
+			scr_main._f.SetCMD ("single.");
 	}
 	
 	public void OnTouch(int numType){
@@ -145,20 +144,20 @@ public class scr_behaviorGoomba : MonoBehaviour {
 				setAnim ("pressDown");
 				GetComponent<Collider> ().enabled = false;
 				dead = true;
-				scr_gameInit.globalValues.dbg_enemyCount--;
+				scr_main._f.dbg_enemyCount--;
 				if (isMoving == false)
 					RankBelowGoomba ();
 				break;
 			case 2:
 					//kill mario
-					Debug.Log("~YOU DIED~");
+					scr_main._f.SetCMD("~YOU DIED~");
 				break;
 			}
 		}
 	}
 
 	public void OnCapture(){
-		scr_gameInit.globalValues.capMountPoint = "Armature/nw4f_root/AllRoot/JointRoot/Head/Cap";
+		scr_main._f.capMountPoint = "Armature/nw4f_root/AllRoot/JointRoot/Head/Cap";
 	}
 	public void OnCaptured(){
 		gameObject.tag = "captureMe";
@@ -175,7 +174,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if(scr_gameInit.globalValues.isFocused){
+		if(scr_main._f.isFocused){
 			if (dead) {
 				if (anim.GetBool ("flat")) {
 					for (int i = 1; i < 7; i++) {

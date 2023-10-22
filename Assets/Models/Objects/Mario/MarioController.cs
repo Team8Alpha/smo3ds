@@ -87,8 +87,10 @@ public class MarioController : MonoBehaviour
 
     void Awake()
 	{
+		scr_main._f.SetCMD ("");
+
 		// Disable AudioListener for the global values
-		scr_gameInit.globalValues.GetComponent<AudioListener>().enabled = false;
+		scr_main._f.GetComponent<AudioListener>().enabled = false;
 
 		// Enable AudioListener for Mario's object
 		GetComponent<AudioListener>().enabled = true;
@@ -106,7 +108,7 @@ public class MarioController : MonoBehaviour
 
 	void Update()
 	{
-		if (scr_gameInit.globalValues.isFocused) {
+		if (scr_main._f.isFocused) {
 
 			HandleInput ();
 
@@ -148,7 +150,6 @@ public class MarioController : MonoBehaviour
 						rb.velocity = new Vector3 (rb.velocity.x, 0, rb.velocity.z); 
 						jumpAfterTimer = 0;
 					}
-					Debug.Log ("ssshsshshshuohados");
 					SetState (MarioState.Falling, 1); //substate 1, jumpfall
 					
 				}
@@ -515,7 +516,7 @@ public class MarioController : MonoBehaviour
 					isBlocked 		= false;
 					isBlockBlocked 	= false;
 					isHacking 		= false;
-					scr_gameInit.globalValues.capMountPoint = "missingno";
+					scr_main._f.capMountPoint = "missingno";
 					var Mustache = cappy.capturedObject.transform.GetChild (0);
 					if (Mustache.name == "Mustache" || Mustache.name == "Mustache__HairMT")
 						Mustache.gameObject.SetActive (false); //if mustache, place it at index 0
@@ -544,8 +545,8 @@ public class MarioController : MonoBehaviour
 	{
 		try
 		{
-			if (collis.gameObject.layer != scr_gameInit.lyr_def)
-			if (collis.gameObject.layer == scr_gameInit.lyr_enemy || collis.gameObject.layer == scr_gameInit.lyr_obj)
+			if (collis.gameObject.layer != scr_main.lyr_def)
+			if (collis.gameObject.layer == scr_main.lyr_enemy || collis.gameObject.layer == scr_main.lyr_obj)
 			{
 				if(collis.GetComponent<paramObj>() != null) if(!collis.GetComponent<paramObj>().isTouch) return;
 
@@ -561,7 +562,7 @@ public class MarioController : MonoBehaviour
 		}
 		catch (Exception e)
 		{
-			Debug.Log(e.Message);
+			scr_main._f.SetCMD(e.Message);
 		}
 	}
 	void OnSensorTopEnter(Collider col){

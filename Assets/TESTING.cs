@@ -19,6 +19,6 @@ public class TESTING : MonoBehaviour {
 		if (Input.GetKeyUp (KeyCode.C))
 			MAXIMAL = 0;
 		if (Input.GetKeyUp (KeyCode.A))
-			Debug.Log (MAXIMAL); 
+			scr_main._f.SetCMD (MAXIMAL+""); 
 	}
 }

@@ -46,7 +46,7 @@ public class scr_behaviorFrog : MonoBehaviour {
 			anim.Play ("reaction");
 	}
 	public void OnCapture(){
-		scr_gameInit.globalValues.capMountPoint = capMount;
+		scr_main._f.capMountPoint = capMount;
 	}
 	public void OnCaptured(){
 		gameObject.tag = "captureMe";

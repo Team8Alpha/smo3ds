@@ -14,10 +14,11 @@ public class scr_menuSplashPress : MonoBehaviour {
     }
 	
 	void Confirm(){
-		Debug.Log ("Loading...");
+		scr_main._f.SetCMD ("Loading...");
 		//scr_loadScene._f.StartScene ("scn_capMain0", 1);
 		UnityEngine.SceneManagement.SceneManager.LoadScene("scn_menuTitle");
 		scr_manageData._f.Load ();
+		scr_main._f.SetCMD ("");
 	}
 
     /*void Update () {
@@ -35,8 +36,8 @@ public class scr_menuSplashPress : MonoBehaviour {
 		if(!exiting && Input.GetKey(KeyCode.Return)) timer = 0;
 		#else
 		if(!exiting && UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A)){ 
-			if(scr_gameInit.globalValues != null){
-			if(scr_gameInit.globalValues.isFocused) timer = 0;
+			if(scr_main._f != null){
+			if(scr_main._f.isFocused) timer = 0;
 			} else timer = 0;
 		}
 		#endif

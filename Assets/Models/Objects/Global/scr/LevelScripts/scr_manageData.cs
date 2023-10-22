@@ -34,7 +34,7 @@ public class scr_manageData : MonoBehaviour
 	public static scr_manageData _f;
 
 	private const string SAVE_FILE_NAME = "save.json";
-	private scr_gameInit globVar;
+	private scr_main globVar;
 
 	void Awake()
 	{
@@ -44,13 +44,13 @@ public class scr_manageData : MonoBehaviour
 		
 		
 		_f = this;
-		globVar = scr_gameInit.globalValues;
+		globVar = scr_main._f;
 	}
 
 	public void Save()
 	{
-		scr_gameInit.globalValues.focusOff ();
-		scr_gameInit.globalValues.transform.GetChild (2).GetChild (1).gameObject.SetActive (true);
+		scr_main._f.focusOff ();
+		scr_main._f.transform.GetChild (2).GetChild (1).gameObject.SetActive (true);
 		PrintLog ("N: saving data");
 		string filePath = Path.Combine (Application.persistentDataPath, SAVE_FILE_NAME);
 		try {
@@ -59,7 +59,7 @@ public class scr_manageData : MonoBehaviour
 			if (File.Exists (Path.Combine (Application.persistentDataPath, SAVE_FILE_NAME))) {
 				saveData = LoadManual ();
 				if (saveData.levelData [buildIndex] == null) {
-					Debug.Log ("N: creating saveData for level");
+					scr_main._f.SetCMD ("N: creating saveData for level");
 					saveData.levelData [buildIndex] = new LevelSaveData ();
 				}
 			} else {
@@ -85,8 +85,8 @@ public class scr_manageData : MonoBehaviour
 			PrintLog("Error saving data: {e.Message}");
 		}
 
-		scr_gameInit.globalValues.transform.GetChild (2).GetChild (1).gameObject.SetActive (false);
-		scr_gameInit.globalValues.focusOn ();
+		scr_main._f.transform.GetChild (2).GetChild (1).gameObject.SetActive (false);
+		scr_main._f.focusOn ();
 	}
 
 
@@ -143,7 +143,7 @@ public class scr_manageData : MonoBehaviour
 					data.levelData [buildIndex] = new LevelSaveData ();
 				}
 				globVar.lastCheckpoint = data.levelData [buildIndex].lastSpawn;
-				if(scr_gameInit.globalValues.nextSpawn == -1) globVar.nextSpawn = globVar.lastCheckpoint;
+				if(scr_main._f.nextSpawn == -1) globVar.nextSpawn = globVar.lastCheckpoint;
 			}
 		} catch (UnauthorizedAccessException e) {
 			PrintLog ("Error in LoadLevel: {e.Message}");
@@ -152,7 +152,7 @@ public class scr_manageData : MonoBehaviour
 
 	public void PrintLog(string message)
 	{
-		Debug.Log(message);
+		scr_main._f.SetCMD(message);
 	}
 
 	public SaveData LoadManual()
