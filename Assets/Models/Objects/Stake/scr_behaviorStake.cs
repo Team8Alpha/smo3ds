@@ -22,6 +22,7 @@ public class scr_behaviorStake : MonoBehaviour {
 		boneBend1 = boneBend0.GetChild (0);
 		boneBend2 = boneBend1.GetChild (0);
 		capBone  = transform.Find ("Armature/AllRoot/Center/Stake/JointRoot/Bend0/Bend1/Bend2/CapPoint");
+		this.enabled = false;
 	}
 
 	public void OnCapture(){
@@ -35,6 +36,7 @@ public class scr_behaviorStake : MonoBehaviour {
 		anim.Play ("pull");
 		bentH = scr_manageInput.AxisDir(-1).x;
 		bentV = scr_manageInput.AxisDir(-1).y;
+		this.enabled = true;
 	}
 
 	void Update () {

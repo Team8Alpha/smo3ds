@@ -24,6 +24,7 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 	private bool isColliding = false;
 	private bool isHacking = false;
 	private Vector3 tmp_pos;
+	paramObj paramCaptured;
 
 	string prefixSND = "Sound/Entity/Cappy/";
 	AudioClip snd_capHackStart;
@@ -124,8 +125,12 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 			isColliding = true;
 		//else if(currentState == 1)
 		//	MarioController.marioObject.SetState (MarioState.Jumping); //problems with collision
+		if (collis.gameObject.GetComponent<paramObj> () != null)
+			paramCaptured = collis.gameObject.GetComponent<paramObj> ();
 	}
 	void OnTriggerStay(Collider collis){
+		if (paramCaptured == null)
+			return;
 		if (collis.gameObject.layer != scr_main.lyr_player) {
 			if (collis.gameObject.layer != scr_main.lyr_def) {
 				try {
@@ -134,19 +139,18 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 						tchCount = 50;
 
 						if (collis.gameObject.layer == scr_main.lyr_enemy) {
-							collis.gameObject.SendMessage ("OnTouch", 1);
-							collis.gameObject.SendMessage ("OnCapture"); //send OnCapture event to object
+							if(paramCaptured.isTouch) collis.gameObject.SendMessage ("OnTouch", 1);
+							if(paramCaptured.isCapture) collis.gameObject.SendMessage ("OnCapture"); //send OnCapture event to object
+							else return;
 							mountPoint = collis.gameObject.transform.Find (scr_main._f.capMountPoint).gameObject;
 							if (mountPoint == null) {//if not set by object, or set wrongly, dont capture.
-								scr_main._f.capMountPoint = "missingno";
 								scr_main._f.SetCMD ("NO CPMNT AT " + scr_main._f.capMountPoint + " IN " + collis.gameObject);
 								capturedObject = null;
 							} else if (!isHacking) {
 								scr_main._f.SetCMD ("crappy hav frund " + collis.gameObject.name);
-                                print(collis.gameObject.GetComponentInChildren<scr_behaviorGoomba>().name == "goombaOnTop");
-                                if (collis.gameObject.GetComponentInChildren<scr_behaviorGoomba>() != null && collis.gameObject.GetComponentInChildren<scr_behaviorGoomba>().isTop && collis.gameObject.GetComponent<scr_behaviorGoomba>().stackAmount > 0)
+                                /*if (collis.gameObject.GetComponentInChildren<scr_behaviorGoomba>() != null && collis.gameObject.GetComponentInChildren<scr_behaviorGoomba>().isTop && collis.gameObject.GetComponent<scr_behaviorGoomba>().stackAmount > 0)
                                     capturedObject = GameObject.Find("goombaOnTop");
-                                else
+                                else*/
                                     capturedObject = collis.gameObject;
 
 								if(collis.gameObject.GetComponent<Collider>() != null)
@@ -154,8 +158,9 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 								if(collis.gameObject.GetComponent<Rigidbody>() != null)
 									collis.gameObject.GetComponent<Rigidbody>().useGravity = false;
 								toggleCollision(false);
-								MarioController.marioObject.isHacking = true;
 								capturedObject.SendMessage ("OnCaptured"); //send OnCaptured event to object
+								if(paramCaptured.isHack) MarioController.marioObject.isHacking = true;
+								else anim.Play("hookStart");
 								SetState (4);
 								armature.eulerAngles = Vector3.zero;
 								transform.GetChild (1).gameObject.transform.eulerAngles = Vector3.zero;
@@ -165,7 +170,8 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 								isHacking = true;
 							}
 						} else if (collis.gameObject.layer == scr_main.lyr_obj) {
-							collis.gameObject.SendMessage ("OnTouch", 1);
+							if(paramCaptured.isTouch) collis.gameObject.SendMessage ("OnTouch", 1);
+							if(paramCaptured.isCapture) collis.gameObject.SendMessage ("OnCapture", 1);
 							capturedObject = collis.gameObject;
 							scr_main._f.SetCMD ("crappy hav pfund" + collis.gameObject + collis.gameObject.layer.ToString ());
 						}

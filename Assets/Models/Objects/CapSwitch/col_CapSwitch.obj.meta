@@ -1,39 +1,25 @@
 fileFormatVersion: 2
-guid: d2ae9046cc20cf6419498447e5ec9d09
-timeCreated: 1698005310
+guid: 63d162fa7f62715438d27c0f0922170c
+timeCreated: 1698084229
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: AllRoot
-    100002: Armature
-    100004: //RootNode
-    100006: Gear
-    100008: HatTarget
-    100010: JointRoot
-    100012: pPlane1
-    100014: Swicth
-    400000: AllRoot
-    400002: Armature
-    400004: //RootNode
-    400006: Gear
-    400008: HatTarget
-    400010: JointRoot
-    400012: pPlane1
-    400014: Swicth
-    2300000: pPlane1
-    3300000: pPlane1
-    4300000: pPlane1
-    7400000: Take 001
-    9500000: //RootNode
+    100000: //RootNode
+    100002: default
+    400000: //RootNode
+    400002: default
+    2300000: default
+    3300000: default
+    4300000: default
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleCurves: 0
+    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
     rigImportErrors: 
@@ -42,7 +28,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    animationCompression: 0
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -52,7 +38,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.01
     meshCompression: 3
     addColliders: 0
     importBlendShapes: 0
@@ -90,7 +76,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

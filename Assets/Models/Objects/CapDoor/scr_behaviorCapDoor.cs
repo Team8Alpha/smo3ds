@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class scr_behaviorCapDoor : MonoBehaviour {
 
-	public int currentState = 0;
 	private Animator anim;
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator>();
+		this.enabled = false;
 	}
 	public void OnTouch(int numType){
 		if (numType == 1) {

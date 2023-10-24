@@ -8,8 +8,6 @@ public class scr_behaviorBlockQuestion : MonoBehaviour {
 	bool isActive = true;
 
 	public int FrameLimit = 30; //10 * 30 = 300
-	const int CoinInterval = 10;
-	private int CoinInvFrame = 0;
 
 	void Start() {
 		anim = GetComponent<Animator> ();
@@ -23,8 +21,8 @@ public class scr_behaviorBlockQuestion : MonoBehaviour {
 	}
 
 	void SpawnCoins(int numCoins) {
-		Vector3 coinSpawnPos = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
-		var coin = scr_summon.f_summon.s_object(0, coinSpawnPos, transform.eulerAngles).GetComponent<scr_behaviorCoin>();
+		Vector3 coinSpawnPos = new Vector3 (transform.position.x, transform.position.y + 0.8f, transform.position.z);
+		var coin = scr_summon.f_summon.s_object (0, coinSpawnPos, transform.eulerAngles).GetComponent<scr_behaviorCoin> ();
 		coin.currentState = 1;
 	}
 
@@ -40,14 +38,11 @@ public class scr_behaviorBlockQuestion : MonoBehaviour {
 		if (type == 1 || type == 4) {
 			if (hitCount == 0)
 				this.enabled = true;
-			if (timerFrame - CoinInvFrame >= CoinInterval || hitCount == 0 || !isActive) {
-				CoinInvFrame = timerFrame;
-				anim.Play ("up");
-				SpawnCoins (1);
-				hitCount++;
-				if (!isActive)
-					DoIsEmpty ();
-			}
+			anim.Play ("up");
+			SpawnCoins (1);
+			hitCount++;
+			if (!isActive)
+				DoIsEmpty ();
 		}
 	}
 }

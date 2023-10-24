@@ -8,8 +8,6 @@ public class scr_behaviorBlockBrick : MonoBehaviour {
 	bool isActive = true;
 
 	public int FrameLimit = 10; //10 * 30 = 300
-	const int CoinInterval = 10;
-	private int CoinInvFrame = 0;
 
 	void Start() {
 		anim = GetComponent<Animator> ();
@@ -49,14 +47,11 @@ public class scr_behaviorBlockBrick : MonoBehaviour {
 			} else {
 				if (hitCount == 0)
 					this.enabled = true;
-				if (timerFrame - CoinInvFrame >= CoinInterval || hitCount == 0 || !isActive) {
-					CoinInvFrame = timerFrame;
-					anim.Play ("brickUp");
-					SpawnCoins (1);
-					hitCount++;
-					if (!isActive)
-						DoIsEmpty ();
-				}
+				anim.Play ("brickUp");
+				SpawnCoins (1);
+				hitCount++;
+				if (!isActive)
+					DoIsEmpty ();
 			}
 		}
 	}
