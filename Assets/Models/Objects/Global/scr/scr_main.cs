@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class scr_main : MonoBehaviour {
 
 	// Initialization script for Super Mario Odyssey for 3ds, made by Team Alpha.
+	public const string version = "a0.3.1";
+	public bool isRelease = true;
 
 	//constants
 	public static scr_main _f;
@@ -58,8 +61,17 @@ public class scr_main : MonoBehaviour {
 		lyr_obj = LayerMask.NameToLayer ("Object");
 		lyr_def= LayerMask.NameToLayer ("Default");
 		lyr_player = LayerMask.NameToLayer ("Player");
+
+		string authorVersion;
+		if (isRelease)
+			authorVersion = "SMO3DS " + version;
+		else
+			authorVersion = "SMO3DS pre-" + version;
+		transform.GetChild (1).GetChild (0).GetComponent<Text> ().text = authorVersion;
 	}
 	public void SetCMD(string text, bool isEditorOut = true){
+		if (isRelease)
+			return;
 		if(scr_devMenu.txt_cmdOut != null) scr_devMenu.txt_cmdOut = text;
 		if(isEditorOut && text != "") Debug.Log (text);
 	}

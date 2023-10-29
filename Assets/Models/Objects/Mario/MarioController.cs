@@ -336,7 +336,7 @@ public class MarioController : MonoBehaviour
 	}
 
 	public void SetState(plState state, int subState = 0)
-	{ Debug.Log (state);
+	{
 		myState = state;
 		mySubState = subState;
 		switch (state) {

@@ -6,7 +6,7 @@ using UnityEngine;
 public class scr_menuSplashPress : MonoBehaviour {
 
 	[SerializeField] float timer = 5;
-	//private bool exiting = false;
+	private bool checkedDev = false;
 
 	void Start(){
 		//scr_fadefull._f.Run (true, 0, 0.04f);
@@ -45,6 +45,14 @@ public class scr_menuSplashPress : MonoBehaviour {
 
     IEnumerator Delay()
 	{
+		if (!checkedDev) {
+			if (scr_main._f == null)
+				yield return null;
+			if (!scr_main._f.isRelease) {
+				transform.parent.GetChild (2).GetChild (1).gameObject.SetActive (true);
+				checkedDev = true;
+			}
+		}
 		yield return new WaitForSecondsRealtime(timer);
 		Confirm();
 	}

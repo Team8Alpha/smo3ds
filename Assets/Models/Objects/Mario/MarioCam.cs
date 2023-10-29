@@ -80,11 +80,11 @@ public class MarioCam : MonoBehaviour {
 			{
 				cursorXtemp = ((UnityEngine.N3DS.GamePad.CirclePadPro.x * cursorSensitivity * Time.deltaTime));
 				cursorYtemp = ((UnityEngine.N3DS.GamePad.CirclePadPro.y * cursorSensitivity * Time.deltaTime));
-				if(cursorX > 0f) cursorX = 1; if(cursorY > 0f) cursorY = 1; //roughen camera sensitivity
-				if(cursorX < 0f) cursorX = -1; if(cursorY < 0f) cursorY = -1; //roughen camera sensitivity
+				if(cursorXtemp > 0f) cursorXtemp = 1; if(cursorYtemp > 0f) cursorYtemp = 1; //roughen camera sensitivity
+				if(cursorXtemp < 0f) cursorXtemp = -1; if(cursorYtemp < 0f) cursorYtemp = -1; //roughen camera sensitivity
 			}
 			#endif
-			scr_main._f.SetCMD("CAM: "+UnityEngine.N3DS.GamePad.CirclePadPro.x+", "+cursorXtemp+", "+cursorX+", "+cursorSensitivity+", "+Time.deltaTime, false);
+			scr_main._f.SetCMD("CAM: "+UnityEngine.N3DS.GamePad.CirclePad.x+", "+cursorXtemp+", "+cursorX+", "+cursorSensitivity+", "+Time.deltaTime, false);
 			if (isInvertCursorX)
 				cursorXtemp = -cursorXtemp;
 			if (isInvertCursorY)
