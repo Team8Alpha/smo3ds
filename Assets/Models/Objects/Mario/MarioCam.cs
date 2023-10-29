@@ -64,7 +64,7 @@ public class MarioCam : MonoBehaviour {
 	}
 
 	void Update() {
-
+		
 		if (!isLocked) {
 			float cursorXtemp=0;
 			float cursorYtemp=0;
@@ -72,18 +72,19 @@ public class MarioCam : MonoBehaviour {
 				cursorXtemp = ((Input.GetAxis ("Mouse X") * cursorSensitivity * Time.deltaTime));
 				cursorYtemp = ((Input.GetAxis ("Mouse Y") * cursorSensitivity * Time.deltaTime));
 			#else
-			if(UnityEngine.N3DS.GamePad.IsCirclePadProConnected())
-			{
-				cursorXtemp = ((UnityEngine.N3DS.GamePad.CirclePadPro.x * cursorSensitivity * Time.deltaTime));
-				cursorYtemp = ((UnityEngine.N3DS.GamePad.CirclePadPro.y * cursorSensitivity * Time.deltaTime));
-				if(cursorX > 0f) cursorX = 1; if(cursorY > 0f) cursorY = 1; //roughen camera sensitivity
-			}
 			if(UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.L)) 
 			{
 				cursorXtemp = ((UnityEngine.N3DS.GamePad.CirclePad.x * cursorSensitivity * Time.deltaTime));
 				cursorYtemp = ((UnityEngine.N3DS.GamePad.CirclePad.y * cursorSensitivity * Time.deltaTime));
+			} else if(UnityEngine.N3DS.GamePad.IsCirclePadProConnected())
+			{
+				cursorXtemp = ((UnityEngine.N3DS.GamePad.CirclePadPro.x * cursorSensitivity * Time.deltaTime));
+				cursorYtemp = ((UnityEngine.N3DS.GamePad.CirclePadPro.y * cursorSensitivity * Time.deltaTime));
+				if(cursorX > 0f) cursorX = 1; if(cursorY > 0f) cursorY = 1; //roughen camera sensitivity
+				if(cursorX < 0f) cursorX = -1; if(cursorY < 0f) cursorY = -1; //roughen camera sensitivity
 			}
 			#endif
+			scr_main._f.SetCMD("CAM: "+UnityEngine.N3DS.GamePad.CirclePadPro.x+", "+cursorXtemp+", "+cursorX+", "+cursorSensitivity+", "+Time.deltaTime, false);
 			if (isInvertCursorX)
 				cursorXtemp = -cursorXtemp;
 			if (isInvertCursorY)

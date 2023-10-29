@@ -5,7 +5,7 @@ using UnityEngine;
 public class scr_behaviorCapSwitch : MonoBehaviour{
 	
 	private string capMount = "Armature/AllRoot/JointRoot/Swicth/Hat";
-
+	public bool isForward = true;
 	private Animator anim;
 
 	void Start(){
@@ -20,10 +20,13 @@ public class scr_behaviorCapSwitch : MonoBehaviour{
 		MarioController.marioObject.cappy.headHeight = 0f;
 		MarioController.marioObject.cappy.hackScale = 2f;
 		MarioController.marioObject.cappy.hackRot = new Vector3 (0, 0, 90);
-		if (MarioController.marioObject.cappy.transform.position.z > transform.position.z)
+		if(isForward)
 			anim.Play ("hitFront");
 		else
 			anim.Play ("hitBack");
 		this.enabled = true;
+	}
+	void Update(){
+		if(anim.GetCurrentAnimatorStateInfo (0).IsName("hitBack2") || anim.GetCurrentAnimatorStateInfo (0).IsName("hitFront2")) MarioController.marioObject.cappy.SetState (2);
 	}
 }

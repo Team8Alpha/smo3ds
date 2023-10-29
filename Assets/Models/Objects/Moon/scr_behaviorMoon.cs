@@ -131,7 +131,7 @@ public class scr_behaviorMoon : MonoBehaviour {
 				Destroy (gameObject);
 				scr_main._f.focusOn ();
 				MarioController.marioObject.SetAnim ("wait", 0.1f);
-				MarioController.marioObject.SetState (MarioState.Falling);
+				MarioController.marioObject.SetState (plState.Falling);
 				globalCanvas.gameObject.SetActive (false);
 				MarioCam.marioCamera.confYOffset = 2;
 				MarioCam.marioCamera.confRotate = true;

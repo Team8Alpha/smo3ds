@@ -55,7 +55,7 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 			tmp_pos = transformMario.position;
 			transform.rotation = transformMario.rotation;
 			transform.position = new Vector3 (tmp_pos.x, tmp_pos.y + offsetYthrow, tmp_pos.z);
-			if (MarioController.myState == MarioState.Jumping) {
+			if (MarioController.myState == plState.Jumping) {
 				currentState = -1;
 				anim.Play ("throwJump");
 				MarioController.marioObject.anim.Play ("spinCapJumpStart");
@@ -76,7 +76,9 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 		case 2:
 			isHacking = false;
 			hackScale = 0;
-			transform.localScale = new Vector3 (1,1,1);
+			transform.localScale = new Vector3 (1, 1, 1);
+			transform.eulerAngles = Vector3.zero;
+			setHackData (0, Vector3.zero, Vector3.zero);
 			anim.Play ("default");
 			break;
 		case 3:
@@ -124,7 +126,7 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 		if (collis.gameObject.layer != scr_main.lyr_player)
 			isColliding = true;
 		//else if(currentState == 1)
-		//	MarioController.marioObject.SetState (MarioState.Jumping); //problems with collision
+		//	MarioController.marioObject.SetState (plState.Jumping); //problems with collision
 		if (collis.gameObject.GetComponent<paramObj> () != null)
 			paramCaptured = collis.gameObject.GetComponent<paramObj> ();
 	}
@@ -235,7 +237,7 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 				armature.Rotate (0, 50, 0);
 				mPosTmp = transformMario.position;
 				transform.position = Vector3.MoveTowards (transform.position, new Vector3 (mPosTmp.x, mPosTmp.y + offsetYthrow, mPosTmp.z), 50 * Time.deltaTime);
-				if (transform.position == new Vector3 (mPosTmp.x, mPosTmp.y + offsetYthrow, mPosTmp.z)) {
+				if (Vector3.Distance(transform.position, mPosTmp) < 1f) {
 					activated = false;
 					SetState (3);
 				}

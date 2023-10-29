@@ -47,7 +47,6 @@ public class scr_behaviorStake : MonoBehaviour {
 				else if (bentAmount != -0.1f) {
 					GetComponent<Collider> ().enabled = false;
 					anim.Play ("pullOut");
-					scr_main._f.capMountPoint = "missingno";
 					MarioController.marioObject.cappy.SetState (2);
 					bentAmount = -0.1f;
 				} else if (anim.GetBool ("isDead")) {
