@@ -65,7 +65,7 @@ public class scr_behaviorMoon : MonoBehaviour {
 		anim = GetComponent<Animator>();
 		mat_color = transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
 		setColor ();
-		globalCanvas = scr_main._f.transform.GetChild (1).transform.GetChild (0);
+		globalCanvas = scr_main._f.transform.GetChild (1).transform.GetChild (1);
 	}
 	void OnTouch(int numType){
 		switch (numType) {
