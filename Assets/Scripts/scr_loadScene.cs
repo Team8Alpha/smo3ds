@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class scr_loadScene : MonoBehaviour {
 	
-	public static scr_loadScene _f;
-	public string nextScene = "scn_menuTitle";
-	public bool isDone = false;
+	[HideInInspector] public static scr_loadScene _f;
+	[HideInInspector] public string nextScene = "scn_menuTitle";
+	[HideInInspector] public bool isDone = false;
 	AsyncOperation loadOP;
 
 	void Start(){ _f = this; }

@@ -6,25 +6,25 @@ using UnityEngine.UI;
 public class scr_main : MonoBehaviour {
 
 	// Initialization script for Super Mario Odyssey for 3ds, made by Team Alpha.
-	public const string version = "a0.3.1";
-	public bool isRelease = true;
+	[HideInInspector] public const string version = "a0.4";
+	[HideInInspector] public bool isRelease = false;
 
 	//constants
-	public static scr_main _f;
-	public static GUIStyle stl_debug;
-	public static LayerMask lyr_enemy;
-	public static LayerMask lyr_obj;
-	public static LayerMask lyr_def;
-	public static LayerMask lyr_player;
+	[HideInInspector] public static scr_main _f;
+	[HideInInspector] public static GUIStyle stl_debug;
+	[HideInInspector] public static LayerMask lyr_enemy;
+	[HideInInspector] public static LayerMask lyr_obj;
+	[HideInInspector] public static LayerMask lyr_def;
+	[HideInInspector] public static LayerMask lyr_player;
 	//modifiable
-	public bool isFocused = true;
-	public int dbg_enemyCount = 0;
-	public int coinsCount = 0;
-	public int moonsCount = 0;
-	public int nextSpawn = -1; // next index of spawn point
-	public int lastCheckpoint = 0;
-	public string capMountPoint = "missingno";
-	public bool hasLevelLoaded = false;
+	[HideInInspector] public bool isFocused = true;
+	[HideInInspector] public int dbg_enemyCount = 0;
+	[HideInInspector] public int coinsCount = 0;
+	[HideInInspector] public int moonsCount = 0;
+	[HideInInspector] public int nextSpawn = -1; // next index of spawn point
+	[HideInInspector] public int lastCheckpoint = 0;
+	[HideInInspector] public string capMountPoint = "missingno";
+	[HideInInspector] public bool hasLevelLoaded = false;
 	
 	public void focusOff(){
 		isFocused = false;

@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class scr_behaviorAreaChanger : MonoBehaviour {
+public class scr_areaChanger : MonoBehaviour {
 
 	public string nextArea;
 	public int nextSpawn=0;
 	public int transitionType=2;
 
+	void Start(){
+		this.enabled = false;
+	}
 	void OnTouch(int num){
 		if (num == 2) {
 			scr_main._f.nextSpawn = nextSpawn;

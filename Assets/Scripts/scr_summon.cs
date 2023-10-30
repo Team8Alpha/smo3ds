@@ -81,5 +81,6 @@ public class scr_summon : MonoBehaviour {
 	[RuntimeInitializeOnLoadMethod]
 	void Awake () {
 		f_summon = this;
+		this.enabled = false;
 	}
 }
