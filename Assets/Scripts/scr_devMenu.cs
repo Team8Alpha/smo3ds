@@ -20,7 +20,7 @@ public class scr_devMenu: MonoBehaviour {
 	private bool deb_cmdIsShowing = true;
 	private int height = 12;
 	private bool canSelect = false;
-	static public string txt_cmdOut = "Command Output";
+	static public string txt_cmdOut = "";
 
 	void Start(){
 		if (false) {
