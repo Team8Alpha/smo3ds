@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class scr_main : MonoBehaviour {
 
 	// Initialization script for Super Mario Odyssey for 3ds, made by Team Alpha.
-	[HideInInspector] public const string version = "a0.4";
-	[HideInInspector] public bool isRelease = false;
+	public string version = "0.4";
+	public bool isRelease = false; //change via Assets/Resources/Objects/objGlobal<scr_main>
 
 	//constants
 	[HideInInspector] public static scr_main _f;
@@ -64,9 +64,9 @@ public class scr_main : MonoBehaviour {
 
 		string authorVersion;
 		if (isRelease)
-			authorVersion = "SMO3DS " + version;
+			authorVersion = "SMO3DS a" + version;
 		else
-			authorVersion = "SMO3DS pre-" + version;
+			authorVersion = "SMO3DS pre-a" + version;
 		transform.GetChild (1).GetChild (0).GetComponent<Text> ().text = authorVersion;
 	}
 	public void SetCMD(string text, bool isEditorOut = true){
