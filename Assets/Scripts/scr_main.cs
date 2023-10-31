@@ -8,7 +8,7 @@ public class scr_main : MonoBehaviour {
 	// Initialization script for Super Mario Odyssey for 3ds, made by Team Alpha.
 	public string version = "0.4";
 	public bool isRelease = false; //change via Assets/Resources/Objects/objGlobal<scr_main>
-	#define testingBool = true;
+	//bool testingBool = true; Not even used
 	//constants
 	[HideInInspector] public static scr_main _f;
 	[HideInInspector] public static GUIStyle stl_debug; //style for debug menu
@@ -49,7 +49,7 @@ public class scr_main : MonoBehaviour {
 	}
 	
 	void Init () {
-		Application.targetFrameRate = 50;
+		Application.targetFrameRate = 30;
 		QualitySettings.vSyncCount = 0;
 		//UnityEngine.N3DS.HomeButton.Enable ();
 
