@@ -48,14 +48,7 @@ public class scr_loadScene : MonoBehaviour {
 		//scr_fadefull._f.Run ( );
 		//break;
 		case 3:
-                // Makes sure that the scene is completely empty just in case the scene does not get unloaded at all
-                for (int i = 0; i < rootObjects.Count; ++i)
-                {
-                    print(rootObjects[i]);
-                    if(rootObjects[i].name != "objFader")
-                        Destroy(rootObjects[i]);
-                }
-                StartCoroutine (loadAsync ());
+            StartCoroutine (loadAsync ());
 			break;
 		}
 	}
@@ -67,7 +60,15 @@ public class scr_loadScene : MonoBehaviour {
 			yield return null;
 		}
 		scr_main._f.SetCMD ("loading: 100%");
-		isDone = true;
+
+        // Makes sure that the scene is completely empty just in case the scene does not get unloaded at all
+        for (int i = 0; i < rootObjects.Count; ++i)
+        {
+            print(rootObjects[i]);
+            if (rootObjects[i].name != "objFader")
+                Destroy(rootObjects[i]);
+        }
+        isDone = true;
 	}
 	public void SetSceneActive(){
 		loadOP.allowSceneActivation = true;
