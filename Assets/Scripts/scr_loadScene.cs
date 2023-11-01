@@ -10,21 +10,30 @@ public class scr_loadScene : MonoBehaviour {
 	[HideInInspector] public bool isDone = false;
 	AsyncOperation loadOP;
 
-	void Start(){ _f = this; }
+    List<GameObject> rootObjects = new List<GameObject>();
+
+    void Start(){ _f = this; }
 	public void StartScene(string sceneName, int transition = 0){
 		isDone = false;
 		string currentscn = SceneManager.GetActiveScene ().name;
-		scr_main._f.hasLevelLoaded = false;
+
+        Scene scene = SceneManager.GetActiveScene();
+        scene.GetRootGameObjects(rootObjects);
+
+        scr_main._f.hasLevelLoaded = false;
 		nextScene = sceneName;
 		scr_main._f.dbg_enemyCount = 0;
 		GetComponent<AudioListener> ().enabled = true;
-//		if (MarioController.marioObject != null)
-//			MarioController.marioObject.gameObject.GetComponent<AudioListener> ().enabled = false;
-		scr_main._f.SetCMD ("nSCN: " + nextScene);
+
+        //		if (MarioController.marioObject != null)
+        //			MarioController.marioObject.gameObject.GetComponent<AudioListener> ().enabled = false;
+        // Makes delete the gameObjects of your scene once loaded just in case
+
+        scr_main._f.SetCMD ("nSCN: " + nextScene);
 		switch (transition) {
 		case 0: //direct, no transition
 			SceneManager.LoadScene (sceneName, LoadSceneMode.Additive);
-			SceneManager.UnloadSceneAsync (currentscn);
+            SceneManager.UnloadSceneAsync (currentscn);
 			break;
 		case 1: //flying ship line
 			scr_main._f.focusOff ();
@@ -34,12 +43,19 @@ public class scr_loadScene : MonoBehaviour {
 			break;
 		case 2://cap fly transition
 			scr_main._f.transform.GetChild (1).GetChild (1).gameObject.SetActive (true);
-			break;
+            break;
 		//case 3://basic transition
 		//scr_fadefull._f.Run ( );
 		//break;
-		case 3: 
-			StartCoroutine (loadAsync ());
+		case 3:
+                // Makes sure that the scene is completely empty just in case the scene does not get unloaded at all
+                for (int i = 0; i < rootObjects.Count; ++i)
+                {
+                    print(rootObjects[i]);
+                    if(rootObjects[i].name != "objFader")
+                        Destroy(rootObjects[i]);
+                }
+                StartCoroutine (loadAsync ());
 			break;
 		}
 	}

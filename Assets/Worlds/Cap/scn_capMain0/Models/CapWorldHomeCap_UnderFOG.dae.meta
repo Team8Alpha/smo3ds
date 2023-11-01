@@ -1,40 +1,35 @@
 fileFormatVersion: 2
-guid: 532d45578a0a5114ea41a54bc8da2a6b
-timeCreated: 1682087880
+guid: f481c1e93207db447a1ccf7b4fc67b42
+timeCreated: 1698832923
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Armature
-    100002: //RootNode
-    100004: CapWorldHomeObstacle000
-    100006: pCylinder401_1__Metal00
-    100008: polySurface4408__MetalGold00
-    100010: polySurface4408__WindowGlass00
-    100012: polySurface5379__HatSatin00
-    100014: polySurface5379__HatSatin01
-    400000: Armature
-    400002: //RootNode
-    400004: CapWorldHomeObstacle000
-    400006: pCylinder401_1__Metal00
-    400008: polySurface4408__MetalGold00
-    400010: polySurface4408__WindowGlass00
-    400012: polySurface5379__HatSatin00
-    400014: polySurface5379__HatSatin01
-    4300000: pCylinder401_1__Metal00
-    4300002: polySurface4408__MetalGold00
-    4300004: polySurface4408__WindowGlass00
-    4300006: polySurface5379__HatSatin00
-    4300008: polySurface5379__HatSatin01
+    100000: //RootNode
+    100002: polySurface4652
+    100004: polySurface4652__HatSatin00
+    100006: polySurface4652__MetalGold00
+    100008: polySurface4652__WindowGlass00
+    100010: Ship00
+    400000: //RootNode
+    400002: polySurface4652
+    400004: polySurface4652__HatSatin00
+    400006: polySurface4652__MetalGold00
+    400008: polySurface4652__WindowGlass00
+    400010: Ship00
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: polySurface4652__HatSatin00
+    4300002: polySurface4652__MetalGold00
+    4300004: polySurface4652__WindowGlass00
+    4300006: Circle
     9500000: //RootNode
-    13700000: pCylinder401_1__Metal00
-    13700002: polySurface4408__MetalGold00
-    13700004: polySurface4408__WindowGlass00
-    13700006: polySurface5379__HatSatin00
-    13700008: polySurface5379__HatSatin01
+    13700000: polySurface4652__HatSatin00
+    13700002: polySurface4652__MetalGold00
+    13700004: polySurface4652__WindowGlass00
   materials:
     importMaterials: 1
-    materialName: 1
+    materialName: 0
     materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
@@ -55,13 +50,13 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 3
+    meshCompression: 0
     addColliders: 0
-    importBlendShapes: 0
+    importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
