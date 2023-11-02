@@ -22,19 +22,19 @@ public class scr_behaviorFrog : MonoBehaviour {
 	void setEye(int typeEye){
 		switch (typeEye) {
 		case 0: 
-			transform.GetChild (2).gameObject.SetActive (false);
-			transform.GetChild (3).gameObject.SetActive (false);
-			transform.GetChild (4).gameObject.SetActive (true);
+			transform.GetChild (1).GetChild (2).gameObject.SetActive (false);
+			transform.GetChild (1).GetChild (3).gameObject.SetActive (false);
+			transform.GetChild (1).GetChild (4).gameObject.SetActive (true);
 			break;
 		case 1: 
-			transform.GetChild (2).gameObject.SetActive (false);
-			transform.GetChild (3).gameObject.SetActive (true);
-			transform.GetChild (4).gameObject.SetActive (false);
+			transform.GetChild (1).GetChild (2).gameObject.SetActive (false);
+			transform.GetChild (1).GetChild (3).gameObject.SetActive (true);
+			transform.GetChild (1).GetChild (4).gameObject.SetActive (false);
 			break;
 		case 2: 
-			transform.GetChild (2).gameObject.SetActive (true);
-			transform.GetChild (3).gameObject.SetActive (false);
-			transform.GetChild (4).gameObject.SetActive (false);
+			transform.GetChild (1).GetChild (2).gameObject.SetActive (true);
+			transform.GetChild (1).GetChild (3).gameObject.SetActive (false);
+			transform.GetChild (1).GetChild (4).gameObject.SetActive (false);
 			break;
 		}
 	}

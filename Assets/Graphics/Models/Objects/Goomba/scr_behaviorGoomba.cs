@@ -36,26 +36,29 @@ public class scr_behaviorGoomba : MonoBehaviour {
 	void setEye(int typeEye){
 		switch (typeEye) {
 		case 0: //open
-			transform.GetChild (4).gameObject.SetActive (false);
-			transform.GetChild (5).gameObject.SetActive (false);
-			transform.GetChild (6).gameObject.SetActive (true);
+			setEyeEach (3, false);
+			setEyeEach (4, false);
+			setEyeEach (5, true);
 			break;
 		case 1: //half closed
-			transform.GetChild (4).gameObject.SetActive (false);
-			transform.GetChild (5).gameObject.SetActive (true);
-			transform.GetChild (6).gameObject.SetActive (false);
+			setEyeEach (3, false);
+			setEyeEach (4, true);
+			setEyeEach (5, false);
 			break;
 		case 2: //closed
-			transform.GetChild (4).gameObject.SetActive (true);
-			transform.GetChild (5).gameObject.SetActive (false);
-			transform.GetChild (6).gameObject.SetActive (false);
+			setEyeEach (3, true);
+			setEyeEach (4, false);
+			setEyeEach (5, false);
 			break;
 		}
 	}
+	void setEyeEach(int child, bool state){
+		transform.GetChild (1).GetChild (child).gameObject.SetActive (state);
+	}
 
 	void setEyeTexture(int numEye){
-		transform.GetChild (6).transform.GetChild (0).GetComponent<SkinnedMeshRenderer> ().material = Resources.Load<Material> ("Objects/objGoomba/eye."+numEye);
-		transform.GetChild (6).transform.GetChild (1).GetComponent<SkinnedMeshRenderer> ().material = Resources.Load<Material> ("Objects/objGoomba/eye."+numEye);
+		transform.GetChild (1).GetChild (6).transform.GetChild (0).GetComponent<SkinnedMeshRenderer> ().material = Resources.Load<Material> ("Objects/objGoomba/eye."+numEye);
+		transform.GetChild (1).GetChild (6).transform.GetChild (1).GetComponent<SkinnedMeshRenderer> ().material = Resources.Load<Material> ("Objects/objGoomba/eye."+numEye);
 	}
 
 	void setState(int stateNum){
@@ -87,13 +90,13 @@ public class scr_behaviorGoomba : MonoBehaviour {
 		case 6:
 			setAnim ("hackStart", 0.1f);
 			setEyeTexture (1);
-			transform.GetChild (3).gameObject.SetActive (false);
+			transform.GetChild (1).GetChild (3).gameObject.SetActive (false);
 			MarioController.marioObject.SetSpeed (3, 4, 0.7f);
 			break;
 		case 7:
 			setAnim ("hackEnd", 0.1f);
 			setEyeTexture (0);
-			transform.GetChild (3).gameObject.SetActive (true);
+			transform.GetChild (1).GetChild (3).gameObject.SetActive (true);
 			break;
 		}
 	}
@@ -177,10 +180,10 @@ public class scr_behaviorGoomba : MonoBehaviour {
 		if(scr_main._f.isFocused){
 			if (dead) {
 				if (anim.GetBool ("flat")) {
-					for (int i = 1; i < 7; i++) {
-						transform.GetChild (i).gameObject.SetActive (false);
+					for (int i = 1; i < 6; i++) {
+						transform.GetChild (1).GetChild (i).gameObject.SetActive (false);
 					}
-					transform.GetChild (7).gameObject.SetActive (true);
+					transform.GetChild (1).GetChild (6).gameObject.SetActive (true);
 				}
 				if (anim.GetBool ("dead"))
 					Destroy (gameObject);

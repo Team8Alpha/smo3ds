@@ -11,7 +11,7 @@ public class scr_behaviorCoin : MonoBehaviour {
 	GameObject childMesh; // Reference to the child mesh GameObject
 
 	void Start () {
-		childMesh = transform.GetChild (0).gameObject;
+		childMesh = transform.GetChild (1).gameObject;
 		sndSrc = childMesh.GetComponent<AudioSource> ();
 		anim = childMesh.GetComponent<Animator> ();
 		if (currentState == 1) anim.Play ("collect");

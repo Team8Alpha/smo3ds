@@ -582,6 +582,17 @@ public class MarioController : MonoBehaviour
 		if (rb.velocity.y < 0 && !isGrounded && key_jump && col.gameObject.layer != 20)
 			isJumpingSoon = true;
 	}
+	public void OnSensorLODEnter(Collider coll){
+		SetLOD (coll, true);
+	}
+	public void OnSensorLODExit(Collider coll){
+		SetLOD (coll, false);
+	}
+	void SetLOD(Collider coll, bool state){
+		if(coll.gameObject.GetComponent<paramObj>() != null)
+		if(coll.gameObject.GetComponent<paramObj>().isLOD) 
+			coll.gameObject.transform.GetChild(1).gameObject.SetActive (state);
+	}
 
 	//RESET
 	public void ResetSpeed()

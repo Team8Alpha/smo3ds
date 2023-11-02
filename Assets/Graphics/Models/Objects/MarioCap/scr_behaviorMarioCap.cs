@@ -166,8 +166,8 @@ public class scr_behaviorMarioCap : MonoBehaviour {
 								SetState (4);
 								armature.eulerAngles = Vector3.zero;
 								transform.GetChild (1).gameObject.transform.eulerAngles = Vector3.zero;
-								var Mustache = capturedObject.transform.GetChild(0);
-								if(Mustache.name == "Mustache" || Mustache.name == "Mustache__HairMT") Mustache.gameObject.SetActive (true); //if mustache, place it at index 0
+								GameObject Mustache = capturedObject.transform.GetChild(1).GetChild(0).gameObject;
+								if(Mustache.name == "Mustache" || Mustache.name == "Mustache__HairMT") Mustache.SetActive (true); //if mustache, place it at index 0
 								scr_main._f.SetCMD ("CAPMOUNT AT " + mountPoint.name);
 								isHacking = true;
 							}

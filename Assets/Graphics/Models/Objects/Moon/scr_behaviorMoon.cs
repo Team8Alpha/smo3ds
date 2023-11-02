@@ -63,7 +63,7 @@ public class scr_behaviorMoon : MonoBehaviour {
 	void Start () {
 		tmpMpos.x -= 0;
 		anim = GetComponent<Animator>();
-		mat_color = transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
+		mat_color = transform.GetChild(1).GetChild(1).GetComponent<SkinnedMeshRenderer>();
 		setColor ();
 		globalCanvas = scr_main._f.transform.GetChild (1).transform.GetChild (1);
 	}

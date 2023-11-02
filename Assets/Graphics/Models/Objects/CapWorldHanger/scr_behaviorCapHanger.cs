@@ -24,7 +24,7 @@ public class scr_behaviorCapHanger : MonoBehaviour {
 		} else {
 			glassCol = new Vector4 (1, 0.86f, 0.36f, 1);
 		}
-		material = transform.GetChild(0).gameObject.GetComponent<Renderer>().material;
+		material = transform.GetChild(1).GetChild(0).gameObject.GetComponent<Renderer>().material;
 		material.SetVector("_Color", glassCol);
 		material.SetVector("_SpecColor", glassCol);
 	}

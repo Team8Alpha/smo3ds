@@ -40,12 +40,12 @@ public class scr_behaviorFrailBox : MonoBehaviour {
 		anim.CrossFade ("damage", 0.1f);
 		switch (currentState) {
 		case 1://1
-			transform.GetChild (0).gameObject.SetActive (false);
-			transform.GetChild (1).gameObject.SetActive (true);
-			transform.GetChild (2).gameObject.SetActive (true);
+			transform.GetChild (1).GetChild (0).gameObject.SetActive (false);
+			transform.GetChild (1).GetChild (1).gameObject.SetActive (true);
+			transform.GetChild (1).GetChild (2).gameObject.SetActive (true);
 			break;
 		case 2://2
-			transform.GetChild (1).gameObject.SetActive (false);
+			transform.GetChild (1).GetChild (1).gameObject.SetActive (false);
 			hitCount = hitMax-2;
 			break;
 		case 3:
