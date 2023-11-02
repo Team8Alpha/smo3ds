@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#define isRelease // UNCOMMENT FOR RELEASING TO THE PUBLIC!
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,8 +9,7 @@ public class scr_main : MonoBehaviour {
 
 	// Initialization script for Super Mario Odyssey for 3ds, made by Team Alpha.
 	public string version = "0.4";
-	public bool isRelease = false; //change via Assets/Resources/Objects/objGlobal<scr_main>
-	//bool testingBool = true; Not even used
+
 	//constants
 	[HideInInspector] public static scr_main _f;
 	[HideInInspector] public static GUIStyle stl_debug; //style for debug menu
@@ -63,18 +64,22 @@ public class scr_main : MonoBehaviour {
 		lyr_player = LayerMask.NameToLayer ("Player");
 
 		string authorVersion;
-		if (isRelease)
+		#if isRelease
 			authorVersion = "SMO3DS a" + version; //TODO: maybe make this some compiling #if, to save resources at runtime?
-		else 
+		#else
 			authorVersion = "SMO3DS pre-a" + version;
+		#endif
 		transform.GetChild (1).GetChild (0).GetComponent<Text> ().text = authorVersion;
 	}
+
+	#if isRelease
+	public void SetCMD(string text, bool isEditorOut = true){ }
+	#else
 	public void SetCMD(string text, bool isEditorOut = true){
-		if (isRelease)
-			return;
 		if(scr_devMenu.txt_cmdOut != null) scr_devMenu.txt_cmdOut = text;
 		if(isEditorOut && text != "") Debug.Log (text);
 	}
+	#endif
 	/*void OnApplicationPause(bool paused)
 	{
 		if (paused)

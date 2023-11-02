@@ -48,10 +48,10 @@ public class scr_menuSplashPress : MonoBehaviour {
 		if (!checkedDev) {
 			if (scr_main._f == null)
 				yield return null;
-			if (!scr_main._f.isRelease) {
+			#if !isRelease
 				transform.parent.GetChild (2).GetChild (1).gameObject.SetActive (true);
 				checkedDev = true;
-			}
+			#endif
 		}
 		yield return new WaitForSecondsRealtime(timer);
 		Confirm();
