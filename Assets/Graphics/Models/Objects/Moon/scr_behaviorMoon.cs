@@ -78,7 +78,8 @@ public class scr_behaviorMoon : MonoBehaviour {
 			tmpMpos = MarioController.marioObject.transform.position;
 			anim.Play("getStart");
 			GetComponent<Collider>().enabled = false; //or else it literally disables marios collision
-			break;
+            MarioController.marioObject.rb.velocity = new Vector3(0, 0, 0);
+            break;
 		}
 	}
 
@@ -124,13 +125,12 @@ public class scr_behaviorMoon : MonoBehaviour {
 				bvar0 = true;
 					
 				currentState = 2;
-			}
-			break;
+                }
+                break;
 		case 2://finishing
 			if (!scr_manageAudio._f.isPlaying()) {
 				Destroy (gameObject);
 				scr_main._f.focusOn ();
-				MarioController.marioObject.rb.velocity.Set(0, 0, 0);
 				MarioController.marioObject.SetAnim ("wait", 0.1f);
 				MarioController.marioObject.SetState (plState.Falling);
 				globalCanvas.gameObject.SetActive (false);
@@ -145,8 +145,8 @@ public class scr_behaviorMoon : MonoBehaviour {
 						if (i != 2 && i != 5 && i != 7)
 							MarioController.marioObject.transform.GetChild (i).gameObject.SetActive (false);
 					}
-			}
-			break;
+                }
+                break;
 		}
 	}
 }
