@@ -66,7 +66,7 @@ public class scr_title : MonoBehaviour {
 					for (int i = 0; i < 4; i++)
 						cnv_down.GetChild (i).gameObject.SetActive (true);
 					EventSystem.current.SetSelectedGameObject (buttonRes);
-					scr_manageAudio._f.AudioStart ("Music/Bgm/snd_BgmTitle");
+					scr_manageAudio._f.AudioStart ("Music/Bgm/bgmTitle");
 					this.enabled = false;
 				}
 			}

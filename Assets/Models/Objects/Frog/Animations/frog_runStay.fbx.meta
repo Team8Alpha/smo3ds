@@ -1,0 +1,266 @@
+fileFormatVersion: 2
+guid: 96c2015aae9badb41bd30524fa6d2efb
+timeCreated: 1684152592
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: AllRoot
+    100002: Armature
+    100004: ArmL1
+    100006: ArmL2
+    100008: ArmR1
+    100010: ArmR2
+    100012: EyeLibL1
+    100014: EyeLibL2
+    100016: EyeLibL3
+    100018: EyeLibR1
+    100020: EyeLibR2
+    100022: EyeLibR3
+    100024: FootL1
+    100026: FootL2
+    100028: FootR1
+    100030: FootR2
+    100032: Frog
+    100034: //RootNode
+    100036: HandL1
+    100038: HandL2
+    100040: HandR1
+    100042: HandR2
+    100044: Head
+    100046: Hip
+    100048: Iungs
+    100050: Joe
+    100052: JoeBalloon
+    100054: JoeBalloonBody
+    100056: JoeBody
+    100058: JointRoot
+    100060: LegL1
+    100062: LegL2
+    100064: LegR1
+    100066: LegR2
+    100068: Mustache
+    100070: nw4f_root
+    100072: pPyramid1
+    100074: Spine
+    100076: Tonge
+    400000: AllRoot
+    400002: Armature
+    400004: ArmL1
+    400006: ArmL2
+    400008: ArmR1
+    400010: ArmR2
+    400012: EyeLibL1
+    400014: EyeLibL2
+    400016: EyeLibL3
+    400018: EyeLibR1
+    400020: EyeLibR2
+    400022: EyeLibR3
+    400024: FootL1
+    400026: FootL2
+    400028: FootR1
+    400030: FootR2
+    400032: Frog
+    400034: //RootNode
+    400036: HandL1
+    400038: HandL2
+    400040: HandR1
+    400042: HandR2
+    400044: Head
+    400046: Hip
+    400048: Iungs
+    400050: Joe
+    400052: JoeBalloon
+    400054: JoeBalloonBody
+    400056: JoeBody
+    400058: JointRoot
+    400060: LegL1
+    400062: LegL2
+    400064: LegR1
+    400066: LegR2
+    400068: Mustache
+    400070: nw4f_root
+    400072: pPyramid1
+    400074: Spine
+    400076: Tonge
+    2300000: pPyramid1
+    3300000: pPyramid1
+    4300000: pPyramid1
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 15
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/nw4f_root
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Hip
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Hip/LegL1
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Hip/LegL1/LegL2
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Hip/LegL1/LegL2/FootL1
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Hip/LegL1/LegL2/FootL1/FootL2
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Hip/LegR1
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Hip/LegR1/LegR2
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Hip/LegR1/LegR2/FootR1
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Hip/LegR1/LegR2/FootR1/FootR2
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine/ArmL1
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine/ArmL1/ArmL2
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine/ArmL1/ArmL2/HandL1
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine/ArmL1/ArmL2/HandL1/HandL2
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine/ArmR1
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine/ArmR1/ArmR2
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine/ArmR1/ArmR2/HandR1
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine/ArmR1/ArmR2/HandR1/HandR2
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine/Head
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine/Head/Joe
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine/Head/Joe/JoeBalloon
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine/Head/Joe/Tonge
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Spine/Iungs
+        weight: 1
+      - path: Armature/nw4f_root/Frog
+        weight: 1
+      - path: Armature/nw4f_root/Frog/EyeLibL1
+        weight: 1
+      - path: Armature/nw4f_root/Frog/EyeLibL2
+        weight: 1
+      - path: Armature/nw4f_root/Frog/EyeLibL3
+        weight: 1
+      - path: Armature/nw4f_root/Frog/EyeLibR1
+        weight: 1
+      - path: Armature/nw4f_root/Frog/EyeLibR2
+        weight: 1
+      - path: Armature/nw4f_root/Frog/EyeLibR3
+        weight: 1
+      - path: Armature/nw4f_root/Frog/JoeBalloonBody
+        weight: 1
+      - path: Armature/nw4f_root/Frog/JoeBody
+        weight: 1
+      - path: Armature/nw4f_root/Frog/Mustache
+        weight: 1
+      - path: pPyramid1
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

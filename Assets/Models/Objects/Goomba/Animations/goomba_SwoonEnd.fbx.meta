@@ -1,0 +1,174 @@
+fileFormatVersion: 2
+guid: 4b11f0e04cc6d6745a780204e16298a9
+timeCreated: 1683567963
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: AllRoot
+    100002: Armature
+    100004: browL1
+    100006: browL2
+    100008: browR1
+    100010: browR2
+    100012: Cap
+    100014: FootL
+    100016: FootR
+    100018: //RootNode
+    100020: Head
+    100022: JointRoot
+    100024: mouth
+    100026: mouth_up
+    100028: nw4f_root
+    100030: pPyramid1
+    400000: AllRoot
+    400002: Armature
+    400004: browL1
+    400006: browL2
+    400008: browR1
+    400010: browR2
+    400012: Cap
+    400014: FootL
+    400016: FootR
+    400018: //RootNode
+    400020: Head
+    400022: JointRoot
+    400024: mouth
+    400026: mouth_up
+    400028: nw4f_root
+    400030: pPyramid1
+    2300000: pPyramid1
+    3300000: pPyramid1
+    4300000: pPyramid1
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 45
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/nw4f_root
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/FootL
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/FootR
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Head
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Head/browL1
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Head/browL1/browL2
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Head/browR1
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Head/browR1/browR2
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Head/Cap
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Head/mouth
+        weight: 1
+      - path: Armature/nw4f_root/AllRoot/JointRoot/Head/mouth_up
+        weight: 1
+      - path: pPyramid1
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

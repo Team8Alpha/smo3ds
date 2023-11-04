@@ -21,6 +21,15 @@ public class scr_menuSplashPress : MonoBehaviour {
 		scr_main._f.SetCMD ("");
 	}
 
+	void Update()
+    {
+#if isRelease
+			this.enabled = false;
+#else
+			transform.parent.GetChild(2).GetChild(1).gameObject.SetActive(true);
+#endif
+    }
+
     /*void Update () {
 		timer -= 0.1f;
 		if(timer<=0){
@@ -32,27 +41,19 @@ public class scr_menuSplashPress : MonoBehaviour {
 				exiting = true;
 			}
 		}
-		#if UNITY_EDITOR
+#if UNITY_EDITOR
 		if(!exiting && Input.GetKey(KeyCode.Return)) timer = 0;
-		#else
+#else
 		if(!exiting && UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A)){ 
 			if(scr_main._f != null){
 			if(scr_main._f.isFocused) timer = 0;
 			} else timer = 0;
 		}
-		#endif
+#endif
 	}*/
 
     IEnumerator Delay()
 	{
-		if (!checkedDev) {
-			if (scr_main._f == null)
-				yield return null;
-			#if !isRelease
-				transform.parent.GetChild (2).GetChild (1).gameObject.SetActive (true);
-				checkedDev = true;
-			#endif
-		}
 		yield return new WaitForSecondsRealtime(timer);
 		Confirm();
 	}

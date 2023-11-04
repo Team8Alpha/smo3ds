@@ -1,4 +1,4 @@
-﻿#define isRelease // UNCOMMENT FOR RELEASING TO THE PUBLIC!
+﻿//#define isRelease // UNCOMMENT FOR RELEASING TO THE PUBLIC!
 
 using System.Collections;
 using System.Collections.Generic;

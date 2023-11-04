@@ -1,0 +1,211 @@
+fileFormatVersion: 2
+guid: f691b651a73d3244a83d851dee196bb9
+timeCreated: 1682620394
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Armature
+    100002: //RootNode
+    100004: EyeCloseLeft__EyesMT
+    100006: EyeCloseRight__EyesMT
+    100008: EyeHalf1Left__EyesMT
+    100010: EyeHalf1Right__EyesMT
+    100012: EyeHalf2Left__EyesMT
+    100014: EyeHalf2Right__EyesMT
+    100016: EyeHalf3Left__EyesMT
+    100018: EyeHalf3Right__EyesMT
+    100020: EyeLeft
+    100022: EyelidLeftCenter
+    100024: EyelidLeftInside
+    100026: EyelidLeftOutside
+    100028: EyelidRightCenter
+    100030: EyelidRightInside
+    100032: EyelidRightOutside
+    100034: EyeOpenLeft__EyesMT
+    100036: EyeOpenRight__EyesMT
+    100038: EyePupil__EyePupilLeftMT
+    100040: EyePupil__EyePupilRightMT
+    100042: EyeRight
+    100044: EyeRootLeft
+    100046: EyeRootRight
+    100048: JointRoot
+    100050: nw4f_root
+    100052: group
+    100054: pasted__EyePupil__EyePupilRightMT
+    100056: s
+    100058: AllRoot
+    100060: EyeCloseLeft
+    100062: EyeCloseRight
+    100064: EyeHalf1Left
+    100066: EyeHalf1Right
+    100068: EyeHalf2Left
+    100070: EyeHalf2Right
+    100072: EyeHalf3Left
+    100074: EyeHalf3Right
+    100076: EyeOpenLeft
+    100078: EyeOpenRight
+    100080: EyePupil
+    100082: Model
+    400000: Armature
+    400002: //RootNode
+    400004: EyeCloseLeft__EyesMT
+    400006: EyeCloseRight__EyesMT
+    400008: EyeHalf1Left__EyesMT
+    400010: EyeHalf1Right__EyesMT
+    400012: EyeHalf2Left__EyesMT
+    400014: EyeHalf2Right__EyesMT
+    400016: EyeHalf3Left__EyesMT
+    400018: EyeHalf3Right__EyesMT
+    400020: EyeLeft
+    400022: EyelidLeftCenter
+    400024: EyelidLeftInside
+    400026: EyelidLeftOutside
+    400028: EyelidRightCenter
+    400030: EyelidRightInside
+    400032: EyelidRightOutside
+    400034: EyeOpenLeft__EyesMT
+    400036: EyeOpenRight__EyesMT
+    400038: EyePupil__EyePupilLeftMT
+    400040: EyePupil__EyePupilRightMT
+    400042: EyeRight
+    400044: EyeRootLeft
+    400046: EyeRootRight
+    400048: JointRoot
+    400050: nw4f_root
+    400052: group
+    400054: pasted__EyePupil__EyePupilRightMT
+    400056: s
+    400058: AllRoot
+    400060: EyeCloseLeft
+    400062: EyeCloseRight
+    400064: EyeHalf1Left
+    400066: EyeHalf1Right
+    400068: EyeHalf2Left
+    400070: EyeHalf2Right
+    400072: EyeHalf3Left
+    400074: EyeHalf3Right
+    400076: EyeOpenLeft
+    400078: EyeOpenRight
+    400080: EyePupil
+    400082: Model
+    2300000: EyeCloseLeft__EyesMT
+    2300002: EyeCloseRight__EyesMT
+    2300004: EyeHalf1Left__EyesMT
+    2300006: EyeHalf1Right__EyesMT
+    2300008: EyeHalf2Left__EyesMT
+    2300010: EyeHalf2Right__EyesMT
+    2300012: EyeHalf3Left__EyesMT
+    2300014: EyeHalf3Right__EyesMT
+    2300016: EyeOpenLeft__EyesMT
+    2300018: EyeOpenRight__EyesMT
+    2300020: EyePupil__EyePupilRightMT
+    2300022: pasted__EyePupil__EyePupilRightMT
+    3300000: EyeCloseLeft__EyesMT
+    3300002: EyeCloseRight__EyesMT
+    3300004: EyeHalf1Left__EyesMT
+    3300006: EyeHalf1Right__EyesMT
+    3300008: EyeHalf2Left__EyesMT
+    3300010: EyeHalf2Right__EyesMT
+    3300012: EyeHalf3Left__EyesMT
+    3300014: EyeHalf3Right__EyesMT
+    3300016: EyeOpenLeft__EyesMT
+    3300018: EyeOpenRight__EyesMT
+    3300020: EyePupil__EyePupilRightMT
+    3300022: pasted__EyePupil__EyePupilRightMT
+    4300000: EyeCloseLeft__EyesMT
+    4300002: EyeCloseRight__EyesMT
+    4300004: EyeHalf1Left__EyesMT
+    4300006: EyeHalf1Right__EyesMT
+    4300008: EyeHalf2Left__EyesMT
+    4300010: EyeHalf2Right__EyesMT
+    4300012: EyeHalf3Left__EyesMT
+    4300014: EyeHalf3Right__EyesMT
+    4300016: EyeOpenLeft__EyesMT
+    4300018: EyeOpenRight__EyesMT
+    4300020: EyePupil__EyePupilLeftMT
+    4300022: EyePupil__EyePupilRightMT
+    4300024: pasted__EyePupil__EyePupilRightMT
+    9500000: //RootNode
+    13700000: EyeCloseLeft__EyesMT
+    13700002: EyeCloseRight__EyesMT
+    13700004: EyeHalf1Left__EyesMT
+    13700006: EyeHalf1Right__EyesMT
+    13700008: EyeHalf2Left__EyesMT
+    13700010: EyeHalf2Right__EyesMT
+    13700012: EyeHalf3Left__EyesMT
+    13700014: EyeHalf3Right__EyesMT
+    13700016: EyeOpenLeft__EyesMT
+    13700018: EyeOpenRight__EyesMT
+    13700020: EyePupil__EyePupilLeftMT
+    13700022: EyePupil__EyePupilRightMT
+  materials:
+    importMaterials: 1
+    materialName: 2
+    materialSearch: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 3
+    addColliders: 0
+    importBlendShapes: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

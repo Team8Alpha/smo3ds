@@ -1,0 +1,157 @@
+fileFormatVersion: 2
+guid: b13ae21050cc056499c2e94a4137386f
+timeCreated: 1680789727
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: AllRoot
+    100002: Armature
+    100004: Body__BodyMT
+    100006: browL1
+    100008: browL2
+    100010: browR1
+    100012: browR2
+    100014: Cap
+    100016: EyeBrow__BodyMT
+    100018: EyeBrowCap__BodyMT
+    100020: EyeClose__BodyMT
+    100022: EyeHalfClose__BodyMT
+    100024: EyeOpen__BodyMT
+    100026: EyeOpen__EyeLMT
+    100028: EyeOpen__EyeRMT
+    100030: FootL
+    100032: FootR
+    100034: //RootNode
+    100036: Head
+    100038: JointRoot
+    100040: mouth
+    100042: mouth_up
+    100044: Mustache__HairMT
+    100046: nw4f_root
+    100048: EyeHalfClose__EyeLMT
+    100050: EyeHalfClose__EyeRMT
+    100052: PressModel__BodyMT
+    400000: AllRoot
+    400002: Armature
+    400004: Body__BodyMT
+    400006: browL1
+    400008: browL2
+    400010: browR1
+    400012: browR2
+    400014: Cap
+    400016: EyeBrow__BodyMT
+    400018: EyeBrowCap__BodyMT
+    400020: EyeClose__BodyMT
+    400022: EyeHalfClose__BodyMT
+    400024: EyeOpen__BodyMT
+    400026: EyeOpen__EyeLMT
+    400028: EyeOpen__EyeRMT
+    400030: FootL
+    400032: FootR
+    400034: //RootNode
+    400036: Head
+    400038: JointRoot
+    400040: mouth
+    400042: mouth_up
+    400044: Mustache__HairMT
+    400046: nw4f_root
+    400048: EyeHalfClose__EyeLMT
+    400050: EyeHalfClose__EyeRMT
+    400052: PressModel__BodyMT
+    4300000: Body__BodyMT
+    4300002: EyeBrow__BodyMT
+    4300004: EyeBrowCap__BodyMT
+    4300006: EyeClose__BodyMT
+    4300008: EyeHalfClose__BodyMT
+    4300010: EyeOpen__BodyMT
+    4300012: EyeOpen__EyeLMT
+    4300014: EyeOpen__EyeRMT
+    4300016: Mustache__HairMT
+    4300018: EyeHalfClose__EyeLMT
+    4300020: EyeHalfClose__EyeRMT
+    4300022: PressModel__BodyMT
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Body__BodyMT
+    13700002: EyeBrow__BodyMT
+    13700004: EyeBrowCap__BodyMT
+    13700006: EyeClose__BodyMT
+    13700008: EyeHalfClose__BodyMT
+    13700010: EyeOpen__BodyMT
+    13700012: EyeOpen__EyeLMT
+    13700014: EyeOpen__EyeRMT
+    13700016: Mustache__HairMT
+    13700018: EyeHalfClose__EyeLMT
+    13700020: EyeHalfClose__EyeRMT
+    13700022: PressModel__BodyMT
+  materials:
+    importMaterials: 1
+    materialName: 1
+    materialSearch: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 3
+    addColliders: 1
+    importBlendShapes: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
