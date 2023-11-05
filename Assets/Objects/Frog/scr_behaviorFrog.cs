@@ -50,7 +50,7 @@ public class scr_behaviorFrog : MonoBehaviour {
 	}
 	public void OnCaptured(){
 		gameObject.tag = "captureMe";
-		MarioController.marioObject.cappy.setHackData (1.15f, new Vector3(0, 0, -0.1f), new Vector3(0, -119.16f, 90));
+		//CAP! MarioController.marioObject.cappy.setHackData (1.15f, new Vector3(0, 0, -0.1f), new Vector3(0, -119.16f, 90));
 	}
 	public void setState(int num){
 		currentState = num;

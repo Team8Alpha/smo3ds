@@ -30,9 +30,9 @@ public class scr_behaviorStake : MonoBehaviour {
 	}
 	public void OnCaptured(){
 		gameObject.tag = "captureMe"; //only used for its-own-script identification, since i modified some stuff.
-		MarioController.marioObject.cappy.headHeight = 0f;
-		MarioController.marioObject.isHacking = false;
-		MarioController.marioObject.cappy.hackScale = 2f;
+									  //CAP! MarioController.marioObject.cappy.headHeight = 0f;
+									  //CAP! MarioController.marioObject.isHacking = false;
+									  //CAP! MarioController.marioObject.cappy.hackScale = 2f;
 		anim.Play ("pull");
 		bentH = scr_manageInput.AxisDir(-1).x;
 		bentV = scr_manageInput.AxisDir(-1).y;
@@ -47,7 +47,7 @@ public class scr_behaviorStake : MonoBehaviour {
 				else if (bentAmount != -0.1f) {
 					GetComponent<Collider> ().enabled = false;
 					anim.Play ("pullOut");
-					MarioController.marioObject.cappy.SetState (2);
+					//CAP! MarioController.marioObject.cappy.SetState (2);
 					bentAmount = -0.1f;
 				} else if (anim.GetBool ("isDead")) {
 					Destroy (gameObject);

@@ -28,10 +28,10 @@ public class scr_capWorldHanger4 : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider collis){
-		if(collis.gameObject.name == "objMarioCap"&&MarioController.marioObject.cappy.isThrown){
-			if(!isEnabled){ myLight(); isEnabled = true; }
-			MarioController.marioObject.cappy.SetState(5);
-			MarioController.marioObject.cappy.transform.position = new Vector3(transform.position.x, transform.position.y+3.8f, transform.position.z);
-		}
+		//CAP! if(collis.gameObject.name == "objMarioCap"&&MarioController.marioObject.cappy.isThrown){
+		//CAP! if (!isEnabled){ myLight(); isEnabled = true; }
+		//CAP! MarioController.marioObject.cappy.SetState(5);
+		//CAP! 	MarioController.marioObject.cappy.transform.position = new Vector3(transform.position.x, transform.position.y+3.8f, transform.position.z);
+		//CAP! }
 	}
 }

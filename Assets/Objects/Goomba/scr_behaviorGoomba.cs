@@ -164,7 +164,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 	}
 	public void OnCaptured(){
 		gameObject.tag = "captureMe";
-		MarioController.marioObject.cappy.setHackData (1.525f, new Vector3 (0, 0.5f, 0), new Vector3(-6,0,0));
+		//CAP!	MarioController.marioObject.cappy.setHackData (1.525f, new Vector3 (0, 0.5f, 0), new Vector3(-6,0,0));
 	}
 	public void OnSensorEnter(Collider col){
 		if (col.name == "mario" && isMoving && !dead)
