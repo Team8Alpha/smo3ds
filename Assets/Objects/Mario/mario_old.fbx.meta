@@ -1,0 +1,174 @@
+fileFormatVersion: 2
+guid: 33aadd305244c8f42ba6e983d73d5eca
+timeCreated: 1680778695
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: AllRoot
+    100002: Armature
+    100004: ArmL1
+    100006: ArmL2
+    100008: ArmR1
+    100010: ArmR2
+    100012: Body
+    100014: Cap
+    100016: Cap 1
+    100018: CapHair
+    100020: Face
+    100022: FaceParts
+    100024: FootL
+    100026: FootR
+    100028: Hair
+    100030: HandL
+    100032: HandL_ball
+    100034: HandL_flat
+    100036: HandR
+    100038: HandR_ball
+    100040: HandR_flat
+    100042: Hip
+    100044: JointRoot
+    100046: LegL1
+    100048: LegL2
+    100050: LegR1
+    100052: LegR2
+    100054: //RootNode
+    100056: MarioHead
+    100058: nw4f_root
+    100060: ShoulderL
+    100062: ShoulderR
+    100064: small_placeholder
+    100066: Spine1
+    100068: Spine2
+    400000: AllRoot
+    400002: Armature
+    400004: ArmL1
+    400006: ArmL2
+    400008: ArmR1
+    400010: ArmR2
+    400012: Body
+    400014: Cap
+    400016: Cap 1
+    400018: CapHair
+    400020: Face
+    400022: FaceParts
+    400024: FootL
+    400026: FootR
+    400028: Hair
+    400030: HandL
+    400032: HandL_ball
+    400034: HandL_flat
+    400036: HandR
+    400038: HandR_ball
+    400040: HandR_flat
+    400042: Hip
+    400044: JointRoot
+    400046: LegL1
+    400048: LegL2
+    400050: LegR1
+    400052: LegR2
+    400054: //RootNode
+    400056: MarioHead
+    400058: nw4f_root
+    400060: ShoulderL
+    400062: ShoulderR
+    400064: small_placeholder
+    400066: Spine1
+    400068: Spine2
+    2300000: small_placeholder
+    3300000: small_placeholder
+    4300000: HandL_ball
+    4300002: HandR_ball
+    4300004: Cap
+    4300006: CapHair
+    4300008: FaceParts
+    4300010: Face
+    4300012: small_placeholder
+    4300014: HandL_flat
+    4300016: HandR_flat
+    4300018: Hair
+    4300020: Body
+    6400000: small_placeholder
+    7400000: marionewer
+    7400002: Take 001
+    9500000: //RootNode
+    13700000: Body
+    13700002: Cap
+    13700004: CapHair
+    13700006: Face
+    13700008: FaceParts
+    13700010: Hair
+    13700012: HandL_ball
+    13700014: HandL_flat
+    13700016: HandR_ball
+    13700018: HandR_flat
+  materials:
+    importMaterials: 0
+    materialName: 1
+    materialSearch: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 3
+    addColliders: 0
+    importBlendShapes: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

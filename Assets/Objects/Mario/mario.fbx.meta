@@ -1,0 +1,187 @@
+fileFormatVersion: 2
+guid: 16fddc4e87c092247833a39155a0c77e
+timeCreated: 1699206998
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: AllRoot
+    100002: Armature
+    100004: ArmL1
+    100006: ArmL1Sub
+    100008: ArmL2
+    100010: ArmL2Sub
+    100012: ArmR1
+    100014: ArmR1Sub
+    100016: ArmR2
+    100018: ArmR2Sub
+    100020: Cap
+    100022: Cap 1
+    100024: CapHair
+    100026: Face
+    100028: FaceParts
+    100030: FootL
+    100032: FootR
+    100034: Hair
+    100036: HandL
+    100038: HandL_ball
+    100040: HandL_flat
+    100042: HandR
+    100044: HandR_ball
+    100046: HandR_flat
+    100048: Head
+    100050: Head_end
+    100052: Hip
+    100054: JointRoot
+    100056: LegL1
+    100058: LegL2
+    100060: LegR1
+    100062: LegR2
+    100064: Mario__BodyMT
+    100066: MarioHead
+    100068: //RootNode
+    100070: nw4f_root
+    100072: ShoulderL
+    100074: ShoulderR
+    100076: small_placeholder
+    100078: Spine1
+    100080: Spine2
+    100082: ToeL
+    100084: ToeR
+    400000: AllRoot
+    400002: Armature
+    400004: ArmL1
+    400006: ArmL1Sub
+    400008: ArmL2
+    400010: ArmL2Sub
+    400012: ArmR1
+    400014: ArmR1Sub
+    400016: ArmR2
+    400018: ArmR2Sub
+    400020: Cap
+    400022: Cap 1
+    400024: CapHair
+    400026: Face
+    400028: FaceParts
+    400030: FootL
+    400032: FootR
+    400034: Hair
+    400036: HandL
+    400038: HandL_ball
+    400040: HandL_flat
+    400042: HandR
+    400044: HandR_ball
+    400046: HandR_flat
+    400048: Head
+    400050: Head_end
+    400052: Hip
+    400054: JointRoot
+    400056: LegL1
+    400058: LegL2
+    400060: LegR1
+    400062: LegR2
+    400064: Mario__BodyMT
+    400066: MarioHead
+    400068: //RootNode
+    400070: nw4f_root
+    400072: ShoulderL
+    400074: ShoulderR
+    400076: small_placeholder
+    400078: Spine1
+    400080: Spine2
+    400082: ToeL
+    400084: ToeR
+    2300000: small_placeholder
+    3300000: small_placeholder
+    4300000: HandR_flat
+    4300002: HandL_ball
+    4300004: FaceParts
+    4300006: Cap
+    4300008: Mario__BodyMT
+    4300010: HandL_flat
+    4300012: HandR_ball
+    4300014: CapHair
+    4300016: Face
+    4300018: Hair
+    4300020: small_placeholder
+    9500000: //RootNode
+    13700000: Cap
+    13700002: CapHair
+    13700004: Face
+    13700006: FaceParts
+    13700008: Hair
+    13700010: HandL_ball
+    13700012: HandL_flat
+    13700014: HandR_ball
+    13700016: HandR_flat
+    13700018: Mario__BodyMT
+  materials:
+    importMaterials: 0
+    materialName: 2
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 3
+    addColliders: 0
+    importBlendShapes: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
