@@ -17,7 +17,7 @@ public class scr_behaviorCheckpoint : MonoBehaviour {
     {
 		if (!wasActivated && collis.tag == "Player"){
 			anim.Play("get");
-			transform.GetChild(2).gameObject.GetComponent<Renderer>().material = mat_after;
+			transform.GetChild(1).GetChild(1).gameObject.GetComponent<Renderer>().material = mat_after;
 			scr_main._f.lastCheckpoint = numSpawnPoint;
 			scr_manageData._f.Save();
 			wasActivated = true;

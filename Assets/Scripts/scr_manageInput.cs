@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,11 +19,11 @@ public class scr_manageInput : MonoBehaviour {
 
 	public static Vector2 AxisCircleL(bool rotateCam = false){
 		Vector2 circleL;
-		#if UNITY_EDITOR
+#if !UNITY_EDITOR
 		circleL = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-		#else
+#else
 		circleL = UnityEngine.N3DS.GamePad.CirclePad;
-		#endif
+#endif
 
 		if(rotateCam){
 			// Rotate the circleL around the y-axis of the camera

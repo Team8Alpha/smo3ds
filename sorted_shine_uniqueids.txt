@@ -1,0 +1,759 @@
+id   | kingdom     | moon name
+-----+-------------+------------------------------------
+2    | Snow        | Moon Shards in the Snow
+3    | Snow        | Taking Notes: Snow Path Dash
+4    | Snow        | Fishing in the Glacier!
+6    | Snow        | Above the Freezing Fishing Pond
+7    | Snow        | Ice Floe Swimming
+8    | Snow        | Shining on High
+9    | Snow        | Deep in the Cold, Cold Water
+10   | Snow        | It Popped Out of the Ice
+12   | Snow        | Dashing Over Cold Water!
+13   | Snow        | Dashing Above and Beyond!
+14   | Snow        | Jump 'n' Swim in the Freezing Water
+15   | Snow        | Freezing Water Near the Ceiling
+16   | Snow        | Atop a Blustery Arch
+17   | Snow        | The Icicle Barrier
+18   | Snow        | The Gusty Barrier
+19   | Snow        | Peach in the Snow Kingdom
+20   | Snow        | Ice-Dodging Goomba Stack
+21   | Snow        | Behind Snowy Mountain
+22   | Snow        | The Ice Wall Barrier
+23   | Snow        | The Shiverian Treasure Chest
+24   | Snow        | Treasure in the Ice Wall
+25   | Snow        | The Snowy Mountain Barrier
+31   | Snow        | Running the Flower Road
+32   | Snow        | Looking Back on the Flower Road
+33   | Snow        | Blowing and Sliding
+35   | Sand        | Through the Freezing Waterway
+36   | Sand        | Freezing Waterway: Hidden Room
+37   | Metro       | New Donk City's Pest Problem
+38   | Metro       | Inside an Iron Girder
+39   | Metro       | Swaying in the Breeze
+40   | Metro       | Secret Path to New Donk City!
+41   | Metro       | Guitarist on Board!
+42   | Metro       | Drummer on Board!
+43   | Metro       | Trumpeter on Board!
+44   | Metro       | Bassist on Board!
+46   | Metro       | How You Doin', Captain Toad?
+49   | Metro       | Who Piled Garbage on This?
+50   | Metro       | Bench Friends
+51   | Metro       | Jump-Rope Genius
+53   | Metro       | Remotely Captured Car
+54   | Metro       | Girder Sandwich
+59   | Metro       | Secret Girder Tunnel!
+60   | Metro       | Jump-Rope Hero
+61   | Metro       | Dizzying Heights
+62   | Metro       | Hidden in the Scrap
+65   | Metro       | Glittering Above the Pool
+68   | Metro       | How Do They Take Out the Trash?
+69   | Metro       | City Gardening: Rooftop Planter
+70   | Metro       | City Gardening: Building Planter
+71   | Metro       | City Gardening: Plaza Planter
+74   | Metro       | Out of a Crate in the City
+75   | Metro       | Peach in the Metro Kingdom
+77   | Metro       | Left at the Café?
+78   | Metro       | Crossing Lines
+81   | Metro       | Hat-and-Seek: In the City
+82   | Metro       | Found in the Park! Good Dog!
+84   | Metro       | Hanging Between Buildings
+95   | Metro       | A Traditional Festival!
+96   | Metro       | A Request from the Mayor
+97   | Metro       | Mario Signs His Name
+99   | Metro       | Caught Hopping on a Building!
+100  | Metro       | City Hall Lost & Found
+101  | Metro       | Shopping in New Donk City
+102  | Metro       | Taking Notes: In the Private Room
+103  | Metro       | Hanging from a High-Rise
+104  | Metro       | Vaulting Up a High-Rise
+105  | Metro       | RC Car Pro!
+106  | Metro       | RC Car Champ!
+107  | Metro       | Powering Up the Station
+113  | Metro       | Sharpshooting Under Siege
+114  | Metro       | Moon Shards Under Siege
+115  | Metro       | Bullet Billding
+116  | Metro       | One Man's Trash...
+118  | Metro       | Inside the Rotating Maze
+119  | Metro       | Outside the Rotating Maze
+121  | Metro       | Off the Beaten Wire
+122  | Metro       | Rewiring the Neighborhood
+123  | Metro       | Motor Scooter Daredevil!
+124  | Metro       | Full-Throttle Scooting!
+125  | Metro       | Swinging Scaffolding: Jump!
+126  | Metro       | Swinging Scaffolding: Break!
+129  | Wooded      | Road to Sky Garden
+130  | Wooded      | Flower Thieves of Sky Garden
+131  | Wooded      | Love in the Forest Ruins
+133  | Wooded      | Hey Out There, Captain Toad!
+134  | Wooded      | Behind the Rock Wall
+135  | Wooded      | Thanks for the Charge!
+136  | Wooded      | Fire in the Cave
+137  | Wooded      | Secret Path to the Steam Gardens!
+138  | Wooded      | Shopping in Steam Gardens
+139  | Wooded      | Atop the Tall Tree
+140  | Wooded      | Climb the Cliff to Get the Nut
+141  | Wooded      | The Nut in the Red Maze
+142  | Wooded      | The Nut at the Dead End
+143  | Wooded      | Tucked Away Inside the Tunnel
+144  | Wooded      | Cracked Nut on a Crumbling Tower
+145  | Wooded      | The Nut 'Round the Corner
+146  | Wooded      | Over the Cliff's Edge
+147  | Wooded      | The Nut that Grew on the Tall Fence
+148  | Wooded      | Caught Hopping in the Forest!
+149  | Wooded      | Rolling Rock in the Woods
+150  | Wooded      | Back Way Up the Mountain
+151  | Wooded      | Taking Notes: Stretching
+152  | Wooded      | Moon Shards in the Forest
+153  | Wooded      | Wooded Kingdom Regular Cup
+155  | Wooded      | Peach in the Wooded Kingdom
+156  | Wooded      | Invader in the Sky Garden
+157  | Wooded      | Wooded Kingdom Timer Challenge 1
+159  | Wooded      | Path to the Secret Flower Field
+160  | Wooded      | Looking Down on the Goombas
+161  | Wooded      | Above the Iron Mountain Path
+163  | Wooded      | Hot, Hot, Hot from the Campfire
+166  | Wooded      | Bird Traveling the Forest
+168  | Wooded      | High Up in the Cave
+169  | Wooded      | The Nut in the Robot Storeroom
+170  | Wooded      | Taking Notes: On Top of the Wall
+174  | Wooded      | The Nut Under the Observation Deck
+177  | Wooded      | High Up on a Rock Wall
+179  | Wooded      | Stretching Your Legs
+180  | Wooded      | Nut Planted in the Tower
+181  | Wooded      | Defend the Secret Flower Field!
+182  | Wooded      | Make the Secret Flower Field Bloom
+183  | Wooded      | Rolling Rock in the Deep Woods
+184  | Wooded      | Beneath the Roots of the Moving Tree
+185  | Wooded      | By the Babbling Brook in Deep Woods
+186  | Wooded      | The Hard Rock in Deep Woods
+187  | Wooded      | Exploring for Treasure
+188  | Wooded      | Deep Woods Treasure Trap
+189  | Wooded      | Elevator Blind Spot
+190  | Wooded      | Elevator Escalation
+191  | Wooded      | Flower Road Run
+192  | Wooded      | Flower Road Reach
+193  | Wooded      | Wandering in the Fog
+194  | Wooded      | Nut Hidden in the Fog
+195  | Wooded      | Spinning-Platforms Treasure
+196  | Wooded      | Flooding Pipeway
+197  | Wooded      | Flooding Pipeway Ceiling Secret
+198  | Wooded      | Walking on Clouds
+199  | Wooded      | Above the Clouds
+200  | Wooded      | Herding Sheep Above the Forest Fog
+201  | Wooded      | Herding Sheep on the Iron Bridge
+202  | Wooded      | Invisible Road: Danger!
+203  | Wooded      | Invisible Road: Hidden Room
+204  | Cascade     | Good Morning, Captain Toad!
+205  | Cascade     | Our First Power Moon
+206  | Cascade     | Chomp Through the Rocks
+207  | Cascade     | Secret Path to Fossil Falls!
+208  | Cascade     | Across the Floating Isles
+209  | Cascade     | Peach in the Cascade Kingdom
+210  | Cascade     | Above a High Cliff
+211  | Cascade     | Shopping in Fossil Falls
+212  | Cascade     | Behind the Waterfall
+213  | Cascade     | Bottom of the Waterfall Basin
+214  | Cascade     | Treasure Under the Cliff
+215  | Cascade     | Next to the Stone Arch
+216  | Cascade     | Treasure of the Waterfall Basin
+217  | Cascade     | Caught Hopping at the Waterfall!
+218  | Cascade     | Multi Moon Atop the Falls
+221  | Cascade     | Past the Chasm Lifts
+222  | Cascade     | Hidden Chasm Passage
+223  | Cascade     | Atop a Wall Among the Clouds
+224  | Cascade     | Across the Mysterious Clouds
+225  | Cascade     | Nice Shot with the Chain Chomp!
+226  | Cascade     | Very Nice Shot with the Chain Chomp!
+227  | Cap         | Good Evening, Captain Toad!
+228  | Cap         | The Forgotten Treasure
+229  | Cap         | Peach in the Cap Kingdom
+230  | Cap         | Shopping in Bonneton
+231  | Cap         | Hidden in a Sunken Hat
+232  | Cap         | Caught Hopping Near the Ship!
+233  | Cap         | Next to Glasses Bridge
+234  | Cap         | Push-Block Peril
+235  | Cap         | Hidden Among the Push-Blocks
+236  | Cap         | Skimming the Poison Tide
+237  | Cap         | Slipping Through the Poison Tide
+238  | Cap         | Searching the Frog Pond
+239  | Cap         | Secrets of the Frog Pond
+240  | Luncheon    | Is This an Ingredient Too?!
+241  | Luncheon    | Golden Turnip Recipe 2
+242  | Luncheon    | Golden Turnip Recipe 1
+243  | Luncheon    | Golden Turnip Recipe 3
+244  | Luncheon    | Taking Notes: Swimming in Magma
+245  | Luncheon    | Island of Salt Floating in the Lava
+246  | Luncheon    | Overlooking a Bunch of Ingredients
+247  | Luncheon    | Atop a Column in a Row
+248  | Luncheon    | Surrounded by Tall Mountains
+249  | Luncheon    | Luncheon Kingdom Timer Challenge 2
+250  | Luncheon    | Lurking in the Pillar's Shadow
+251  | Luncheon    | Under the Cheese Rocks
+253  | Luncheon    | Atop the Jutting Crag
+254  | Luncheon    | Light the Lantern on the Small Island
+255  | Luncheon    | Light the Two Flames
+256  | Luncheon    | Piled on the Salt
+257  | Luncheon    | Climb Up the Cascading Magma
+259  | Luncheon    | Alcove Behind the Pillars of Magma
+260  | Luncheon    | Secret Path to Mount Volbono!
+261  | Luncheon    | Light the Far-Off Lanterns
+263  | Luncheon    | Beneath the Rolling Vegetables
+264  | Luncheon    | Luncheon Kingdom Timer Challenge 1
+265  | Luncheon    | Bon Appétit, Captain Toad!
+266  | Luncheon    | Luncheon Kingdom: Regular Cup
+268  | Luncheon    | Peach in the Luncheon Kingdom
+269  | Luncheon    | The Rooftop Lantern
+271  | Luncheon    | From Inside a Bright Stone
+276  | Luncheon    | From a Crack in the Hard Ground
+277  | Luncheon    | By the Cannon Pointed at the Big Pot
+280  | Luncheon    | Hat-and-Seek: Among the Food
+287  | Luncheon    | On Top of a Tall, Tall Roof
+289  | Luncheon    | Caught Hopping at the Volcano!
+290  | Luncheon    | Cookatiel Showdown!
+291  | Luncheon    | The Broodals Are After Some Cookin'
+292  | Luncheon    | Big Pot on the Volcano: Dive In!
+294  | Luncheon    | Shopping in Mount Volbono
+296  | Luncheon    | Fork Flickin' to the Summit
+297  | Luncheon    | Fork Flickin' Detour
+298  | Luncheon    | Crossing to the Magma
+299  | Luncheon    | Magma Narrow Path
+300  | Luncheon    | Excavate 'n' Search the Cheese Rocks
+301  | Luncheon    | Climb the Cheese Rocks
+302  | Luncheon    | Magma Swamp: Floating and Sinking
+303  | Luncheon    | Corner of the Magma Swamp
+306  | Luncheon    | Taking Notes: Spinning Athletics
+307  | Luncheon    | Spinning Athletics End Goal
+308  | Luncheon    | Flying Over the Lava Islands
+310  | Luncheon    | Volcano Cave Cruisin'
+311  | Luncheon    | Volcano Cave and Mysterious Clouds
+312  | Luncheon    | Lanterns on the Gear Steps
+313  | Luncheon    | Stepping Over the Gears
+314  | Bowser's    | Big Broodal Battle
+315  | Bowser's    | Taking Notes: Between Spinies
+316  | Bowser's    | Jizo All in a Row
+317  | Bowser's    | Underground Jizo
+318  | Bowser's    | Good to See You, Captain Toad!
+319  | Bowser's    | Inside a Block in the Castle
+320  | Bowser's    | Exterminate the Ogres!
+321  | Bowser's    | Behind the Big Wall
+322  | Bowser's    | Secret Path to Bowser's Castle!
+323  | Bowser's    | Poking Your Nose in the Plaster Wall
+324  | Bowser's    | Stack Up Above the Wall
+325  | Bowser's    | Infiltrate Bowser's Castle!
+326  | Bowser's    | Above the Poison Swamp
+327  | Bowser's    | Sunken Treasure in the Moat
+328  | Bowser's    | Poking Your Nose by the Great Gate
+331  | Bowser's    | Found Behind Bars!
+332  | Bowser's    | Showdown at Bowser's Castle
+333  | Bowser's    | Treasure Inside the Turret
+334  | Bowser's    | Smart Bombing
+335  | Bowser's    | From the Side Above the Castle Gate
+337  | Bowser's    | Poking the Turret Wall
+338  | Bowser's    | Peach in Bowser's Kingdom
+339  | Bowser's    | On the Giant Bowser Statue's Nose
+340  | Bowser's    | Past the Moving Wall
+343  | Bowser's    | Caught Hopping at Bowser's Castle!
+345  | Bowser's    | Caught on the Iron Fence
+348  | Bowser's    | Third Courtyard Outskirts
+349  | Bowser's    | Invader in Bowser's Castle
+350  | Bowser's    | Behind the Tall Wall: Poke, Poke!
+351  | Bowser's    | Taking Notes: On the Wall
+355  | Bowser's    | Jumping from Flag to Flag
+356  | Bowser's    | Inside a Block at the Gate
+360  | Bowser's    | Shopping at Bowser's Castle
+363  | Bowser's    | Jizo's Big Adventure
+364  | Bowser's    | Jizo and the Hidden Room
+365  | Bowser's    | Dashing Above the Clouds
+366  | Bowser's    | Dashing Through the Clouds
+367  | Bowser's    | Down and Up the Spinning Tower
+368  | Bowser's    | On Top of the Spinning Tower
+369  | Bowser's    | Poke the Wooden Tower
+370  | Bowser's    | Climb the Wooden Tower
+372  | Lost        | Get Some Rest, Captain Toad
+373  | Lost        | A Propeller Pillar's Secret
+374  | Lost        | Inside the Stone Cage
+375  | Lost        | Inside the Rising Stone Pillar
+376  | Lost        | Atop a Propeller Pillar
+377  | Lost        | On a Tree in the Swamp
+378  | Lost        | Cave Gardening
+379  | Lost        | On the Mountain Road
+380  | Lost        | Below the Cliff's Edge
+381  | Lost        | Soaring Over Forgotten Isle!
+382  | Lost        | Peeking Out from Under the Bridge
+383  | Lost        | The Caged Gold
+384  | Lost        | Over the Fuzzies, Above the Swamp
+385  | Lost        | Enjoying the View of Forgotten Isle
+386  | Lost        | Moon Shards in the Jungle
+387  | Lost        | Avoiding Fuzzies Inside the Wall
+388  | Lost        | A Butterfly's Treasure
+390  | Lost        | Caught Hopping in the Jungle!
+392  | Lost        | Line It Up, Blow It Up
+393  | Lost        | Taking Notes: Stretch and Shrink
+394  | Lost        | Peach in the Lost Kingdom
+395  | Lost        | The Shining Fruit
+396  | Lost        | Jump Down to the Top of a Tree
+398  | Lost        | Shopping on Forgotten Isle
+399  | Lost        | Stretch and Traverse the Jungle
+400  | Lost        | Aglow in the Jungle
+401  | Lake        | On the Lakeshore
+402  | Lake        | Taking Notes: Dive and Swim
+403  | Lake        | Let's Go Swimming, Captain Toad!
+404  | Lake        | What's in the Box?
+405  | Lake        | From the Broken Pillar
+406  | Lake        | I Feel Underdressed
+407  | Lake        | Taking Notes: In the Cliffside
+408  | Lake        | Peach in the Lake Kingdom
+409  | Lake        | I Met a Lake Cheep Cheep!
+410  | Lake        | End of the Hidden Passage
+411  | Lake        | Dorrie-Back Rider
+412  | Lake        | Cheep Cheep Crossing
+413  | Lake        | Moon Shards in the Lake
+414  | Lake        | Our Secret Little Room
+415  | Lake        | Treasure in the Spiky Waterway
+416  | Lake        | Lake Fishing
+417  | Lake        | Secret Path to Lake Lamode!
+420  | Lake        | Lake Kingdom Timer Challenge 2
+422  | Lake        | Behind the Floodgate
+423  | Lake        | Bird Traveling Over the Lake
+424  | Lake        | Broodals Over the Lake
+425  | Lake        | Jump, Grab, Cling, and Climb
+426  | Lake        | Jump, Grab, and Climb Some More
+430  | Lake        | Shopping in Lake Lamode
+431  | Lake        | Waves of Poison: Hop to It!
+434  | Lake        | Waves of Poison: Hoppin' Over
+437  | Seaside     | The Glass Is Half Full!
+438  | Seaside     | The Stone Pillar Seal
+439  | Seaside     | The Seal Above the Canyon
+440  | Seaside     | The Hot Spring Seal
+441  | Seaside     | The Lighthouse Seal
+442  | Seaside     | Taking Notes: Ocean Surface Dash
+443  | Seaside     | Good Job, Captain Toad!
+444  | Seaside     | The Back Canyon: Excavate!
+445  | Seaside     | Under a Dangerous Ceiling
+446  | Seaside     | Love by the Seaside
+447  | Seaside     | What the Waves Left Behind
+448  | Seaside     | Treasure Trap Hidden in the Inlet
+449  | Seaside     | On the Cliff Overlooking the Beach
+450  | Seaside     | Underwater Highway Tunnel
+451  | Seaside     | Shh! It's a Shortcut!
+452  | Seaside     | Bonjour, Dorrie!
+453  | Seaside     | Merci, Dorrie!
+454  | Seaside     | Moon Shards in the Sea
+455  | Seaside     | Ride the Jetstream
+457  | Seaside     | Ocean Quiz: Good!
+458  | Seaside     | Gap in the Ocean Trench
+459  | Seaside     | Slip Through the Nesting Spot
+460  | Seaside     | Shopping in Bubblaine
+464  | Seaside     | Secret Path to Bubblaine!
+466  | Seaside     | Ocean-Bottom Maze: Treasure
+467  | Seaside     | Ocean-Bottom Maze: Hidden Room
+468  | Seaside     | Seaside Kingdom Timer Challenge 1
+471  | Seaside     | Found on the Beach! Good Dog!
+472  | Seaside     | Beach Volleyball: Champ
+473  | Seaside     | Beach Volleyball: Hero of the Beach!
+474  | Seaside     | Lighthouse Leaper
+475  | Seaside     | Caught Hopping at Glass Palace!
+476  | Seaside     | Underwater Highway West: Explore!
+477  | Seaside     | Peach in the Seaside Kingdom
+478  | Seaside     | Fly Through the Narrow Valley
+479  | Seaside     | Treasure Chest in the Narrow Valley
+481  | Seaside     | Stretch on the Side Path
+482  | Seaside     | Hurry and Stretch
+483  | Seaside     | The Sphynx's Underwater Vault
+484  | Seaside     | A Relaxing Dance
+485  | Seaside     | Wading in the Cloud Sea
+486  | Seaside     | Sunken Treasure in the Cloud Sea
+487  | Seaside     | Poke! Roll!
+488  | Seaside     | Aim! Poke!
+489  | Seaside     | The Spinning Maze: Search!
+490  | Seaside     | The Spinning Maze: Open!
+491  | Lost        | Chasing Klepto
+492  | Lost        | Extremely Hot Bath
+493  | Sand        | Love in the Heart of the Desert
+495  | Sand        | Showdown on the Inverted Pyramid
+496  | Sand        | Moon Shards in the Sand
+497  | Sand        | Atop the Highest Tower
+498  | Sand        | Sand Quiz: Wonderful!
+501  | Sand        | Welcome Back, Jaxi!
+502  | Sand        | Fishing in the Oasis
+504  | Sand        | Secret of the Inverted Mural
+505  | Sand        | Secret of the Mural
+506  | Sand        | Top of a Dune
+507  | Sand        | From a Crate in the Ruins
+508  | Sand        | Inside a Block Is a Hard Place
+509  | Sand        | Wandering Cactus
+510  | Sand        | Lost in the Luggage
+511  | Sand        | Where the Birds Gather
+512  | Sand        | Found in the Sand! Good Dog!
+513  | Sand        | On the Statue's Tail
+515  | Sand        | Taking Notes: Running Down
+516  | Sand        | On the Leaning Pillar
+517  | Sand        | Overlooking the Desert Town
+518  | Sand        | Alcove in the Ruins
+519  | Sand        | Bullet Bill Breakthrough
+520  | Sand        | On Top of the Stone Archway
+521  | Sand        | Island in the Poison Swamp
+522  | Sand        | On the Lone Pillar
+523  | Sand        | Hidden Room in the Flowing Sands
+524  | Sand        | Secret Path to Tostarena!
+525  | Sand        | Taking Notes: Jump on the Palm
+526  | Sand        | Bird Traveling the Desert
+530  | Sand        | The Treasure of Jaxi Ruins
+531  | Sand        | Sand Kingdom Timer Challenge 1
+532  | Sand        | Herding Sheep in the Dunes
+533  | Sand        | Walking the Desert!
+534  | Sand        | Hang Your Hat on the Fountain
+535  | Sand        | 'Round-the-World Tourist
+536  | Sand        | Sand Kingdom Timer Challenge 2
+538  | Sand        | The Lurker Under the Stone
+539  | Sand        | Sand Kingdom Timer Challenge 3
+540  | Sand        | On the Eastern Pillar
+542  | Sand        | An Invisible Gleam
+544  | Sand        | Peach in the Sand Kingdom
+545  | Sand        | Poster Cleanup
+546  | Sand        | On the North Pillar
+547  | Sand        | Mighty Leap from the Palm Tree!
+550  | Sand        | In the Skies Above the Canyon
+552  | Sand        | Bird Traveling the Wastes
+553  | Sand        | Caught Hopping in the Desert!
+554  | Sand        | The Bullet Bill Maze: Side Path
+555  | Sand        | The Bullet Bill Maze: Break Through!
+556  | Sand        | Jaxi Stunt Driving
+557  | Sand        | Jaxi Driver
+558  | Sand        | Goomba Tower Assembly
+560  | Sand        | The Hole in the Desert
+561  | Sand        | Skull Sign in the Transparent Maze
+562  | Sand        | The Invisible Maze
+563  | Sand        | Hidden Room in the Inverted Pyramid
+564  | Sand        | Employees Only
+565  | Sand        | Shopping in Tostarena
+566  | Sand        | Sphynx's Treasure Vault
+567  | Sand        | Ice Cave Treasure
+569  | Sand        | Dancing with New Friends
+570  | Sand        | Strange Neighborhood
+571  | Sand        | Above a Strange Neighborhood
+572  | Sand        | Where the Transparent Platforms End
+573  | Sand        | Jump Onto the Transparent Lift
+574  | Sand        | Sinking Colossal Ruins: Hurry!
+575  | Sand        | Colossal Ruins: Dash! Jump!
+576  | Moon        | Taking Notes: On the Moon's Surface
+577  | Moon        | The Tip of a White Spire
+578  | Moon        | Walking on the Moon!
+579  | Moon        | Shining Above the Moon
+580  | Moon        | Moon Quiz: Amazing!
+581  | Moon        | Peach in the Moon Kingdom
+582  | Moon        | Cliffside Treasure Chest
+583  | Moon        | Rolling Rock on the Moon
+584  | Moon        | Moon Kingdom Timer Challenge 1
+585  | Moon        | Caught Hopping on the Moon!
+586  | Moon        | Along the Cliff Face
+593  | Moon        | Up in the Rafters
+594  | Moon        | On Top of the Cannon
+595  | Moon        | Under the Bowser Statue
+596  | Moon        | In a Hole in the Magma
+597  | Moon        | Around the Barrier Wall
+598  | Moon        | Fly to the Treasure Chest and Back
+599  | Moon        | Sphynx's Hidden Vault
+601  | Moon        | Navigating Giant Swings
+602  | Moon        | A Swing on Top of a Swing
+603  | Moon        | Center of the Galaxy
+604  | Moon        | Edge of the Galaxy
+605  | Mushroom    | Forever Onward, Captain Toad!
+606  | Mushroom    | Love at Peach's Castle
+607  | Mushroom    | Herding Sheep at Peach's Castle
+608  | Mushroom    | Secret Path to Peach's Castle!
+613  | Mushroom    | Caught Hopping at Peach's Castle!
+669  | Cascade     | Cascade Kingdom Timer Challenge 1
+670  | Cascade     | Cascade Kingdom Timer Challenge 2
+671  | Moon        | Moon Shards on the Moon
+672  | Moon        | Found on the Moon, Good Dog!
+673  | Cascade     | Across the Gusty Bridges
+674  | Cascade     | Flying Far Away from Gusty Bridges
+676  | Wooded      | Wooded Kingdom Timer Challenge 2
+678  | Snow        | Snow Kingdom Timer Challenge 1
+686  | Snow        | Snow Kingdom Timer Challenge 2
+690  | Bowser's    | Fishing(?) in Bowser's Castle
+691  | Bowser's    | Bowser's Kingdom Timer Challenge 1
+692  | Sand        | You're Quite a Catch, Captain Toad!
+693  | Moon        | Sneaking Around in the Crater
+694  | Snow        | Captain Toad is Chilly!
+695  | Snow        | Snow Kingdom Regular Cup
+699  | Snow        | Stacked-Up Ice Climb
+701  | Snow        | Water Pooling in the Crevasse
+703  | Snow        | Icy Jump Challenge
+704  | Snow        | Squirming Under Ice
+707  | Moon        | Moon Kingdom Regular Cup
+708  | Cascade     | Cascade Kingdom Regular Cup
+709  | Lake        | Lake Kingdom Regular Cup
+711  | Luncheon    | Luncheon Kingdom Timer Challenge 3
+712  | Sand        | More Walking in the Desert!
+714  | Moon        | Walking on the Moon: Again!
+715  | Lake        | Lake Kingdom Timer Challenge 1
+719  | Lake        | Deep, Deep Down
+720  | Lake        | Lake Kingdom Master Cup
+770  | Cascade     | Taking Notes: Hurry Upward
+771  | Lake        | High-Flying Leap
+773  | Seaside     | Underwater Highway East: Explore!
+775  | Seaside     | At the Base of the Lighthouse
+776  | Seaside     | A Light Next to the Lighthouse
+778  | Seaside     | The Tall Rock Shelf in the Deep Ocean
+779  | Seaside     | What Shines Inside the Glass
+780  | Seaside     | Above the Parasol: Catch!
+783  | Sand        | Taking Notes: In the Wall Painting
+790  | Seaside     | Taking Notes: Ocean-Bottom Maze
+793  | Ruined      | In the Ancient Treasure Chest
+795  | Ruined      | Battle with the Lord of Lightning!
+798  | Moon        | Moon Kingdom Timer Challenge 2
+799  | Sand        | Into the Flowing Sands
+801  | Bowser's    | Searching Hexagon Tower
+802  | Bowser's    | Center of Hexagon Tower
+803  | Luncheon    | Love Above the Lava
+807  | Mushroom    | Light from the Ceiling
+809  | Metro       | Free Parking: Rooftop Hop
+810  | Moon        | Hidden on the Side of the Cliff
+811  | Moon        | Jumping High as a Frog
+813  | Cap         | Fog-Shrouded Platform
+815  | Cap         | Frog-Jumping from the Top Deck
+816  | Cap         | Danger Sign
+817  | Cap         | Under the Big One's Brim
+822  | Cascade     | Under the Ground
+823  | Cascade     | Under the Old Electrical Pole
+825  | Cascade     | Guarded by a Colossal Fossil
+826  | Cascade     | Just a Hat, Skip, and a Jump
+828  | Moon        | Taking Notes: In Low Gravity
+829  | Luncheon    | Under the Meat Plateau
+830  | Snow        | Spinning Above the Clouds
+831  | Snow        | High-Altitude Spinning
+832  | Lost        | Lost Kingdom Regular Cup
+833  | Luncheon    | Taking Notes: Big Pot Swim
+834  | Ruined      | Caught on a Big Horn
+835  | Ruined      | Upon the Broken Arch
+839  | Metro       | Metro Kingdom Timer Challenge 2
+840  | Mushroom    | Found at Peach's Castle! Good Dog!
+843  | Snow        | Forgotten in the Holding Room
+848  | Metro       | Powering Up the Power Plant
+851  | Cloud       | Digging in the...Cloud?
+852  | Cloud       | High, High Above the Clouds
+853  | Cloud       | Crossing the Cloud Sea
+855  | Lost        | Lost Kingdom Timer Challenge
+856  | Mushroom    | Gobbling Fruit with Yoshi
+857  | Mushroom    | Yoshi's Second Helping!
+858  | Mushroom    | Yoshi's All Filled Up!
+859  | Bowser's    | Bowser's Kingdom Regular Cup
+861  | Cap         | Cap Kingdom Timer Challenge 1
+863  | Seaside     | Seaside Kingdom Timer Challenge 2
+864  | Seaside     | Seaside Kingdom Timer Challenge 3
+866  | Cascade     | Caveman Cave-Fan
+868  | Snow        | Shopping in Shiveria
+869  | Lake        | Space Is "In" Right Now
+870  | Lake        | That Trendy "Pirate" Look
+871  | Lake        | That "Old West" Style
+873  | Snow        | I'm Not Cold!
+874  | Metro       | Surprise Clown!
+875  | Metro       | Celebrating in the Streets!
+877  | Snow        | Walking on Ice!
+878  | Snow        | Even More Walking on Ice!
+879  | Snow        | Snowline Circuit Class S
+881  | Metro       | A Tourist in the Metro Kingdom!
+882  | Wooded      | Down and Back Breakdown Road
+883  | Wooded      | Below Breakdown Road
+886  | Luncheon    | Mechanic: Repairs Complete!
+887  | Sand        | Binding Band Returned
+888  | Ruined      | Roulette Tower: Climbed
+889  | Ruined      | Roulette Tower: Stopped
+890  | Ruined      | The Mummy Army's Curse
+891  | Ruined      | Charging Through an Army
+892  | Wooded      | Lost in the Tall Trees
+893  | Sand        | Among the Five Cactuses
+894  | Cascade     | Cascade Kingdom Master Cup
+895  | Luncheon    | Luncheon Kingdom: Master Cup
+896  | Bowser's    | Bowser's Kingdom Master Cup
+897  | Lost        | Lost Kingdom Master Cup
+899  | Moon        | Moon Kingdom Master Cup
+900  | Snow        | Snow Kingdom Master Cup
+901  | Wooded      | Wooded Kingdom Master Cup
+903  | Snow        | Hat-and-Seek in the Snow
+904  | Metro       | Jammin' in the Metro Kingdom
+905  | Wooded      | Jammin' in the Wooded Kingdom
+906  | Cascade     | A Tourist in the Cascade Kingdom
+907  | Luncheon    | Jammin' in the Luncheon Kingdom
+908  | Luncheon    | A Tourist in the Luncheon Kingdom!
+909  | Ruined      | Rolling Rock on the Battlefield
+910  | Sand        | Jammin' in the Sand Kingdom
+911  | Moon        | A Tourist in the Moon Kingdom!
+912  | Mushroom    | A Tourist in the Mushroom Kingdom!
+913  | Mushroom    | Jammin' in the Mushroom Kingdom
+914  | Cloud       | King of the Cube!
+915  | Cloud       | The Sixth Face
+920  | Seaside     | A Fine Detail on the Glass
+924  | Sand        | Hat-and-Seek: In the Sand
+928  | Metro       | Up on the Big Screen
+929  | Metro       | Down Inside the Big Screen
+933  | Mushroom    | Shopping Near Peach's Castle
+934  | Mushroom    | Totally Classic!
+937  | Snow        | Secret Path to Shiveria!
+938  | Metro       | Metro Kingdom Timer Challenge 3
+939  | Metro       | Metro Kingdom Regular Cup
+940  | Metro       | Metro Kingdom Master Cup
+941  | Bowser's    | I Met a Pokio!
+942  | Lost        | Wrecked Rock Block
+943  | Lost        | I Met a Tropical Wiggler!
+948  | Metro       | Reaching Pitchblack Island
+949  | Metro       | Scaling Pitchblack Mountain
+950  | Cap         | Roll On and On
+951  | Cap         | Precision Rolling
+952  | Luncheon    | Treasure Beneath the Cheese Rocks
+953  | Sand        | Underground Treasure Chest
+956  | Mushroom    | Loose-Tile Trackdown
+959  | Mushroom    | Grow a Flower Garden
+963  | Bowser's    | Bowser's Kingdom Timer Challenge 2
+965  | Sand        | Love at the Edge of the Desert
+967  | Mushroom    | Mushroom Kingdom Regular Cup
+968  | Mushroom    | Mushroom Kingdom Master Cup
+970  | Luncheon    | All the Cracks Are Fixed
+971  | Lake        | A Successful Repair Job
+973  | Snow        | I Met a Snow Cheep Cheep!
+974  | Mushroom    | Yoshi's Feast in the Sea of Clouds
+975  | Mushroom    | Sunken Star in the Sea of Clouds
+977  | Mushroom    | Mushroom Kingdom Timer Challenge
+978  | Mushroom    | Hat-and-Seek: Mushroom Kingdom
+979  | Metro       | Free Parking: Leap of Faith
+981  | Cap         | Cap Kingdom Timer Challenge 2
+982  | Cloud       | Picture Match: Basically a Goomba
+983  | Cloud       | Picture Match: A Stellar Goomba!
+984  | Mushroom    | Toad Defender
+985  | Mushroom    | Picture Match: Basically Mario
+986  | Mushroom    | Picture Match: A Stellar Mario!
+987  | Bowser's    | Scene of Crossing the Poison Swamp
+988  | Bowser's    | Taking Notes: In the Folding Screen
+990  | Luncheon    | An Extreme Simmer
+991  | Luncheon    | A Strong Simmer
+992  | Luncheon    | The Treasure Chest in the Veggies
+995  | Sand        | Under the Mummy's Curse
+997  | Snow        | Iceburn Circuit Class S
+998  | Snow        | Iceburn Circuit Class A
+999  | Bowser's    | Bowser's Castle Treasure Vault
+1000 | Moon        | Thanks, Captain Toad!
+1001 | Wooded      | I Met an Uproot!
+1002 | Snow        | Caught Hopping in the Snow!
+1003 | Snow        | Snow Kingdom Timer Challenge 3
+1004 | Cascade     | Rolling Rock by the Falls
+1005 | Luncheon    | Diving from the Big Pot!
+1008 | Lake        | Unzip the Chasm
+1009 | Lake        | Super-Secret Zipper
+1010 | Wooded      | Wooded Kingdom Timer Challenge 3
+1011 | Wooded      | Swing Around Secret Flower Field
+1014 | Bowser's    | Small Bird in Bowser's Castle
+1015 | Lake        | Rooftop of the Water Plaza
+1016 | Bowser's    | Caught on the Giant Horn
+1017 | Lake        | Love by the Lake
+1018 | Cap         | Taking Notes: In the Fog
+1019 | Cap         | Frog-Jumping Above the Fog
+1020 | Snow        | The Bound Bowl Grand Prix
+1021 | Metro       | Hat-and-Seek: In the Crowd
+1022 | Metro       | Pushing Through the Crowd
+1023 | Metro       | High Over the Crowd
+1024 | Seaside     | Wriggling on the Sandy Bottom
+1025 | Cap         | Spin the Hat, Get a Prize
+1026 | Wooded      | Inside a Rock in the Forest
+1027 | Mushroom    | Pops Out of the Tail
+1028 | Seaside     | Seaside Kingdom Regular Cup
+1029 | Seaside     | Seaside Kingdom Master Cup
+1030 | Snow        | Moon Shards in the Cold Room
+1031 | Snow        | Slip Behind the Ice
+1032 | Bowser's    | From Crates in the Moat
+1033 | Cap         | Cap Kingdom Regular Cup
+1034 | Cap         | Cap Kingdom Master Cup
+1037 | Metro       | Sphynx in the City
+1038 | Cap         | Bonneter Blockade
+1039 | Bowser's    | Sphynx Over Bowser's Castle
+1040 | Metro       | Metro Kingdom Slots
+1041 | Cascade     | Sphynx Traveling to the Waterfall
+1042 | Luncheon    | Luncheon Kingdom Slots
+1043 | Seaside     | Rapid Ascent on Hot Spring Island
+1045 | Sand        | Sand Kingdom Regular Cup
+1046 | Sand        | Sand Kingdom Master Cup
+1047 | Sand        | Sand Kingdom Slots
+1049 | Moon        | Mysterious Flying Object
+1050 | Mushroom    | Secret 2D Treasure
+1051 | Mushroom    | 2D Boost from Bullet Bill
+1054 | Metro       | Metro Kingdom Timer Challenge 1
+1055 | Dark Side   | Arrival at Rabbit Ridge!
+1057 | Seaside     | Glass Palace Treasure Chest
+1059 | Sand        | Jaxi Reunion!
+1061 | Darker Side | Long Journey's End
+1062 | Dark Side   | Breakdown Road: Hurry!
+1063 | Dark Side   | Breakdown Road: Final Challenge!
+1064 | Dark Side   | Vanishing Road Challenge
+1065 | Dark Side   | Vanishing Road Rush
+1066 | Dark Side   | Yoshi Under Siege
+1067 | Dark Side   | Fruit Feast Under Siege
+1068 | Dark Side   | Invisible Road: Secret!
+1069 | Dark Side   | Invisible Road: Rush!
+1070 | Dark Side   | Yoshi on the Sinking Island
+1071 | Dark Side   | Fruit Feast on the Sinking Island
+1073 | Cap         | Taxi Flying Through Bonneton
+1075 | Lost        | Twist 'n' Turn-Up Treasure
+1077 | Lost        | Taxi Flying Through Forgotten Isle
+1078 | Lake        | Taxi Flying Through Lake Lamode
+1080 | Snow        | Shining in the Snow in Town
+1081 | Snow        | Entrance to Shiveria
+1082 | Dark Side   | Yoshi's Magma Swamp
+1083 | Dark Side   | Fruit Feast in the Magma Swamp!
+1086 | Cap         | Found with Cap Kingdom Art
+1087 | Snow        | Found with Snow Kingdom Art
+1088 | Metro       | Found with Metro Kingdom Art
+1089 | Wooded      | Found with Wooded Kingdom Art
+1090 | Luncheon    | Found with Luncheon Kingdom Art
+1091 | Bowser's    | Found with Bowser's Kingdom Art
+1092 | Bowser's    | Hidden Corridor Under the Floor
+1094 | Lake        | Found with Lake Kingdom Art
+1095 | Seaside     | Found with Seaside Kingdom Art
+1096 | Sand        | Found with Sand Kingdom Art
+1100 | Metro       | Sewer Treasure
+1101 | Luncheon    | Treasure of the Lava Islands
+1102 | Bowser's    | Taking Notes with a Spinning Throw
+1103 | Seaside     | Sea Gardening: Inlet Seed
+1104 | Seaside     | Sea Gardening: Canyon Seed
+1105 | Seaside     | Sea Gardening: Ocean Trench Seed
+1106 | Seaside     | Sea Gardening: Hot-Spring Seed
+1107 | Seaside     | Looking Back in the Dark Waterway
+1108 | Mushroom    | Gardening for Toad: Garden Seed
+1109 | Mushroom    | Gardening for Toad: Field Seed
+1110 | Mushroom    | Gardening for Toad: Lake Seed
+1111 | Mushroom    | Gardening for Toad: Pasture Seed
+1112 | Sand        | Desert Gardening: Plaza Seed
+1113 | Sand        | Desert Gardening: Ruins Seed
+1114 | Sand        | Desert Gardening: Seed on the Cliff
+1115 | Cascade     | Dinosaur Nest: Running Wild!
+1116 | Cascade     | Dinosaur Nest: Big Cleanup!
+1117 | Ruined      | Peach in the Ruined Kingdom
+1118 | Cloud       | Peach in the Cloud Kingdom
+1119 | Mushroom    | Princess Peach, Home Again!
+1120 | Seaside     | Bird Traveling Over the Ocean
+1121 | Mushroom    | Taking Notes: Around the Well
+1122 | Dark Side   | Captain Toad on the Dark Side!
+1123 | Dark Side   | Found with Dark Side Art 8
+1124 | Dark Side   | Found with Dark Side Art 4
+1125 | Dark Side   | Found with Dark Side Art 10
+1126 | Dark Side   | Found with Dark Side Art 7
+1127 | Dark Side   | Found with Dark Side Art 6
+1128 | Dark Side   | Found with Dark Side Art 9
+1129 | Dark Side   | Found with Dark Side Art 5
+1130 | Dark Side   | Found with Dark Side Art 2
+1131 | Dark Side   | Found with Dark Side Art 3
+1132 | Dark Side   | Found with Dark Side Art 1
+1133 | Bowser's    | Knocking Down the Nice Frame
+1134 | Mushroom    | Perched on the Castle Roof
+1135 | Seaside     | A Rumble on the Seaside Floor
+1136 | Sand        | A Rumble from the Sandy Floor
+1137 | Wooded      | Glowing in the Deep Woods
+1139 | Metro       | Motor Scooter: Escape!
+1140 | Metro       | Big Jump: Escape!
+1141 | Mushroom    | Dust-Up in New Donk City: Rematch
+1142 | Mushroom    | Blowup at Mount Volbono: Rematch
+1143 | Bowser's    | Stone Wall Circuit
+1144 | Mushroom    | Courtyard Chest Trap
+1145 | Cascade     | On Top of the Rubble
+1146 | Mushroom    | Rumble in Crumbleden: Rematch
+1147 | Mushroom    | Battle in Bubblaine: Rematch
