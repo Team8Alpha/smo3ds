@@ -562,7 +562,7 @@ public class MarioController : MonoBehaviour
 						collis.gameObject.SendMessage("OnTouch", 4);
 						return;
 					}
-					if (transform.position.y < collis.GetComponent<paramObj>().bCenterY())
+					if (transform.position.y < collis.GetComponent<paramObj>().GetPosCenterV())
 						collis.gameObject.SendMessage("OnTouch", 2);
 					else if (!hasTouchedCeiling)
 						collis.gameObject.SendMessage("OnTouch", 3);

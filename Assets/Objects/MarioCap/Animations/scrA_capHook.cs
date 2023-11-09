@@ -12,7 +12,6 @@ public class scrA_capHook : StateMachineBehaviour {
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 		animator.speed -= 0.05f;
-		Debug.Log (stateInfo.speed);
 		if (animator.speed < 0.5f)
 			animator.CrossFade("hookWait", 0.2f);
 	}

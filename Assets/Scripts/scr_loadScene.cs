@@ -10,7 +10,7 @@ public class scr_loadScene : MonoBehaviour {
 	[HideInInspector] public bool isDone = false;
 	AsyncOperation loadOP;
 
-    List<GameObject> rootObjects = new List<GameObject>();
+    //List<GameObject> rootObjects = new List<GameObject>();
 
     void Start(){ _f = this; }
 	public void StartScene(string sceneName, int transition = 0){
@@ -18,15 +18,13 @@ public class scr_loadScene : MonoBehaviour {
 		string currentscn = SceneManager.GetActiveScene ().name;
 
         Scene scene = SceneManager.GetActiveScene();
-        scene.GetRootGameObjects(rootObjects);
+        //scene.GetRootGameObjects(rootObjects);
 
         scr_main._f.hasLevelLoaded = false;
 		nextScene = sceneName;
 		scr_main._f.dbg_enemyCount = 0;
 		GetComponent<AudioListener> ().enabled = true;
 
-        //		if (MarioController.marioObject != null)
-        //			MarioController.marioObject.gameObject.GetComponent<AudioListener> ().enabled = false;
         // Makes delete the gameObjects of your scene once loaded just in case
 
         scr_main._f.SetCMD ("nSCN: " + nextScene);
@@ -44,9 +42,6 @@ public class scr_loadScene : MonoBehaviour {
 		case 2://cap fly transition
 			scr_main._f.transform.GetChild (1).GetChild (1).gameObject.SetActive (true);
             break;
-		//case 3://basic transition
-		//scr_fadefull._f.Run ( );
-		//break;
 		case 3:
             StartCoroutine (loadAsync ());
 			break;
@@ -62,12 +57,12 @@ public class scr_loadScene : MonoBehaviour {
 		scr_main._f.SetCMD ("loading: 100%");
 
         // Makes sure that the scene is completely empty just in case the scene does not get unloaded at all
-        for (int i = 0; i < rootObjects.Count; ++i)
+        /*for (int i = 0; i < rootObjects.Count; ++i)
         {
             print(rootObjects[i]);
             if (rootObjects[i].name != "objFader")
                 Destroy(rootObjects[i]);
-        }
+        }*/
         isDone = true;
 	}
 	public void SetSceneActive(){

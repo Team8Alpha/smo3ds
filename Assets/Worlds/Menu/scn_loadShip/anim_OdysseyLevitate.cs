@@ -1,16 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class anim_OdysseyLevitate : MonoBehaviour {
 
 	bool hasLoaded = false;
 	bool isExiting = false;
 	bool hasStarted= false;
+	List<GameObject> rootObjects = new List<GameObject>();
 
 	void Start(){
 		Application.backgroundLoadingPriority = ThreadPriority.BelowNormal;
+		rootObjects.AddRange(GameObject.FindObjectsOfType<GameObject>());
 	}
 	// Update is called once per frame
 	void Update () {
@@ -27,13 +28,9 @@ public class anim_OdysseyLevitate : MonoBehaviour {
 				isExiting = true;
 			}
 		} else if (scr_fadefull._f.isDone) {
-			var gos = GameObject.FindGameObjectsWithTag ("loading");
 			scr_loadScene._f.SetSceneActive ();
-			foreach (GameObject go in gos)
-				Destroy (go);
+			foreach (GameObject _obj in rootObjects)
+				try { Destroy(_obj); } catch(System.Exception e) { }
 		}
 	}
-	//public IEnumerator WaitKill(){
-		//for fading out, not implemented yet.
-	//}
 }
