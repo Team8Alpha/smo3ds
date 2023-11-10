@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class anim_OdysseyLevitate : MonoBehaviour {
 
@@ -11,7 +12,11 @@ public class anim_OdysseyLevitate : MonoBehaviour {
 
 	void Start(){
 		Application.backgroundLoadingPriority = ThreadPriority.BelowNormal;
-		rootObjects.AddRange(GameObject.FindObjectsOfType<GameObject>());
+		for (int i = 0; i < SceneManager.sceneCount; i++)
+		{
+			rootObjects.AddRange(SceneManager.GetSceneAt(i).GetRootGameObjects());
+		}
+
 	}
 	// Update is called once per frame
 	void Update () {
@@ -30,7 +35,8 @@ public class anim_OdysseyLevitate : MonoBehaviour {
 		} else if (scr_fadefull._f.isDone) {
 			scr_loadScene._f.SetSceneActive ();
 			foreach (GameObject _obj in rootObjects)
-				try { Destroy(_obj); } catch(System.Exception e) { }
+				try { if(_obj.name != "objGlobal(Clone)" && _obj.name != "camLoadShip") Destroy(_obj); Debug.Log(_obj.name); } catch(System.Exception e) { }
+			Destroy(transform.parent.gameObject);
 		}
 	}
 }

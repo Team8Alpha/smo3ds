@@ -14,7 +14,7 @@ public class scr_title : MonoBehaviour {
 	public Transform cnv_down;
 	Material mat_rotMap;
 	Material mat_shade;
-	bool bvar0 = false;
+	float timerShow = 0;
 
 	public float speed;
 	public Color startColor, endColor;
@@ -22,7 +22,6 @@ public class scr_title : MonoBehaviour {
 	public GameObject buttonRes;//resume button
 
 	public static scr_title _f;
-
 
 	public IEnumerator ChangeEngineColour()
 	{
@@ -37,39 +36,39 @@ public class scr_title : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Start(){
-		anim = GetComponent<Animator> ();
+	void Start()
+	{
+		anim = GetComponent<Animator>();
 		marioPos = transform.position; // to move him back later
-		transform.position = new Vector3 (-1000, transform.position.y, transform.position.z); //move to waitzone, works like a timer.
-		scr_fadefull._f.Run (true, 0, 0.02f);//fade in
-		mat_rotMap = spr_rotMap.gameObject.GetComponent<MeshRenderer> ().material;
-		mat_shade = spr_shade.gameObject.GetComponent<MeshRenderer> ().material;//get materials
-		scr_main._f.focusOff ();
+		transform.position = new Vector3(-1000, transform.position.y, transform.position.z); //move to waitzone, works like a timer.
+		scr_fadefull._f.Run(true, 0, 0.02f);//fade in
+		mat_rotMap = spr_rotMap.gameObject.GetComponent<MeshRenderer>().material;
+		mat_shade = spr_shade.gameObject.GetComponent<MeshRenderer>().material;//get materials
+		scr_main._f.focusOff();
 		_f = this;
+		scr_manageAudio._f.AudioStart("Sound/Entity/Mario/snd_MarioTitleName", false);
 	}
 
 	// Update is called once per frame
-	void Update () {
-		if (scr_fadefull._f.isDone || bvar0) {
-			if (!bvar0) {
-				scr_manageAudio._f.AudioStart ("Sound/Entity/Mario/snd_MarioTitleName", false);
-				bvar0 = true;
-			} else {
-				if (scr_manageAudio._f.isPlaying()) {
-					if (transform.position.x < -1008f) {
-						transform.position = marioPos;
-						anim.Play ("titleStart");
-					}
-					transform.Translate (new Vector3 (0.1f, 0, 0));
-				} else {
-					scr_main._f.focusOn ();
-					for (int i = 0; i < 4; i++)
-						cnv_down.GetChild (i).gameObject.SetActive (true);
-					EventSystem.current.SetSelectedGameObject (buttonRes);
-					scr_manageAudio._f.AudioStart ("Music/Bgm/bgmTitle");
-					this.enabled = false;
-				}
+	void Update()
+	{
+		if (scr_manageAudio._f.isPlaying())
+		{ // timer (1.5 seconds, since targetFPS is X frames per second...)
+			if (timerShow >= 1.5 * Application.targetFrameRate)
+			{
+				transform.position = marioPos;
+				anim.Play("titleStart");
 			}
+			timerShow++;
+		}
+		else
+		{ // audio has finished, show canvas
+			scr_main._f.focusOn();
+			for (int i = 0; i < 4; i++)
+				cnv_down.GetChild(i).gameObject.SetActive(true);
+			EventSystem.current.SetSelectedGameObject(buttonRes);
+			scr_manageAudio._f.AudioStart("Music/Bgm/bgmTitle");
+			this.enabled = false;
 		}
 	}
 }

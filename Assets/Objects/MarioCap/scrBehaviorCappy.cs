@@ -58,7 +58,7 @@ public class scrBehaviorCappy : MonoBehaviour
                     switch (mySubState)
                     {
                         case 0:
-                            float varAnimTime = mAnim.GetCurrentAnimatorStateInfo(1).normalizedTime;
+                            float varAnimTime = GetAnimTime();
                             if (varAnimTime > 0.6f && varAnimTime < 1) SetState(capState.Throw, 1);
                             break;
                         case 1:
@@ -83,7 +83,7 @@ public class scrBehaviorCappy : MonoBehaviour
                             }
                             break;
                         case 1:
-                            if (!CheckIsAnim())
+                            if (GetAnimTime()>1)
                             {
                                 mario.SetCap(true);
                                 SetState(capState.Wait);
@@ -166,7 +166,7 @@ public class scrBehaviorCappy : MonoBehaviour
     }
     void SetRotate(bool boolean)
     {
-        if(!mAnim.GetCurrentAnimatorStateInfo(0).IsName("rotate")) mAnim.Play("rotate", 0);
+        if(!mAnim.GetCurrentAnimatorStateInfo(0).IsName("spin")) mAnim.Play("spin", 0);
     }
     void SetVisible(bool boolean)
     {
@@ -174,9 +174,9 @@ public class scrBehaviorCappy : MonoBehaviour
         transform.GetChild(1).gameObject.SetActive(boolean);
         gameObject.GetComponent<Animator>().enabled = boolean;
     }
-    bool CheckIsAnim()
+    float GetAnimTime()
     {
-        return (mAnim.GetCurrentAnimatorStateInfo(1).normalizedTime < 1) ? true : false;
+        return mAnim.GetCurrentAnimatorStateInfo(1).normalizedTime;
     }
 
 }
