@@ -8,6 +8,8 @@
         new float[] { 11.57f, 3.75f, 5.5f }   // Jump 3
     };
     public const int maxMoveJump = 3;
-    public const int speedRotJump = 3;
-    public const int speedRotJumpTurn = 20;
+    public const int speedTurnWalk = 30;
+    public const int speedTurnJump = 10;
+    public const int speedTurnFall = 12;
+    public const int speedTurnSquat = 5;
 };

@@ -30,8 +30,8 @@ public class scr_loadScene : MonoBehaviour {
         scr_main._f.SetCMD ("nSCN: " + nextScene);
 		switch (transition) {
 		case 0: //direct, no transition
-			SceneManager.LoadScene (sceneName, LoadSceneMode.Additive);
-            SceneManager.UnloadSceneAsync (currentscn);
+			SceneManager.LoadScene (sceneName/*, LoadSceneMode.Additive*/);
+            //SceneManager.UnloadScene (currentscn);
 			break;
 		case 1: //flying ship line
 			scr_main._f.focusOff ();
@@ -42,7 +42,7 @@ public class scr_loadScene : MonoBehaviour {
 		case 2://cap fly transition
 			scr_main._f.transform.GetChild (1).GetChild (1).gameObject.SetActive (true);
             break;
-		case 3:
+		case 3: //async
             StartCoroutine (loadAsync ());
 			break;
 		}

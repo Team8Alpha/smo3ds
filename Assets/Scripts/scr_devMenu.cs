@@ -92,10 +92,8 @@ public class scr_devMenu: MonoBehaviour {
 								tmpLvName = "scn_capExTower";
 								break;
 							}
-							if (SceneManager.GetActiveScene ().name != tmpLvName) {
-								ResetVal ();
-								scr_loadScene._f.StartScene (tmpLvName, 0);
-							}
+							ResetVal ();
+							scr_loadScene._f.StartScene (tmpLvName, 0);
 						}
 						maxOption = 8;
 						canSelect = true;

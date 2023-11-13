@@ -91,7 +91,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 			setAnim ("hackStart", 0.1f);
 			setEyeTexture (1);
 			transform.GetChild (1).GetChild (3).gameObject.SetActive (false);
-			MarioController.marioObject.SetSpeed (3, 4, 0.7f);
+			MarioController.marioObject.SetSpeed (3, 4);
 			break;
 		case 7:
 			setAnim ("hackEnd", 0.1f);

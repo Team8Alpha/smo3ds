@@ -27,9 +27,10 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] public bool isMoving 			= false;
 	[HideInInspector] public bool wasMoving 		= false;
 	[HideInInspector] public bool lockJump			= false;
-	[HideInInspector] public bool isFixWalk 		= false; // fix run animation
 	[HideInInspector] public bool hasJumped 		= false;
-	[HideInInspector] public bool isJumpingSoon 	= false;
+	[HideInInspector] public bool isJumpingSoon		= false;
+	[HideInInspector] public bool isInstTurn		= false;
+	[HideInInspector] public bool isTurning			= false;
 
 	[HideInInspector] public Animator anim;
 	[HideInInspector] public Rigidbody rb;
@@ -46,6 +47,8 @@ public class MarioController : MonoBehaviour
 	private float v 								= 0;
 	private float currentMoveSpeed 					= 0;
 	private float jumpVelocity 						= 0;
+	private float currentTurnSpeed					= 0;
+	private Vector2 currentRotation					= Vector2.zero;
 
 	[HideInInspector] public string anim_stand 		= "idle";
 	[HideInInspector] public string anim_run 		= "run";
@@ -94,10 +97,10 @@ public class MarioController : MonoBehaviour
 		capsColl1 = GetComponents<CapsuleCollider>()[0];
 		capsColl2 = GetComponents<CapsuleCollider>()[1];
 		marioObject = this;
-		ResetAnim();
 
 		groundedPosition = transform.position.y;
 		lastPosition = transform.position;
+		SetState(plState.Ground);
 	}
 
 	void Update()
@@ -329,6 +332,9 @@ public class MarioController : MonoBehaviour
 				SetCollider(1.6f);
 				ResetSpeed();
 				ResetAnim();
+
+				currentTurnSpeed = MarioTable.speedTurnWalk;
+				isInstTurn = false;
 				break;
 
 			case plState.Jumping:
@@ -356,6 +362,9 @@ public class MarioController : MonoBehaviour
 				}
 				lastGroundedPosition = groundedPosition;
 
+				currentTurnSpeed = MarioTable.speedTurnJump;
+				isInstTurn = true;
+
 				rb.AddForce(MarioTable.dataJump[jumpType - 1][0] * Vector3.up, ForceMode.Impulse);
 				break;
 
@@ -372,10 +381,14 @@ public class MarioController : MonoBehaviour
 					case 1://falling after jump, still above lastgroundedposition
 						break;
 				}
+
+				currentTurnSpeed = MarioTable.speedTurnFall;
+				isInstTurn = true;
+
 				break;
 
 			case plState.Landing:
-				SetAnim(anim_land, 0.02f);
+				if(false) SetAnim(anim_land, 0.02f); // WIP LANDING HEIGHTS
 
 				hasJumped = false;
 				break;
@@ -395,6 +408,10 @@ public class MarioController : MonoBehaviour
 				isBlocked = true;
 
 				moveAdditional = transform.rotation * Vector3.forward * (currentMoveSpeed / 50);
+
+				currentTurnSpeed = MarioTable.speedTurnSquat;
+				isInstTurn = true;
+
 				break;
 		}
 
@@ -422,11 +439,6 @@ public class MarioController : MonoBehaviour
 		{
 			if (isGrounded)
 			{
-				if (isFixWalk)
-				{
-					SetAnim(anim_run);
-					isFixWalk = false;
-				}
 				if (!wasMoving)
 				{
 					if (currentMoveSpeed > 1)
@@ -436,24 +448,31 @@ public class MarioController : MonoBehaviour
 				}
 			}
 
-			float tmp_walkRotation = 0;
-			if (transform.rotation.y < 179 && transform.rotation.y > -179)
 			{
-				tmp_walkRotation = Mathf.Atan2(h, v) * Mathf.Rad2Deg;
-				tmp_walkRotation += MarioCam.marioCamera.transform.eulerAngles.y;
-				if (isMovingAir)
+				if (/*transform.rotation.y < 179 && transform.rotation.y > -179 && */!isTurning)
 				{
-					var _speed = MarioTable.speedRotJump;
-					var _inputAngle = tmp_walkRotation - MarioCam.marioCamera.transform.eulerAngles.y;
-					if (_inputAngle > 100 || _inputAngle < -100) _speed = MarioTable.speedRotJumpTurn;
-					tmp_walkRotation = Mathf.MoveTowardsAngle(transform.eulerAngles.y, tmp_walkRotation, _speed);
+					currentRotation = new Vector2(Mathf.Atan2(h, v) * Mathf.Rad2Deg,
+						Mathf.Atan2(MarioCam.marioCamera.transform.forward.x, MarioCam.marioCamera.transform.forward.z) * Mathf.Rad2Deg);
 				}
+
+				if (isInstTurn)
+				{
+					float angleDistance = Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.y, currentRotation.x + currentRotation.y));
+					if (isTurning)
+					{
+						if (angleDistance > 100) currentTurnSpeed = Mathf.Abs(currentTurnSpeed) * 2;
+						else if (angleDistance < 1) isTurning = false;
+					}
+					else
+					{
+						if (angleDistance > 100) isTurning = true;
+					}
+				}
+
+				transform.rotation = Quaternion.Euler(transform.eulerAngles.x,
+					Mathf.MoveTowardsAngle(transform.eulerAngles.y, currentRotation.x + currentRotation.y, currentTurnSpeed), 
+					transform.eulerAngles.z);
 			}
-			else
-			{
-				tmp_walkRotation = 0;
-			}
-			transform.rotation = Quaternion.Euler(transform.eulerAngles.x, tmp_walkRotation, transform.eulerAngles.z);
 
 			if (!isMovingAir)
 			{
@@ -582,6 +601,7 @@ public class MarioController : MonoBehaviour
 		{
 			isGrounded = true;
 			isMovingAir = false;
+			isTurning = false;
 			tsldSpeed = 1f;
 			SetState(plState.Landing);
 		}
@@ -640,11 +660,10 @@ public class MarioController : MonoBehaviour
 	}
 
 	//SET
-	public void SetSpeed(int _maxJump, float _moveSpeed, float scaleCap = 1)
+	public void SetSpeed(int _maxJump, float _moveSpeed)
 	{
 		maxJump = _maxJump;
 		moveSpeed = _moveSpeed;
-		cappy.transform.localScale = new Vector3 (scaleCap, scaleCap, scaleCap);
 	}
 
 	public void SetAnim(string animName, float transitionTime = -1, float standTrnsTime = 0/*, float animSpeed = 1*/)
