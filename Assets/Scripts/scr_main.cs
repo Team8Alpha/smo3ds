@@ -27,13 +27,9 @@ public class scr_main : MonoBehaviour {
 	[HideInInspector] public string capMountPoint = "missingno"; //used by cap
 	[HideInInspector] public bool hasLevelLoaded = false; //used by level loading and data.
 	
-	public void focusOff(){
-		isFocused = false;
-		Time.timeScale=0;
-	}
-	public void focusOn(){
-		isFocused = true;
-		Time.timeScale=1;
+	public void SetFocus(bool boolean){
+		isFocused = boolean;
+		Time.timeScale=boolean?1:0;
 	}
 	
 	void Awake(){

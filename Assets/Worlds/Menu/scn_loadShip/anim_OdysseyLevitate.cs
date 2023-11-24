@@ -11,6 +11,7 @@ public class anim_OdysseyLevitate : MonoBehaviour {
 	List<GameObject> rootObjects = new List<GameObject>();
 
 	void Start(){
+		scr_main._f.SetFocus(false);
 		Application.backgroundLoadingPriority = ThreadPriority.BelowNormal;
 		for (int i = 0; i < SceneManager.sceneCount; i++)
 		{
@@ -36,6 +37,7 @@ public class anim_OdysseyLevitate : MonoBehaviour {
 			scr_loadScene._f.SetSceneActive ();
 			foreach (GameObject _obj in rootObjects)
 				try { if(_obj.name != "objGlobal(Clone)" && _obj.name != "camLoadShip") Destroy(_obj); Debug.Log(_obj.name); } catch(System.Exception e) { }
+			scr_main._f.SetFocus(true);
 			Destroy(transform.parent.gameObject);
 		}
 	}

@@ -79,7 +79,6 @@ public class scr_buttonCtrl : MonoBehaviour {
 		if (scr_loadScene._f.nextScene == name)
 			return;
 		scr_loadScene._f.nextScene = name;
-		scr_main._f.focusOff();
 		scr_main._f.dbg_enemyCount=0;
 		SceneManager.LoadScene ("scn_loadShip", LoadSceneMode.Additive);
 		scr_title._f.GetComponent<Animator>().Play ("titleEnd");

@@ -33,7 +33,6 @@ public class scrBehaviorCappy : MonoBehaviour
 
     void Awake()
     {
-        Destroy(gameObject);
         mAnim = GetComponent<Animator>();
         mAudio = GetComponent<AudioSource>();
         objBone = transform.GetChild(0);

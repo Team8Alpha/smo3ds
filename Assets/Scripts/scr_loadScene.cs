@@ -18,7 +18,6 @@ public class scr_loadScene : MonoBehaviour {
 		string currentscn = SceneManager.GetActiveScene ().name;
 
         Scene scene = SceneManager.GetActiveScene();
-        //scene.GetRootGameObjects(rootObjects);
 
         scr_main._f.hasLevelLoaded = false;
 		nextScene = sceneName;
@@ -34,7 +33,7 @@ public class scr_loadScene : MonoBehaviour {
             //SceneManager.UnloadScene (currentscn);
 			break;
 		case 1: //flying ship line
-			scr_main._f.focusOff ();
+			scr_main._f.SetFocus(false);
 			SceneManager.LoadScene ("scn_loadShip");
 			nextScene = sceneName;
 				//wip

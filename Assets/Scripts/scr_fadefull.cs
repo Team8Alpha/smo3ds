@@ -116,7 +116,7 @@ public class scr_fadefull : MonoBehaviour {
 			}
 		} else {
 			if (isFocusOnExit)
-				scr_main._f.focusOn ();
+				scr_main._f.SetFocus(true);
 			if (isReverseOnExit) {
 				Run (!fadeIn, conf, fadeSpeed, isFocusOnExit, false);
 			} else if (isKillOnExit)

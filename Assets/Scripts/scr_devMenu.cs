@@ -35,7 +35,7 @@ public class scr_devMenu: MonoBehaviour {
 		noButtonPressed = true;
 		submenu = false;
 		selectionSub = -1;
-		scr_main._f.focusOn();
+		scr_main._f.SetFocus(true);
 	}
 
 	void Update () {
@@ -43,11 +43,11 @@ public class scr_devMenu: MonoBehaviour {
 			isOpen = true;
 			maxOption = 6;
 			ResetVal ();
-			scr_main._f.focusOff();
+			scr_main._f.SetFocus(false);
 		} else if (UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.R) && UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.Start) || Input.GetKey(KeyCode.Escape) && Input.GetKey(KeyCode.LeftShift)) {
 			isOpen = false;
 			ResetVal ();
-			scr_main._f.focusOn();
+			scr_main._f.SetFocus(true);
 		}
 		if(isOpen){
 			if(noButtonPressed){
@@ -58,7 +58,7 @@ public class scr_devMenu: MonoBehaviour {
 				} else {
 					if(Input.GetKeyDown(KeyCode.UpArrow)) selection--;
 					if(Input.GetKeyDown(KeyCode.DownArrow)) selection++;
-					if(Input.GetKeyDown(KeyCode.Escape) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B)){ scr_main._f.focusOn(); isOpen = false;}
+					if(Input.GetKeyDown(KeyCode.Escape) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B)){ scr_main._f.SetFocus(true); isOpen = false;}
 				}
 				if(Input.GetKeyDown(KeyCode.Return) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A)){
 					switch(selection-3){

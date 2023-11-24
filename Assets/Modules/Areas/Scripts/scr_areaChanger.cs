@@ -14,7 +14,7 @@ public class scr_areaChanger : MonoBehaviour {
 	void OnTouch(int num){
 		if (num == 2) {
 			scr_main._f.nextSpawn = nextSpawn;
-			scr_main._f.focusOff ();
+			scr_main._f.SetFocus(false);
 			scr_loadScene._f.StartScene (nextArea, transitionType);
 			scr_main._f.transform.GetChild (1).GetChild (1).gameObject.SetActive (true); //cuz it was broken, wanted to sleep.
 			//PlayerWalkDoor ();

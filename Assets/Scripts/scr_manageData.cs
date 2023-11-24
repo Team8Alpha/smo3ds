@@ -49,7 +49,7 @@ public class scr_manageData : MonoBehaviour
 
 	public void Save()
 	{
-		scr_main._f.focusOff ();
+		scr_main._f.SetFocus(false);
 		scr_main._f.transform.GetChild (2).GetChild (1).gameObject.SetActive (true);
 		PrintLog ("N: saving data");
 		string filePath = Path.Combine (Application.persistentDataPath, SAVE_FILE_NAME);
@@ -86,7 +86,7 @@ public class scr_manageData : MonoBehaviour
 		}
 
 		scr_main._f.transform.GetChild (2).GetChild (1).gameObject.SetActive (false);
-		scr_main._f.focusOn ();
+		scr_main._f.SetFocus(true);
 	}
 
 

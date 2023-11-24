@@ -44,7 +44,7 @@ public class scr_title : MonoBehaviour {
 		scr_fadefull._f.Run(true, 0, 0.02f);//fade in
 		mat_rotMap = spr_rotMap.gameObject.GetComponent<MeshRenderer>().material;
 		mat_shade = spr_shade.gameObject.GetComponent<MeshRenderer>().material;//get materials
-		scr_main._f.focusOff();
+		scr_main._f.SetFocus(false);
 		_f = this;
 		scr_manageAudio._f.AudioStart("Sound/Entity/Mario/snd_MarioTitleName", false);
 	}
@@ -63,7 +63,7 @@ public class scr_title : MonoBehaviour {
 		}
 		else
 		{ // audio has finished, show canvas
-			scr_main._f.focusOn();
+			scr_main._f.SetFocus(true);
 			for (int i = 0; i < 4; i++)
 				cnv_down.GetChild(i).gameObject.SetActive(true);
 			EventSystem.current.SetSelectedGameObject(buttonRes);
