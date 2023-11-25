@@ -8,6 +8,7 @@ public class scr_sensor : MonoBehaviour {
 	public string funcEnter = "OnSensorEnter";
 	public string funcStay = "OnSensorStay";
 	public string funcExit = "OnSensorExit";
+	public GameObject targetObj;
 	bool started = false;
 
 
@@ -34,6 +35,6 @@ public class scr_sensor : MonoBehaviour {
 	}
 
 	void DoCall(Collider coll, string func){
-		if(func != "" && coll.gameObject != transform.parent.gameObject) transform.parent.gameObject.SendMessage (func, coll);
+		if(func != "" && coll.gameObject != targetObj) targetObj.SendMessage (func, coll);
 	}
 }

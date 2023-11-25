@@ -67,7 +67,7 @@ public class scr_behaviorMoon : MonoBehaviour
 	{
 		tmpMpos.x -= 0;
 		anim = GetComponent<Animator>();
-		mat_color = transform.GetChild(1).GetChild(1).GetComponent<SkinnedMeshRenderer>();
+		mat_color = transform.GetChild(1).GetChild(0).GetComponent<SkinnedMeshRenderer>();
 		setColor();
 		globalCanvas = scr_main._f.transform.GetChild(1).transform.GetChild(1);
 	}
@@ -142,7 +142,6 @@ public class scr_behaviorMoon : MonoBehaviour
 				if (!scr_manageAudio._f.isPlaying())
 				{
 					scr_main._f.SetFocus(true);
-					MarioController.marioObject.SetAnim("wait", 0.1f);
 					MarioController.marioObject.SetState(plState.Falling);
 					globalCanvas.gameObject.SetActive(false);
 					MarioCam.marioCamera.confYOffset = 2;
@@ -157,8 +156,8 @@ public class scr_behaviorMoon : MonoBehaviour
 							if (i != 2 && i != 5 && i != 7)
 								MarioController.marioObject.transform.GetChild(i).gameObject.SetActive(false);
 						}
+					Destroy(gameObject);
 				}
-				Destroy(gameObject);
 				break;
 		}
 	}

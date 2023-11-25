@@ -33,7 +33,7 @@ public class scrBehaviorCappy : MonoBehaviour
 
     void Awake()
     {
-        mAnim = GetComponent<Animator>();
+        /*mAnim = GetComponent<Animator>();
         mAudio = GetComponent<AudioSource>();
         objBone = transform.GetChild(0);
         myParent = transform.parent;
@@ -43,11 +43,14 @@ public class scrBehaviorCappy : MonoBehaviour
         transform.localScale = Vector3.one;
         SetState(capState.Wait);
         SetVisible(false);
+        */
+        Destroy(gameObject);
     }
 
     void Update()
     {
-        if (scr_main._f.isFocused)
+        if(false)
+     //   if (scr_main._f.isFocused)
         {
             switch (myState)
             {
@@ -176,7 +179,8 @@ public class scrBehaviorCappy : MonoBehaviour
     }
     float GetAnimTime()
     {
-        return mAnim.GetCurrentAnimatorStateInfo(1).normalizedTime;
+        //return mAnim.GetCurrentAnimatorStateInfo(1).normalizedTime;
+        return mAnim.GetCurrentAnimatorStateInfo(0).normalizedTime;
     }
 
 }

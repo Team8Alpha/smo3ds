@@ -48,6 +48,17 @@ ModelImporter:
     100080: Spine2
     100082: ToeL
     100084: ToeR
+    100086: ArmL1Sub_end
+    100088: ArmL2Sub_end
+    100090: ArmR1Sub_end
+    100092: ArmR2Sub_end
+    100094: Body
+    100096: Cap_end
+    100098: HandL_end
+    100100: HandR_end
+    100102: Head_end_end
+    100104: ToeL_end
+    100106: ToeR_end
     400000: AllRoot
     400002: Armature
     400004: ArmL1
@@ -91,6 +102,17 @@ ModelImporter:
     400080: Spine2
     400082: ToeL
     400084: ToeR
+    400086: ArmL1Sub_end
+    400088: ArmL2Sub_end
+    400090: ArmR1Sub_end
+    400092: ArmR2Sub_end
+    400094: Body
+    400096: Cap_end
+    400098: HandL_end
+    400100: HandR_end
+    400102: Head_end_end
+    400104: ToeL_end
+    400106: ToeR_end
     2300000: small_placeholder
     3300000: small_placeholder
     4300000: HandR_flat
@@ -104,7 +126,9 @@ ModelImporter:
     4300016: Face
     4300018: Hair
     4300020: small_placeholder
+    4300022: Body
     9500000: //RootNode
+    11100000: //RootNode
     13700000: Cap
     13700002: CapHair
     13700004: Face
@@ -115,6 +139,7 @@ ModelImporter:
     13700014: HandR_ball
     13700016: HandR_flat
     13700018: Mario__BodyMT
+    13700020: Body
   materials:
     importMaterials: 0
     materialName: 2
@@ -176,10 +201,10 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 1
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
