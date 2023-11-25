@@ -8,7 +8,7 @@ smo3ds-builds/
 zz_start_unity.bat
 SCREENSHOTS\
 SCREENSHOTS/
-cci2cia.lnk
+cci2cia.bat
 
 # This .gitignore file should be placed at the root of your Unity project directory
 #
