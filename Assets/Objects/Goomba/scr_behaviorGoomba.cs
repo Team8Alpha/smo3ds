@@ -134,7 +134,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 			scr_behaviorGoomba obj = hit.transform.gameObject.GetComponent<scr_behaviorGoomba> ();
 			obj.isTop = true;
 		} else
-			scr_main._f.SetCMD ("single.");
+			scr_main.DPrint ("single.");
 	}
 	
 	public void OnTouch(int numType){
@@ -153,7 +153,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 				break;
 			case 2:
 					//kill mario
-					scr_main._f.SetCMD("~YOU DIED~");
+					scr_main.DPrint("~YOU DIED~");
 				break;
 			}
 		}

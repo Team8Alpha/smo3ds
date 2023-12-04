@@ -72,7 +72,7 @@ public class scr_buttonCtrl : MonoBehaviour {
 	}
 	public void LoadOptions()
 	{
-		scr_main._f.SetCMD ("Wait, a bit, wont ya?");
+		scr_main.DPrint ("Wait, a bit, wont ya?");
 	}
 	void LoadScene(string name){
 		StartCoroutine (scr_title._f.ChangeEngineColour());

@@ -60,7 +60,7 @@ public class scr_behaviorStake : MonoBehaviour {
 				boneBend2.transform.localEulerAngles = tmp_001;
 
 				capBone.localRotation = Quaternion.LookRotation (Vector3.up, capBone.up);
-				//scr_main._f.SetCMD (capBone.localEulerAngles);
+				//scr_main.DPrint (capBone.localEulerAngles);
 				capBone.localEulerAngles = new Vector3 (-capBone.localEulerAngles.y, 0, 90);
 			}
 		}

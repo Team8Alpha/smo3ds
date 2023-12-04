@@ -56,7 +56,7 @@ public class scr_fadefull : MonoBehaviour {
 				Destroy (gameObject);
 
 			} catch(System.Exception e){
-				scr_main._f.SetCMD (" " + e);
+				scr_main.DPrint (" " + e);
 		}
 		if (isDone) {
 			colUp.color = new Color (0, 0, 0, 0);

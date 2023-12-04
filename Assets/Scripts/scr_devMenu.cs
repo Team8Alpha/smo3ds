@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿//#if !isRelease
+#if true
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,7 +11,6 @@ public class scr_devMenu: MonoBehaviour {
 	private bool isOpen = false;
 	private float ypos = 14;
 	private float xoffset = 10;
-	private float width = 600;
 	private int selection = 3;
 	private bool noButtonPressed = true;
 	private bool submenu = false;
@@ -21,13 +22,6 @@ public class scr_devMenu: MonoBehaviour {
 	private int height = 12;
 	private bool canSelect = false;
 	static public string txt_cmdOut = "";
-
-	void Start(){
-		if (false) {
-			this.enabled = false;
-			txt_cmdOut = null;
-		}
-	}
 
 	void ResetVal () {
 		canSelect = false;
@@ -126,7 +120,7 @@ public class scr_devMenu: MonoBehaviour {
 				if(selectionSub < 3) selectionSub = maxOption;
 				if(selectionSub > maxOption) selectionSub = 3;
 			}
-				#if UNITY_EDITOR
+#if UNITY_EDITOR
 				if (Input.GetKeyDown (KeyCode.UpArrow)
 					|| Input.GetKeyDown (KeyCode.DownArrow)
 					|| Input.GetKeyDown (KeyCode.Return)
@@ -134,13 +128,13 @@ public class scr_devMenu: MonoBehaviour {
 				noButtonPressed = false;
 				else
 					noButtonPressed = true;
-				#else
+#else
 				if (UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.A)
 				|| UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.B))
 				noButtonPressed = false;
 				else
 				noButtonPressed = true;
-				#endif
+#endif
 		}
 	}
 
@@ -195,3 +189,5 @@ public class scr_devMenu: MonoBehaviour {
 			DoPrint (16, txt_cmdOut, -5, 1000);
 	}
 }
+		
+#endif

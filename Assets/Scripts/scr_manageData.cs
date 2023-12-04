@@ -59,7 +59,7 @@ public class scr_manageData : MonoBehaviour
 			if (File.Exists (Path.Combine (Application.persistentDataPath, SAVE_FILE_NAME))) {
 				saveData = LoadManual ();
 				if (saveData.levelData [buildIndex] == null) {
-					scr_main._f.SetCMD ("N: creating saveData for level");
+					scr_main.DPrint ("N: creating saveData for level");
 					saveData.levelData [buildIndex] = new LevelSaveData ();
 				}
 			} else {
@@ -152,7 +152,7 @@ public class scr_manageData : MonoBehaviour
 
 	public void PrintLog(string message)
 	{
-		scr_main._f.SetCMD(message);
+		scr_main.DPrint(message);
 	}
 
 	public SaveData LoadManual()

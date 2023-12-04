@@ -9,7 +9,7 @@
     };
     public const int maxMoveJump = 3;
     public const int speedTurnWalk = 30;
-    public const int speedTurnJump = 10;
-    public const int speedTurnFall = 12;
+    public const int speedTurnJump = 4;
+    public const int speedTurnFall = 7;
     public const int speedTurnSquat = 5;
 };

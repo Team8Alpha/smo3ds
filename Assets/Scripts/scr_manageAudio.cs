@@ -37,7 +37,7 @@ public class scr_manageAudio : MonoBehaviour {
 	}
 	public bool PlayClip (string input){
 		if ((clip = GetClip (input)) == null) {
-			scr_main._f.SetCMD ("<SND> ERR! not a valid sound clip: Audio/"+input);
+			scr_main.DPrint ("<SND> ERR! not a valid sound clip: Audio/"+input);
 			return false;
 		}
 		sndSrc.PlayOneShot (clip);
@@ -45,7 +45,7 @@ public class scr_manageAudio : MonoBehaviour {
 	}
 	public bool AudioStart (string input, bool isLoop = true){
 		if ((clip = GetClip (input)) == null) {
-			scr_main._f.SetCMD ("<SND> ERR! not a valid sound clip: Audio/"+input);
+			scr_main.DPrint ("<SND> ERR! not a valid sound clip: Audio/"+input);
 			return false;
 		}
 		sndSrc.clip = clip;

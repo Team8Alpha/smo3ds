@@ -36,10 +36,11 @@ public class scr_main : MonoBehaviour {
 		if(_f == null)
 		{
 			Debug.ClearDeveloperConsole ();
-			SetCMD("INITIALIZE SUPER MARIO ODYSSEY - 3DS DEMAKE");
-			_f = this;
+			scr_main.DPrint("INITIALIZE SUPER MARIO ODYSSEY - 3DS DEMAKE");
 			DontDestroyOnLoad(gameObject);
+			_f = this;
 			Init ();
+
 			return;
 		}
 		Destroy(gameObject);
@@ -69,18 +70,11 @@ public class scr_main : MonoBehaviour {
 	}
 
 	#if isRelease
-	public void SetCMD(string text, bool isEditorOut = true){ }
+	public static void DPrint(string text, bool isEditorOut = true){ }
 	#else
-	public void SetCMD(string text, bool isEditorOut = true){
+	public static void DPrint(string text, bool isEditorOut = true){
 		if(scr_devMenu.txt_cmdOut != null) scr_devMenu.txt_cmdOut = text;
 		if(isEditorOut && text != "") Debug.Log (text);
 	}
 	#endif
-	/*void OnApplicationPause(bool paused)
-	{
-		if (paused)
-		{
-			scr_manageData._f.Save ();
-		}
-	}*/
 }

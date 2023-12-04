@@ -21,7 +21,7 @@ public class scr_manageEffect : MonoBehaviour {
 		if (currentPrt.gameObject != null) {
 			currentPrt.gameObject.GetComponent<ParticleSystem> ().Play ();
 		} else
-			scr_main._f.SetCMD ("E: PRT." + namePrt + "NOT FOUND");
+			scr_main.DPrint ("E: PRT." + namePrt + "NOT FOUND");
 	}
 	void Update(){
 		if (isRunning) {

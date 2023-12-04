@@ -96,12 +96,17 @@ public class MarioController : MonoBehaviour
 		rb = GetComponent<Rigidbody>();
 		capsColl1 = GetComponents<CapsuleCollider>()[0];
 		capsColl2 = GetComponents<CapsuleCollider>()[1];
-		marioObject = this;
 
 		groundedPosition = transform.position.y;
 		lastPosition = transform.position;
-		SetState(plState.Ground);
+
+		marioObject = this;
 	}
+
+	void Start()
+    {
+		SetState(plState.Ground);
+    }
 
 	void Update()
 	{
@@ -193,14 +198,15 @@ public class MarioController : MonoBehaviour
 					break;
 
 				case plState.CaptureFly: //flying to capture enemy
-					// Calculate the current percentage of the journey completed
-					float distanceCovered = (Time.time - hackFlyStartTime) * hackFlyLength / 1;
-					float journeyFraction = distanceCovered / hackFlyLength;
+						// Calculate the current percentage of the journey completed
+					//float distanceCovered = (Time.time - hackFlyStartTime) * hackFlyLength / 1;
+					//float journeyFraction = distanceCovered / hackFlyLength;
+						// CAP!
 
-					// Calculate the current position along the Bezier curve
-					Vector3 targetPosition = Vector3.zero;//Bezier (transform.position, cappy.capturedObject.transform.position + Vector3.up * 3 + (transform.position - cappy.capturedObject.transform.position).normalized * 1, cappy.capturedObject.transform.position, journeyFraction);
-
-					// Calculate the additional movement vector based on the target position
+					   	// Calculate the current position along the Bezier curve
+					Vector3 targetPosition = Vector3.zero; //Bezier (transform.position, cappy.capturedObject.transform.position + Vector3.up * 3 + (transform.position - cappy.capturedObject.transform.position).normalized * 1, cappy.capturedObject.transform.position, journeyFraction);
+						// CAP!
+						// Calculate the additional movement vector based on the target position
 					moveAdditional = targetPosition - transform.position;
 
 					// Check if the movement is completed
@@ -269,10 +275,7 @@ public class MarioController : MonoBehaviour
 			key_cap = Input.GetKey(KeyCode.LeftAlt);
 #else
 				key_backL = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.L);
-				if(key_backL){
-					h = 0; v = 0;
-					return;
-				}
+
 				h = UnityEngine.N3DS.GamePad.CirclePad.x;
 				v = UnityEngine.N3DS.GamePad.CirclePad.y;
 
@@ -280,7 +283,11 @@ public class MarioController : MonoBehaviour
 				key_backR = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.R);
 				key_cap = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.X) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.Y);
 #endif
-
+			if (key_backL)
+			{
+				h = 0; v = 0;
+				return;
+			}
 			isMoving = h != 0 || v != 0;
 			switch (myState)
 			{
@@ -387,8 +394,8 @@ public class MarioController : MonoBehaviour
 
 				break;
 
-			case plState.Landing:
-				if(false) SetAnim(anim_land, 0.02f); // WIP LANDING HEIGHTS
+			case plState.Landing: //TODO: FALLING-LANDING HEIGHT STUFF
+				//SetAnim(anim_land, 0.02f); // WIP LANDING HEIGHTS
 
 				hasJumped = false;
 				break;
@@ -427,7 +434,7 @@ public class MarioController : MonoBehaviour
 				if (!isMoving) speedJumpH = 0;
 				else
 				{
-					speedJumpH = (Vector3.Distance(lastPosition, transform.position));
+					speedJumpH = (Vector3.Distance(lastPosition, transform.position)) /2;
 				}
 				tsldSpeed = 0.1f;
 				isMovingAir = true;
@@ -589,7 +596,7 @@ public class MarioController : MonoBehaviour
 		}
 		catch (Exception e)
 		{
-			scr_main._f.SetCMD(e.Message);
+			scr_main.DPrint(e.Message);
 		}
 	}
 	void OnSensorTopEnter(Collider col){

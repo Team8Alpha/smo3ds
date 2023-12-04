@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +15,11 @@ public class scr_sensor : MonoBehaviour {
 
 	void Start () {
 		this.enabled = false;
-		sensor = gameObject.GetComponent<BoxCollider> ();
+		if ((sensor = gameObject.GetComponent<Collider>()) == null)
+		{
+			this.enabled = false;
+			return;
+		}
 		sensor.isTrigger = true;
 	}
 

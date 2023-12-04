@@ -23,7 +23,7 @@ public class MarioCam : MonoBehaviour {
 	private Vector3 cameraControl; // Variable for controlled camera offset(cstick)
 	private float targetedY; //position camera wants to move to.
 	private Quaternion targetRot; //rotation smoothing
-	private Vector3 targetPos; //position smoothing
+	private Vector3 targetPos = Vector3.zero; //position smoothing
 	private float targetCamDistance 					= 0;
 
 	public float confStickXmax 							= 1;// * stick X movement
@@ -85,7 +85,6 @@ public class MarioCam : MonoBehaviour {
 				if(cursorXtemp < 0f) cursorXtemp = -1; if(cursorYtemp < 0f) cursorYtemp = -1; //roughen camera sensitivity
 			}
 			#endif
-			scr_main._f.SetCMD("CAM: "+UnityEngine.N3DS.GamePad.CirclePad.x+", "+cursorXtemp+", "+cursorX+", "+cursorSensitivity+", "+Time.deltaTime, false);
 			if (isInvertCursorX)
 				cursorXtemp = -cursorXtemp;
 			if (isInvertCursorY)
@@ -119,9 +118,6 @@ public class MarioCam : MonoBehaviour {
 			//actual camera offset
 
 			if (confWalk) {
-				float smoothSpeed = confCamDistance / 0.5f;
-				// ensure it takes half a second to move
-
 				target.position = new Vector3 (player.transform.position.x, targetedY, player.transform.position.z);
 				//move camera with player									//smoothly calculate y position
 

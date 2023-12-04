@@ -17,20 +17,17 @@ public class scr_loadScene : MonoBehaviour {
 		isDone = false;
 		string currentscn = SceneManager.GetActiveScene ().name;
 
-        Scene scene = SceneManager.GetActiveScene();
+        //Scene scene = SceneManager.GetActiveScene();
 
         scr_main._f.hasLevelLoaded = false;
 		nextScene = sceneName;
 		scr_main._f.dbg_enemyCount = 0;
 		GetComponent<AudioListener> ().enabled = true;
 
-        // Makes delete the gameObjects of your scene once loaded just in case
-
-        scr_main._f.SetCMD ("nSCN: " + nextScene);
+        scr_main.DPrint ("nSCN: " + nextScene);
 		switch (transition) {
 		case 0: //direct, no transition
-			SceneManager.LoadScene (sceneName/*, LoadSceneMode.Additive*/);
-            //SceneManager.UnloadScene (currentscn);
+			SceneManager.LoadScene (sceneName);
 			break;
 		case 1: //flying ship line
 			scr_main._f.SetFocus(false);
@@ -50,10 +47,10 @@ public class scr_loadScene : MonoBehaviour {
 		loadOP = SceneManager.LoadSceneAsync (nextScene, LoadSceneMode.Additive);
 		loadOP.allowSceneActivation = false;
 		while (!loadOP.isDone) {
-			scr_main._f.SetCMD ("loading: " + (loadOP.progress*100) + "%", false);
+			scr_main.DPrint ("loading: " + (loadOP.progress*100) + "%", false);
 			yield return null;
 		}
-		scr_main._f.SetCMD ("loading: 100%");
+		scr_main.DPrint ("loading: 100%");
 
         // Makes sure that the scene is completely empty just in case the scene does not get unloaded at all
         /*for (int i = 0; i < rootObjects.Count; ++i)

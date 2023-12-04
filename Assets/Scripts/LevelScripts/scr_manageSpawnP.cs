@@ -12,7 +12,7 @@ public class scr_manageSpawnP : MonoBehaviour {
 		else if (scr_main._f.hasLevelLoaded) {
 			if (scr_main._f.nextSpawn == -1)
 				scr_main._f.nextSpawn = 0;
-			scr_main._f.SetCMD ("SP:" + scr_main._f.nextSpawn);
+			scr_main.DPrint ("SP:" + scr_main._f.nextSpawn);
 			Transform spawnPos = transform.GetChild (scr_main._f.nextSpawn).transform;
 			scr_summon.f_summon.s_player (spawnPos.position, spawnPos.eulerAngles);
 			scr_main._f.nextSpawn = -1;

@@ -15,8 +15,8 @@ public class scrBehaviorCappy : MonoBehaviour
     public Animator mAnim;         // anim component
     private Transform tMario;       // player reference
     private MarioController mario;  // mario reference
-    private AudioSource mAudio;     // audio component
-    private Transform objBone;      // bone that is assigned to cap when hacked.
+    //private AudioSource mAudio;     // audio component
+    private Transform objBone = null;      // bone that is assigned to cap when hacked.
     public static capState myState; // cap state
     [HideInInspector]
     public int mySubState;          // cap states state
@@ -28,13 +28,13 @@ public class scrBehaviorCappy : MonoBehaviour
 
     private Vector3 posOrigin;      // start position before flying
     private float numTimer = 0;     // timer for states
-    private string strAnimLast = "";// last animation set
+    //private string strAnimLast = "";// last animation set
 
 
     void Awake()
     {
-        /*mAnim = GetComponent<Animator>();
-        mAudio = GetComponent<AudioSource>();
+        mAnim = GetComponent<Animator>();
+        //mAudio = GetComponent<AudioSource>();
         objBone = transform.GetChild(0);
         myParent = transform.parent;
         mario = MarioController.marioObject;
@@ -43,19 +43,18 @@ public class scrBehaviorCappy : MonoBehaviour
         transform.localScale = Vector3.one;
         SetState(capState.Wait);
         SetVisible(false);
-        */
-        Destroy(gameObject);
     }
 
     void Update()
     {
-        if(false)
-     //   if (scr_main._f.isFocused)
+        if (scr_main._f.isFocused)
         {
             switch (myState)
             {
                 case capState.Wait: // 5.5, 1
+
                     if (mario.key_cap) SetState(capState.Throw);
+
                     break;
                 case capState.Throw:
                     switch (mySubState)
@@ -86,7 +85,7 @@ public class scrBehaviorCappy : MonoBehaviour
                             }
                             break;
                         case 1:
-                            if (GetAnimTime()>1)
+                            if (GetAnimTime() > 1)
                             {
                                 mario.SetCap(true);
                                 SetState(capState.Wait);
@@ -112,6 +111,7 @@ public class scrBehaviorCappy : MonoBehaviour
                 SetParent();
                 SetVisible(false);
                 transform.localPosition = Vector3.zero;
+                SetAnim("default");
                 break;
             case capState.Throw:
                 switch (mySubState)
@@ -162,14 +162,14 @@ public class scrBehaviorCappy : MonoBehaviour
     }
     void SetAnim(string animName, float transitionTime = 0.1f, float animSpeed = 1)
     {
-        if (transitionTime == 0) mAnim.Play(animName, 1);
-        else mAnim.CrossFade(animName, transitionTime, 1);
+        if (transitionTime == 0) mAnim.Play(animName, 0);
+        else mAnim.CrossFade(animName, transitionTime, 0);
         mAnim.speed = animSpeed;
-        strAnimLast = animName;
+        //strAnimLast = animName;
     }
     void SetRotate(bool boolean)
     {
-        if(!mAnim.GetCurrentAnimatorStateInfo(0).IsName("spin")) mAnim.Play("spin", 0);
+        //if(!mAnim.GetCurrentAnimatorStateInfo(0).IsName("spin")) mAnim.Play("spin", 0);
     }
     void SetVisible(bool boolean)
     {

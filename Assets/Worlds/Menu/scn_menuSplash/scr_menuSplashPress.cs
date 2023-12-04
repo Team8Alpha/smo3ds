@@ -6,7 +6,6 @@ using UnityEngine;
 public class scr_menuSplashPress : MonoBehaviour {
 
 	[SerializeField] float timer = 5;
-	private bool checkedDev = false;
 
 	void Start(){
 		//scr_fadefull._f.Run (true, 0, 0.04f);
@@ -14,11 +13,11 @@ public class scr_menuSplashPress : MonoBehaviour {
     }
 	
 	void Confirm(){
-		scr_main._f.SetCMD ("Loading...");
+		scr_main.DPrint ("Loading...");
 		//scr_loadScene._f.StartScene ("scn_capMain0", 1);
 		UnityEngine.SceneManagement.SceneManager.LoadScene("scn_menuTitle");
 		scr_manageData._f.Load ();
-		scr_main._f.SetCMD ("");
+		scr_main.DPrint ("");
 	}
 
 	void Update()

@@ -160,12 +160,12 @@ public class scrbehaviorCappyOld : MonoBehaviour
 							mountPoint = collis.gameObject.transform.Find(scr_main._f.capMountPoint).gameObject;
 							if (mountPoint == null)
 							{//if not set by object, or set wrongly, dont capture.
-								scr_main._f.SetCMD("NO CPMNT AT " + scr_main._f.capMountPoint + " IN " + collis.gameObject);
+								scr_main.DPrint("NO CPMNT AT " + scr_main._f.capMountPoint + " IN " + collis.gameObject);
 								capturedObject = null;
 							}
 							else if (!isHacking)
 							{
-								scr_main._f.SetCMD("crappy hav frund " + collis.gameObject.name);
+								scr_main.DPrint("crappy hav frund " + collis.gameObject.name);
 								/*if (collis.gameObject.GetComponentInChildren<scr_behaviorGoomba>() != null && collis.gameObject.GetComponentInChildren<scr_behaviorGoomba>().isTop && collis.gameObject.GetComponent<scr_behaviorGoomba>().stackAmount > 0)
                                     capturedObject = GameObject.Find("goombaOnTop");
                                 else*/
@@ -184,7 +184,7 @@ public class scrbehaviorCappyOld : MonoBehaviour
 								transform.GetChild(1).gameObject.transform.eulerAngles = Vector3.zero;
 								GameObject Mustache = capturedObject.transform.GetChild(1).GetChild(0).gameObject;
 								if (Mustache.name == "Mustache" || Mustache.name == "Mustache__HairMT") Mustache.SetActive(true); //if mustache, place it at index 0
-								scr_main._f.SetCMD("CAPMOUNT AT " + mountPoint.name);
+								scr_main.DPrint("CAPMOUNT AT " + mountPoint.name);
 								isHacking = true;
 							}
 						}
@@ -193,7 +193,7 @@ public class scrbehaviorCappyOld : MonoBehaviour
 							if (paramCaptured.isTouch) collis.gameObject.SendMessage("OnTouch", 1);
 							if (paramCaptured.isCapture) collis.gameObject.SendMessage("OnCapture", 1);
 							capturedObject = collis.gameObject;
-							scr_main._f.SetCMD("crappy hav pfund" + collis.gameObject + collis.gameObject.layer.ToString());
+							scr_main.DPrint("crappy hav pfund" + collis.gameObject + collis.gameObject.layer.ToString());
 						}
 					}
 					else
@@ -203,7 +203,7 @@ public class scrbehaviorCappyOld : MonoBehaviour
 				}
 				catch (Exception e)
 				{
-					scr_main._f.SetCMD("ERROR at CapTrigger: " + e);
+					scr_main.DPrint("ERROR at CapTrigger: " + e);
 				}
 			}
 		}
