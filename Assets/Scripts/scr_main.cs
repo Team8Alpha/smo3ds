@@ -1,5 +1,6 @@
 ﻿//#define isRelease // UNCOMMENT FOR RELEASING TO THE PUBLIC!
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,6 +34,13 @@ public class scr_main : MonoBehaviour {
 	}
 	
 	void Awake(){
+        try
+        {
+			_f.coinsCount = 1;
+        } catch(Exception e)
+        {
+        }
+
 		if(_f == null)
 		{
 			Debug.ClearDeveloperConsole ();

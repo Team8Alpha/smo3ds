@@ -61,7 +61,7 @@ public class scr_buttonCtrl : MonoBehaviour {
 					LoadScene ("scn_capMain0");
 					break;
 				case 1:
-					LoadScene ("scn_test0");
+					LoadScene ("scn_test1");
 					break;
 				case 2:
 					LoadOptions ();

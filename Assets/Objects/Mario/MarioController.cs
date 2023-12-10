@@ -220,8 +220,7 @@ public class MarioController : MonoBehaviour
 						isCapturing = false;
 						hasCaptured = true;
 						//CAP! cappy.capturedObject.SendMessage ("setState", 6);
-						for (int i = 0; i <= 8; i++)
-							transform.GetChild(i).gameObject.SetActive(false);
+						SetVisible(false);
 						rb.useGravity = true;
 						moveAdditional = Vector3.zero;
 					}
@@ -528,8 +527,7 @@ public class MarioController : MonoBehaviour
 				{
 					if (key_backR || plsUnhack)
 					{
-						transform.GetChild(2).gameObject.SetActive(false);//hair
-						transform.GetChild(1).gameObject.SetActive(true);//cap
+						SetCap(true);
 						SetState(plState.Ground);
 						//CAP! cappy.capturedObject.SendMessage ("setState", 7); //CAP!
 						//CAP! cappy.capturedObject.tag 	= "Untagged"; //CAP!
@@ -563,12 +561,8 @@ public class MarioController : MonoBehaviour
 				{
 					hasCaptured = false;
 					//CAP! cappy.SetState (2);
-					for (int i = 0; i <= 8; i++)
-					{
-						transform.GetChild(i).gameObject.SetActive(true);
-					}
-					transform.GetChild(2).gameObject.SetActive(true); // hair
-					transform.GetChild(1).gameObject.SetActive(false); // cap
+					SetVisible(true);
+					SetCap(false);
 				}
 			}
 		}
@@ -686,9 +680,9 @@ public class MarioController : MonoBehaviour
 			if(standTrnsTime!=0) timeStandTrns = standTrnsTime; //time to transition back to stand, quick of slow
 		}
 	}
-	public void SetHand(int side, bool state)
+	public void SetHand(int side, int type, bool state) // 0 = ball, 1 = flat
 	{
-		transform.GetChild(4 + side).gameObject.SetActive(state);
+		transform.GetChild(1).GetChild(3 + (side * 2 /* MAX NUM OF HAND TYPES */) + type).gameObject.SetActive(state);
 	}
 	public void SetCap(bool boolean)
 	{
@@ -708,6 +702,13 @@ public class MarioController : MonoBehaviour
 		capsColl2.radius = radius;
 		capsColl2.height = height;
 	}
+	public void SetVisible(bool boolean)
+    {
+		for (int i = 0; i < transform.GetChild(1).childCount; i++)
+        {
+			transform.GetChild(1).GetChild(i).gameObject.SetActive(boolean);
+        }
+    }
 
 	//CHECK
 	public bool isAnim(string anmName)

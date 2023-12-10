@@ -1,0 +1,182 @@
+fileFormatVersion: 2
+guid: a93a64b3896e0f84aa9573be5f2540dc
+timeCreated: 1702210861
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: AllRoot
+    100002: Armature
+    100004: ArmL1
+    100006: ArmL1Sub
+    100008: ArmL2
+    100010: ArmL2Sub
+    100012: ArmR1
+    100014: ArmR1Sub
+    100016: ArmR2
+    100018: ArmR2Sub
+    100020: Body
+    100022: Cap
+    100024: Face
+    100026: FootL
+    100028: FootR
+    100030: Hair
+    100032: Hand_Ball
+    100034: Hand_Flat
+    100036: HandL
+    100038: HandR
+    100040: Head
+    100042: Hip
+    100044: JointRoot
+    100046: LegL1
+    100048: LegL2
+    100050: LegR1
+    100052: LegR2
+    100054: //RootNode
+    100056: nw4f_root
+    100058: ShoulderL
+    100060: ShoulderR
+    100062: small_placeholder
+    100064: Spine1
+    100066: Spine2
+    100068: ToeL
+    100070: ToeR
+    100072: HandL_ball
+    100074: HandL_flat
+    100076: HandR_ball
+    100078: HandR_flat
+    400000: AllRoot
+    400002: Armature
+    400004: ArmL1
+    400006: ArmL1Sub
+    400008: ArmL2
+    400010: ArmL2Sub
+    400012: ArmR1
+    400014: ArmR1Sub
+    400016: ArmR2
+    400018: ArmR2Sub
+    400020: Body
+    400022: Cap
+    400024: Face
+    400026: FootL
+    400028: FootR
+    400030: Hair
+    400032: Hand_Ball
+    400034: Hand_Flat
+    400036: HandL
+    400038: HandR
+    400040: Head
+    400042: Hip
+    400044: JointRoot
+    400046: LegL1
+    400048: LegL2
+    400050: LegR1
+    400052: LegR2
+    400054: //RootNode
+    400056: nw4f_root
+    400058: ShoulderL
+    400060: ShoulderR
+    400062: small_placeholder
+    400064: Spine1
+    400066: Spine2
+    400068: ToeL
+    400070: ToeR
+    400072: HandL_ball
+    400074: HandL_flat
+    400076: HandR_ball
+    400078: HandR_flat
+    2300000: small_placeholder
+    3300000: small_placeholder
+    4300000: Cap
+    4300002: Hair
+    4300004: Face
+    4300006: Hand_Ball
+    4300008: Hand_Flat
+    4300010: Body
+    4300012: small_placeholder
+    4300014: HandR_ball
+    4300016: HandR_flat
+    4300018: HandL_ball
+    4300020: HandL_flat
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Body
+    13700002: Cap
+    13700004: Face
+    13700006: Hair
+    13700008: Hand_Ball
+    13700010: Hand_Flat
+    13700012: HandL_ball
+    13700014: HandL_flat
+    13700016: HandR_ball
+    13700018: HandR_flat
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 3
+    addColliders: 0
+    importBlendShapes: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

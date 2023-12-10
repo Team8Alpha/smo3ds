@@ -59,6 +59,14 @@ ModelImporter:
     100102: Head_end_end
     100104: ToeL_end
     100106: ToeR_end
+    100108: Body0
+    100110: Body1
+    100112: Button
+    100114: HandL_Ball
+    100116: HandL_Flat
+    100118: HandR_Ball
+    100120: HandR_Flat
+    100122: Shoes
     400000: AllRoot
     400002: Armature
     400004: ArmL1
@@ -113,6 +121,14 @@ ModelImporter:
     400102: Head_end_end
     400104: ToeL_end
     400106: ToeR_end
+    400108: Body0
+    400110: Body1
+    400112: Button
+    400114: HandL_Ball
+    400116: HandL_Flat
+    400118: HandR_Ball
+    400120: HandR_Flat
+    400122: Shoes
     2300000: small_placeholder
     3300000: small_placeholder
     4300000: HandR_flat
@@ -127,6 +143,14 @@ ModelImporter:
     4300018: Hair
     4300020: small_placeholder
     4300022: Body
+    4300024: HandL_Flat
+    4300026: HandR_Flat
+    4300028: HandL_Ball
+    4300030: HandR_Ball
+    4300032: Button
+    4300034: Shoes
+    4300036: Body0
+    4300038: Body1
     9500000: //RootNode
     11100000: //RootNode
     13700000: Cap
@@ -140,10 +164,18 @@ ModelImporter:
     13700016: HandR_flat
     13700018: Mario__BodyMT
     13700020: Body
+    13700022: Body0
+    13700024: Body1
+    13700026: Button
+    13700028: HandL_Ball
+    13700030: HandL_Flat
+    13700032: HandR_Ball
+    13700034: HandR_Flat
+    13700036: Shoes
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 2
-    materialSearch: 1
+    materialSearch: 2
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
