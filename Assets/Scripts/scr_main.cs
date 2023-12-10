@@ -34,13 +34,6 @@ public class scr_main : MonoBehaviour {
 	}
 	
 	void Awake(){
-        try
-        {
-			_f.coinsCount = 1;
-        } catch(Exception e)
-        {
-        }
-
 		if(_f == null)
 		{
 			Debug.ClearDeveloperConsole ();
