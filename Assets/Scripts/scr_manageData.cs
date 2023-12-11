@@ -80,9 +80,9 @@ public class scr_manageData : MonoBehaviour
 			File.WriteAllText(filePath, json);
 			PrintLog("N: data saved");
 		}
-		catch (Exception e)
+		catch (IOException e)
 		{
-			PrintLog("Error saving data: {e.Message}");
+			PrintLog("Error saving data: " + e);
 		}
 
 		scr_main._f.transform.GetChild (2).GetChild (1).gameObject.SetActive (false);
@@ -114,8 +114,8 @@ public class scr_manageData : MonoBehaviour
 				globVar.coinsCount = data.coinsCount;
 				globVar.moonsCount = data.moonsCount;
 			}
-		} catch (Exception e) {
-			PrintLog ("Error in Load: {e.Message}");
+		} catch (IOException e) {
+			PrintLog ("Error in Load: " + e);
 			return false;
 		}
 		return true;
@@ -145,8 +145,8 @@ public class scr_manageData : MonoBehaviour
 				globVar.lastCheckpoint = data.levelData [buildIndex].lastSpawn;
 				if(scr_main._f.nextSpawn == -1) globVar.nextSpawn = globVar.lastCheckpoint;
 			}
-		} catch (UnauthorizedAccessException e) {
-			PrintLog ("Error in LoadLevel: {e.Message}");
+		} catch (IOException e) {
+			PrintLog ("Error in LoadLevel: " + e);
 		}
 	}
 
@@ -169,9 +169,9 @@ public class scr_manageData : MonoBehaviour
 			SaveData saveData = JsonUtility.FromJson<SaveData>(json);
 			return saveData;
 		}
-		catch (Exception e)
+		catch (IOException e)
 		{
-			PrintLog("Error loading save data: {e.Message}");
+			PrintLog("Error loading save data: " + e);
 		}
 		return data;
 	}

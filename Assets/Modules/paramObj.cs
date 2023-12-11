@@ -4,7 +4,7 @@ using System;
 public class paramObj : MonoBehaviour {
 
 	[SerializeField]
-	private float posCenterV = 0;
+	public float posCenterV = 0;
 	public bool isTouch = false;
 	public bool isCapture = false;
 	public bool isHack = true;
@@ -15,13 +15,7 @@ public class paramObj : MonoBehaviour {
 		return posCenterV + transform.position.y;
     }
 	void Awake(){
-		try
-		{
-			if (isLOD) transform.GetChild(1).gameObject.SetActive(false);
-		} catch(Exception e)
-        {
-			Debug.Log("LOD ERROR: "+gameObject.name+ " HAS INVALID STRUCTURE: "+e);
-        }
+		if (isLOD && transform.GetChild(1) != null) transform.GetChild(1).gameObject.SetActive(false);
 		this.enabled = false;
 	}
 }

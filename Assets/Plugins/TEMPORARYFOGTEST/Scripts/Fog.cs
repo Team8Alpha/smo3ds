@@ -26,11 +26,11 @@ public class Fog : MonoBehaviour
     private Color[] heightMap;
     private Texture2D texture;
 
-    private float halfSize;
+   // private float halfSize = 0;
 
     private void Awake()
     {
-        halfSize = size * 0.5f;
+        //halfSize = size * 0.5f;
 
         heightMap = new Color[resolution * resolution];
 

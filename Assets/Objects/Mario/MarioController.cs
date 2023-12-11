@@ -570,28 +570,41 @@ public class MarioController : MonoBehaviour
 
 	void OnTriggerEnter(Collider collis)
 	{
-		try
-		{
-			if (collis.gameObject.layer != scr_main.lyr_def)
-				if (collis.gameObject.layer == scr_main.lyr_enemy || collis.gameObject.layer == scr_main.lyr_obj)
-				{
-					if (collis.GetComponent<paramObj>() != null) if (!collis.GetComponent<paramObj>().isTouch) return;
+		paramObj collisParam;
+		if ((collisParam = collis.GetComponent<paramObj>()) == null) return;
 
-					if (hasTouchedCeiling)
-					{
-						collis.gameObject.SendMessage("OnTouch", 4);
-						return;
-					}
-					if (transform.position.y < collis.GetComponent<paramObj>().GetPosCenterV())
-						collis.gameObject.SendMessage("OnTouch", 2);
-					else if (!hasTouchedCeiling)
-						collis.gameObject.SendMessage("OnTouch", 3);
-				}
-		}
-		catch (Exception e)
+
+		if (collisParam.isTouch)
 		{
-			scr_main.DPrint(e.Message);
+			if (hasTouchedCeiling)
+			{
+				collis.gameObject.SendMessage("OnTouch", 4);
+				return;
+			}
+
+			if (collisParam.posCenterV != 0 && transform.position.y > collisParam.GetPosCenterV())
+			{
+				collis.gameObject.SendMessage("OnTouch", 3);
+				return;
+			}
+			else if (!hasTouchedCeiling)
+			{
+				collis.gameObject.SendMessage("OnTouch", 2);
+				return;
+			}
+			/*else
+            {
+				collis.gameObject.SendMessage("OnTouch", 0);
+				return;
+            }*/
 		}
+		/*
+		 * 0 = invalid
+		 * 1 = cappy collision
+		 * 2 = mario normal/ lower touch collision
+		 * 3 = mario higher touch collision
+		 * 4 = mario touched from below(ceiling)
+		 */
 	}
 	void OnSensorTopEnter(Collider col){
 		hasTouchedCeiling = true;
@@ -626,23 +639,20 @@ public class MarioController : MonoBehaviour
 	}
 	public void OnSensorLODEnter(Collider coll)
 	{
-		SetLOD(coll, true);
+		SetLOD(coll.gameObject, true);
 	}
 	public void OnSensorLODExit(Collider coll)
 	{
-		SetLOD(coll, false);
+		SetLOD(coll.gameObject, false);
 	}
-	void SetLOD(Collider coll, bool state)
+	void SetLOD(GameObject coll, bool state)
 	{
-		try
+		if (coll.GetComponent<paramObj>() != null && coll.GetComponent<paramObj>().isLOD)
 		{
-			if (coll.gameObject.GetComponent<paramObj>().isLOD)
-			{
-				coll.gameObject.transform.GetChild(1).gameObject.SetActive(state);
-				coll.gameObject.GetComponent<Animator>().enabled = state;
-			}
+			if (coll.transform.GetChild(1).gameObject.name == "Mesh") coll.transform.GetChild(1).gameObject.SetActive(state);
+			else return;
+			coll.GetComponent<Animator>().enabled = state;
 		}
-		catch (Exception e) { }
 	}
 
 	//RESET

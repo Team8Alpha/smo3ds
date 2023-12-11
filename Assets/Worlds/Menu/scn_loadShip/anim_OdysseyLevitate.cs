@@ -34,7 +34,9 @@ public class anim_OdysseyLevitate : MonoBehaviour {
 		} else if (scr_fadefull._f.isDone) {
 			scr_loadScene._f.SetSceneActive ();
 			foreach (GameObject _obj in rootObjects)
-				try { if(_obj.name != "objGlobal(Clone)" && _obj.name != "camLoadShip") Destroy(_obj); } catch(System.Exception e) { Debug.Log("LVLLoad OBJ Destroy Exception: "+e); }
+				if(_obj != null && _obj.name != "objGlobal(Clone)" && _obj.name != "camLoadShip")
+					Destroy(_obj);
+
 			scr_main._f.SetFocus(true);
 			Destroy(transform.parent.gameObject);
 		}
