@@ -130,7 +130,29 @@ ModelImporter:
     400120: HandR_Flat
     400122: Shoes
     2300000: small_placeholder
+    2300002: Body0
+    2300004: Body1
+    2300006: Button
+    2300008: Cap
+    2300010: Face
+    2300012: Hair
+    2300014: HandL_Ball
+    2300016: HandL_Flat
+    2300018: HandR_Ball
+    2300020: HandR_Flat
+    2300022: Shoes
     3300000: small_placeholder
+    3300002: Body0
+    3300004: Body1
+    3300006: Button
+    3300008: Cap
+    3300010: Face
+    3300012: Hair
+    3300014: HandL_Ball
+    3300016: HandL_Flat
+    3300018: HandR_Ball
+    3300020: HandR_Flat
+    3300022: Shoes
     4300000: HandR_flat
     4300002: HandL_ball
     4300004: FaceParts
@@ -151,6 +173,7 @@ ModelImporter:
     4300034: Shoes
     4300036: Body0
     4300038: Body1
+    7400000: Take 001
     9500000: //RootNode
     11100000: //RootNode
     13700000: Cap
@@ -173,14 +196,14 @@ ModelImporter:
     13700034: HandR_Flat
     13700036: Shoes
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 2
     materialSearch: 2
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
-    optimizeGameObjects: 1
+    optimizeGameObjects: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 

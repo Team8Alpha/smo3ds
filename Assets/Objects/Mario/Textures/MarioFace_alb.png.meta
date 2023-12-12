@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 7a3a68ac84cbf00428f8dab284dd1575
-timeCreated: 1684410083
+timeCreated: 1702402007
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName: {}
@@ -68,7 +68,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Nintendo 3DS
     maxTextureSize: 256
-    textureFormat: 61
+    textureFormat: 60
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
