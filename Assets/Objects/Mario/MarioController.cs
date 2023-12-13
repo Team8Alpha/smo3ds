@@ -140,13 +140,6 @@ public class MarioController : MonoBehaviour
 					{
 						case 0:
 
-							if (jumpedHeight > 4.5f)
-							{ //JUMPING HIGH CAM
-								groundedPosition = transform.position.y;
-								MarioCam.marioCamera.confSmoothTime = 0.13f;
-								MarioCam.marioCamera.confYOffset = 1;
-							}
-
 							if ((jumpedHeight > MarioTable.dataJump[jumpType - 1][1] && !key_jump)
 								|| (jumpedHeight > MarioTable.dataJump[jumpType - 1][2] && key_jump)
 								|| hasTouchedCeiling)
@@ -349,6 +342,7 @@ public class MarioController : MonoBehaviour
 				SetCollider(1.6f);
 				ResetSpeed();
 				ResetAnim();
+				MarioCam.marioCamera.ResetValue();
 
 				currentTurnSpeed = MarioTable.speedTurnWalk;
 				isInstTurn = false;

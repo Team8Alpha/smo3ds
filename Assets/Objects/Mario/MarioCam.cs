@@ -67,6 +67,11 @@ public class MarioCam : MonoBehaviour {
 	void Update() {
 		
 		if (!isLocked) {
+			if (!MarioController.marioObject.isGrounded && MarioController.marioObject.transform.position.y - transform.position.y > 2.4f)
+			{ //JUMPING HIGH CAM
+				MarioController.marioObject.groundedPosition = transform.position.y;
+				setCameraVal(0.14f, 4);
+			}
 			float cursorXtemp=0;
 			float cursorYtemp=0;
 			#if UNITY_EDITOR
@@ -138,6 +143,7 @@ public class MarioCam : MonoBehaviour {
 			}
 			targetCamDistance = Mathf.SmoothDamp (targetCamDistance, confCamDistance, ref velocity.y, confSmoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
 		}
+
 	}
 	public void ResetValue(){
 		confRotateSpeed = defRotateSpeed;
@@ -145,4 +151,9 @@ public class MarioCam : MonoBehaviour {
 		confCamDistance = defCamDistance;
 		confYOffset = defYOffset;
 	}
+	public void setCameraVal(float timeSmooth, float offsetY, float distanceCam = 0)
+    {
+		confSmoothTime = timeSmooth;  confYOffset = offsetY; 
+		if(distanceCam != 0) confCamDistance = distanceCam;
+    }
 }
