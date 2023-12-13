@@ -76,7 +76,6 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] private bool isMovingAir 		= false; //if falling direction is active
 	[HideInInspector] private float speedJumpH; //used for falling direction
 	[HideInInspector] private Vector3 lastPosition;
-	[HideInInspector] public float tsldSpeed = 1; //treshold speed, like 0.1th of the speed (in this case just 1)
 	[HideInInspector] float timeStandTrns = 0.5f;
 
 	[HideInInspector] CapsuleCollider capsColl1;
@@ -244,11 +243,13 @@ public class MarioController : MonoBehaviour
 
 		lastPosition = transform.position;
 		wasMoving = isMoving;
-		// Calculate the movement vector based on the input and current speed
-		Vector3 movementVector = Vector3.forward * (currentMoveSpeed * tsldSpeed / Application.targetFrameRate);// * Time.deltaTime;
+		float yVel = rb.velocity.y;
+		Vector3 movementVector = (transform.rotation * Vector3.forward) * currentMoveSpeed + moveAdditional;// * Time.deltaTime;
+		movementVector.y = yVel;
 
 		// Move the character using the Rigidbody
-		rb.MovePosition((rb.position + (transform.rotation * Vector3.forward) * movementVector.magnitude) + Vector3.up * jumpVelocity + moveAdditional);
+		rb.velocity = movementVector;
+		rb.AddForce(Vector3.up * jumpVelocity);
 	}
 
 	void HandleInput()
@@ -435,7 +436,6 @@ public class MarioController : MonoBehaviour
 				{
 					speedJumpH = (Vector3.Distance(lastPosition, transform.position)) /2;
 				}
-				tsldSpeed = 0.1f;
 				isMovingAir = true;
 			}
 			rb.MovePosition(rb.position + transform.forward * speedJumpH);
@@ -613,15 +613,14 @@ public class MarioController : MonoBehaviour
 	{
 		if (col.gameObject.layer != 20 && col.gameObject.layer != 18)
 		{
-			isGrounded = true;
 			isMovingAir = false;
 			isTurning = false;
-			tsldSpeed = 1f;
 			SetState(plState.Landing);
 		}
 	}
 	void OnSensorBottomStay(Collider col)
 	{
+		isGrounded = true;
 		if (col.gameObject.layer != 20 && col.gameObject.layer != 18)
 		{ // 20 = WALL LAYER
 			groundedPosition = transform.position.y;
@@ -651,7 +650,7 @@ public class MarioController : MonoBehaviour
 		{
 			if (coll.transform.GetChild(1).gameObject.name == "Mesh") coll.transform.GetChild(1).gameObject.SetActive(state);
 			else return;
-			coll.GetComponent<Animator>().enabled = state;
+			if(coll.GetComponent<Animator>() != null) coll.GetComponent<Animator>().enabled = state;
 		}
 	}
 
@@ -731,7 +730,7 @@ public class MarioController : MonoBehaviour
 		return animLast == anmName;
 	}
 
-	// Bezier function (same as before)
+	// Bezier function
 	Vector3 Bezier(Vector3 a, Vector3 b, Vector3 c, float t)
 	{
 		return Vector3.Lerp(Vector3.Lerp(a, b, t), Vector3.Lerp(b, c, t), t);

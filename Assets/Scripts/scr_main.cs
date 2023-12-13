@@ -14,8 +14,6 @@ public class scr_main : MonoBehaviour {
 	//constants
 	[HideInInspector] public static scr_main _f;
 	[HideInInspector] public static GUIStyle stl_debug; //style for debug menu
-	[HideInInspector] public static LayerMask lyr_enemy;
-	[HideInInspector] public static LayerMask lyr_obj; //TODO: rewrite cappy catch sorting system
 	[HideInInspector] public static LayerMask lyr_def;
 	[HideInInspector] public static LayerMask lyr_player;
 	//modifiable
@@ -56,8 +54,6 @@ public class scr_main : MonoBehaviour {
 		stl_debug.normal = new GUIStyleState();
 		stl_debug.normal.textColor = Color.white;
 
-		lyr_enemy = LayerMask.NameToLayer ("Enemy");
-		lyr_obj = LayerMask.NameToLayer ("Object"); //TODO: rewrite cappy catch sorting with paramObj
 		lyr_def= LayerMask.NameToLayer ("Default");
 		lyr_player = LayerMask.NameToLayer ("Player");
 
