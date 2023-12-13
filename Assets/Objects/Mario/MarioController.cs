@@ -48,7 +48,7 @@ public class MarioController : MonoBehaviour
 	private float currentMoveSpeed 					= 0;
 	private float jumpVelocity 						= 0;
 	private float currentTurnSpeed					= 0;
-	private Vector2 currentRotation					= Vector2.zero;
+	private float currentRotation					= 0;
 
 	[HideInInspector] public string anim_stand 		= "idle";
 	[HideInInspector] public string anim_run 		= "run";
@@ -136,34 +136,43 @@ public class MarioController : MonoBehaviour
 
 				case plState.Jumping: // Jumping from land normal
 					float jumpedHeight = transform.position.y - lastGroundedPosition;
-
-					if (jumpedHeight > 4.5f)
-					{ //JUMPING HIGH CAM
-						groundedPosition = transform.position.y;
-						MarioCam.marioCamera.confSmoothTime = 0.13f;
-						MarioCam.marioCamera.confYOffset = 1;
-					}
-
-					if ((jumpedHeight > MarioTable.dataJump[jumpType - 1][1] && !key_jump)
-						|| (jumpedHeight > MarioTable.dataJump[jumpType - 1][2] && key_jump)
-						|| hasTouchedCeiling)
+					switch (mySubState)
 					{
+						case 0:
 
-						rb.AddForce(Vector3.down * MarioTable.dataJump[jumpType - 1][0] / 2.5f, ForceMode.VelocityChange);
-						if (hasTouchedCeiling)
-						{
-							rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-							jumpAfterTimer = 0;
-						}
-						SetState(plState.Falling, 1); //substate 1, jumpfall
+							if (jumpedHeight > 4.5f)
+							{ //JUMPING HIGH CAM
+								groundedPosition = transform.position.y;
+								MarioCam.marioCamera.confSmoothTime = 0.13f;
+								MarioCam.marioCamera.confYOffset = 1;
+							}
 
+							if ((jumpedHeight > MarioTable.dataJump[jumpType - 1][1] && !key_jump)
+								|| (jumpedHeight > MarioTable.dataJump[jumpType - 1][2] && key_jump)
+								|| hasTouchedCeiling)
+							{
+
+								mySubState = 1;
+
+							}
+							//once left ground, he jumped.
+							if (!isGrounded)
+								hasJumped = true;
+							//if clipped up without even starting the jumpfall, he landed.
+							if (isGrounded && hasJumped)
+								SetState(plState.Landing);
+							break;
+						case 1:
+							rb.AddForce(Vector3.down * MarioTable.dataJump[jumpType - 1][0] * 5 * jumpedHeight, ForceMode.Acceleration);
+							if (hasTouchedCeiling)
+							{
+								rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+								jumpAfterTimer = 0;
+							}
+							if (rb.velocity.y < 0)
+								SetState(plState.Falling, 1); //substate 1, jumpfall
+							break;
 					}
-					//once left ground, he jumped.
-					if (!isGrounded)
-						hasJumped = true;
-					//if clipped up without even starting the jumpfall, he landed.
-					if (isGrounded && hasJumped)
-						SetState(plState.Landing);
 					break;
 				case plState.Falling: //FALLING CAM
 					switch (mySubState)
@@ -243,9 +252,10 @@ public class MarioController : MonoBehaviour
 
 		lastPosition = transform.position;
 		wasMoving = isMoving;
-		float yVel = rb.velocity.y;
-		Vector3 movementVector = (transform.rotation * Vector3.forward) * currentMoveSpeed + moveAdditional;// * Time.deltaTime;
-		movementVector.y = yVel;
+
+		float yVel = rb.velocity.y; //store old yvel
+		Vector3 movementVector = transform.rotation * Vector3.forward * currentMoveSpeed + moveAdditional;// * Time.deltaTime; //mashed together movement math
+		movementVector.y = yVel; //reassign old yvel
 
 		// Move the character using the Rigidbody
 		rb.velocity = movementVector;
@@ -427,6 +437,7 @@ public class MarioController : MonoBehaviour
 
 	void HandleMove()
 	{
+		moveAdditional = Vector3.zero;
 		if (!isGrounded)
 		{
 			if (!isMovingAir && myState == plState.Jumping)
@@ -438,7 +449,7 @@ public class MarioController : MonoBehaviour
 				}
 				isMovingAir = true;
 			}
-			rb.MovePosition(rb.position + transform.forward * speedJumpH);
+			moveAdditional += transform.forward * speedJumpH;
 		}
 
 		if (isMoving || isMovingAir)
@@ -457,13 +468,13 @@ public class MarioController : MonoBehaviour
 			{
 				if (/*transform.rotation.y < 179 && transform.rotation.y > -179 && */!isTurning)
 				{
-					currentRotation = new Vector2(Mathf.Atan2(h, v) * Mathf.Rad2Deg,
-						Mathf.Atan2(MarioCam.marioCamera.transform.forward.x, MarioCam.marioCamera.transform.forward.z) * Mathf.Rad2Deg);
+					if(isMoving) currentRotation = Mathf.Atan2(h, v) * Mathf.Rad2Deg
+						+ Mathf.Atan2(MarioCam.marioCamera.transform.forward.x, MarioCam.marioCamera.transform.forward.z) * Mathf.Rad2Deg;
 				}
 
 				if (isInstTurn)
 				{
-					float angleDistance = Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.y, currentRotation.x + currentRotation.y));
+					float angleDistance = Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.y, currentRotation));
 					if (isTurning)
 					{
 						if (angleDistance > 100) currentTurnSpeed = Mathf.Abs(currentTurnSpeed) * 2;
@@ -476,7 +487,7 @@ public class MarioController : MonoBehaviour
 				}
 
 				transform.rotation = Quaternion.Euler(transform.eulerAngles.x,
-					Mathf.MoveTowardsAngle(transform.eulerAngles.y, currentRotation.x + currentRotation.y, currentTurnSpeed), 
+					Mathf.MoveTowardsAngle(transform.eulerAngles.y, currentRotation, currentTurnSpeed), 
 					transform.eulerAngles.z);
 			}
 

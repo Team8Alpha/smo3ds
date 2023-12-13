@@ -24,4 +24,7 @@ public class scr_behaviorCheckpoint : MonoBehaviour {
 			//MarioController.marioObject.setAnim (" ");
 		}
 	}
+    void OnTouch(int type) { 
+		//if(type )
+	}
 }
