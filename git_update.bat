@@ -16,3 +16,4 @@ git --git-dir=%GITROOT% push
 echo Looking for remote updates, finishing...
 git --git-dir=%GITROOT% pull
 git --git-dir=%GITROOT% fetch
+git --git-dir=%GITROOT% push
