@@ -126,7 +126,7 @@ public class scr_behaviorMoon : MonoBehaviour
 								MarioController.marioObject.transform.GetChild(i).gameObject.SetActive(true);
 						}
 
-					scr_manageAudio._f.AudioStart("Music/Jingle/snd_JingleMoonCollect", false);
+					//scr_manageAudio._f.AudioStart("Music/Jingle/snd_JingleMoonCollect", false); //SND!
 
 					string t_date = System.DateTime.UtcNow.ToShortDateString(); //even works on 3ds
 					scr_main._f.moonsCount++;
@@ -139,7 +139,7 @@ public class scr_behaviorMoon : MonoBehaviour
 				}
 				break;
 			case 2://finishing
-				if (!scr_manageAudio._f.isPlaying())
+				//if (!scr_manageAudio._f.isPlaying()) //SND!
 				{
 					scr_main._f.SetFocus(true);
 					MarioController.marioObject.SetState(plState.Falling);

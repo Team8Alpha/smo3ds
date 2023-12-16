@@ -84,10 +84,7 @@ public class MarioController : MonoBehaviour
 
 	void Awake()
 	{
-		// Disable AudioListener for the global values
 		scr_main._f.GetComponent<AudioListener>().enabled = false;
-
-		// Enable AudioListener for Mario's object
 		GetComponent<AudioListener>().enabled = true;
 
 		// Store references to Animator and Rigidbody components
@@ -102,6 +99,11 @@ public class MarioController : MonoBehaviour
 		marioObject = this;
 	}
 
+	void OnDestroy()
+    {
+		scr_main._f.GetComponent<AudioListener>().enabled = true;
+	}
+
 	void Start()
     {
 		SetState(plState.Ground);
@@ -109,6 +111,8 @@ public class MarioController : MonoBehaviour
 
 	void Update()
 	{
+		if (key_cap) scr_manAudio._f.PlaySND(eSnd.JnSuccess);
+		if (key_backR) scr_manAudio._f.PlayBGM("Hat");
 		if (scr_main._f.isFocused)
 		{
 			HandleInput();

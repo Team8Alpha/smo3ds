@@ -17,12 +17,12 @@ public class scr_loadScene : MonoBehaviour {
 		isDone = false;
 		string currentscn = SceneManager.GetActiveScene ().name;
 
-        //Scene scene = SceneManager.GetActiveScene();
+		//Scene scene = SceneManager.GetActiveScene();
 
-        scr_main._f.hasLevelLoaded = false;
+		GetComponent<AudioListener>().enabled = true;
+		scr_main._f.hasLevelLoaded = false;
 		nextScene = sceneName;
 		scr_main._f.dbg_enemyCount = 0;
-		GetComponent<AudioListener> ().enabled = true;
 
         scr_main.DPrint ("nSCN: " + nextScene);
 		switch (transition) {

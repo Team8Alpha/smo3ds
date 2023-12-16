@@ -14,7 +14,8 @@ public class scr_title : MonoBehaviour {
 	public Transform cnv_down;
 	Material mat_rotMap;
 	Material mat_shade;
-	float timerShow = 0;
+	int timerShow = 0;
+	const int cJumpWaitTime = 45 + 15;
 
 	public float speed;
 	public Color startColor, endColor;
@@ -22,6 +23,7 @@ public class scr_title : MonoBehaviour {
 	public GameObject buttonRes;//resume button
 
 	public static scr_title _f;
+
 
 	public IEnumerator ChangeEngineColour()
 	{
@@ -39,25 +41,31 @@ public class scr_title : MonoBehaviour {
 	void Start()
 	{
 		anim = GetComponent<Animator>();
+
 		marioPos = transform.position; // to move him back later
 		transform.position = new Vector3(-1000, transform.position.y, transform.position.z); //move to waitzone, works like a timer.
+
 		scr_fadefull._f.Run(true, 0, 0.02f);//fade in
 		mat_rotMap = spr_rotMap.gameObject.GetComponent<MeshRenderer>().material;
 		mat_shade = spr_shade.gameObject.GetComponent<MeshRenderer>().material;//get materials
+
 		scr_main._f.SetFocus(false);
 		_f = this;
-		scr_manageAudio._f.AudioStart("Sound/Entity/Mario/snd_MarioTitleName", false);
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if (scr_manageAudio._f.isPlaying())
+		if(timerShow <= cJumpWaitTime || scr_manAudio._f.isPlaying(false))
 		{ // timer (1.5 seconds, since targetFPS is X frames per second...)
-			if (timerShow >= 1.5 * Application.targetFrameRate)
-			{
-				transform.position = marioPos;
-				anim.Play("titleStart");
+			switch (timerShow) {
+				case cJumpWaitTime:
+					transform.position = marioPos;
+					anim.Play("titleStart");
+					break;
+				case 15:
+					scr_manAudio._f.PlaySND(eSnd.MarioTitleScream); //SND!
+					break;
 			}
 			timerShow++;
 		}
@@ -67,7 +75,7 @@ public class scr_title : MonoBehaviour {
 			for (int i = 0; i < 4; i++)
 				cnv_down.GetChild(i).gameObject.SetActive(true);
 			EventSystem.current.SetSelectedGameObject(buttonRes);
-			scr_manageAudio._f.AudioStart("Music/Bgm/bgmTitle");
+			scr_manAudio._f.PlayBGM("Title"); //SND!
 			this.enabled = false;
 		}
 	}

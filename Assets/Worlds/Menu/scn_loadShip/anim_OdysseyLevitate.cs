@@ -27,7 +27,7 @@ public class anim_OdysseyLevitate : MonoBehaviour {
 				scr_loadScene._f.StartScene (scr_loadScene._f.nextScene, 3);
 			}
 			if (transform.position.x > -100) {
-				scr_manageAudio._f.AudioFadeOut (1);
+				//scr_manageAudio._f.AudioFadeOut (1); //SND!
 				scr_fadefull._f.Run (false, 0, 0.09f, true, true, true);
 				isExiting = true;
 			}

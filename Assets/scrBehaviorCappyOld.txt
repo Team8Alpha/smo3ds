@@ -1,4 +1,6 @@
-﻿using System;
+﻿### CAPPY
+
+using System;
 using UnityEngine;
 
 public class scrbehaviorCappyOld : MonoBehaviour
@@ -290,4 +292,85 @@ public class scrbehaviorCappyOld : MonoBehaviour
 			}
 		}
 	}
+}
+
+### manageAudio
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class scr_manageAudio : MonoBehaviour {
+
+	AudioSource mAudio;
+	public static scr_manageAudio _f;
+	float fadeSpeed = 1f;
+	bool isFadeOut = false;
+
+	void Start () {
+		_f = this;
+		this.enabled = false;
+		mAudio = gameObject.GetComponent<AudioSource> ();
+	}
+	void Update(){
+		if (isFadeOut) {
+			if (mAudio.volume > 0)
+				mAudio.volume -= fadeSpeed * Time.deltaTime;
+			else {
+				mAudio.volume = 1;
+				mAudio.Stop ();
+				this.enabled = false;
+			}
+		} else {
+			if (mAudio.volume < 1)
+				mAudio.volume += fadeSpeed * Time.deltaTime;
+			else
+				this.enabled = false;
+		}
+	}
+
+	public AudioClip GetClip (string input) {
+		return Resources.Load<AudioClip>("Audio/"+input);
+	}
+	public bool PlayClip (string input){
+		if ((clip = GetClip (input)) == null) {
+			scr_main.DPrint ("<SND> ERR! not a valid sound clip: Audio/"+input);
+			return false;
+		}
+		mAudio.PlayOneShot (clip);
+		return true;
+	}
+	public bool AudioStart (string input, bool isLoop = true){
+		if ((clip = GetClip (input)) == null) {
+			scr_main.DPrint ("<SND> ERR! not a valid sound clip: Audio/"+input);
+			return false;
+		}
+		mAudio.clip = clip;
+		mAudio.loop = isLoop;
+		mAudio.Play ();
+		return true;
+	}
+	public void AudioStop (string input){
+		mAudio.Stop ();
+	}
+	public bool AudioFadeIn (string Input, float speed, bool isLoop = true){
+		if (!AudioStart (Input, isLoop))
+			return false;
+		mAudio.volume = 0;
+		AudioFade (speed, false);
+		return true;
+	}
+	public void AudioFadeOut (float speed){
+		AudioFade (speed, true);
+	}
+	void AudioFade(float speed, bool isFadeOut){
+		this.fadeSpeed = speed;
+		this.isFadeOut = isFadeOut;
+		this.enabled = true;
+	}
+	public void SetVolume (float volume){
+		mAudio.volume = volume;
+	}
+
+	public bool isPlaying() { return mAudio.isPlaying; }
 }
