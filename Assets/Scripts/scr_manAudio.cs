@@ -8,7 +8,19 @@ public enum eSnd
 	CappySpin,
 	CoinCollect,
 	JnMoonGet,
+	JnMoon64Get8Bit,
+	JnMoonGrandGet,
+	JnMoonMainGet,
+	JnNewUnlock,
+	JnPreBroodals,
+	JnStoryLogo,
 	JnSuccess,
+	JnSuccessComplete,
+	JnSuccessS,
+	JnSuccessSS,
+	JnWorldIntro,
+	JnWorldIntro2,
+	JnZeldaItem,
 	MarioTitleScream
 
 }
@@ -17,7 +29,7 @@ public class scr_manAudio : MonoBehaviour {
 
 	AudioSource mAudioSND;
 	AudioSource mAudioBGM;
-	public scr_listSnd mTableSound;
+	public AudioClip[] listSound;
 	public static scr_manAudio _f;
 
 	void Awake () {
@@ -25,10 +37,11 @@ public class scr_manAudio : MonoBehaviour {
 		this.enabled = false;
 		mAudioSND = gameObject.GetComponents<AudioSource>()[0];
 		mAudioBGM = gameObject.GetComponents<AudioSource>()[1];
-		mTableSound = GetComponent<scr_listSnd>();
 
-        LoadSND(new eSnd[] {eSnd.JnSuccess}); // GLOBAL AUDIO LOADING LIST.
-		//mTableSound.Init();
+		listSound = Resources.LoadAll<AudioClip>("Audio/Sounds");
+
+		LoadSND(new eSnd[] {eSnd.JnSuccess}); // GLOBAL AUDIO LOADING LIST.
+
 	}
 
 	public void PlaySND(eSnd eIdSnd, int _volume = 1, AudioSource _mAudio = null)
@@ -36,7 +49,7 @@ public class scr_manAudio : MonoBehaviour {
 		if (_mAudio == null) _mAudio = mAudioSND;
 		_mAudio.volume = _volume;
 
-		AudioClip sndClip = mTableSound.tableSound[(int)eIdSnd];
+		AudioClip sndClip = listSound[(int)eIdSnd];
 		_mAudio.PlayOneShot(sndClip);
 
 		scr_main.DPrint(sndClip.name + " " + sndClip.loadState);
@@ -51,7 +64,7 @@ public class scr_manAudio : MonoBehaviour {
     {
 		mAudioBGM.volume = _volume;
 		mAudioBGM.loop = isLoop;
-		mAudioBGM.clip = Resources.Load<AudioClip>("Music/bgm" + name);
+		mAudioBGM.clip = Resources.Load<AudioClip>("Audio/Music/bgm" + name);
 		mAudioBGM.Play();
 
 	}
@@ -78,16 +91,16 @@ public class scr_manAudio : MonoBehaviour {
 	{
 		for (int i = 0; i != sounds.Length; i++)
 		{
-			mTableSound.tableSound[(int)sounds[i]].LoadAudioData();
+			listSound[(int)sounds[i]].LoadAudioData();
 		}
 	}
 	public void UnloadSND(eSnd[] sounds)
 	{
 		for (int i = 0; i != sounds.Length; i++)
 		{
-			mTableSound.tableSound[(int)sounds[i]].UnloadAudioData();
+			listSound[(int)sounds[i]].UnloadAudioData();
 		}
 	}
-	public void LoadSND(eSnd sound) { mTableSound.tableSound[(int)sound].LoadAudioData(); }
-	public void UnloadSND(eSnd sound) { mTableSound.tableSound[(int)sound].UnloadAudioData(); }
+	public void LoadSND(eSnd sound) { listSound[(int)sound].LoadAudioData(); }
+	public void UnloadSND(eSnd sound) { listSound[(int)sound].UnloadAudioData(); }
 }

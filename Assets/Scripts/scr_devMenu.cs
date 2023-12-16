@@ -15,7 +15,7 @@ public class scr_devMenu: MonoBehaviour {
 	private bool noButtonPressed = true;
 	private bool submenu = false;
 	private int selectionSub = -1;
-	private int maxOption = 6;
+	private int maxOption = 7;
 	private bool deb_fpsIsShowing = true;
 	private bool deb_enemyIsShowing = false;
 	private bool deb_cmdIsShowing = true;
@@ -49,7 +49,7 @@ public class scr_devMenu: MonoBehaviour {
 				if(submenu){
 					if(Input.GetKeyDown(KeyCode.UpArrow)) selectionSub--;
 					if(Input.GetKeyDown(KeyCode.DownArrow)) selectionSub++;
-					if(Input.GetKeyDown(KeyCode.Escape) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B)){ submenu = false; selection = 3; selectionSub = 3; maxOption = 6; canSelect = false;}
+					if(Input.GetKeyDown(KeyCode.Escape) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B)){ submenu = false; selection = 3; selectionSub = 3; maxOption = 7; canSelect = false;}
 				} else {
 					if(Input.GetKeyDown(KeyCode.UpArrow)) selection--;
 					if(Input.GetKeyDown(KeyCode.DownArrow)) selection++;
@@ -112,6 +112,11 @@ public class scr_devMenu: MonoBehaviour {
 						maxOption = 6;
 						break;
 					case 3:
+						isOpen = false;
+						ResetVal();
+						scr_loadScene._f.StartScene("scn_menuTestAudio");
+						break;
+					case 4:
 						scr_manageData._f.Save ();
 						break;
 					}
@@ -179,8 +184,9 @@ public class scr_devMenu: MonoBehaviour {
 				DoPrint (2, "Main Menu", 1);
 				DoPrint (3, "Load Title Screen", 15);
 				DoPrint (4, "Map Select", 15);
-				DoPrint (5, "Toggle Debug", 15);
-				DoPrint (6, "Save Game", 15);
+				DoPrint (5, "Debug Settings", 15);
+				DoPrint (6, "Enter Sound Test", 15);
+				DoPrint (7, "Save Game", 15);
 			}
 		} else {
 			if(deb_fpsIsShowing) DoPrint (0, "FPS: "+1/Time.deltaTime, 1, 50);

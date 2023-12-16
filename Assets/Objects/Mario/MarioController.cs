@@ -113,6 +113,7 @@ public class MarioController : MonoBehaviour
 	{
 		if (key_cap) scr_manAudio._f.PlaySND(eSnd.JnSuccess);
 		if (key_backR) scr_manAudio._f.PlayBGM("Hat");
+
 		if (scr_main._f.isFocused)
 		{
 			HandleInput();
