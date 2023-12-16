@@ -13,10 +13,10 @@ AudioImporter:
     conversionMode: 0
   platformSettingOverrides:
     23:
-      loadType: 0
+      loadType: 1
       sampleRateSetting: 2
       sampleRateOverride: 22050
-      compressionFormat: 0
+      compressionFormat: 8
       quality: 1
       conversionMode: 0
   forceToMono: 1
@@ -25,5 +25,5 @@ AudioImporter:
   loadInBackground: 0
   3D: 1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: audio
+  assetBundleVariant: sound

@@ -19,6 +19,7 @@ public class scr_devMenu: MonoBehaviour {
 	private bool deb_fpsIsShowing = true;
 	private bool deb_enemyIsShowing = false;
 	private bool deb_cmdIsShowing = true;
+	private bool deb_statsIsShowing = true;
 	private int height = 12;
 	private bool canSelect = false;
 	static public string txt_cmdOut = "";
@@ -102,10 +103,13 @@ public class scr_devMenu: MonoBehaviour {
 							if(deb_enemyIsShowing) deb_enemyIsShowing=false; else deb_enemyIsShowing=true;
 							break;
 						case 2:
-							if(deb_cmdIsShowing) deb_cmdIsShowing=false; else deb_cmdIsShowing=true;
+							if (deb_cmdIsShowing) deb_cmdIsShowing = false; else deb_cmdIsShowing = true;
+							break;
+						case 3:
+							if (deb_statsIsShowing) deb_statsIsShowing = false; else deb_statsIsShowing = true;
 							break;
 						}
-						maxOption = 5;
+						maxOption = 6;
 						break;
 					case 3:
 						scr_manageData._f.Save ();
@@ -164,6 +168,7 @@ public class scr_devMenu: MonoBehaviour {
 					DoPrint (3, "Toggle FPS: " + deb_fpsIsShowing, 15);
 					DoPrint (4, "Toggle ENEMY: " + deb_enemyIsShowing, 15);
 					DoPrint (5, "Toggle CMD: " + deb_cmdIsShowing, 15);
+					DoPrint (5, "Toggle STATS: " + deb_statsIsShowing, 15);
 					break;
 				default:
 					submenu = false;
@@ -179,10 +184,14 @@ public class scr_devMenu: MonoBehaviour {
 			}
 		} else {
 			if(deb_fpsIsShowing) DoPrint (0, "FPS: "+1/Time.deltaTime, 1, 50);
-			if(deb_enemyIsShowing) DoPrint (1, "ENEMY: "+scr_main._f.dbg_enemyCount, 1, 50);
+			if(deb_enemyIsShowing) DoPrint (3, "ENEMY: "+scr_main._f.dbg_enemyCount, 1, 50);
 			if(MarioController.marioObject != null){
 				DoPrint (4, "COIN: "+scr_main._f.coinsCount, 1, 50);
 				DoPrint (5, "MOON: "+scr_main._f.moonsCount, 1, 50);
+			}
+			if (deb_statsIsShowing){
+				DoPrint(1, "CPU: " + UnityEngine.N3DS.Debug.GetSystemFree(), 1, 50);
+				DoPrint(2, "RAM: A " + UnityEngine.N3DS.Debug.GetVRAMAFree() + ", B "+UnityEngine.N3DS.Debug.GetVRAMBFree(), 1, 50);
 			}
 		}
 		if (deb_cmdIsShowing && txt_cmdOut != "")

@@ -51,6 +51,8 @@ public class scr_title : MonoBehaviour {
 
 		scr_main._f.SetFocus(false);
 		_f = this;
+
+		scr_manAudio._f.LoadSND(eSnd.MarioTitleScream);
 	}
 
 	// Update is called once per frame
@@ -71,12 +73,18 @@ public class scr_title : MonoBehaviour {
 		}
 		else
 		{ // audio has finished, show canvas
-			scr_main._f.SetFocus(true);
-			for (int i = 0; i < 4; i++)
-				cnv_down.GetChild(i).gameObject.SetActive(true);
-			EventSystem.current.SetSelectedGameObject(buttonRes);
-			scr_manAudio._f.PlayBGM("Title");
-			this.enabled = false;
+			Finish();
 		}
 	}
+	void Finish()
+	{
+		scr_main._f.SetFocus(true);
+		for (int i = 0; i < 4; i++)
+			cnv_down.GetChild(i).gameObject.SetActive(true);
+		EventSystem.current.SetSelectedGameObject(buttonRes);
+		scr_manAudio._f.PlayBGM("Title");
+		scr_manAudio._f.UnloadSND(eSnd.MarioTitleScream);
+		this.enabled = false;
+	}
 }
+
