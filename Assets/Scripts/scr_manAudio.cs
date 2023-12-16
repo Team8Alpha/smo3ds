@@ -52,4 +52,22 @@ public class scr_manAudio : MonoBehaviour {
 		mAudioBGM.Play();
 
 	}
+	public void FadeBGM(float time, float targetVolume, bool isStop = true)
+    {
+		StartCoroutine(StartFade(time, targetVolume, isStop));
+	}
+	IEnumerator StartFade(float time, float volume, bool isStop)
+    {
+		float currentTime = 0;
+		float startVolume = mAudioBGM.volume;
+		float targetVolume = volume;
+		while (currentTime < time)
+		{
+			currentTime += Time.deltaTime;
+			mAudioBGM.volume = Mathf.Lerp(startVolume, targetVolume, currentTime / time);
+			yield return null;
+		}
+		if (isStop && mAudioBGM.volume <= 0.1f) mAudioBGM.Stop();
+		yield break;
+	}
 }

@@ -64,7 +64,7 @@ public class scr_title : MonoBehaviour {
 					anim.Play("titleStart");
 					break;
 				case 15:
-					scr_manAudio._f.PlaySND(eSnd.MarioTitleScream); //SND!
+					scr_manAudio._f.PlaySND(eSnd.MarioTitleScream);
 					break;
 			}
 			timerShow++;
@@ -75,7 +75,7 @@ public class scr_title : MonoBehaviour {
 			for (int i = 0; i < 4; i++)
 				cnv_down.GetChild(i).gameObject.SetActive(true);
 			EventSystem.current.SetSelectedGameObject(buttonRes);
-			scr_manAudio._f.PlayBGM("Title"); //SND!
+			scr_manAudio._f.PlayBGM("Title");
 			this.enabled = false;
 		}
 	}
