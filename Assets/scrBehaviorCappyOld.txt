@@ -157,7 +157,7 @@ public class scrbehaviorCappyOld : MonoBehaviour
 						if (collis.gameObject.layer == scr_main.lyr_enemy)
 						{
 							if (paramCaptured.isTouch) collis.gameObject.SendMessage("OnTouch", 1);
-							if (paramCaptured.isCapture) collis.gameObject.SendMessage("OnCapture"); //send OnCapture event to object
+							if (paramCaptured.isCapTrigger) collis.gameObject.SendMessage("OnCapTrigger"); //send OnCapTrigger event to object
 							else return;
 							mountPoint = collis.gameObject.transform.Find(scr_main._f.capMountPoint).gameObject;
 							if (mountPoint == null)
@@ -178,7 +178,7 @@ public class scrbehaviorCappyOld : MonoBehaviour
 								if (collis.gameObject.GetComponent<Rigidbody>() != null)
 									collis.gameObject.GetComponent<Rigidbody>().useGravity = false;
 								toggleCollision(false);
-								capturedObject.SendMessage("OnCaptured"); //send OnCaptured event to object
+								capturedObject.SendMessage("OnCapHacked"); //send OnCapHacked event to object
 								if (paramCaptured.isHack) MarioController.marioObject.isHacking = true;
 								else anim.Play("hookStart");
 								SetState(4);
@@ -193,7 +193,7 @@ public class scrbehaviorCappyOld : MonoBehaviour
 						else if (collis.gameObject.layer == scr_main.lyr_obj)
 						{
 							if (paramCaptured.isTouch) collis.gameObject.SendMessage("OnTouch", 1);
-							if (paramCaptured.isCapture) collis.gameObject.SendMessage("OnCapture", 1);
+							if (paramCaptured.isCapTrigger) collis.gameObject.SendMessage("OnCapTrigger", 1);
 							capturedObject = collis.gameObject;
 							scr_main.DPrint("crappy hav pfund" + collis.gameObject + collis.gameObject.layer.ToString());
 						}

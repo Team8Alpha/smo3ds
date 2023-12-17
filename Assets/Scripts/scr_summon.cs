@@ -17,21 +17,16 @@ public class scr_summon : MonoBehaviour {
 	}
 	public GameObject s_entity(int type, Vector3 pos, Vector3 rot){
 		string myObjString="INVALID";
-		/*param.isCapture = true;
-		param.isTouch = true;
-		param.isWall = false;
-		*/switch(type){
+		switch(type){
 		case 0: //goomba
 			myObjString = "Objects/objGoomba";
 			break;
 		}
 		GameObject result = GameObject.Instantiate(Resources.Load<GameObject>(myObjString), pos, Quaternion.Euler(rot));
-		result.layer = LayerMask.NameToLayer ("Enemy");
 		return result;
 	}
 	
 	public GameObject s_object(int type, Vector3 pos, Vector3 rot){
-		string myLayer = "Object";
 		string myObjString="INVALID";
 		switch (type) {
 		case 0: //goomba
@@ -66,14 +61,12 @@ public class scr_summon : MonoBehaviour {
 			break;
 		case 10: //Stake / brown fat pole
 			myObjString = "Objects/objStake";
-			myLayer = "Enemy";
 			break;
 		case 11: //Stake / brown fat pole
 			myObjString = "Objects/objFrailBox";
 			break;
 		}
 		GameObject result = GameObject.Instantiate(Resources.Load<GameObject>(myObjString), pos, Quaternion.Euler(rot));
-		result.layer = LayerMask.NameToLayer (myLayer);
 		return result;
 	}
 	

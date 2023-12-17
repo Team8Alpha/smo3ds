@@ -159,10 +159,10 @@ public class scr_behaviorGoomba : MonoBehaviour {
 		}
 	}
 
-	public void OnCapture(){
+	public void OnCapTrigger(){
 		scr_main._f.capMountPoint = "Armature/nw4f_root/AllRoot/JointRoot/Head/Cap";
 	}
-	public void OnCaptured(){
+	public void OnCapHacked(){
 		gameObject.tag = "captureMe";
 		//CAP!	MarioController.marioObject.cappy.setHackData (1.525f, new Vector3 (0, 0.5f, 0), new Vector3(-6,0,0));
 	}

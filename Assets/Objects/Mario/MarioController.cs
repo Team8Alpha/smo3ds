@@ -31,6 +31,7 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] public bool isJumpingSoon		= false;
 	[HideInInspector] public bool isInstTurn		= false;
 	[HideInInspector] public bool isTurning			= false;
+	[HideInInspector] public bool isFreezeFall		= false;
 
 	[HideInInspector] public Animator anim;
 	[HideInInspector] public Rigidbody rb;
@@ -69,8 +70,8 @@ public class MarioController : MonoBehaviour
 	public bool isBlockBlocked 						= false; // to prevent it from setting block to false, if it handles multiple blocks...
 	[HideInInspector] public bool plsUnhack 		= false;
 	[HideInInspector] public string animLast 		= "idle";
+	[HideInInspector] public int jumpType			= 0;
 	[HideInInspector] int jumpAfterTimer 			= 0; //timer till it refuses to execute double jump
-	[HideInInspector] int jumpType 					= 0;
 	[HideInInspector] bool hasTouchedCeiling 		= false;
 	[HideInInspector] float lastGroundedPosition 	= 0;
 	[HideInInspector] private bool isMovingAir 		= false; //if falling direction is active
@@ -101,7 +102,7 @@ public class MarioController : MonoBehaviour
 
 	void OnDestroy()
     {
-		scr_main._f.GetComponent<AudioListener>().enabled = true;
+		if(scr_main._f != null) scr_main._f.GetComponent<AudioListener>().enabled = true;
 	}
 
 	void Start()
@@ -111,8 +112,6 @@ public class MarioController : MonoBehaviour
 
 	void Update()
 	{
-		if (key_cap) scr_manAudio._f.PlaySND(eSnd.JnSuccess);
-		if (key_backR) scr_manAudio._f.PlayBGM("Hat");
 
 		if (scr_main._f.isFocused)
 		{
@@ -205,13 +204,13 @@ public class MarioController : MonoBehaviour
 
 				case plState.CaptureFly: //flying to capture enemy
 						// Calculate the current percentage of the journey completed
-					//float distanceCovered = (Time.time - hackFlyStartTime) * hackFlyLength / 1;
-					//float journeyFraction = distanceCovered / hackFlyLength;
-						// CAP!
+					float distanceCovered = (Time.time - hackFlyStartTime) * hackFlyLength / 1;
+					float journeyFraction = distanceCovered / hackFlyLength;
 
-					   	// Calculate the current position along the Bezier curve
-					Vector3 targetPosition = Vector3.zero; //Bezier (transform.position, cappy.capturedObject.transform.position + Vector3.up * 3 + (transform.position - cappy.capturedObject.transform.position).normalized * 1, cappy.capturedObject.transform.position, journeyFraction);
-						// CAP!
+					// Calculate the current position along the Bezier curve
+					Vector3 posHackObj = cappy.hackedObj.transform.position;
+					Vector3 targetPosition = Bezier (transform.position, posHackObj + Vector3.up * 3 + (transform.position - posHackObj).normalized * 1, posHackObj, journeyFraction);
+
 						// Calculate the additional movement vector based on the target position
 					moveAdditional = targetPosition - transform.position;
 
@@ -219,13 +218,13 @@ public class MarioController : MonoBehaviour
 					if (Time.time - hackFlyStartTime >= 1)
 					{
 						// Ensure the object ends up at the final position
-						//CAP! transform.position = cappy.capturedObject.transform.position;
+						transform.position = posHackObj;
 						SetState(plState.Ground);
 						if (!isBlockBlocked)
 							isBlocked = false;
 						isCapturing = false;
 						hasCaptured = true;
-						//CAP! cappy.capturedObject.SendMessage ("setState", 6);
+						cappy.hackedObj.SendMessage ("setState", 6);
 						SetVisible(false);
 						rb.useGravity = true;
 						moveAdditional = Vector3.zero;
@@ -253,7 +252,7 @@ public class MarioController : MonoBehaviour
 
 		float yVel = rb.velocity.y; //store old yvel
 		Vector3 movementVector = transform.rotation * Vector3.forward * currentMoveSpeed + moveAdditional;// * Time.deltaTime; //mashed together movement math
-		movementVector.y = yVel; //reassign old yvel
+		movementVector.y = isFreezeFall ? 0 : yVel; //reassign old yvel
 
 		// Move the character using the Rigidbody
 		rb.velocity = movementVector;
@@ -278,9 +277,9 @@ public class MarioController : MonoBehaviour
 			v = Input.GetAxisRaw("Vertical");
 
 			key_jump = Input.GetKey(KeyCode.Space);
-			key_backL = Input.GetKey(KeyCode.LeftControl);
-			key_backR = Input.GetKey(KeyCode.RightControl);
-			key_cap = Input.GetKey(KeyCode.LeftAlt);
+			key_backL = Input.GetKey(KeyCode.Q);
+			key_backR = Input.GetKey(KeyCode.E);
+			key_cap = Input.GetKey(KeyCode.X);
 #else
 				key_backL = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.L);
 
@@ -512,9 +511,7 @@ public class MarioController : MonoBehaviour
 				if (currentMoveSpeed > 0) currentMoveSpeed = 0;
 				//if (animLast != anim_stand && animLast != anim_land && myState == plState.Ground) {
 				if (animLast != anim_stand)
-					if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1
-						&& (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 7 || anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 9)
-						&& anim.GetNextAnimatorStateInfo(0).normalizedTime == 0)
+					if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
 					{
 						SetAnim(anim_stand, timeStandTrns);
 					}
@@ -537,22 +534,21 @@ public class MarioController : MonoBehaviour
 				{
 					if (key_backR || plsUnhack)
 					{
-						SetCap(true);
+						SetCap(false);
 						SetState(plState.Ground);
-						//CAP! cappy.capturedObject.SendMessage ("setState", 7); //CAP!
-						//CAP! cappy.capturedObject.tag 	= "Untagged"; //CAP!
-						//CAP! if (cappy.capturedObject.GetComponent<Collider> () != null)
-						//CAP! cappy.capturedObject.GetComponent<Collider> ().enabled = true;
+						cappy.hackedObj.SendMessage ("setState", 7);
+						if (cappy.hackedObj.GetComponent<Collider> () != null)
+						cappy.hackedObj.GetComponent<Collider> ().enabled = true;
 						transform.Translate(0, 0, -2);
 						ResetSpeed();
 						plsUnhack = false;
 						isBlocked = false;
 						isBlockBlocked = false;
 						isHacking = false;
-						scr_main._f.capMountPoint = "missingno";
-						//CAP! var Mustache = cappy.capturedObject.transform.GetChild (0); //CAP!
-						//CAP! if (Mustache.name == "Mustache" || Mustache.name == "Mustache__HairMT")
-						//CAP! Mustache.gameObject.SetActive (false); //if mustache, place it at index 0
+						scr_main._f.capMountPoint = "";
+						var Mustache = cappy.hackedObj.transform.GetChild (0);
+						if (Mustache.name == "Mustache" || Mustache.name == "Mustache__HairMT")
+						Mustache.gameObject.SetActive (false); //if mustache, place it at index 0
 					}
 				}
 				else
@@ -570,7 +566,7 @@ public class MarioController : MonoBehaviour
 				if (hasCaptured == true)
 				{
 					hasCaptured = false;
-					//CAP! cappy.SetState (2);
+					cappy.SetState (capState.Return);
 					SetVisible(true);
 					SetCap(false);
 				}
@@ -701,7 +697,7 @@ public class MarioController : MonoBehaviour
 	}
 	public void SetHand(int side, int type, bool state) // 0 = ball, 1 = flat
 	{
-		transform.GetChild(1).GetChild(3 + (side * 2 /* MAX NUM OF HAND TYPES */) + type).gameObject.SetActive(state);
+		transform.GetChild(1).GetChild(5 + (side * 2 /* MAX NUM OF HAND TYPES */) + type).gameObject.SetActive(state);
 	}
 	public void SetCap(bool boolean)
 	{

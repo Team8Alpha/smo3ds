@@ -6,7 +6,7 @@ public class paramObj : MonoBehaviour {
 	[SerializeField]
 	public float posCenterV = 0;
 	public bool isTouch = false;
-	public bool isCapture = false;
+	public bool isCapTrigger = false;
 	public bool isHack = true;
 	public bool isLOD = true;
 

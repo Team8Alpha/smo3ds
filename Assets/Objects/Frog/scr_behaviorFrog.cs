@@ -45,10 +45,10 @@ public class scr_behaviorFrog : MonoBehaviour {
 		if (num == 3)
 			anim.Play ("reaction");
 	}
-	public void OnCapture(){
+	public void OnCapTrigger(){
 		scr_main._f.capMountPoint = capMount;
 	}
-	public void OnCaptured(){
+	public void OnCapHacked(){
 		gameObject.tag = "captureMe";
 		//CAP! MarioController.marioObject.cappy.setHackData (1.15f, new Vector3(0, 0, -0.1f), new Vector3(0, -119.16f, 90));
 	}

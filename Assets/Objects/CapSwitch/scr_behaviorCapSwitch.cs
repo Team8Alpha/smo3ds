@@ -13,10 +13,10 @@ public class scr_behaviorCapSwitch : MonoBehaviour{
 		this.enabled = false;
 	}
 
-	public void OnCapture(){
+	public void OnCapTrigger(){
 		scr_main._f.capMountPoint = capMount;
 	}
-	public void OnCaptured(){//CAP!
+	public void OnCapHacked(){//CAP!
 		//MarioController.marioObject.cappy.headHeight = 0f;
 		//MarioController.marioObject.cappy.hackScale = 2f;
 		//MarioController.marioObject.cappy.hackRot = new Vector3 (0, 0, 90);

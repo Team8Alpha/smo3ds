@@ -7,8 +7,9 @@ public enum eSnd
 	CappyHacked,
 	CappySpin,
 	CoinCollect,
+	JnMoon64Get,
 	JnMoonGet,
-	JnMoon64Get8Bit,
+	JnMoonGet8Bit,
 	JnMoonGrandGet,
 	JnMoonMainGet,
 	JnNewUnlock,
@@ -44,15 +45,28 @@ public class scr_manAudio : MonoBehaviour {
 
 	}
 
-	public void PlaySND(eSnd eIdSnd, int _volume = 1, AudioSource _mAudio = null)
+	public void PlaySND(eSnd eIdSnd, int _volume = 1)
+	{
+		AudioClip sndClip = GetSND(eIdSnd);
+		mAudioSND.volume = _volume;
+		mAudioSND.PlayOneShot(sndClip);
+	}
+	public void PlaySelfSND(ref AudioSource _mAudio, eSnd eIdSnd, bool isLoop = false, bool isOneShot = false, int _volume = 1)
     {
-		if (_mAudio == null) _mAudio = mAudioSND;
 		_mAudio.volume = _volume;
+		_mAudio.loop = isLoop;
+		AudioClip sndClip = GetSND(eIdSnd);
+		if (isOneShot) _mAudio.PlayOneShot(sndClip);
+		else
+		{
+			_mAudio.clip = sndClip;
+			_mAudio.Play();
+		}
+	}
 
-		AudioClip sndClip = listSound[(int)eIdSnd];
-		_mAudio.PlayOneShot(sndClip);
-
-		scr_main.DPrint(sndClip.name + " " + sndClip.loadState);
+	public AudioClip GetSND(eSnd eIdSnd)
+    {
+		return listSound[(int)eIdSnd];
 	}
 
 	public bool isPlaying(bool isBGM)

@@ -25,10 +25,10 @@ public class scr_behaviorStake : MonoBehaviour {
 		this.enabled = false;
 	}
 
-	public void OnCapture(){
+	public void OnCapTrigger(){
 		scr_main._f.capMountPoint = capMount;
 	}
-	public void OnCaptured(){
+	public void OnCapHacked(){
 		gameObject.tag = "captureMe"; //only used for its-own-script identification, since i modified some stuff.
 									  //CAP! MarioController.marioObject.cappy.headHeight = 0f;
 									  //CAP! MarioController.marioObject.isHacking = false;
