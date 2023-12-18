@@ -57,8 +57,10 @@ public class scr_behaviorGoomba : MonoBehaviour {
 	}
 
 	void setEyeTexture(int numEye){
-		transform.GetChild (1).GetChild (6).transform.GetChild (0).GetComponent<SkinnedMeshRenderer> ().material = Resources.Load<Material> ("Objects/objGoomba/eye."+numEye);
-		transform.GetChild (1).GetChild (6).transform.GetChild (1).GetComponent<SkinnedMeshRenderer> ().material = Resources.Load<Material> ("Objects/objGoomba/eye."+numEye);
+		for (int i = 0; i != 2; i++)
+		{
+			transform.GetChild(1).GetChild(5).GetChild(i).GetComponent<SkinnedMeshRenderer>().material = Resources.Load<Material>("Objects/objGoomba/eye." + numEye);
+		}
 	}
 
 	void setState(int stateNum){
@@ -89,14 +91,15 @@ public class scr_behaviorGoomba : MonoBehaviour {
 			break;
 		case 6:
 			setAnim ("hackStart", 0.1f);
+			setEye(0);
 			setEyeTexture (1);
-			transform.GetChild (1).GetChild (3).gameObject.SetActive (false);
+			transform.GetChild (1).GetChild (2).gameObject.SetActive (false);
 			MarioController.marioObject.SetSpeed (3, 4);
 			break;
 		case 7:
 			setAnim ("hackEnd", 0.1f);
 			setEyeTexture (0);
-			transform.GetChild (1).GetChild (3).gameObject.SetActive (true);
+			transform.GetChild (1).GetChild (2).gameObject.SetActive (true);
 			break;
 		}
 	}
@@ -143,7 +146,6 @@ public class scr_behaviorGoomba : MonoBehaviour {
 			case 3:
 				if (!isTop)
 					break; //spare his life
-				gameObject.tag = "Untagged";
 				setAnim ("pressDown");
 				GetComponent<Collider> ().enabled = false;
 				dead = true;
@@ -160,11 +162,10 @@ public class scr_behaviorGoomba : MonoBehaviour {
 	}
 
 	public void OnCapTrigger(){
-		scr_main._f.capMountPoint = "Armature/nw4f_root/AllRoot/JointRoot/Head/Cap";
+		scr_main._f.capMountPoint = "Armature/nw4f_root/AllRoot/JointRoot/Head/Cap/mount";
 	}
 	public void OnCapHacked(){
-		gameObject.tag = "captureMe";
-		//CAP!	MarioController.marioObject.cappy.setHackData (1.525f, new Vector3 (0, 0.5f, 0), new Vector3(-6,0,0));
+		MarioController.marioObject.cappy.SetTransformOffset(1.5f);
 	}
 	public void OnSensorEnter(Collider col){
 		if (col.name == "mario" && isMoving && !dead)

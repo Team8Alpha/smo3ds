@@ -56,7 +56,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    animationCompression: 1
+    animationCompression: 0
     animationRotationError: 25
     animationPositionError: 25
     animationScaleError: 25

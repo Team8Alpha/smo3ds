@@ -23,6 +23,7 @@ public class scrBehaviorCappy : MonoBehaviour
     private Transform myParent;     // saves parent, for mario switching.
     public GameObject hackedObj;    // object posessed by cappy
     Rigidbody rb;
+    CharacterController charc;
 
     //private const float numOffsetY = 0.6f; // y offset at marios
 
@@ -36,9 +37,13 @@ public class scrBehaviorCappy : MonoBehaviour
 
     void Awake()
     {
+        SetVisible(false);
+
         mAnim = GetComponent<Animator>();
         mAudio = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
+        charc = GetComponent<CharacterController>();
+        charc.detectCollisions = false;
 
         objBone = transform.GetChild(0);
         myParent = transform.parent;
@@ -46,11 +51,8 @@ public class scrBehaviorCappy : MonoBehaviour
         tMario = mario.transform;
         mario.cappy = this;
 
-        transform.localScale = Vector3.one;
-
         SetState(capState.Wait);
         SetParent(mario.transform);
-        SetVisible(false);
     }
 
     void Update()
@@ -73,9 +75,10 @@ public class scrBehaviorCappy : MonoBehaviour
                             if (varAnimTime > 0.6f && varAnimTime < 1) SetState(capState.Throw, 1);
                             break;
                         case 1:
-                            if (Vector3.Distance(posOrigin, transform.position) < 4)
+                            if (Vector3.Distance(posOrigin, transform.position) < 4 && charc.velocity.magnitude > 0f)
                                 OnMove(0, 0, 2);
-                            else SetState(capState.FlyWait);
+                            else
+                                SetState(capState.FlyWait);
                             break;
                     }
                     break;
@@ -109,7 +112,7 @@ public class scrBehaviorCappy : MonoBehaviour
 
     void OnMove(float x, float y, float z)
     {
-        transform.Translate(x, y, z);
+        charc.Move(transform.forward * new Vector3(x, y, z).magnitude);
     }
 
     public void SetState(capState state, int subState = 0)
@@ -173,6 +176,7 @@ public class scrBehaviorCappy : MonoBehaviour
                 }
                 break;
             case capState.Hack:
+                SetRotate(false);
                 SetAnim("capture");
                 scr_manAudio._f.PlaySelfSND(ref mAudio, eSnd.CappyHacked, false, true);
                 break;
@@ -185,7 +189,11 @@ public class scrBehaviorCappy : MonoBehaviour
         if (resetPos)
         {
             transform.localPosition = Vector3.zero;
-            transform.position = parent == null ? mario.transform.position : parent.position;
+            transform.localEulerAngles = Vector3.zero;
+            transform.position = transform.parent.position;
+            transform.rotation = transform.parent.rotation;
+            transform.localScale = Vector3.one;
+
         }
     }
     void SetAnim(string animName, float transitionTime = 0.1f, float animSpeed = 1)
@@ -227,6 +235,10 @@ public class scrBehaviorCappy : MonoBehaviour
     {
         gameObject.GetComponents<Collider>()[1].enabled = boolean;
         gameObject.GetComponents<Collider>()[0].enabled = boolean;
+    }
+    public void SetTransformOffset(float scale)
+    {
+        transform.localScale = new Vector3(scale, scale, scale);
     }
     float GetAnimTime()
     {

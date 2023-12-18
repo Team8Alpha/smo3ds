@@ -203,7 +203,7 @@ public class MarioController : MonoBehaviour
 					break;
 
 				case plState.CaptureFly: //flying to capture enemy
-						// Calculate the current percentage of the journey completed
+					// Calculate the current percentage of the journey completed
 					float distanceCovered = (Time.time - hackFlyStartTime) * hackFlyLength / 1;
 					float journeyFraction = distanceCovered / hackFlyLength;
 
@@ -211,7 +211,7 @@ public class MarioController : MonoBehaviour
 					Vector3 posHackObj = cappy.hackedObj.transform.position;
 					Vector3 targetPosition = Bezier (transform.position, posHackObj + Vector3.up * 3 + (transform.position - posHackObj).normalized * 1, posHackObj, journeyFraction);
 
-						// Calculate the additional movement vector based on the target position
+					// Calculate the additional movement vector based on the target position
 					moveAdditional = targetPosition - transform.position;
 
 					// Check if the movement is completed
