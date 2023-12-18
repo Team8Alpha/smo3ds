@@ -29,7 +29,7 @@ public class scrBehaviorCappy : MonoBehaviour
     private Vector3 posOrigin;      // start position before flying
     private float numTimer = 0;     // timer for states
     //private string strAnimLast = "";  // last animation set
-    public string mountpoint;       // mount point for possession/hacking
+    public Transform mountpoint;       // mount point for possession/hacking
 
     public bool isHacking = false;
 
@@ -173,6 +173,8 @@ public class scrBehaviorCappy : MonoBehaviour
                 }
                 break;
             case capState.Hack:
+                SetAnim("capture");
+                scr_manAudio._f.PlaySelfSND(ref mAudio, eSnd.CappyHacked, false, true);
                 break;
         }
     }
@@ -235,12 +237,13 @@ public class scrBehaviorCappy : MonoBehaviour
     {
         paramObj objParam;
         if ((objParam = collis.gameObject.GetComponent<paramObj>()) == null) return;
-             mountpoint = "";
         if (objParam.isTouch) collis.gameObject.SendMessage("OnTouch", 1);
         if (!objParam.isCapTrigger || isHacking) return;
-        if (mountpoint == "" || (collis.transform.Find(mountpoint) == null))
+        else collis.gameObject.SendMessage("OnCapTrigger");
+        mountpoint = collis.transform.Find(scr_main._f.capMountPoint);
+        if (mountpoint == null)
         {
-            scr_main.DPrint("Cap: No mount at " + collis.gameObject.name + "/" + mountpoint);
+            scr_main.DPrint("Cap: No mount at " + collis.gameObject.name + "/" + scr_main._f.capMountPoint);
             return;
         }
 
@@ -249,16 +252,19 @@ public class scrBehaviorCappy : MonoBehaviour
             hackedObj.GetComponent<Collider>().enabled = false;
         if (hackedObj.GetComponent<Rigidbody>() != null)
             hackedObj.GetComponent<Rigidbody>().useGravity = false;
+        SetParent(mountpoint);
         SetCollision(false);
 
         hackedObj.SendMessage("OnCapHacked"); //send OnCapHacked event to object
         if (objParam.isHack) MarioController.marioObject.isHacking = true; //TODO: hacking event.
         else mAnim.Play("hookStart");
-        SetState(capState.Hack);
 
         GameObject Mustache = hackedObj.transform.GetChild(1).GetChild(0).gameObject;
         if (Mustache.name == "Mustache" || Mustache.name == "Mustache__HairMT") Mustache.SetActive(true); //if mustache, place it at index 0
-        scr_main.DPrint("CAPMOUNT AT " + collis.gameObject.name + "/" + mountpoint);
+
+        SetState(capState.Hack);
+
+        scr_main.DPrint("cap: mount at " + collis.gameObject.name + "/" + scr_main._f.capMountPoint);
         isHacking = true;
     }
 }
