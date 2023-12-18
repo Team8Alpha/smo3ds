@@ -165,7 +165,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 		scr_main._f.capMountPoint = "Armature/nw4f_root/AllRoot/JointRoot/Head/Cap/mount";
 	}
 	public void OnCapHacked(){
-		MarioController.marioObject.cappy.SetTransformOffset(1.5f);
+		MarioController.marioObject.cappy.SetTransformOffset(1.5f, Vector3.zero, Vector3.zero);
 	}
 	public void OnSensorEnter(Collider col){
 		if (col.name == "mario" && isMoving && !dead)

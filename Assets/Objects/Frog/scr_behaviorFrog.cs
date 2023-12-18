@@ -39,7 +39,7 @@ public class scr_behaviorFrog : MonoBehaviour {
 		}
 	}
 	void setEyeTexture(int numEye){
-		transform.GetChild (6).GetComponent<SkinnedMeshRenderer> ().material = Resources.Load<Material> ("Objects/objFrog/eye."+numEye);
+		transform.GetChild(1).GetChild (5).GetComponent<SkinnedMeshRenderer> ().material = Resources.Load<Material> ("Objects/objFrog/eye."+numEye);
 	}
 	public void OnTouch(int num){
 		if (num == 3)
@@ -50,7 +50,7 @@ public class scr_behaviorFrog : MonoBehaviour {
 	}
 	public void OnCapHacked(){
 		gameObject.tag = "captureMe";
-		//CAP! MarioController.marioObject.cappy.setHackData (1.15f, new Vector3(0, 0, -0.1f), new Vector3(0, -119.16f, 90));
+		MarioController.marioObject.cappy.SetTransformOffset (1.15f, new Vector3(0, 0, -0.1f), new Vector3(0, -119.16f, 90));
 	}
 	public void setState(int num){
 		currentState = num;

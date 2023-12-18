@@ -236,9 +236,11 @@ public class scrBehaviorCappy : MonoBehaviour
         gameObject.GetComponents<Collider>()[1].enabled = boolean;
         gameObject.GetComponents<Collider>()[0].enabled = boolean;
     }
-    public void SetTransformOffset(float scale)
+    public void SetTransformOffset(float scale, Vector3 pos, Vector3 rot)
     {
         transform.localScale = new Vector3(scale, scale, scale);
+        if(pos!=null) transform.localPosition = pos;
+        if(rot!=null) transform.localEulerAngles = rot;
     }
     float GetAnimTime()
     {
