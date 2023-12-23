@@ -60,7 +60,7 @@ public class scrbehaviorCappyOld : MonoBehaviour
 				tmp_pos = transformMario.position;
 				transform.rotation = transformMario.rotation;
 				transform.position = new Vector3(tmp_pos.x, tmp_pos.y + offsetYthrow, tmp_pos.z);
-				if (MarioController.myState == plState.Jumping)
+				if (MarioController.myState == eStatePl.Jumping)
 				{
 					currentState = -1;
 					anim.Play("throwJump");
@@ -135,7 +135,7 @@ public class scrbehaviorCappyOld : MonoBehaviour
 		if (collis.gameObject.layer != scr_main.lyr_player)
 			isColliding = true;
 		//else if(currentState == 1)
-		//	MarioController.marioObject.SetState (plState.Jumping); //problems with collision
+		//	MarioController.marioObject.SetState (eStatePl.Jumping); //problems with collision
 		if (collis.gameObject.GetComponent<paramObj>() != null)
 			paramCaptured = collis.gameObject.GetComponent<paramObj>();
 	}

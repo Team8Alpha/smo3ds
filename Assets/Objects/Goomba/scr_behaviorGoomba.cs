@@ -63,7 +63,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 		}
 	}
 
-	void setState(int stateNum){
+	void SetState(int stateNum){
 		currentState = stateNum;
 		statesState = 0;
 		fvar0 = 0; //var to be used by states
@@ -169,11 +169,11 @@ public class scr_behaviorGoomba : MonoBehaviour {
 	}
 	public void OnSensorEnter(Collider col){
 		if (col.name == "mario" && isMoving && !dead)
-			setState (3); 
+			SetState (3); 
 	}
 	public void OnSensorExit(Collider col){
 		if (col.name == "mario" && isMoving && !dead)
-			setState (0);
+			SetState (0);
 	}
 
 	// Update is called once per frame
@@ -198,7 +198,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 					if (fvar0 != fvar1) { //run state
 						fvar0++;
 					} else {
-						setState (1); //end state
+						SetState (1); //end state
 					}
 					break;
 				case 1: //idling around
@@ -211,7 +211,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 							fvar0++; //walk the path
 							transform.Translate (new Vector3 (0, 0, walkSpeed[0] * Time.deltaTime));
 						} else {
-							setState (0);//end the path
+							SetState (0);//end the path
 						}
 
 						break;
@@ -236,11 +236,11 @@ public class scr_behaviorGoomba : MonoBehaviour {
 				case 3:
 					findTimer++;
 					if (findTimer >= 20)
-						setState (4);
+						SetState (4);
 					break;
 				case 4: //saw player 
 					if (anim.GetCurrentAnimatorStateInfo (0).normalizedTime < 1)
-						setState (5);
+						SetState (5);
 					break;
 				case 5: //ATTACK
     				// Calculate the y rotation
@@ -259,7 +259,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 					break;
 				case 7: //confused state after leaving capture
 					if (isAnim ("default"))
-						setState (0);
+						SetState (0);
 					break;
 				}
 			}

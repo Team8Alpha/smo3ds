@@ -118,13 +118,8 @@ public class scr_behaviorMoon : MonoBehaviour
 					transform.position = player.position;
 					transform.rotation = player.rotation;
 
-					MarioController.marioObject.gameObject.GetComponent<Animator>().Play("demoShineGet");
-					if (MarioController.marioObject.hasCaptured)
-						for (int i = 0; i <= 8; i++)
-						{
-							if (i != 2 && i != 5 && i != 7)
-								MarioController.marioObject.transform.GetChild(i).gameObject.SetActive(true);
-						}
+					MarioController.marioObject.SetAnim("demoShineGet");
+					MarioController.marioObject.SetVisible(true);
 
 					scr_manAudio._f.PlaySND(eSnd.JnMoonGet);
 
@@ -142,7 +137,7 @@ public class scr_behaviorMoon : MonoBehaviour
 				if (!scr_manAudio._f.isPlaying(false))
 				{
 					scr_main._f.SetFocus(true);
-					MarioController.marioObject.SetState(plState.Falling);
+					MarioController.marioObject.SetState(eStatePl.Falling);
 					globalCanvas.gameObject.SetActive(false);
 					MarioCam.marioCamera.confYOffset = 2;
 					MarioCam.marioCamera.confRotate = true;
@@ -150,12 +145,7 @@ public class scr_behaviorMoon : MonoBehaviour
 					MarioCam.marioCamera.confStickYmax = 1;
 					MarioCam.marioCamera.confSmoothTime = 0.5f;
 					MarioController.marioObject.GetComponent<Rigidbody>().useGravity = true;
-					if (MarioController.marioObject.hasCaptured)
-						for (int i = 0; i <= 8; i++)
-						{
-							if (i != 2 && i != 5 && i != 7)
-								MarioController.marioObject.transform.GetChild(i).gameObject.SetActive(false);
-						}
+					if(MarioController.marioObject.isHacking) MarioController.marioObject.SetVisible(false);
 					Destroy(gameObject);
 				}
 				break;

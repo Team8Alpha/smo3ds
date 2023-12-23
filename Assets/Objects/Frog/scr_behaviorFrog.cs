@@ -52,7 +52,7 @@ public class scr_behaviorFrog : MonoBehaviour {
 		gameObject.tag = "captureMe";
 		MarioController.marioObject.cappy.SetTransformOffset (1.15f, new Vector3(0, 0, -0.1f), new Vector3(0, -119.16f, 90));
 	}
-	public void setState(int num){
+	public void SetState(int num){
 		currentState = num;
 		switch (num) {
 		case 6:
@@ -76,7 +76,7 @@ public class scr_behaviorFrog : MonoBehaviour {
 			transform.rotation = MarioController.marioObject.transform.rotation;
 			break;
 		case 7:
-			if(isAnim("default")) setState(0);
+			if(isAnim("default")) SetState(0);
 			break;
 		}
 	}

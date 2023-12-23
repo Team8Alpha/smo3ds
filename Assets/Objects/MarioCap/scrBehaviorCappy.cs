@@ -1,13 +1,14 @@
 ﻿using System;
 using UnityEngine;
 
-public enum capState
+public enum eStateCap
 {
     Wait,                           // no movement, invisible.
     Throw,                          // flying forward
     FlyWait,                        // flying static.
     Return,                         // fly back to mario
     Hack,                           // captured, original calls it internally "hacking"
+    HackAfter,                      // uncapturing
     Jump                            // cap jump
 }
 public class scrBehaviorCappy : MonoBehaviour
@@ -17,7 +18,7 @@ public class scrBehaviorCappy : MonoBehaviour
     private MarioController mario;  // mario reference
     private AudioSource mAudio;     // audio component
     private Transform objBone = null;      // bone that is assigned to cap when hacked.
-    public static capState myState; // cap state
+    public static eStateCap myState; // cap state
     [HideInInspector]
     public int mySubState;          // cap states state
     private Transform myParent;     // saves parent, for mario switching.
@@ -51,7 +52,7 @@ public class scrBehaviorCappy : MonoBehaviour
         tMario = mario.transform;
         mario.cappy = this;
 
-        SetState(capState.Wait);
+        SetState(eStateCap.Wait);
         SetParent(mario.transform);
     }
 
@@ -61,32 +62,32 @@ public class scrBehaviorCappy : MonoBehaviour
         {
             switch (myState)
             {
-                case capState.Wait: // 5.5, 1
+                case eStateCap.Wait: // 5.5, 1
 
-                    if (mario.key_cap) SetState(capState.Throw);
+                    if (mario.key_cap) SetState(eStateCap.Throw);
 
                     break;
-                case capState.Throw:
+                case eStateCap.Throw:
                     switch (mySubState)
                     {
                         case 0:
                             float varAnimTime = GetAnimTime();
                             mario.rb.AddForce(0.6f * Vector3.up, ForceMode.Impulse);
-                            if (varAnimTime > 0.6f && varAnimTime < 1) SetState(capState.Throw, 1);
+                            if (varAnimTime > 0.6f && varAnimTime < 1) SetState(eStateCap.Throw, 1);
                             break;
                         case 1:
                             if (Vector3.Distance(posOrigin, transform.position) < 4 && charc.velocity.magnitude > 0f)
                                 OnMove(0, 0, 2);
                             else
-                                SetState(capState.FlyWait);
+                                SetState(eStateCap.FlyWait);
                             break;
                     }
                     break;
-                case capState.FlyWait:
+                case eStateCap.FlyWait:
                     if (numTimer < Application.targetFrameRate / 2) numTimer++;
-                    else if (!mario.key_cap) { numTimer = 0; SetState(capState.Return); }
+                    else if (!mario.key_cap) { numTimer = 0; SetState(eStateCap.Return); }
                     break;
-                case capState.Return:
+                case eStateCap.Return:
                     switch (mySubState)
                     {
                         case 0:
@@ -99,12 +100,12 @@ public class scrBehaviorCappy : MonoBehaviour
                             if (GetAnimTime() > 1)
                             {
                                 mario.SetCap(true);
-                                SetState(capState.Wait);
+                                SetState(eStateCap.Wait);
                             }
                             break;
                     }
                     break;
-                case capState.Hack:
+                case eStateCap.Hack:
                     break;
             }
         }
@@ -115,20 +116,21 @@ public class scrBehaviorCappy : MonoBehaviour
         charc.Move(transform.forward * new Vector3(x, y, z).magnitude);
     }
 
-    public void SetState(capState state, int subState = 0)
+    public void SetState(eStateCap state, int subState = 0)
     {
         myState = state;
         mySubState = subState;
         SetVisible(true);
         switch (myState)
         {
-            case capState.Wait:
+            case eStateCap.Wait:
                 SetRotate(false);
                 SetParent();
                 SetVisible(false);
+                SetCollision(false);
                 SetAnim("default");
                 break;
-            case capState.Throw:
+            case eStateCap.Throw:
                 switch (mySubState)
                 {
                     case 0:
@@ -156,13 +158,14 @@ public class scrBehaviorCappy : MonoBehaviour
                         break;
                 }
                 break;
-            case capState.FlyWait:
+            case eStateCap.FlyWait:
                 SetAnim("stay", 0.2f);
                 break;
-            case capState.Return:
+            case eStateCap.Return:
                 switch (mySubState)
                 {
                     case 0:
+                        SetParent(null, false);
                         SetAnim("default", 0.2f);
                         SetRotate(true);
                         break;
@@ -175,10 +178,19 @@ public class scrBehaviorCappy : MonoBehaviour
                         break;
                 }
                 break;
-            case capState.Hack:
+            case eStateCap.Hack:
                 SetRotate(false);
                 SetAnim("capture");
                 scr_manAudio._f.PlaySelfSND(ref mAudio, eSnd.CappyHacked, false, true);
+                break;
+            case eStateCap.HackAfter:
+                scr_main._f.capMountPoint = "";
+                var Mustache = hackedObj.transform.GetChild(1).GetChild(0);
+                if (Mustache.name == "Mustache" || Mustache.name == "Mustache__HairMT")
+                    Mustache.gameObject.SetActive(false); //if mustache, place it at index 0
+                isHacking = false;
+                SetCollision(false);
+                SetState(eStateCap.Return);
                 break;
         }
     }
@@ -231,16 +243,18 @@ public class scrBehaviorCappy : MonoBehaviour
         gameObject.GetComponent<AudioSource>().enabled = boolean;
         SetCollision(boolean);
     }
-    void SetCollision(bool boolean)
-    {
-        gameObject.GetComponents<Collider>()[1].enabled = boolean;
-        gameObject.GetComponents<Collider>()[0].enabled = boolean;
-    }
     public void SetTransformOffset(float scale, Vector3 pos, Vector3 rot)
     {
         transform.localScale = new Vector3(scale, scale, scale);
         if(pos!=null) transform.localPosition = pos;
         if(rot!=null) transform.localEulerAngles = rot;
+    }
+    public void SetCollision(bool boolean)
+    {
+        foreach(Collider obj in GetComponents<Collider>())
+        {
+            obj.enabled = boolean;
+        }
     }
     float GetAnimTime()
     {
@@ -276,7 +290,7 @@ public class scrBehaviorCappy : MonoBehaviour
         GameObject Mustache = hackedObj.transform.GetChild(1).GetChild(0).gameObject;
         if (Mustache.name == "Mustache" || Mustache.name == "Mustache__HairMT") Mustache.SetActive(true); //if mustache, place it at index 0
 
-        SetState(capState.Hack);
+        SetState(eStateCap.Hack);
 
         scr_main.DPrint("cap: mount at " + collis.gameObject.name + "/" + scr_main._f.capMountPoint);
         isHacking = true;

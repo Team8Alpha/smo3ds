@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public enum plState
+public enum eStatePl
 {
 	Ground,
 	Jumping,
@@ -16,7 +16,7 @@ public enum plState
 
 public class MarioController : MonoBehaviour
 {
-	[HideInInspector] public static plState myState;
+	[HideInInspector] public static eStatePl myState;
 	[HideInInspector] public int mySubState = 0;
 
 	public int maxJump = 6;
@@ -78,8 +78,10 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] private float speedJumpH; //used for falling direction
 	[HideInInspector] private Vector3 lastPosition;
 	[HideInInspector] float timeStandTrns = 0.5f;
+    [HideInInspector] bool[] meshPartsVisible = { true, true, false, true, false };
+												// cap, haLb, haLf,  haRb, haRf
 
-	[HideInInspector] CapsuleCollider capsColl1;
+    [HideInInspector] CapsuleCollider capsColl1;
 	[HideInInspector] CapsuleCollider capsColl2;
 	//jump force max,  jump height min,  jump height max
 
@@ -97,6 +99,8 @@ public class MarioController : MonoBehaviour
 		groundedPosition = transform.position.y;
 		lastPosition = transform.position;
 
+		resetVisibleParts();
+
 		marioObject = this;
 	}
 
@@ -107,7 +111,7 @@ public class MarioController : MonoBehaviour
 
 	void Start()
     {
-		SetState(plState.Ground);
+		SetState(eStatePl.Ground);
     }
 
 	void Update()
@@ -122,7 +126,7 @@ public class MarioController : MonoBehaviour
 			// Update Mario's animation and movement based on states
 			switch (myState)
 			{
-				case plState.Ground: // Standing still, wait
+				case eStatePl.Ground: // Standing still, wait
 
 					if (jumpAfterTimer > 0)
 					{
@@ -135,10 +139,10 @@ public class MarioController : MonoBehaviour
 						jumpAfterTimer++;
 					}
 					if (transform.position.y < groundedPosition - 3)
-						SetState(plState.Falling);
+						SetState(eStatePl.Falling);
 					break;
 
-				case plState.Jumping: // Jumping from land normal
+				case eStatePl.Jumping: // Jumping from land normal
 					float jumpedHeight = transform.position.y - lastGroundedPosition;
 					switch (mySubState)
 					{
@@ -157,7 +161,7 @@ public class MarioController : MonoBehaviour
 								hasJumped = true;
 							//if clipped up without even starting the jumpfall, he landed.
 							if (isGrounded && hasJumped)
-								SetState(plState.Landing);
+								SetState(eStatePl.Landing);
 							break;
 						case 1:
 							rb.AddForce(Vector3.down * MarioTable.dataJump[jumpType - 1][0] * 5 * jumpedHeight, ForceMode.Acceleration);
@@ -167,11 +171,11 @@ public class MarioController : MonoBehaviour
 								jumpAfterTimer = 0;
 							}
 							if (rb.velocity.y < 0)
-								SetState(plState.Falling, 1); //substate 1, jumpfall
+								SetState(eStatePl.Falling, 1); //substate 1, jumpfall
 							break;
 					}
 					break;
-				case plState.Falling: //FALLING CAM
+				case eStatePl.Falling: //FALLING CAM
 					switch (mySubState)
 					{
 						case 0: //camera follow
@@ -193,44 +197,43 @@ public class MarioController : MonoBehaviour
 
 					if (isGrounded)
 					{
-						SetState(plState.Landing);
+						SetState(eStatePl.Landing);
 						MarioCam.marioCamera.ResetValue();
 					}
 					break;
 
-				case plState.Landing: //land
-					SetState(plState.Ground);
+				case eStatePl.Landing: //land
+					SetState(eStatePl.Ground);
 					break;
 
-				case plState.CaptureFly: //flying to capture enemy
+				case eStatePl.CaptureFly: //flying to capture enemy
 					// Calculate the current percentage of the journey completed
 					float distanceCovered = (Time.time - hackFlyStartTime) * hackFlyLength / 1;
 					float journeyFraction = distanceCovered / hackFlyLength;
 
 					// Calculate the current position along the Bezier curve
 					Vector3 posHackObj = cappy.hackedObj.transform.position;
-					Vector3 targetPosition = Bezier (transform.position, posHackObj + Vector3.up * 3 + (transform.position - posHackObj).normalized * 1, posHackObj, journeyFraction);
+					Vector3 targetPosition = Bezier (transform.position, posHackObj + Vector3.up * 2 + (transform.position - posHackObj).normalized * 1, posHackObj, journeyFraction);
 
 					// Calculate the additional movement vector based on the target position
-					moveAdditional = targetPosition - transform.position;
+					transform.Translate(targetPosition - transform.position);
 
 					// Check if the movement is completed
-					if (Time.time - hackFlyStartTime >= 1)
+					if (Vector3.Distance(transform.position, posHackObj) < 1f)
 					{
 						// Ensure the object ends up at the final position
 						transform.position = posHackObj;
-						SetState(plState.Ground);
+						SetState(eStatePl.Ground);
 						if (!isBlockBlocked)
 							isBlocked = false;
 						isCapturing = false;
 						hasCaptured = true;
-						cappy.hackedObj.SendMessage ("setState", 6);
+						cappy.hackedObj.SendMessage ("SetState", 6);
 						SetVisible(false);
-						rb.useGravity = true;
 						moveAdditional = Vector3.zero;
 					}
 					break;
-				case plState.Squat:
+				case eStatePl.Squat:
 					if (moveAdditional != Vector3.zero)
 					{
 						moveAdditional *= 0.8f;
@@ -251,8 +254,9 @@ public class MarioController : MonoBehaviour
 		wasMoving = isMoving;
 
 		float yVel = rb.velocity.y; //store old yvel
-		Vector3 movementVector = transform.rotation * Vector3.forward * currentMoveSpeed + moveAdditional;// * Time.deltaTime; //mashed together movement math
+		Vector3 movementVector = transform.rotation * Vector3.forward * currentMoveSpeed;// * Time.deltaTime; //mashed together movement math
 		movementVector.y = isFreezeFall ? 0 : yVel; //reassign old yvel
+		movementVector += moveAdditional;
 
 		// Move the character using the Rigidbody
 		rb.velocity = movementVector;
@@ -298,14 +302,14 @@ public class MarioController : MonoBehaviour
 			isMoving = h != 0 || v != 0;
 			switch (myState)
 			{
-				case plState.Ground:
+				case eStatePl.Ground:
 					if (key_jump || isJumpingSoon)
 					{
 						if (!lockJump)
 						{
 							lockJump = true;
 							isJumpingSoon = false;
-							SetState(plState.Jumping);
+							SetState(eStatePl.Jumping);
 						}
 						else if (!key_jump)
 							lockJump = false;
@@ -315,32 +319,32 @@ public class MarioController : MonoBehaviour
 							lockJump = false;
 
 					if (key_backR)
-						SetState(plState.Squat);
+						SetState(eStatePl.Squat);
 					break;
 
-				case plState.Jumping:
+				case eStatePl.Jumping:
 					if (!key_jump)
 						lockJump = false;
 					break;
 
-				case plState.Squat:
+				case eStatePl.Squat:
 					if (!key_backR)
 					{
 						moveAdditional = Vector3.zero;
-						SetState(plState.Ground);
+						SetState(eStatePl.Ground);
 					}
 					break;
 			}
 		}
 	}
 
-	public void SetState(plState state, int subState = 0)
+	public void SetState(eStatePl state, int subState = 0)
 	{
 		myState = state;
 		mySubState = subState;
 		switch (state)
 		{
-			case plState.Ground:
+			case eStatePl.Ground:
 
 				//reset some data
 				SetCollider(1.6f);
@@ -352,7 +356,7 @@ public class MarioController : MonoBehaviour
 				isInstTurn = false;
 				break;
 
-			case plState.Jumping:
+			case eStatePl.Jumping:
 				jumpType++;
 				jumpAfterTimer = 1;
 				float timeTrnsJump = 0.05f;
@@ -383,7 +387,7 @@ public class MarioController : MonoBehaviour
 				rb.AddForce(MarioTable.dataJump[jumpType - 1][0] * Vector3.up, ForceMode.Impulse);
 				break;
 
-			case plState.Falling:
+			case eStatePl.Falling:
 				switch (subState)
 				{
 					case 0://falling, below lastgroundedposition
@@ -402,19 +406,18 @@ public class MarioController : MonoBehaviour
 
 				break;
 
-			case plState.Landing: //TODO: FALLING-LANDING HEIGHT STUFF
+			case eStatePl.Landing: //TODO: FALLING-LANDING HEIGHT STUFF
 				//SetAnim(anim_land, 0.02f); // WIP LANDING HEIGHTS
 
 				hasJumped = false;
 				break;
 
-			case plState.CaptureFly:
+			case eStatePl.CaptureFly:
 				hackFlyStartTime = Time.time;
 				SetAnim("captureFly");
-				rb.useGravity = false;
 				break;
 
-			case plState.Squat:
+			case eStatePl.Squat:
 				SetCollider(0.94f);
 				if (isMoving)
 					SetAnim("squatStart_w", 0.1f);
@@ -438,7 +441,7 @@ public class MarioController : MonoBehaviour
 		moveAdditional = Vector3.zero;
 		if (!isGrounded)
 		{
-			if (!isMovingAir && myState == plState.Jumping)
+			if (!isMovingAir && myState == eStatePl.Jumping)
 			{
 				if (!isMoving) speedJumpH = 0;
 				else
@@ -509,7 +512,7 @@ public class MarioController : MonoBehaviour
 				//if(animLast != "dashBrake" && animLast != anim_land) SetAnim ("dashBrake", 0.3f);
 				//} else {
 				if (currentMoveSpeed > 0) currentMoveSpeed = 0;
-				//if (animLast != anim_stand && animLast != anim_land && myState == plState.Ground) {
+				//if (animLast != anim_stand && animLast != anim_land && myState == eStatePl.Ground) {
 				if (animLast != anim_stand)
 					if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
 					{
@@ -535,8 +538,8 @@ public class MarioController : MonoBehaviour
 					if (key_backR || plsUnhack)
 					{
 						SetCap(false);
-						SetState(plState.Ground);
-						cappy.hackedObj.SendMessage ("setState", 7);
+						SetState(eStatePl.Ground);
+						cappy.hackedObj.SendMessage ("SetState", 7);
 						if (cappy.hackedObj.GetComponent<Collider> () != null)
 						cappy.hackedObj.GetComponent<Collider> ().enabled = true;
 						transform.Translate(0, 0, -2);
@@ -545,10 +548,7 @@ public class MarioController : MonoBehaviour
 						isBlocked = false;
 						isBlockBlocked = false;
 						isHacking = false;
-						scr_main._f.capMountPoint = "";
-						var Mustache = cappy.hackedObj.transform.GetChild (0);
-						if (Mustache.name == "Mustache" || Mustache.name == "Mustache__HairMT")
-						Mustache.gameObject.SetActive (false); //if mustache, place it at index 0
+						cappy.SetState(eStateCap.HackAfter);
 					}
 				}
 				else
@@ -557,7 +557,7 @@ public class MarioController : MonoBehaviour
 					{
 						isCapturing = true;
 						isBlocked = true;
-						SetState(plState.CaptureFly);
+						SetState(eStatePl.CaptureFly);
 					}
 				}
 			}
@@ -566,7 +566,7 @@ public class MarioController : MonoBehaviour
 				if (hasCaptured == true)
 				{
 					hasCaptured = false;
-					cappy.SetState (capState.Return);
+					cappy.SetState (eStateCap.Return);
 					SetVisible(true);
 					SetCap(false);
 				}
@@ -621,7 +621,7 @@ public class MarioController : MonoBehaviour
 		{
 			isMovingAir = false;
 			isTurning = false;
-			SetState(plState.Landing);
+			SetState(eStatePl.Landing);
 		}
 	}
 	void OnSensorBottomStay(Collider col)
@@ -697,12 +697,39 @@ public class MarioController : MonoBehaviour
 	}
 	public void SetHand(int side, int type, bool state) // 0 = ball, 1 = flat
 	{
-		transform.GetChild(1).GetChild(5 + (side * 2 /* MAX NUM OF HAND TYPES */) + type).gameObject.SetActive(state);
+		int iPart = (side * 2 /* MAX NUM OF HAND TYPES */) + type;
+		transform.GetChild(1).GetChild(5 + iPart).gameObject.SetActive(state);
+		meshPartsVisible[iPart + 1] = state;
 	}
 	public void SetCap(bool boolean)
 	{
-		transform.GetChild(1).GetChild(0).gameObject.SetActive(boolean);
+		transform.GetChild(1).GetChild(0).gameObject.SetActive(boolean); meshPartsVisible[0] = boolean;
 		transform.GetChild(1).GetChild(1).gameObject.SetActive(!boolean);
+	}
+	public void SetVisible(bool boolean)
+	{
+		if (boolean)
+		{
+			transform.GetChild(1).GetChild(2).gameObject.SetActive(true);
+			transform.GetChild(1).GetChild(4).gameObject.SetActive(true);
+			transform.GetChild(1).GetChild(9).gameObject.SetActive(true);
+			resetVisibleParts();
+		}
+		else
+		{
+			for (int i = 0; i != transform.GetChild(1).childCount; i++)
+			{
+				transform.GetChild(1).GetChild(i).gameObject.SetActive(false);
+			}
+		}
+	}
+	void resetVisibleParts()
+	{
+		SetCap(meshPartsVisible[0]);
+		SetHand(0, 0, meshPartsVisible[1]);
+		SetHand(0, 1, meshPartsVisible[2]);
+		SetHand(1, 0, meshPartsVisible[3]);
+		SetHand(1, 1, meshPartsVisible[4]);
 	}
 	public void SetAnimMove(string stand, string run, string runStart)
 	{
@@ -717,13 +744,6 @@ public class MarioController : MonoBehaviour
 		capsColl2.radius = radius;
 		capsColl2.height = height;
 	}
-	public void SetVisible(bool boolean)
-    {
-		for (int i = 0; i < transform.GetChild(1).childCount; i++)
-        {
-			transform.GetChild(1).GetChild(i).gameObject.SetActive(boolean);
-        }
-    }
 
 	//CHECK
 	public bool isAnim(string anmName)
