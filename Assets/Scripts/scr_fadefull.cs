@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class scr_fadefull : MonoBehaviour {
 
-	public static scr_fadefull _f;
+	public static scr_fadefull s;
 	private bool fadeIn = true;
 	private int conf = 0;
 	private float fadeSpeed = 0.01f;
@@ -49,8 +49,8 @@ public class scr_fadefull : MonoBehaviour {
 
 	}
 	void Awake () {
-		if (scr_fadefull._f == null)
-			scr_fadefull._f = this;
+		if (scr_fadefull.s == null)
+			scr_fadefull.s = this;
 		else
 			Destroy (gameObject);
 
@@ -112,7 +112,7 @@ public class scr_fadefull : MonoBehaviour {
 			}
 		} else {
 			if (isFocusOnExit)
-				scr_main._f.SetFocus(true);
+				scr_main.s.SetFocus(true);
 			if (isReverseOnExit) {
 				Run (!fadeIn, conf, fadeSpeed, isFocusOnExit, false);
 			} else if (isKillOnExit)

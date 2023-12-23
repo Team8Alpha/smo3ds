@@ -19,7 +19,7 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] public static eStatePl myState;
 	[HideInInspector] public int mySubState = 0;
 
-	public int maxJump = 6;
+	public byte maxJump = 6;
 	public float jumpForce = 2.5f;
 	public float moveSpeed = 8.06f;
 
@@ -36,9 +36,9 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] public Animator anim;
 	[HideInInspector] public Rigidbody rb;
 	
-	[HideInInspector] bool key_jump 				= false;
-	[HideInInspector] bool key_backL 				= false;
-	[HideInInspector] bool key_backR 				= false;
+	[HideInInspector] public bool key_jump 			= false;
+	[HideInInspector] public bool key_backL 		= false;
+	[HideInInspector] public bool key_backR			= false;
 	[HideInInspector] public bool key_cap 			= false;
     
 	private float hackFlyLength 					= 0.5f;
@@ -57,7 +57,7 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] public string anim_land		= "landShort";
 
 	[HideInInspector] public scrBehaviorCappy		cappy;
-	[HideInInspector] public static MarioController marioObject;
+	[HideInInspector] public static MarioController s;
 
 	[HideInInspector] public Vector3 moveAdditional = Vector3.zero;
 	[HideInInspector] public float groundedPosition = 0; // latest floor position
@@ -71,7 +71,7 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] public bool plsUnhack 		= false;
 	[HideInInspector] public string animLast 		= "idle";
 	[HideInInspector] public int jumpType			= 0;
-	[HideInInspector] int jumpAfterTimer 			= 0; //timer till it refuses to execute double jump
+	[HideInInspector] byte jumpAfterTimer 			= 0; //timer till it refuses to execute double jump
 	[HideInInspector] bool hasTouchedCeiling 		= false;
 	[HideInInspector] float lastGroundedPosition 	= 0;
 	[HideInInspector] private bool isMovingAir 		= false; //if falling direction is active
@@ -87,7 +87,7 @@ public class MarioController : MonoBehaviour
 
 	void Awake()
 	{
-		scr_main._f.GetComponent<AudioListener>().enabled = false;
+		scr_main.s.GetComponent<AudioListener>().enabled = false;
 		GetComponent<AudioListener>().enabled = true;
 
 		// Store references to Animator and Rigidbody components
@@ -101,12 +101,12 @@ public class MarioController : MonoBehaviour
 
 		resetVisibleParts();
 
-		marioObject = this;
+		s = this;
 	}
 
 	void OnDestroy()
     {
-		if(scr_main._f != null) scr_main._f.GetComponent<AudioListener>().enabled = true;
+		if(scr_main.s != null) scr_main.s.GetComponent<AudioListener>().enabled = true;
 	}
 
 	void Start()
@@ -117,11 +117,10 @@ public class MarioController : MonoBehaviour
 	void Update()
 	{
 
-		if (scr_main._f.isFocused)
+		if (scr_main.s.isFocused)
 		{
 			HandleInput();
 			HandleMove();
-			HandleHack();
 
 			// Update Mario's animation and movement based on states
 			switch (myState)
@@ -184,7 +183,7 @@ public class MarioController : MonoBehaviour
 							{
 								if (transform.position.y > lastGroundedPosition - 5)
 								{
-									MarioCam.marioCamera.confSmoothTime = 10f;
+									MarioCam.s.confSmoothTime = 10f;
 
 								}
 							}
@@ -198,7 +197,7 @@ public class MarioController : MonoBehaviour
 					if (isGrounded)
 					{
 						SetState(eStatePl.Landing);
-						MarioCam.marioCamera.ResetValue();
+						MarioCam.s.ResetValue();
 					}
 					break;
 
@@ -221,16 +220,9 @@ public class MarioController : MonoBehaviour
 					// Check if the movement is completed
 					if (Vector3.Distance(transform.position, posHackObj) < 1f)
 					{
-						// Ensure the object ends up at the final position
 						transform.position = posHackObj;
-						SetState(eStatePl.Ground);
-						if (!isBlockBlocked)
-							isBlocked = false;
-						isCapturing = false;
-						hasCaptured = true;
-						cappy.hackedObj.SendMessage ("SetState", 6);
-						SetVisible(false);
 						moveAdditional = Vector3.zero;
+						MarioEvent.s.SetEvent(eEventPl.hack, 1);
 					}
 					break;
 				case eStatePl.Squat:
@@ -350,7 +342,7 @@ public class MarioController : MonoBehaviour
 				SetCollider(1.6f);
 				ResetSpeed();
 				ResetAnim();
-				MarioCam.marioCamera.ResetValue();
+				MarioCam.s.ResetValue();
 
 				currentTurnSpeed = MarioTable.speedTurnWalk;
 				isInstTurn = false;
@@ -392,9 +384,9 @@ public class MarioController : MonoBehaviour
 				{
 					case 0://falling, below lastgroundedposition
 						lastGroundedPosition = groundedPosition;
-						MarioCam.marioCamera.confSmoothTime = 0.2f;
-						MarioCam.marioCamera.confYOffset = 1;
-						MarioCam.marioCamera.confCamDistance = MarioCam.marioCamera.defCamDistance - 1;
+						MarioCam.s.confSmoothTime = 0.2f;
+						MarioCam.s.confYOffset = 1;
+						MarioCam.s.confCamDistance = MarioCam.s.defCamDistance - 1;
 						SetAnim("falling", 0.1f);
 						break;
 					case 1://falling after jump, still above lastgroundedposition
@@ -470,7 +462,7 @@ public class MarioController : MonoBehaviour
 				if (/*transform.rotation.y < 179 && transform.rotation.y > -179 && */!isTurning)
 				{
 					if(isMoving) currentRotation = Mathf.Atan2(h, v) * Mathf.Rad2Deg
-						+ Mathf.Atan2(MarioCam.marioCamera.transform.forward.x, MarioCam.marioCamera.transform.forward.z) * Mathf.Rad2Deg;
+						+ Mathf.Atan2(MarioCam.s.transform.forward.x, MarioCam.s.transform.forward.z) * Mathf.Rad2Deg;
 				}
 
 				if (isInstTurn)
@@ -519,57 +511,6 @@ public class MarioController : MonoBehaviour
 						SetAnim(anim_stand, timeStandTrns);
 					}
 				//}
-			}
-		}
-	}
-
-	void HandleHack()
-	{
-		if (cappy != null)
-		{
-			if (plsUnhack)
-			{
-				plsUnhack = false;
-			}
-			if (isHacking)
-			{
-				if (hasCaptured)
-				{
-					if (key_backR || plsUnhack)
-					{
-						SetCap(false);
-						SetState(eStatePl.Ground);
-						cappy.hackedObj.SendMessage ("SetState", 7);
-						if (cappy.hackedObj.GetComponent<Collider> () != null)
-						cappy.hackedObj.GetComponent<Collider> ().enabled = true;
-						transform.Translate(0, 0, -2);
-						ResetSpeed();
-						plsUnhack = false;
-						isBlocked = false;
-						isBlockBlocked = false;
-						isHacking = false;
-						cappy.SetState(eStateCap.HackAfter);
-					}
-				}
-				else
-				{
-					if (!isCapturing)
-					{
-						isCapturing = true;
-						isBlocked = true;
-						SetState(eStatePl.CaptureFly);
-					}
-				}
-			}
-			else
-			{
-				if (hasCaptured == true)
-				{
-					hasCaptured = false;
-					cappy.SetState (eStateCap.Return);
-					SetVisible(true);
-					SetCap(false);
-				}
 			}
 		}
 	}
@@ -715,13 +656,8 @@ public class MarioController : MonoBehaviour
 			transform.GetChild(1).GetChild(9).gameObject.SetActive(true);
 			resetVisibleParts();
 		}
-		else
-		{
-			for (int i = 0; i != transform.GetChild(1).childCount; i++)
-			{
-				transform.GetChild(1).GetChild(i).gameObject.SetActive(false);
-			}
-		}
+		else for (int i = 0; i != transform.GetChild(1).childCount; i++)
+			transform.GetChild(1).GetChild(i).gameObject.SetActive(false);
 	}
 	void resetVisibleParts()
 	{

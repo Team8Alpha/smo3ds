@@ -69,7 +69,7 @@ public class scr_behaviorMoon : MonoBehaviour
 		anim = GetComponent<Animator>();
 		mat_color = transform.GetChild(1).GetChild(0).GetComponent<SkinnedMeshRenderer>();
 		setColor();
-		globalCanvas = scr_main._f.transform.GetChild(1).transform.GetChild(1);
+		globalCanvas = scr_main.s.transform.GetChild(1).transform.GetChild(1);
 	}
 	void OnTouch(int numType)
 	{
@@ -80,11 +80,11 @@ public class scr_behaviorMoon : MonoBehaviour
 				break;
 			case 2://mar
 				currentState = 1;
-				MarioController.marioObject.groundedPosition = MarioController.marioObject.transform.position.y;
-				tmpMpos = MarioController.marioObject.transform.position;
+				MarioController.s.groundedPosition = MarioController.s.transform.position.y;
+				tmpMpos = MarioController.s.transform.position;
 				anim.Play("getStart");
 				GetComponent<Collider>().enabled = false; //or else it literally disables marios collision
-				MarioController.marioObject.rb.velocity = new Vector3(0, 0, 0);
+				MarioController.s.rb.velocity = new Vector3(0, 0, 0);
 				break;
 		}
 	}
@@ -104,27 +104,27 @@ public class scr_behaviorMoon : MonoBehaviour
 			case 1://collected
 				if (!bvar0)
 				{
-					scr_main._f.SetFocus(false);
+					scr_main.s.SetFocus(false);
 					anim.Play("get");
-					Transform player = MarioController.marioObject.transform;
+					Transform player = MarioController.s.transform;
 
-					MarioCam.marioCamera.confYOffset = 3 + player.position.y - MarioController.marioObject.groundedPosition;
-					MarioCam.marioCamera.confRotate = false;
-					MarioCam.marioCamera.confStickXmax = 0;
-					MarioCam.marioCamera.confStickYmax = 0;
-					MarioCam.marioCamera.confSmoothTime = 0.3f;
-					player.rotation = Quaternion.Euler(player.eulerAngles.x, MarioCam.marioCamera.transform.eulerAngles.y + 180, player.eulerAngles.z);
+					MarioCam.s.confYOffset = 3 + player.position.y - MarioController.s.groundedPosition;
+					MarioCam.s.confRotate = false;
+					MarioCam.s.confStickXmax = 0;
+					MarioCam.s.confStickYmax = 0;
+					MarioCam.s.confSmoothTime = 0.3f;
+					player.rotation = Quaternion.Euler(player.eulerAngles.x, MarioCam.s.transform.eulerAngles.y + 180, player.eulerAngles.z);
 					player.position = new Vector3(player.position.x, transform.position.y, player.position.z);
 					transform.position = player.position;
 					transform.rotation = player.rotation;
 
-					MarioController.marioObject.SetAnim("demoShineGet");
-					MarioController.marioObject.SetVisible(true);
+					MarioController.s.SetAnim("demoShineGet");
+					MarioController.s.SetVisible(true);
 
-					scr_manAudio._f.PlaySND(eSnd.JnMoonGet);
+					scr_manAudio.s.PlaySND(eSnd.JnMoonGet);
 
 					string t_date = System.DateTime.UtcNow.ToShortDateString(); //even works on 3ds
-					scr_main._f.moonsCount++;
+					scr_main.s.moonsCount++;
 					globalCanvas.gameObject.SetActive(true);
 					globalCanvas.GetChild(1).gameObject.GetComponent<Text>().text = moonName;
 					globalCanvas.GetChild(2).gameObject.GetComponent<Text>().text = t_date;
@@ -134,18 +134,18 @@ public class scr_behaviorMoon : MonoBehaviour
 				}
 				break;
 			case 2://finishing
-				if (!scr_manAudio._f.isPlaying(false))
+				if (!scr_manAudio.s.isPlaying(false))
 				{
-					scr_main._f.SetFocus(true);
-					MarioController.marioObject.SetState(eStatePl.Falling);
+					scr_main.s.SetFocus(true);
+					MarioController.s.SetState(eStatePl.Falling);
 					globalCanvas.gameObject.SetActive(false);
-					MarioCam.marioCamera.confYOffset = 2;
-					MarioCam.marioCamera.confRotate = true;
-					MarioCam.marioCamera.confStickXmax = 1;
-					MarioCam.marioCamera.confStickYmax = 1;
-					MarioCam.marioCamera.confSmoothTime = 0.5f;
-					MarioController.marioObject.GetComponent<Rigidbody>().useGravity = true;
-					if(MarioController.marioObject.isHacking) MarioController.marioObject.SetVisible(false);
+					MarioCam.s.confYOffset = 2;
+					MarioCam.s.confRotate = true;
+					MarioCam.s.confStickXmax = 1;
+					MarioCam.s.confStickYmax = 1;
+					MarioCam.s.confSmoothTime = 0.5f;
+					MarioController.s.GetComponent<Rigidbody>().useGravity = true;
+					if(MarioController.s.isHacking) MarioController.s.SetVisible(false);
 					Destroy(gameObject);
 				}
 				break;

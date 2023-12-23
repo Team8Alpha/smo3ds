@@ -43,11 +43,11 @@ public class MarioCam : MonoBehaviour {
 	[HideInInspector] public float defCamDistance 		= 5f; // The distance between the camera and the target
 	[HideInInspector] public float defYOffset 			= 3;
 
-	public static MarioCam marioCamera;
+	public static MarioCam s;
 
 	void Awake() {
 		target = transform; // Set the camera parent to the script's transform
-		player = MarioController.marioObject.gameObject;
+		player = MarioController.s.gameObject;
 		actualCamera = target.GetChild(0); // Assuming the camera is the first child of target
 		cursorX = 0.0f; cursorY = 0.0f;
 		Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the screen
@@ -59,17 +59,17 @@ public class MarioCam : MonoBehaviour {
 		defYOffset = confYOffset;
 
 		transform.localRotation = Quaternion.Euler (transform.localEulerAngles.y, 0, transform.localEulerAngles.z);
-		targetedY = MarioController.marioObject.transform.position.y;
+		targetedY = MarioController.s.transform.position.y;
 
-		marioCamera = this;
+		s = this;
 	}
 
 	void Update() {
 		
 		if (!isLocked) {
-			if (!MarioController.marioObject.isGrounded && MarioController.marioObject.transform.position.y - transform.position.y > 2.4f)
+			if (!MarioController.s.isGrounded && MarioController.s.transform.position.y - transform.position.y > 2.4f)
 			{ //JUMPING HIGH CAM
-				MarioController.marioObject.groundedPosition = transform.position.y;
+				MarioController.s.groundedPosition = transform.position.y;
 				setCameraVal(0.14f, 4);
 			}
 			float cursorXtemp=0;
@@ -101,7 +101,7 @@ public class MarioCam : MonoBehaviour {
 			cursorY = Mathf.Clamp (cursorY, -180, 180); // Clamp the Y axis to prevent camera flipping
 
 			cameraControl = new Vector2 (cursorY / 2.2f, cursorX);
-			if (confRotate && MarioController.marioObject.isMoving) {
+			if (confRotate && MarioController.s.isMoving) {
 				float targetCameraRotation = player.transform.eulerAngles.y - target.eulerAngles.y;
 
 				if (targetCameraRotation > 180)
@@ -133,13 +133,13 @@ public class MarioCam : MonoBehaviour {
 				actualCamera.LookAt (target.transform); // Look at the camera target
 			}
 			if (confSmoothY) {
-				targetedY = Mathf.SmoothStep (targetedY, MarioController.marioObject.groundedPosition + confYOffset, confSmoothTime);
+				targetedY = Mathf.SmoothStep (targetedY, MarioController.s.groundedPosition + confYOffset, confSmoothTime);
 			} else if (confSmooth) {
 				target.localRotation = Quaternion.Slerp (target.localRotation, targetRot, 1 - Time.unscaledTime * confSmoothTime);
 				target.position = Vector3.Lerp (target.position, targetPos, Time.unscaledTime * confSmoothTime);
 				actualCamera.localRotation = Quaternion.Euler (0, 0, 0);
 			} else {
-				targetedY = MarioController.marioObject.groundedPosition + confYOffset;
+				targetedY = MarioController.s.groundedPosition + confYOffset;
 			}
 			targetCamDistance = Mathf.SmoothDamp (targetCamDistance, confCamDistance, ref velocity.y, confSmoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
 		}

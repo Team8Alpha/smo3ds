@@ -19,8 +19,8 @@ public class scr_behaviorCheckpoint : MonoBehaviour {
 		{
 			anim.Play("get");
 			transform.GetChild(1).GetChild(1).gameObject.GetComponent<Renderer>().material = mat_after;
-			scr_main._f.lastCheckpoint = numSpawnPoint;
-			scr_manageData._f.Save();
+			scr_main.s.lastCheckpoint = numSpawnPoint;
+			scr_manageData.s.Save();
 			wasActivated = true;
 
 			if (type == 1)
@@ -28,7 +28,7 @@ public class scr_behaviorCheckpoint : MonoBehaviour {
 
 			} else
 			{
-				//MarioController.marioObject.setAnim (" ");
+				//MarioController.s.setAnim (" ");
 			}
 		}
 	}

@@ -15,22 +15,22 @@ public class scr_menuTestAudio : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-			if (i == 0) i = scr_manAudio._f.listSound.Length;
+			if (i == 0) i = scr_manAudio.s.listSound.Length;
             i--;
 			UpdateText();
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
 		{
-			if (i == scr_manAudio._f.listSound.Length) i = 0;
+			if (i == scr_manAudio.s.listSound.Length) i = 0;
 			i++;
 			UpdateText();
 		}
 		if (Input.GetKeyDown(KeyCode.Return) || UnityEngine.N3DS.GamePad.GetButtonTrigger(N3dsButton.A))
-			scr_manAudio._f.PlaySND((eSnd)i);
+			scr_manAudio.s.PlaySND((eSnd)i);
 	}
 	void UpdateText()
     {
-		text.text = scr_manAudio._f.listSound[i].name;
+		text.text = scr_manAudio.s.listSound[i].name;
 
 	}
 }

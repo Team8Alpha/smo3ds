@@ -22,7 +22,7 @@ public class scr_spn_moon : MonoBehaviour {
 	public MoonColor color = MoonColor.yellow;
 	// Use this for initialization
 	void Update () {
-		GameObject obj = scr_summon.f_summon.s_object(6, transform.position, transform.eulerAngles).gameObject;
+		GameObject obj = scr_summon.s.s_object(6, transform.position, transform.eulerAngles).gameObject;
 		scr_behaviorMoon scr = obj.GetComponent<scr_behaviorMoon>();
 		scr.moonName=moonName;
 		scr.color = (int) color;

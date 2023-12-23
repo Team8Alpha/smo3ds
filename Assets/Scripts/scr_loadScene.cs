@@ -5,14 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class scr_loadScene : MonoBehaviour {
 	
-	[HideInInspector] public static scr_loadScene _f;
+	[HideInInspector] public static scr_loadScene s;
 	[HideInInspector] public string nextScene = "scn_menuTitle";
 	[HideInInspector] public bool isDone = false;
 	AsyncOperation loadOP;
 
     //List<GameObject> rootObjects = new List<GameObject>();
 
-    void Start(){ _f = this; }
+    void Start(){ s = this; }
 	public void StartScene(string sceneName, int transition = 0){
 		isDone = false;
 		string currentscn = SceneManager.GetActiveScene ().name;
@@ -20,9 +20,9 @@ public class scr_loadScene : MonoBehaviour {
 		//Scene scene = SceneManager.GetActiveScene();
 
 		GetComponent<AudioListener>().enabled = true;
-		scr_main._f.hasLevelLoaded = false;
+		scr_main.s.hasLevelLoaded = false;
 		nextScene = sceneName;
-		scr_main._f.dbg_enemyCount = 0;
+		scr_main.s.dbg_enemyCount = 0;
 
         scr_main.DPrint ("nSCN: " + nextScene);
 		switch (transition) {
@@ -30,13 +30,13 @@ public class scr_loadScene : MonoBehaviour {
 			SceneManager.LoadScene (sceneName);
 			break;
 		case 1: //flying ship line
-			scr_main._f.SetFocus(false);
+			scr_main.s.SetFocus(false);
 			SceneManager.LoadScene ("scn_loadShip");
 			nextScene = sceneName;
 				//wip
 			break;
 		case 2://cap fly transition
-			scr_main._f.transform.GetChild (1).GetChild (1).gameObject.SetActive (true);
+			scr_main.s.transform.GetChild (1).GetChild (1).gameObject.SetActive (true);
             break;
 		case 3: //async
             StartCoroutine (loadAsync ());

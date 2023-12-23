@@ -6,10 +6,10 @@ using UnityEngine.SceneManagement;
 public class scr_summon : MonoBehaviour {
 //this script, will have different functions to summon entities. the player script gets its own function tho.
 
-	public static scr_summon f_summon;
+	public static scr_summon s;
 	
 	public GameObject s_player(Vector3 pos, Vector3 rot){
-		if (MarioController.marioObject == null)
+		if (MarioController.s == null)
         {
 			return GameObject.Instantiate(Resources.Load<GameObject>("Objects/objMario"), pos, Quaternion.Euler(rot));
         }
@@ -73,7 +73,7 @@ public class scr_summon : MonoBehaviour {
 	// Use this for initialization
 	[RuntimeInitializeOnLoadMethod]
 	void Awake () {
-		f_summon = this;
+		s = this;
 		this.enabled = false;
 	}
 }

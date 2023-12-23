@@ -14,12 +14,12 @@ public class scr_behaviorCapSwitch : MonoBehaviour{
 	}
 
 	public void OnCapTrigger(){
-		scr_main._f.capMountPoint = capMount;
+		scr_main.s.capMountPoint = capMount;
 	}
 	public void OnCapHacked(){//CAP!
-		//MarioController.marioObject.cappy.headHeight = 0f;
-		//MarioController.marioObject.cappy.hackScale = 2f;
-		//MarioController.marioObject.cappy.hackRot = new Vector3 (0, 0, 90);
+		//MarioController.s.cappy.headHeight = 0f;
+		//MarioController.s.cappy.hackScale = 2f;
+		//MarioController.s.cappy.hackRot = new Vector3 (0, 0, 90);
 		if(isForward)
 			anim.Play ("hitFront");
 		else
@@ -27,6 +27,6 @@ public class scr_behaviorCapSwitch : MonoBehaviour{
 		this.enabled = true;
 	}
 	void Update(){
-		//CAP! if(anim.GetCurrentAnimatorStateInfo (0).IsName("hitBack2") || anim.GetCurrentAnimatorStateInfo (0).IsName("hitFront2")) MarioController.marioObject.cappy.SetState (2);
+		//CAP! if(anim.GetCurrentAnimatorStateInfo (0).IsName("hitBack2") || anim.GetCurrentAnimatorStateInfo (0).IsName("hitFront2")) MarioController.s.cappy.SetState (2);
 	}
 }

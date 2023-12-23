@@ -13,14 +13,14 @@ public class scr_areaChanger : MonoBehaviour {
 	}
 	void OnTouch(int num){
 		if (num == 2) {
-			scr_main._f.nextSpawn = nextSpawn;
-			scr_main._f.SetFocus(false);
-			scr_loadScene._f.StartScene (nextArea, transitionType);
-			scr_main._f.transform.GetChild (1).GetChild (1).gameObject.SetActive (true); //cuz it was broken, wanted to sleep.
+			scr_main.s.nextSpawn = nextSpawn;
+			scr_main.s.SetFocus(false);
+			scr_loadScene.s.StartScene (nextArea, transitionType);
+			scr_main.s.transform.GetChild (1).GetChild (1).gameObject.SetActive (true); //cuz it was broken, wanted to sleep.
 			//PlayerWalkDoor ();
 		}
 	}
 	/*public void PlayerWalkDoor() {
-		MarioController.marioObject.transform.Translate (0, 0, 4*Time.deltaTime);
+		MarioController.s.transform.Translate (0, 0, 4*Time.deltaTime);
 	}*/
 }

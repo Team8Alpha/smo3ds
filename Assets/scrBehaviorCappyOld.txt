@@ -51,12 +51,12 @@ public class scrbehaviorCappyOld : MonoBehaviour
 				sndSrc.loop = true;
 				sndSrc.Play();
 				isThrown = true;
-				MarioController.marioObject.anim.Play("spinCapStart");
+				MarioController.s.anim.Play("spinCapStart");
 				anim.Play("default");
 				transformMario.GetChild(2).gameObject.SetActive(true);//hair
 				transformMario.GetChild(1).gameObject.SetActive(false);//cap
-				MarioController.marioObject.SetHand(0, false);//handRball
-				MarioController.marioObject.SetHand(1, true);//handRflat
+				MarioController.s.SetHand(0, false);//handRball
+				MarioController.s.SetHand(1, true);//handRflat
 				tmp_pos = transformMario.position;
 				transform.rotation = transformMario.rotation;
 				transform.position = new Vector3(tmp_pos.x, tmp_pos.y + offsetYthrow, tmp_pos.z);
@@ -64,17 +64,17 @@ public class scrbehaviorCappyOld : MonoBehaviour
 				{
 					currentState = -1;
 					anim.Play("throwJump");
-					MarioController.marioObject.anim.Play("spinCapJumpStart");
+					MarioController.s.anim.Play("spinCapJumpStart");
 					offsetYthrow = 1;
 				}
 				toggleCollision(true);
 				break;
 			case 1:
-				MarioController.marioObject.SetHand(0, true);//handRball
-				MarioController.marioObject.SetHand(1, false);//handRflat
+				MarioController.s.SetHand(0, true);//handRball
+				MarioController.s.SetHand(1, false);//handRflat
 				fvar0 = 0;
-				//if (MarioController.marioObject.isMoving)
-				//MarioController.marioObject.SetAnim ("run");
+				//if (MarioController.s.isMoving)
+				//MarioController.s.SetAnim ("run");
 				anim.Play("stay");
 				armature.gameObject.transform.eulerAngles = Vector3.zero;
 				transform.GetChild(1).gameObject.transform.eulerAngles = Vector3.zero;
@@ -99,7 +99,7 @@ public class scrbehaviorCappyOld : MonoBehaviour
 				break;
 			case 4:
 				toggleCollision(false);
-				if (MarioController.marioObject.isHacking)
+				if (MarioController.s.isHacking)
 				{
 					anim.Play("capture");
 					sndSrc.Stop();
@@ -108,15 +108,15 @@ public class scrbehaviorCappyOld : MonoBehaviour
 					sndSrc.Play();
 				}
 				transform.rotation = Quaternion.Euler(0, 0, 0);
-				MarioController.marioObject.SetHand(0, true);//handRball
-				MarioController.marioObject.SetHand(1, false);//handRflat
+				MarioController.s.SetHand(0, true);//handRball
+				MarioController.s.SetHand(1, false);//handRflat
 				isThrown = false;
 				break;
 			case 5:
 				toggleCollision(false);
 				transformMario.rotation = capturedObject.transform.rotation;
-				MarioController.marioObject.SetHand(0, true);//handRball
-				MarioController.marioObject.SetHand(1, false);//handRflat
+				MarioController.s.SetHand(0, true);//handRball
+				MarioController.s.SetHand(1, false);//handRflat
 				fvar0 = 0;
 				anim.Play("hookStart");
 				break;
@@ -135,7 +135,7 @@ public class scrbehaviorCappyOld : MonoBehaviour
 		if (collis.gameObject.layer != scr_main.lyr_player)
 			isColliding = true;
 		//else if(currentState == 1)
-		//	MarioController.marioObject.SetState (eStatePl.Jumping); //problems with collision
+		//	MarioController.s.SetState (eStatePl.Jumping); //problems with collision
 		if (collis.gameObject.GetComponent<paramObj>() != null)
 			paramCaptured = collis.gameObject.GetComponent<paramObj>();
 	}
@@ -159,10 +159,10 @@ public class scrbehaviorCappyOld : MonoBehaviour
 							if (paramCaptured.isTouch) collis.gameObject.SendMessage("OnTouch", 1);
 							if (paramCaptured.isCapTrigger) collis.gameObject.SendMessage("OnCapTrigger"); //send OnCapTrigger event to object
 							else return;
-							mountPoint = collis.gameObject.transform.Find(scr_main._f.capMountPoint).gameObject;
+							mountPoint = collis.gameObject.transform.Find(scr_main.s.capMountPoint).gameObject;
 							if (mountPoint == null)
 							{//if not set by object, or set wrongly, dont capture.
-								scr_main.DPrint("NO CPMNT AT " + scr_main._f.capMountPoint + " IN " + collis.gameObject);
+								scr_main.DPrint("NO CPMNT AT " + scr_main.s.capMountPoint + " IN " + collis.gameObject);
 								capturedObject = null;
 							}
 							else if (!isHacking)
@@ -179,7 +179,7 @@ public class scrbehaviorCappyOld : MonoBehaviour
 									collis.gameObject.GetComponent<Rigidbody>().useGravity = false;
 								toggleCollision(false);
 								capturedObject.SendMessage("OnCapHacked"); //send OnCapHacked event to object
-								if (paramCaptured.isHack) MarioController.marioObject.isHacking = true;
+								if (paramCaptured.isHack) MarioController.s.isHacking = true;
 								else anim.Play("hookStart");
 								SetState(4);
 								armature.eulerAngles = Vector3.zero;
@@ -222,17 +222,17 @@ public class scrbehaviorCappyOld : MonoBehaviour
 		anim = GetComponent<Animator>();
 		tmp_pos = transform.position;
 		sndSrc = GetComponent<AudioSource>();
-		transformMario = MarioController.marioObject.transform;
+		transformMario = MarioController.s.transform;
 		armature = transform.GetChild(0);
 
-		snd_capHackStart = scr_manageAudio._f.GetClip(prefixSND + "snd_capHackStart");
-		snd_capSpin = snd_capSpin = scr_manageAudio._f.GetClip(prefixSND + "snd_capSpin");
+		snd_capHackStart = scr_manageAudio.s.GetClip(prefixSND + "snd_capHackStart");
+		snd_capSpin = snd_capSpin = scr_manageAudio.s.GetClip(prefixSND + "snd_capSpin");
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if (scr_main._f.isFocused)
+		if (scr_main.s.isFocused)
 		{
 			switch (currentState)
 			{
@@ -303,12 +303,12 @@ using UnityEngine;
 public class scr_manageAudio : MonoBehaviour {
 
 	AudioSource mAudio;
-	public static scr_manageAudio _f;
+	public static scr_manageAudio s;
 	float fadeSpeed = 1f;
 	bool isFadeOut = false;
 
 	void Start () {
-		_f = this;
+		s = this;
 		this.enabled = false;
 		mAudio = gameObject.GetComponent<AudioSource> ();
 	}

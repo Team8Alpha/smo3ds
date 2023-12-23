@@ -16,13 +16,13 @@ public class scr_behaviorBlockQuestion : MonoBehaviour {
 	}
 
 	void DoIsEmpty(){
-		scr_summon.f_summon.s_object(9, transform.position, transform.eulerAngles);
+		scr_summon.s.s_object(9, transform.position, transform.eulerAngles);
 		Destroy(gameObject);
 	}
 
 	void SpawnCoins(int numCoins) {
 		Vector3 coinSpawnPos = new Vector3 (transform.position.x, transform.position.y + 0.8f, transform.position.z);
-		var coin = scr_summon.f_summon.s_object (0, coinSpawnPos, transform.eulerAngles).GetComponent<scr_behaviorCoin> ();
+		var coin = scr_summon.s.s_object (0, coinSpawnPos, transform.eulerAngles).GetComponent<scr_behaviorCoin> ();
 		coin.currentState = 1;
 	}
 

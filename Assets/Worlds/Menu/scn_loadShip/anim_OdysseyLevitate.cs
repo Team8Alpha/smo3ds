@@ -10,7 +10,7 @@ public class anim_OdysseyLevitate : MonoBehaviour {
 	List<GameObject> rootObjects = new List<GameObject>();
 
 	void Start(){
-		scr_main._f.SetFocus(false);
+		scr_main.s.SetFocus(false);
 		Application.backgroundLoadingPriority = ThreadPriority.BelowNormal;
 		for (int i = 0; i < SceneManager.sceneCount; i++)
 		{
@@ -24,20 +24,20 @@ public class anim_OdysseyLevitate : MonoBehaviour {
 			transform.Translate (0, -0.17f * Time.unscaledTime, 0); 
 			if (!hasStarted) {
 				hasStarted = true;
-				scr_loadScene._f.StartScene (scr_loadScene._f.nextScene, 3);
+				scr_loadScene.s.StartScene (scr_loadScene.s.nextScene, 3);
 			}
 			if (transform.position.x > -100) {
-				scr_manAudio._f.FadeBGM(1, 0);
-				scr_fadefull._f.Run (false, 0, 0.09f, true, true, true);
+				scr_manAudio.s.FadeBGM(1, 0);
+				scr_fadefull.s.Run (false, 0, 0.09f, true, true, true);
 				isExiting = true;
 			}
-		} else if (scr_fadefull._f.isDone) {
-			scr_loadScene._f.SetSceneActive ();
+		} else if (scr_fadefull.s.isDone) {
+			scr_loadScene.s.SetSceneActive ();
 			foreach (GameObject _obj in rootObjects)
 				if(_obj != null && _obj.name != "objGlobal(Clone)" && _obj.name != "camLoadShip")
 					Destroy(_obj);
 
-			scr_main._f.SetFocus(true);
+			scr_main.s.SetFocus(true);
 			Destroy(transform.parent.gameObject);
 		}
 	}

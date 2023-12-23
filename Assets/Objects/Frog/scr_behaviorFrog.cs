@@ -46,11 +46,11 @@ public class scr_behaviorFrog : MonoBehaviour {
 			anim.Play ("reaction");
 	}
 	public void OnCapTrigger(){
-		scr_main._f.capMountPoint = capMount;
+		scr_main.s.capMountPoint = capMount;
 	}
 	public void OnCapHacked(){
 		gameObject.tag = "captureMe";
-		MarioController.marioObject.cappy.SetTransformOffset (1.15f, new Vector3(0, 0, -0.1f), new Vector3(0, -119.16f, 90));
+		MarioController.s.cappy.SetTransformOffset (1.15f, new Vector3(0, 0, -0.1f), new Vector3(0, -119.16f, 90));
 	}
 	public void SetState(int num){
 		currentState = num;
@@ -58,7 +58,7 @@ public class scr_behaviorFrog : MonoBehaviour {
 		case 6:
 			setAnim ("hackStart", 0.1f);
 			setEyeTexture (1);
-			MarioController.marioObject.SetSpeed (3, 4);
+			MarioController.s.SetSpeed (3, 4);
 			GetComponent<Collider> ().enabled = false; //REMOVE
 			break;
 		case 7:
@@ -72,8 +72,8 @@ public class scr_behaviorFrog : MonoBehaviour {
 	void Update(){
 		switch (currentState) {
 		case 6:
-			transform.position = MarioController.marioObject.transform.position;
-			transform.rotation = MarioController.marioObject.transform.rotation;
+			transform.position = MarioController.s.transform.position;
+			transform.rotation = MarioController.s.transform.rotation;
 			break;
 		case 7:
 			if(isAnim("default")) SetState(0);

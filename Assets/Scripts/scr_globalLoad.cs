@@ -9,7 +9,7 @@ public class scr_globalLoad : MonoBehaviour {
 		if (FindObjectOfType<scr_main>() == null) { 
 			GameObject.Instantiate (sum_globinit); 
 		}
-		scr_manageData._f.LoadLevel();
+		scr_manageData.s.LoadLevel();
 		Destroy(gameObject);
 	}
 }

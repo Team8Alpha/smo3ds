@@ -5,8 +5,8 @@ using UnityEngine;
 public class scr_levelInOdyssey : MonoBehaviour {
 
 	void LateUpdate () {
-		if (MarioController.marioObject != null) {
-			MarioCam.marioCamera.gameObject.SetActive (false);
+		if (MarioController.s != null) {
+			MarioCam.s.gameObject.SetActive (false);
 			this.enabled = false;
 		}
 	}

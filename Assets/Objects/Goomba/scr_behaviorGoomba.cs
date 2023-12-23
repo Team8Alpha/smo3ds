@@ -94,7 +94,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 			setEye(0);
 			setEyeTexture (1);
 			transform.GetChild (1).GetChild (2).gameObject.SetActive (false);
-			MarioController.marioObject.SetSpeed (3, 4);
+			MarioController.s.SetSpeed (3, 4);
 			break;
 		case 7:
 			setAnim ("hackEnd", 0.1f);
@@ -110,14 +110,14 @@ public class scr_behaviorGoomba : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		scr_main._f.dbg_enemyCount++;
+		scr_main.s.dbg_enemyCount++;
 		anim = GetComponent<Animator> ();
 		if(stackAmount>1){
 			isTop = false;
 			float stackOffY = 2.5f;
 			int i = 1;
 			for(i=0; i<stackAmount-1; i++){
-				GameObject goombaStacked = scr_summon.f_summon.s_entity(0, new Vector3(transform.position.x, transform.position.y+(i+1*stackOffY), transform.position.z), new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z));
+				GameObject goombaStacked = scr_summon.s.s_entity(0, new Vector3(transform.position.x, transform.position.y+(i+1*stackOffY), transform.position.z), new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z));
 				goombaSt[i] = goombaStacked.GetComponent<scr_behaviorGoomba>();
 				goombaSt[i].isMoving = false;
 				goombaSt[i].stackAmount=1;
@@ -149,7 +149,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 				setAnim ("pressDown");
 				GetComponent<Collider> ().enabled = false;
 				dead = true;
-				scr_main._f.dbg_enemyCount--;
+				scr_main.s.dbg_enemyCount--;
 				if (isMoving == false)
 					RankBelowGoomba ();
 				break;
@@ -162,10 +162,10 @@ public class scr_behaviorGoomba : MonoBehaviour {
 	}
 
 	public void OnCapTrigger(){
-		scr_main._f.capMountPoint = "Armature/nw4f_root/AllRoot/JointRoot/Head/Cap/mount";
+		scr_main.s.capMountPoint = "Armature/nw4f_root/AllRoot/JointRoot/Head/Cap/mount";
 	}
 	public void OnCapHacked(){
-		MarioController.marioObject.cappy.SetTransformOffset(1.5f, Vector3.zero, Vector3.zero);
+		MarioController.s.cappy.SetTransformOffset(1.5f, Vector3.zero, Vector3.zero);
 	}
 	public void OnSensorEnter(Collider col){
 		if (col.name == "mario" && isMoving && !dead)
@@ -178,7 +178,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if(scr_main._f.isFocused){
+		if(scr_main.s.isFocused){
 			if (dead) {
 				if (anim.GetBool ("flat")) {
 					for (int i = 1; i < 6; i++) {
@@ -244,7 +244,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 					break;
 				case 5: //ATTACK
     				// Calculate the y rotation
-					Vector3 relativePos = MarioController.marioObject.transform.position - transform.position;
+					Vector3 relativePos = MarioController.s.transform.position - transform.position;
 					float yRotation = Mathf.Atan2 (relativePos.x, relativePos.z) * Mathf.Rad2Deg;
 
     				// Rotate the object to face the target
@@ -254,8 +254,8 @@ public class scr_behaviorGoomba : MonoBehaviour {
 					transform.position += transform.forward * walkSpeed[1] * Time.deltaTime;
 					break;
 				case 6: //controller, each enemy has 6 as its controlled state(for organization?)
-					transform.position = MarioController.marioObject.transform.position;
-					transform.rotation = MarioController.marioObject.transform.rotation;
+					transform.position = MarioController.s.transform.position;
+					transform.rotation = MarioController.s.transform.rotation;
 					break;
 				case 7: //confused state after leaving capture
 					if (isAnim ("default"))

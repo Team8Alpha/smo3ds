@@ -23,7 +23,7 @@ public class scrBehaviorCappy : MonoBehaviour
     public int mySubState;          // cap states state
     private Transform myParent;     // saves parent, for mario switching.
     public GameObject hackedObj;    // object posessed by cappy
-    Rigidbody rb;
+   // Rigidbody rb;
     CharacterController charc;
 
     //private const float numOffsetY = 0.6f; // y offset at marios
@@ -42,13 +42,13 @@ public class scrBehaviorCappy : MonoBehaviour
 
         mAnim = GetComponent<Animator>();
         mAudio = GetComponent<AudioSource>();
-        rb = GetComponent<Rigidbody>();
+       // rb = GetComponent<Rigidbody>();
         charc = GetComponent<CharacterController>();
         charc.detectCollisions = false;
 
         objBone = transform.GetChild(0);
         myParent = transform.parent;
-        mario = MarioController.marioObject;
+        mario = MarioController.s;
         tMario = mario.transform;
         mario.cappy = this;
 
@@ -58,7 +58,7 @@ public class scrBehaviorCappy : MonoBehaviour
 
     void Update()
     {
-        if (scr_main._f.isFocused)
+        if (scr_main.s.isFocused)
         {
             switch (myState)
             {
@@ -181,10 +181,10 @@ public class scrBehaviorCappy : MonoBehaviour
             case eStateCap.Hack:
                 SetRotate(false);
                 SetAnim("capture");
-                scr_manAudio._f.PlaySelfSND(ref mAudio, eSnd.CappyHacked, false, true);
+                scr_manAudio.s.PlaySelfSND(ref mAudio, eSnd.CappyHacked, false, true);
                 break;
             case eStateCap.HackAfter:
-                scr_main._f.capMountPoint = "";
+                scr_main.s.capMountPoint = "";
                 var Mustache = hackedObj.transform.GetChild(1).GetChild(0);
                 if (Mustache.name == "Mustache" || Mustache.name == "Mustache__HairMT")
                     Mustache.gameObject.SetActive(false); //if mustache, place it at index 0
@@ -226,7 +226,7 @@ public class scrBehaviorCappy : MonoBehaviour
             if (!GetIsAnim("spin", 0))
             {
                 mAnim.Play("spin", 0);
-                scr_manAudio._f.PlaySelfSND(ref mAudio, eSnd.CappySpin, true);
+                scr_manAudio.s.PlaySelfSND(ref mAudio, eSnd.CappySpin, true);
             }
         }
         else
@@ -268,10 +268,10 @@ public class scrBehaviorCappy : MonoBehaviour
         if (objParam.isTouch) collis.gameObject.SendMessage("OnTouch", 1);
         if (!objParam.isCapTrigger || isHacking) return;
         else collis.gameObject.SendMessage("OnCapTrigger");
-        mountpoint = collis.transform.Find(scr_main._f.capMountPoint);
+        mountpoint = collis.transform.Find(scr_main.s.capMountPoint);
         if (mountpoint == null)
         {
-            scr_main.DPrint("Cap: No mount at " + collis.gameObject.name + "/" + scr_main._f.capMountPoint);
+            scr_main.DPrint("Cap: No mount at " + collis.gameObject.name + "/" + scr_main.s.capMountPoint);
             return;
         }
 
@@ -284,7 +284,7 @@ public class scrBehaviorCappy : MonoBehaviour
         SetCollision(false);
 
         hackedObj.SendMessage("OnCapHacked"); //send OnCapHacked event to object
-        if (objParam.isHack) MarioController.marioObject.isHacking = true; //TODO: hacking event.
+        if (objParam.isHack) MarioController.s.isHacking = true; //TODO: hacking event.
         else mAnim.Play("hookStart");
 
         GameObject Mustache = hackedObj.transform.GetChild(1).GetChild(0).gameObject;
@@ -292,7 +292,7 @@ public class scrBehaviorCappy : MonoBehaviour
 
         SetState(eStateCap.Hack);
 
-        scr_main.DPrint("cap: mount at " + collis.gameObject.name + "/" + scr_main._f.capMountPoint);
+        scr_main.DPrint("cap: mount at " + collis.gameObject.name + "/" + scr_main.s.capMountPoint);
         isHacking = true;
     }
 }

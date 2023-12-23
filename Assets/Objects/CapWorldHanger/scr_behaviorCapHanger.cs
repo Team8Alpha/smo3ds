@@ -48,8 +48,8 @@ public class scr_behaviorCapHanger : MonoBehaviour {
 		if (numType == 1) {
 			if(!isEnabled){ myLight(); isEnabled = true; }
 			myTrigger ();
-			//CAP! MarioController.marioObject.cappy.SetState(5);
-			//CAP! MarioController.marioObject.cappy.transform.position = new Vector3(transform.position.x, transform.position.y+yOff*transform.localScale.x, transform.position.z+zOff);
+			//CAP! MarioController.s.cappy.SetState(5);
+			//CAP! MarioController.s.cappy.transform.position = new Vector3(transform.position.x, transform.position.y+yOff*transform.localScale.x, transform.position.z+zOff);
 		}
 	}
 }

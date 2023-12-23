@@ -8,15 +8,15 @@ public class scr_menuSplashPress : MonoBehaviour {
 	[SerializeField] float timer = 5;
 
 	void Start(){
-		//scr_fadefull._f.Run (true, 0, 0.04f);
+		//scr_fadefull.s.Run (true, 0, 0.04f);
         StartCoroutine(Delay());
     }
 	
 	void Confirm(){
 		scr_main.DPrint ("Loading...");
-		//scr_loadScene._f.StartScene ("scn_capMain0", 1);
+		//scr_loadScene.s.StartScene ("scn_capMain0", 1);
 		UnityEngine.SceneManagement.SceneManager.LoadScene("scn_menuTitle");
-		scr_manageData._f.Load ();
+		scr_manageData.s.Load ();
 		scr_main.DPrint ("");
 	}
 
@@ -35,7 +35,7 @@ public class scr_menuSplashPress : MonoBehaviour {
 			if (exiting) {
 				
 			} else {
-				scr_fadefull._f.Run (false, 0, 0.08f);
+				scr_fadefull.s.Run (false, 0, 0.08f);
 				timer = 2;
 				exiting = true;
 			}
@@ -44,8 +44,8 @@ public class scr_menuSplashPress : MonoBehaviour {
 		if(!exiting && Input.GetKey(KeyCode.Return)) timer = 0;
 #else
 		if(!exiting && UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A)){ 
-			if(scr_main._f != null){
-			if(scr_main._f.isFocused) timer = 0;
+			if(scr_main.s != null){
+			if(scr_main.s.isFocused) timer = 0;
 			} else timer = 0;
 		}
 #endif

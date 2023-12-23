@@ -8,9 +8,9 @@ public class scr_manageEffect : MonoBehaviour {
 	private string nextPrt0;
 	private string nextPrt1;
 	private bool isRunning = false;
-	public static scr_manageEffect _f;
+	public static scr_manageEffect s;
 	void Start(){
-		_f = this;
+		s = this;
 	}
 	// 23.85809  1.9123  133.5931  -90  0.0165
 	public void Play(string namePrt, Vector3 prtPos, Quaternion prtRot, string _nextPrt0="null", string _nextPrt1="null"){
@@ -38,7 +38,7 @@ public class scr_manageEffect : MonoBehaviour {
 					currentPrt = null;
 				}
 			}
-			currentPrt.transform.rotation = MarioCam.marioCamera.transform.rotation;
+			currentPrt.transform.rotation = MarioCam.s.transform.rotation;
 		}
 	}
 }

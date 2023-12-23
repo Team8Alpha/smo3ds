@@ -11,7 +11,7 @@ public class scr_behaviorTransCap : MonoBehaviour {
 	void OnEnable () {
 		if (!isFlyingIn) {
 			sprRender.color = new Color (0,0,0,0);
-			scr_main._f.SetFocus(false);
+			scr_main.s.SetFocus(false);
 			transform.localScale = new Vector3 (20, 20*0.95f, 0);
 		} else {
 			transform.localScale = new Vector3 (0, 0, 0);
@@ -29,10 +29,10 @@ public class scr_behaviorTransCap : MonoBehaviour {
 			sprRender.color = new Color (0,0,0,gameObject.GetComponent<SpriteRenderer>().color.a + 0.1f);
 			if(transform.localScale.x <0.2f){
 				isFlyingIn = true;
-				SceneManager.LoadScene (scr_loadScene._f.nextScene);
-				scr_main._f.SetFocus(true);
+				SceneManager.LoadScene (scr_loadScene.s.nextScene);
+				scr_main.s.SetFocus(true);
 			}
-		} else if(scr_main._f.hasLevelLoaded){
+		} else if(scr_main.s.hasLevelLoaded){
 			transform.localScale += new Vector3(3f, 3f, 0);
 			if(transform.localScale.x > 20){
 				isFlyingIn = false;

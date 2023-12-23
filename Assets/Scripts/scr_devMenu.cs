@@ -30,7 +30,7 @@ public class scr_devMenu: MonoBehaviour {
 		noButtonPressed = true;
 		submenu = false;
 		selectionSub = -1;
-		scr_main._f.SetFocus(true);
+		scr_main.s.SetFocus(true);
 	}
 
 	void Update () {
@@ -38,11 +38,11 @@ public class scr_devMenu: MonoBehaviour {
 			isOpen = true;
 			maxOption = 6;
 			ResetVal ();
-			scr_main._f.SetFocus(false);
+			scr_main.s.SetFocus(false);
 		} else if (UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.R) && UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.Start) || Input.GetKey(KeyCode.Escape) && Input.GetKey(KeyCode.LeftShift)) {
 			isOpen = false;
 			ResetVal ();
-			scr_main._f.SetFocus(true);
+			scr_main.s.SetFocus(true);
 		}
 		if(isOpen){
 			if(noButtonPressed){
@@ -53,7 +53,7 @@ public class scr_devMenu: MonoBehaviour {
 				} else {
 					if(Input.GetKeyDown(KeyCode.UpArrow)) selection--;
 					if(Input.GetKeyDown(KeyCode.DownArrow)) selection++;
-					if(Input.GetKeyDown(KeyCode.Escape) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B)){ scr_main._f.SetFocus(true); isOpen = false;}
+					if(Input.GetKeyDown(KeyCode.Escape) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B)){ scr_main.s.SetFocus(true); isOpen = false;}
 				}
 				if(Input.GetKeyDown(KeyCode.Return) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A)){
 					switch(selection-3){
@@ -88,7 +88,7 @@ public class scr_devMenu: MonoBehaviour {
 								break;
 							}
 							ResetVal ();
-							scr_loadScene._f.StartScene (tmpLvName, 0);
+							scr_loadScene.s.StartScene (tmpLvName, 0);
 						}
 						maxOption = 8;
 						canSelect = true;
@@ -114,10 +114,10 @@ public class scr_devMenu: MonoBehaviour {
 					case 3:
 						isOpen = false;
 						ResetVal();
-						scr_loadScene._f.StartScene("scn_menuTestAudio");
+						scr_loadScene.s.StartScene("scn_menuTestAudio");
 						break;
 					case 4:
-						scr_manageData._f.Save ();
+						scr_manageData.s.Save ();
 						break;
 					}
 				}
@@ -190,10 +190,10 @@ public class scr_devMenu: MonoBehaviour {
 			}
 		} else {
 			if(deb_fpsIsShowing) DoPrint (0, "FPS: "+1/Time.deltaTime, 1, 50);
-			if(deb_enemyIsShowing) DoPrint (3, "ENEMY: "+scr_main._f.dbg_enemyCount, 1, 50);
-			if(MarioController.marioObject != null){
-				DoPrint (4, "COIN: "+scr_main._f.coinsCount, 1, 50);
-				DoPrint (5, "MOON: "+scr_main._f.moonsCount, 1, 50);
+			if(deb_enemyIsShowing) DoPrint (3, "ENEMY: "+scr_main.s.dbg_enemyCount, 1, 50);
+			if(MarioController.s != null){
+				DoPrint (4, "COIN: "+scr_main.s.coinsCount, 1, 50);
+				DoPrint (5, "MOON: "+scr_main.s.moonsCount, 1, 50);
 			}
 			if (deb_statsIsShowing){
 				DoPrint(1, "CPU: " + UnityEngine.N3DS.Debug.GetSystemFree(), 1, 50);

@@ -31,7 +31,7 @@ public class SaveData
 }
 public class scr_manageData : MonoBehaviour
 {
-	public static scr_manageData _f;
+	public static scr_manageData s;
 
 	private const string SAVE_FILE_NAME = "save.json";
 	private scr_main globVar;
@@ -43,14 +43,14 @@ public class scr_manageData : MonoBehaviour
 		//TEMPORARY
 		
 		
-		_f = this;
-		globVar = scr_main._f;
+		s = this;
+		globVar = scr_main.s;
 	}
 
 	public void Save()
 	{
-		scr_main._f.SetFocus(false);
-		scr_main._f.transform.GetChild (2).GetChild (1).gameObject.SetActive (true);
+		scr_main.s.SetFocus(false);
+		scr_main.s.transform.GetChild (2).GetChild (1).gameObject.SetActive (true);
 		PrintLog ("N: saving data");
 		string filePath = Path.Combine (Application.persistentDataPath, SAVE_FILE_NAME);
 		try {
@@ -85,8 +85,8 @@ public class scr_manageData : MonoBehaviour
 			PrintLog("Error saving data: " + e);
 		}
 
-		scr_main._f.transform.GetChild (2).GetChild (1).gameObject.SetActive (false);
-		scr_main._f.SetFocus(true);
+		scr_main.s.transform.GetChild (2).GetChild (1).gameObject.SetActive (false);
+		scr_main.s.SetFocus(true);
 	}
 
 
@@ -143,7 +143,7 @@ public class scr_manageData : MonoBehaviour
 					data.levelData [buildIndex] = new LevelSaveData ();
 				}
 				globVar.lastCheckpoint = data.levelData [buildIndex].lastSpawn;
-				if(scr_main._f.nextSpawn == -1) globVar.nextSpawn = globVar.lastCheckpoint;
+				if(scr_main.s.nextSpawn == -1) globVar.nextSpawn = globVar.lastCheckpoint;
 			}
 		} catch (IOException e) {
 			PrintLog ("Error in LoadLevel: " + e);

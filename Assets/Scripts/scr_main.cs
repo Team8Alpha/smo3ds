@@ -12,7 +12,7 @@ public class scr_main : MonoBehaviour {
 	public string version = "0.4";
 
 	//constants
-	[HideInInspector] public static scr_main _f;
+	[HideInInspector] public static scr_main s;
 	[HideInInspector] public static GUIStyle stl_debug; //style for debug menu
 	[HideInInspector] public static LayerMask lyr_def;
 	[HideInInspector] public static LayerMask lyr_player;
@@ -32,12 +32,12 @@ public class scr_main : MonoBehaviour {
 	}
 	
 	void Awake(){
-		if(_f == null)
+		if(s == null)
 		{
 			Debug.ClearDeveloperConsole ();
 			scr_main.DPrint("INITIALIZE SUPER MARIO ODYSSEY - 3DS DEMAKE");
 			DontDestroyOnLoad(gameObject);
-			_f = this;
+			s = this;
 			Init ();
 
 			return;

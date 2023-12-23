@@ -31,10 +31,10 @@ public class scr_manAudio : MonoBehaviour {
 	AudioSource mAudioSND;
 	AudioSource mAudioBGM;
 	public AudioClip[] listSound;
-	public static scr_manAudio _f;
+	public static scr_manAudio s;
 
 	void Awake () {
-		_f = this;
+		s = this;
 		this.enabled = false;
 		mAudioSND = gameObject.GetComponents<AudioSource>()[0];
 		mAudioBGM = gameObject.GetComponents<AudioSource>()[1];

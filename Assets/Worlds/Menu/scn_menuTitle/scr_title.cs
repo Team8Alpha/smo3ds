@@ -22,7 +22,7 @@ public class scr_title : MonoBehaviour {
 	public Color startColorShade, endColorShade;
 	public GameObject buttonRes;//resume button
 
-	public static scr_title _f;
+	public static scr_title s;
 
 
 	public IEnumerator ChangeEngineColour()
@@ -45,20 +45,20 @@ public class scr_title : MonoBehaviour {
 		marioPos = transform.position; // to move him back later
 		transform.position = new Vector3(-1000, transform.position.y, transform.position.z); //move to waitzone, works like a timer.
 
-		scr_fadefull._f.Run(true, 0, 0.02f);//fade in
+		scr_fadefull.s.Run(true, 0, 0.02f);//fade in
 		mat_rotMap = spr_rotMap.gameObject.GetComponent<MeshRenderer>().material;
 		mat_shade = spr_shade.gameObject.GetComponent<MeshRenderer>().material;//get materials
 
-		scr_main._f.SetFocus(false);
-		_f = this;
+		scr_main.s.SetFocus(false);
+		s = this;
 
-		scr_manAudio._f.LoadSND(eSnd.MarioTitleScream);
+		scr_manAudio.s.LoadSND(eSnd.MarioTitleScream);
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if(timerShow <= cJumpWaitTime || scr_manAudio._f.isPlaying(false))
+		if(timerShow <= cJumpWaitTime || scr_manAudio.s.isPlaying(false))
 		{ // timer (1.5 seconds, since targetFPS is X frames per second...)
 			switch (timerShow) {
 				case cJumpWaitTime:
@@ -66,7 +66,7 @@ public class scr_title : MonoBehaviour {
 					anim.Play("titleStart");
 					break;
 				case 15:
-					scr_manAudio._f.PlaySND(eSnd.MarioTitleScream);
+					scr_manAudio.s.PlaySND(eSnd.MarioTitleScream);
 					break;
 			}
 			timerShow++;
@@ -78,12 +78,12 @@ public class scr_title : MonoBehaviour {
 	}
 	void Finish()
 	{
-		scr_main._f.SetFocus(true);
+		scr_main.s.SetFocus(true);
 		for (int i = 0; i < 4; i++)
 			cnv_down.GetChild(i).gameObject.SetActive(true);
 		EventSystem.current.SetSelectedGameObject(buttonRes);
-		scr_manAudio._f.PlayBGM("Title");
-		scr_manAudio._f.UnloadSND(eSnd.MarioTitleScream);
+		scr_manAudio.s.PlayBGM("Title");
+		scr_manAudio.s.UnloadSND(eSnd.MarioTitleScream);
 		this.enabled = false;
 	}
 }
