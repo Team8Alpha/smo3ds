@@ -5,7 +5,7 @@ using UnityEngine;
 public enum eEventPl
 {
     wait, // wait and no input
-    walk, // all the controlling
+    control, // all the controlling
     demoMoon, // demo for moon get normal
     die, // death 
     hack, // hack
@@ -14,12 +14,14 @@ public enum eEventPl
 
 public class MarioEvent : MonoBehaviour
 {
-    eEventPl myEvent = eEventPl.wait;
-    eEventPl myPrevEvent = eEventPl.wait;
-    byte mySubEvent = 0;
-    public static MarioEvent s;
+    [HideInInspector] public eEventPl myEvent = eEventPl.wait;
+    [HideInInspector] public eEventPl myPrevEvent = eEventPl.wait;
+    [HideInInspector] public byte mySubEvent = 0;
+    [HideInInspector] public static MarioEvent s;
     MarioController mario;
     scrBehaviorCappy cappy;
+
+    float fVar0 = 0;
 
     void Start()
     {
@@ -34,10 +36,29 @@ public class MarioEvent : MonoBehaviour
         {
             case eEventPl.wait:
                 break;
-            case eEventPl.walk:
+            case eEventPl.control:
                 break;
             case eEventPl.hack:
-                if (mario.key_backR) SetEvent(eEventPl.unhack);
+                switch (mySubEvent)
+                {
+                    case 0:
+                        float distanceCovered = (Time.time - fVar0) / 1;
+
+                        Vector3 posHackObj = cappy.hackedObj.transform.position;
+                        Vector3 targetPosition = Bezier(transform.position, posHackObj + Vector3.up * 2 + ((transform.position - posHackObj).normalized), posHackObj, distanceCovered);
+
+                        transform.position = targetPosition;
+
+                        if (Vector3.Distance(transform.position, posHackObj) < 1f)
+                        {
+                            transform.position = posHackObj;
+                            MarioEvent.s.SetEvent(eEventPl.hack, 1);
+                        }
+                        break;
+                    case 1:
+                        if (mario.key_backL) SetEvent(eEventPl.unhack);
+                        break;
+                }
                 break;
         }
     }
@@ -52,34 +73,46 @@ public class MarioEvent : MonoBehaviour
             case eEventPl.wait:
                 MarioController.s.enabled = false;
                 break;
-            case eEventPl.walk:
+            case eEventPl.control:
                 MarioController.s.enabled = true;
+                mario.SetState(eStatePl.Ground);
+                mario.isInputBlocked = false;
                 break;
             case eEventPl.hack:
                 switch (mySubEvent)
                 {
                     case 0:
-                        mario.SetState(eStatePl.CaptureFly);
+                        mario.SetAnim("captureFly");
+                        MarioController.s.enabled = false;
+                        fVar0 = Time.time;
+                        mario.isHacking = true;
                         break;
                     case 1:
                         mario.SetState(eStatePl.Ground);
                         cappy.hackedObj.SendMessage("SetState", 6);
                         mario.SetVisible(false);
+                        MarioController.s.enabled = true;
                         break;
                 }
                 break;
             case eEventPl.unhack:
                 cappy.hackedObj.SendMessage("SetState", 7);
                 cappy.SetState(eStateCap.Return);
+                cappy.isHacking = false;
                 transform.Translate(0, 0, -2); //TODO: jump out of hack obj
                 mario.ResetSpeed();
-                mario.SetState(eStatePl.Ground);
                 mario.SetVisible(true);
                 mario.SetCap(false);
-                mario.isBlocked = false;
-                mario.isBlockBlocked = false;
-                mario.isHacking = false;
+                GameObject mustache = cappy.hackedObj.transform.GetChild(1).GetChild(0).gameObject;
+                if (mustache.name == "Mustache" || mustache.name == "Mustache__HairMT") mustache.SetActive(false);
+                SetEvent(eEventPl.control);
                 break;
         }
+    }
+    // Bezier function
+    Vector3 Bezier(Vector3 a, Vector3 b, Vector3 c, float t)
+    {
+        float s = 1.0f - t;
+        return s * s * a + 2.0f * s * t * b + t * t * c;
     }
 }

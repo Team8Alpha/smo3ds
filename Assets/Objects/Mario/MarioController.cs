@@ -8,7 +8,6 @@ public enum eStatePl
 	Jumping,
 	Falling,
 	Landing,
-	CaptureFly,
 	Squat,
 	GroundPound,
 	WallJump
@@ -32,6 +31,10 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] public bool isInstTurn		= false;
 	[HideInInspector] public bool isTurning			= false;
 	[HideInInspector] public bool isFreezeFall		= false;
+	[HideInInspector] public bool isInputBlocked	= false;
+	[HideInInspector] public bool isHacking			= false;
+	[HideInInspector] bool isMovingAir				= false; //if falling direction is active
+	[HideInInspector] bool hasTouchedCeiling		= false;
 
 	[HideInInspector] public Animator anim;
 	[HideInInspector] public Rigidbody rb;
@@ -40,16 +43,14 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] public bool key_backL 		= false;
 	[HideInInspector] public bool key_backR			= false;
 	[HideInInspector] public bool key_cap 			= false;
-    
-	private float hackFlyLength 					= 0.5f;
-	private float hackFlyStartTime 					= 0;
 
-	private float h 								= 0;
-	private float v 								= 0;
-	private float currentMoveSpeed 					= 0;
-	private float jumpVelocity 						= 0;
-	private float currentTurnSpeed					= 0;
-	private float currentRotation					= 0;
+	float h 										= 0;
+	float v 										= 0;
+	float currentMoveSpeed 							= 0;
+	float jumpVelocity 								= 0;
+	float currentTurnSpeed							= 0;
+	float currentRotation							= 0;
+	float speedSlip									= 0;
 
 	[HideInInspector] public string anim_stand 		= "idle";
 	[HideInInspector] public string anim_run 		= "run";
@@ -61,29 +62,18 @@ public class MarioController : MonoBehaviour
 
 	[HideInInspector] public Vector3 moveAdditional = Vector3.zero;
 	[HideInInspector] public float groundedPosition = 0; // latest floor position
-	[HideInInspector] public bool hasCaptured 		= false;
-	private bool isCapturing 						= false;
-	private RaycastHit hit;
-	//private float fvar0 							= 0; // temporary var
-	public bool isBlocked 							= false;
-	[HideInInspector] public bool isHacking 		= false; // hack = modify/take control of object
-	public bool isBlockBlocked 						= false; // to prevent it from setting block to false, if it handles multiple blocks...
-	[HideInInspector] public bool plsUnhack 		= false;
 	[HideInInspector] public string animLast 		= "idle";
 	[HideInInspector] public int jumpType			= 0;
 	[HideInInspector] byte jumpAfterTimer 			= 0; //timer till it refuses to execute double jump
-	[HideInInspector] bool hasTouchedCeiling 		= false;
 	[HideInInspector] float lastGroundedPosition 	= 0;
-	[HideInInspector] private bool isMovingAir 		= false; //if falling direction is active
-	[HideInInspector] private float speedJumpH; //used for falling direction
-	[HideInInspector] private Vector3 lastPosition;
+	[HideInInspector] float speedJumpH; //used for falling direction
+	[HideInInspector] Vector3 lastPosition;
 	[HideInInspector] float timeStandTrns = 0.5f;
     [HideInInspector] bool[] meshPartsVisible = { true, true, false, true, false };
 												// cap, haLb, haLf,  haRb, haRf
 
     [HideInInspector] CapsuleCollider capsColl1;
 	[HideInInspector] CapsuleCollider capsColl2;
-	//jump force max,  jump height min,  jump height max
 
 	void Awake()
 	{
@@ -205,38 +195,18 @@ public class MarioController : MonoBehaviour
 					SetState(eStatePl.Ground);
 					break;
 
-				case eStatePl.CaptureFly: //flying to capture enemy
-					// Calculate the current percentage of the journey completed
-					float distanceCovered = (Time.time - hackFlyStartTime) * hackFlyLength / 1;
-					float journeyFraction = distanceCovered / hackFlyLength;
-
-					// Calculate the current position along the Bezier curve
-					Vector3 posHackObj = cappy.hackedObj.transform.position;
-					Vector3 targetPosition = Bezier (transform.position, posHackObj + Vector3.up * 2 + (transform.position - posHackObj).normalized * 1, posHackObj, journeyFraction);
-
-					// Calculate the additional movement vector based on the target position
-					transform.Translate(targetPosition - transform.position);
-
-					// Check if the movement is completed
-					if (Vector3.Distance(transform.position, posHackObj) < 1f)
-					{
-						transform.position = posHackObj;
-						moveAdditional = Vector3.zero;
-						MarioEvent.s.SetEvent(eEventPl.hack, 1);
-					}
-					break;
 				case eStatePl.Squat:
-					if (moveAdditional != Vector3.zero)
-					{
-						moveAdditional *= 0.8f;
-						if (moveAdditional.magnitude < 0.04f)
-						{
-							moveAdditional = Vector3.zero;
-							isBlocked = false;
-						}
+                    switch (mySubState) {
+						case 0:
+							if (rb.velocity.magnitude < 0.1f)
+							{
+								isInputBlocked = false;
+								SetState(myState, 1);
+							}
+							break;
+						case 1:
+							break;
 					}
-					else
-						isBlocked = false;
 					break;
 			}
 		}
@@ -258,16 +228,6 @@ public class MarioController : MonoBehaviour
 	void HandleInput()
 	{
 
-		// Check if Mario is blocked or pressing L to move the camera
-		if (isBlocked)
-		{
-			h = 0;
-			v = 0;
-			isMoving = false;
-		}
-		else
-		{
-
 #if UNITY_EDITOR
 			h = Input.GetAxisRaw("Horizontal");
 			v = Input.GetAxisRaw("Vertical");
@@ -277,56 +237,56 @@ public class MarioController : MonoBehaviour
 			key_backR = Input.GetKey(KeyCode.E);
 			key_cap = Input.GetKey(KeyCode.X);
 #else
-				key_backL = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.L);
+			key_backL = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.L);
+			if (key_backL)
+			{
+				h = 0; v = 0;
+				return;
+			} else {
 
 				h = UnityEngine.N3DS.GamePad.CirclePad.x;
 				v = UnityEngine.N3DS.GamePad.CirclePad.y;
 
 				key_jump = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B);
-				key_backR = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.R);
 				key_cap = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.X) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.Y);
-#endif
-			if (key_backL)
-			{
-				h = 0; v = 0;
-				return;
 			}
-			isMoving = h != 0 || v != 0;
-			switch (myState)
-			{
-				case eStatePl.Ground:
-					if (key_jump || isJumpingSoon)
+#endif
+
+		isMoving = h != 0 || v != 0;
+		switch (myState)
+		{
+			case eStatePl.Ground:
+				if (key_jump || isJumpingSoon)
+				{
+					if (!lockJump)
 					{
-						if (!lockJump)
-						{
-							lockJump = true;
-							isJumpingSoon = false;
-							SetState(eStatePl.Jumping);
-						}
-						else if (!key_jump)
-							lockJump = false;
+						lockJump = true;
+						isJumpingSoon = false;
+						SetState(eStatePl.Jumping);
 					}
-					else if (lockJump)
-						if (!key_jump)
-							lockJump = false;
-
-					if (key_backR)
-						SetState(eStatePl.Squat);
-					break;
-
-				case eStatePl.Jumping:
+					else if (!key_jump)
+						lockJump = false;
+				}
+				else if (lockJump)
 					if (!key_jump)
 						lockJump = false;
-					break;
 
-				case eStatePl.Squat:
-					if (!key_backR)
-					{
-						moveAdditional = Vector3.zero;
-						SetState(eStatePl.Ground);
-					}
-					break;
-			}
+				if (!isHacking) if (key_backR)
+					SetState(eStatePl.Squat);
+				break;
+
+			case eStatePl.Jumping:
+				if (!key_jump)
+					lockJump = false;
+				break;
+
+			case eStatePl.Squat:
+				if (!key_backR)
+				{
+					SetState(eStatePl.Ground); //TODO: standup anim
+					isInputBlocked = false;
+				}
+				break;
 		}
 	}
 
@@ -404,23 +364,19 @@ public class MarioController : MonoBehaviour
 				hasJumped = false;
 				break;
 
-			case eStatePl.CaptureFly:
-				hackFlyStartTime = Time.time;
-				SetAnim("captureFly");
-				break;
-
 			case eStatePl.Squat:
 				SetCollider(0.94f);
 				if (isMoving)
 					SetAnim("squatStart_w", 0.1f);
 				else
 					SetAnim("squatStart_s", 0.1f);
-				isBlocked = true;
 
 				moveAdditional = transform.rotation * Vector3.forward * (currentMoveSpeed / 50);
 
 				currentTurnSpeed = MarioTable.speedTurnSquat;
-				isInstTurn = true;
+				isInputBlocked = true;
+
+				speedSlip = 0.6f;
 
 				break;
 		}
@@ -445,12 +401,13 @@ public class MarioController : MonoBehaviour
 			moveAdditional += transform.forward * speedJumpH;
 		}
 
-		if (isMoving || isMovingAir)
+		if ((isMoving || isMovingAir) && !isInputBlocked )
 		{
 			if (isGrounded)
 			{
 				if (!wasMoving)
 				{
+					speedSlip = 0;
 					if (currentMoveSpeed > 1)
 						SetAnim(anim_run);
 					else
@@ -503,7 +460,7 @@ public class MarioController : MonoBehaviour
 				//currentMoveSpeed -= 0.5f;
 				//if(animLast != "dashBrake" && animLast != anim_land) SetAnim ("dashBrake", 0.3f);
 				//} else {
-				if (currentMoveSpeed > 0) currentMoveSpeed = 0;
+				if (currentMoveSpeed > 0 || currentMoveSpeed < 0) currentMoveSpeed = speedSlip > 0 && currentMoveSpeed > 0 ? currentMoveSpeed - speedSlip : 0;
 				//if (animLast != anim_stand && animLast != anim_land && myState == eStatePl.Ground) {
 				if (animLast != anim_stand)
 					if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
@@ -617,7 +574,7 @@ public class MarioController : MonoBehaviour
 	}
 
 	//SET
-	public void SetSpeed(int _maxJump, float _moveSpeed)
+	public void SetSpeed(byte _maxJump, float _moveSpeed)
 	{
 		maxJump = _maxJump;
 		moveSpeed = _moveSpeed;
@@ -692,9 +649,4 @@ public class MarioController : MonoBehaviour
 		return animLast == anmName;
 	}
 
-	// Bezier function
-	Vector3 Bezier(Vector3 a, Vector3 b, Vector3 c, float t)
-	{
-		return Vector3.Lerp(Vector3.Lerp(a, b, t), Vector3.Lerp(b, c, t), t);
-	}
 }

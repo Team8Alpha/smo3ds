@@ -147,7 +147,8 @@ public class scrBehaviorCappy : MonoBehaviour
                     case 1:
                         SetAnim("default");
                         SetRotate(true);
-                        SetParent(); // reset parent 
+                        SetParent(); // reset parent
+                        SetCollision(true);
                         mario.isFreezeFall = false;
                         mario.SetHand(1, 1, false);
                         mario.SetHand(1, 0, true);
@@ -283,8 +284,8 @@ public class scrBehaviorCappy : MonoBehaviour
         SetParent(mountpoint);
         SetCollision(false);
 
-        hackedObj.SendMessage("OnCapHacked"); //send OnCapHacked event to object
-        if (objParam.isHack) MarioController.s.isHacking = true; //TODO: hacking event.
+        hackedObj.SendMessage("OnCapHacked"); //send OnCapHacked call to object
+        if (objParam.isHack) MarioEvent.s.SetEvent(eEventPl.hack);
         else mAnim.Play("hookStart");
 
         GameObject Mustache = hackedObj.transform.GetChild(1).GetChild(0).gameObject;

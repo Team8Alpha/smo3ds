@@ -7,7 +7,14 @@ public class scr_summon : MonoBehaviour {
 //this script, will have different functions to summon entities. the player script gets its own function tho.
 
 	public static scr_summon s;
-	
+
+	// Use this for initialization
+	void Awake()
+	{
+		s = this;
+		this.enabled = false;
+	}
+
 	public GameObject s_player(Vector3 pos, Vector3 rot){
 		if (MarioController.s == null)
         {
@@ -70,10 +77,4 @@ public class scr_summon : MonoBehaviour {
 		return result;
 	}
 	
-	// Use this for initialization
-	[RuntimeInitializeOnLoadMethod]
-	void Awake () {
-		s = this;
-		this.enabled = false;
-	}
 }

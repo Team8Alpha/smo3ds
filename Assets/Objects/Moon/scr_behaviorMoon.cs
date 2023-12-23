@@ -145,7 +145,7 @@ public class scr_behaviorMoon : MonoBehaviour
 					MarioCam.s.confStickYmax = 1;
 					MarioCam.s.confSmoothTime = 0.5f;
 					MarioController.s.GetComponent<Rigidbody>().useGravity = true;
-					if(MarioController.s.isHacking) MarioController.s.SetVisible(false);
+					if(MarioEvent.s.myEvent == eEventPl.hack) MarioController.s.SetVisible(false);
 					Destroy(gameObject);
 				}
 				break;
