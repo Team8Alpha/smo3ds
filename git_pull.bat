@@ -1,6 +1,6 @@
 @echo off
-echo Super Mario Odyssey 3DS demake,  Github updater by Moddimation
-echo ACTION: UPDATE PULL
+echo Super Mario Odyssey 3DS demake,  Scripts by Moddimation
+echo ACTION: GITHUB UPDATE PULL
 echo =------------------------------------------------------------=
 if exist .gitmain\ (
     set GITROOT=.gitmain
