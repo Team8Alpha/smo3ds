@@ -80,7 +80,7 @@ public class scr_behaviorMoon : MonoBehaviour
 				break;
 			case 2://mar
 				currentState = 1;
-				MarioController.s.groundedPosition = MarioController.s.transform.position.y;
+				MarioController.s.posGround = MarioController.s.transform.position.y;
 				tmpMpos = MarioController.s.transform.position;
 				anim.Play("getStart");
 				GetComponent<Collider>().enabled = false; //or else it literally disables marios collision
@@ -108,7 +108,7 @@ public class scr_behaviorMoon : MonoBehaviour
 					anim.Play("get");
 					Transform player = MarioController.s.transform;
 
-					MarioCam.s.confYOffset = 3 + player.position.y - MarioController.s.groundedPosition;
+					MarioCam.s.confYOffset = 3 + player.position.y - MarioController.s.posGround;
 					MarioCam.s.confRotate = false;
 					MarioCam.s.confStickXmax = 0;
 					MarioCam.s.confStickYmax = 0;

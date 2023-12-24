@@ -61,14 +61,15 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] public static MarioController s;
 
 	[HideInInspector] public Vector3 moveAdditional = Vector3.zero;
-	[HideInInspector] public float groundedPosition = 0; // latest floor position
+	[HideInInspector] public float posGround = 0; // latest floor position
 	[HideInInspector] public string animLast 		= "idle";
 	[HideInInspector] public int jumpType			= 0;
 	[HideInInspector] byte jumpAfterTimer 			= 0; //timer till it refuses to execute double jump
-	[HideInInspector] float lastGroundedPosition 	= 0;
+	[HideInInspector] float posLastGround 	= 0;
 	[HideInInspector] float speedJumpH; //used for falling direction
+	[HideInInspector] float posLastHigh				= 0;
 	[HideInInspector] Vector3 lastPosition;
-	[HideInInspector] float timeStandTrns = 0.5f;
+	[HideInInspector] float timeStandTrns			= 0.5f;
     [HideInInspector] bool[] meshPartsVisible = { true, true, false, true, false };
 												// cap, haLb, haLf,  haRb, haRf
 
@@ -86,7 +87,7 @@ public class MarioController : MonoBehaviour
 		capsColl1 = GetComponents<CapsuleCollider>()[0];
 		capsColl2 = GetComponents<CapsuleCollider>()[1];
 
-		groundedPosition = transform.position.y;
+		posGround = transform.position.y;
 		lastPosition = transform.position;
 
 		resetVisibleParts();
@@ -127,12 +128,12 @@ public class MarioController : MonoBehaviour
 						}
 						jumpAfterTimer++;
 					}
-					if (transform.position.y < groundedPosition - 3)
+					if (transform.position.y < posGround - 3)
 						SetState(eStatePl.Falling);
 					break;
 
 				case eStatePl.Jumping: // Jumping from land normal
-					float jumpedHeight = transform.position.y - lastGroundedPosition;
+					float jumpedHeight = (transform.position.y - posLastGround) * 1.4f;
 					switch (mySubState)
 					{
 						case 0:
@@ -143,6 +144,7 @@ public class MarioController : MonoBehaviour
 							{
 
 								mySubState = 1;
+								posLastHigh = transform.position.y;
 
 							}
 							//once left ground, he jumped.
@@ -153,7 +155,7 @@ public class MarioController : MonoBehaviour
 								SetState(eStatePl.Landing);
 							break;
 						case 1:
-							rb.AddForce(Vector3.down * MarioTable.dataJump[jumpType - 1][0] * 5 * jumpedHeight, ForceMode.Acceleration);
+							rb.AddForce(Vector3.down * MarioTable.dataJump[jumpType - 1][0] * 10, ForceMode.Acceleration);
 							if (hasTouchedCeiling)
 							{
 								rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
@@ -168,10 +170,10 @@ public class MarioController : MonoBehaviour
 					switch (mySubState)
 					{
 						case 0: //camera follow
-							groundedPosition = transform.position.y;
-							if (transform.position.y < lastGroundedPosition - 4)
+							posGround = transform.position.y;
+							if (transform.position.y < posLastGround - 4)
 							{
-								if (transform.position.y > lastGroundedPosition - 5)
+								if (transform.position.y > posLastGround - 5)
 								{
 									MarioCam.s.confSmoothTime = 10f;
 
@@ -179,7 +181,7 @@ public class MarioController : MonoBehaviour
 							}
 							break;
 						case 1://jump fall
-							if (transform.position.y < lastGroundedPosition - 3)
+							if (transform.position.y < posLastGround - 3)
 								SetState(myState, 0);
 							break;
 					}
@@ -287,6 +289,9 @@ public class MarioController : MonoBehaviour
 					isInputBlocked = false;
 				}
 				break;
+			case eStatePl.Falling:
+				if (key_jump && Physics.Raycast(transform.position, -Vector3.up, 1)) isJumpingSoon = true;
+				break;
 		}
 	}
 
@@ -312,28 +317,29 @@ public class MarioController : MonoBehaviour
 				jumpType++;
 				jumpAfterTimer = 1;
 				float timeTrnsJump = 0.05f;
+				float timeTrasStand = 0f;
 				switch (jumpType)
 				{
 					case 2:
-						SetAnim("jump2", timeTrnsJump);
+						SetAnim("jump2", timeTrnsJump, timeTrasStand);
 						break;
 					case 3:
 						if (currentMoveSpeed < 6)
 						{
-							SetAnim("jump", timeTrnsJump);
+							SetAnim("jump", timeTrnsJump, timeTrasStand);
 							jumpType = 1;
 							break;
 						}
-						SetAnim("jump3", timeTrnsJump);
+						SetAnim("jump3", timeTrnsJump, timeTrasStand);
 						break;
 					default:
-						SetAnim("jump", timeTrnsJump);
+						SetAnim("jump", timeTrnsJump, timeTrasStand);
 						jumpType = 1;
 						break;
 				}
-				lastGroundedPosition = groundedPosition;
 
 				currentTurnSpeed = MarioTable.speedTurnJump;
+				posLastGround = posGround;
 				isInstTurn = true;
 
 				rb.AddForce(MarioTable.dataJump[jumpType - 1][0] * Vector3.up, ForceMode.Impulse);
@@ -342,14 +348,14 @@ public class MarioController : MonoBehaviour
 			case eStatePl.Falling:
 				switch (subState)
 				{
-					case 0://falling, below lastgroundedposition
-						lastGroundedPosition = groundedPosition;
+					case 0://falling, below posLastGround
+						posLastGround = posGround;
 						MarioCam.s.confSmoothTime = 0.2f;
 						MarioCam.s.confYOffset = 1;
 						MarioCam.s.confCamDistance = MarioCam.s.defCamDistance - 1;
 						SetAnim("falling", 0.1f);
 						break;
-					case 1://falling after jump, still above lastgroundedposition
+					case 1://falling after jump, still above posLastGround
 						break;
 				}
 
@@ -359,7 +365,20 @@ public class MarioController : MonoBehaviour
 				break;
 
 			case eStatePl.Landing: //TODO: FALLING-LANDING HEIGHT STUFF
-				//SetAnim(anim_land, 0.02f); // WIP LANDING HEIGHTS
+				float trnsLand = 0.1f;
+				float height = Mathf.Abs(posLastHigh - transform.position.y);
+				Debug.Log("FALL HEIGHT: "+ height);
+				if (height > 2)
+				{
+					if (height > 6)
+					{
+						SetAnim("landDownFall", trnsLand);
+					} else {
+						SetAnim("landShort", trnsLand);
+					}
+				}
+				else SetAnim(anim_stand, trnsLand);
+				
 
 				hasJumped = false;
 				break;
@@ -413,6 +432,7 @@ public class MarioController : MonoBehaviour
 					else
 						SetAnim(anim_runStart);
 				}
+				posGround = transform.position.y;
 			}
 
 			{
@@ -515,30 +535,17 @@ public class MarioController : MonoBehaviour
 	}
 	void OnSensorBottomEnter(Collider col)
 	{
-		if (col.gameObject.layer != 20 && col.gameObject.layer != 18)
-		{
-			isMovingAir = false;
-			isTurning = false;
-			SetState(eStatePl.Landing);
-		}
-	}
-	void OnSensorBottomStay(Collider col)
-	{
+		isMovingAir = false;
+		isTurning = false;
 		isGrounded = true;
-		if (col.gameObject.layer != 20 && col.gameObject.layer != 18)
-		{ // 20 = WALL LAYER
-			groundedPosition = transform.position.y;
-		}
+		posGround = transform.position.y;
+		SetState(eStatePl.Landing);
 	}
 	void OnSensorBottomExit(Collider col)
 	{
-		if (col.gameObject.layer != 20 && col.gameObject.layer != 18)
-			isGrounded = false;
-	}
-	void OnSensorBelowStay(Collider col)
-	{
-		if (rb.velocity.y < 0 && !isGrounded && key_jump && col.gameObject.layer != 20 && col.gameObject.layer != 18)
-			isJumpingSoon = true;
+		isGrounded = false;
+		posGround = transform.position.y;
+		posLastHigh = transform.position.y;
 	}
 	public void OnSensorLODEnter(Collider coll)
 	{
@@ -580,17 +587,18 @@ public class MarioController : MonoBehaviour
 		moveSpeed = _moveSpeed;
 	}
 
-	public void SetAnim(string animName, float transitionTime = -1, float standTrnsTime = 0/*, float animSpeed = 1*/)
+	public void SetAnim(string animName, float transitionTime = -1, float standTrnsTime = -1, bool hasExitTime = true/*, float animSpeed = 1*/)
 	{
 		if (!isAnim (animName))
 		{
+			anim.Play("wait");
 			if (transitionTime == -1) transitionTime = 0.1f; // DEFAULT VALUE
 			if (transitionTime == 0 || anim.IsInTransition(0)) anim.Play(animName); // play instant
-			else
-			anim.CrossFade (animName, transitionTime); // play crossfade
-//			anim.speed 		= animSpeed;
+			else anim.CrossFade (animName, transitionTime); // play crossfade
+
+			//			anim.speed 		= animSpeed;
 			animLast 		= animName;
-			if(standTrnsTime!=0) timeStandTrns = standTrnsTime; //time to transition back to stand, quick of slow
+			if(standTrnsTime != -1) timeStandTrns = standTrnsTime; //time to transition back to stand, quick of slow
 		}
 	}
 	public void SetHand(int side, int type, bool state) // 0 = ball, 1 = flat

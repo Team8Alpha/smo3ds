@@ -67,10 +67,10 @@ public class MarioCam : MonoBehaviour {
 	void Update() {
 		
 		if (!isLocked) {
-			if (!MarioController.s.isGrounded && MarioController.s.transform.position.y - transform.position.y > 2.4f)
+			if (!MarioController.s.isGrounded) if (MarioController.s.transform.position.y - transform.position.y > 2.4f)
 			{ //JUMPING HIGH CAM
-				MarioController.s.groundedPosition = transform.position.y;
-				setCameraVal(0.14f, 4);
+				MarioController.s.posGround = transform.position.y;
+				SetCameraVal(0.14f, 4);
 			}
 			float cursorXtemp=0;
 			float cursorYtemp=0;
@@ -133,13 +133,13 @@ public class MarioCam : MonoBehaviour {
 				actualCamera.LookAt (target.transform); // Look at the camera target
 			}
 			if (confSmoothY) {
-				targetedY = Mathf.SmoothStep (targetedY, MarioController.s.groundedPosition + confYOffset, confSmoothTime);
+				targetedY = Mathf.SmoothStep (targetedY, MarioController.s.posGround + confYOffset, confSmoothTime);
 			} else if (confSmooth) {
 				target.localRotation = Quaternion.Slerp (target.localRotation, targetRot, 1 - Time.unscaledTime * confSmoothTime);
 				target.position = Vector3.Lerp (target.position, targetPos, Time.unscaledTime * confSmoothTime);
 				actualCamera.localRotation = Quaternion.Euler (0, 0, 0);
 			} else {
-				targetedY = MarioController.s.groundedPosition + confYOffset;
+				targetedY = MarioController.s.posGround + confYOffset;
 			}
 			targetCamDistance = Mathf.SmoothDamp (targetCamDistance, confCamDistance, ref velocity.y, confSmoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
 		}
@@ -151,9 +151,10 @@ public class MarioCam : MonoBehaviour {
 		confCamDistance = defCamDistance;
 		confYOffset = defYOffset;
 	}
-	public void setCameraVal(float timeSmooth, float offsetY, float distanceCam = 0)
+	public void SetCameraVal(float timeSmooth = 102, float offsetY = 102, float distanceCam = 102)
     {
-		confSmoothTime = timeSmooth;  confYOffset = offsetY; 
-		if(distanceCam != 0) confCamDistance = distanceCam;
+		if(timeSmooth != 102) confSmoothTime = timeSmooth;
+		if(offsetY != 102) confYOffset = offsetY; 
+		if(distanceCam != 102) confCamDistance = distanceCam;
     }
 }
