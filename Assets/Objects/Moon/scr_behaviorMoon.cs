@@ -11,11 +11,8 @@ public class scr_behaviorMoon : MonoBehaviour
 	private Animator anim;
 	public string moonName = "ERROR";
 	private float rotateAddition = 0;
-	private bool bvar0 = false;
-	private Vector3 tmpMpos;
 	public int color = 0;
 	SkinnedMeshRenderer mat_color;
-	Transform globalCanvas;
 
 	void setColor()
 	{
@@ -65,26 +62,32 @@ public class scr_behaviorMoon : MonoBehaviour
 	}
 	void Start()
 	{
-		tmpMpos.x -= 0;
 		anim = GetComponent<Animator>();
 		mat_color = transform.GetChild(1).GetChild(0).GetComponent<SkinnedMeshRenderer>();
 		setColor();
-		globalCanvas = scr_main.s.transform.GetChild(1).transform.GetChild(1);
+		transform.rotation = Quaternion.Euler(0, MarioCam.s.transform.eulerAngles.y + 180, 0);
 	}
 	void OnTouch(int numType)
 	{
 		switch (numType)
 		{
 			case 1://cap
-				rotateAddition = 30;
+				rotateAddition = 1200;
 				break;
 			case 2://mar
 				currentState = 1;
-				MarioController.s.posGround = MarioController.s.transform.position.y;
-				tmpMpos = MarioController.s.transform.position;
-				anim.Play("getStart");
 				GetComponent<Collider>().enabled = false; //or else it literally disables marios collision
-				MarioController.s.rb.velocity = new Vector3(0, 0, 0);
+				MarioEvent.s.SetEvent(eEventPl.demoMoon);
+
+				anim.Play("get");
+
+				transform.position = MarioController.s.transform.position;
+				transform.rotation = MarioController.s.transform.rotation;
+
+				string t_date = System.DateTime.UtcNow.ToShortDateString(); //even works on 3ds
+				scr_main.s.transform.GetChild(1).transform.GetChild(1).GetChild(1).gameObject.GetComponent<Text>().text = moonName;
+				scr_main.s.transform.GetChild(1).transform.GetChild(1).GetChild(2).gameObject.GetComponent<Text>().text = t_date;
+
 				break;
 		}
 	}
@@ -96,56 +99,14 @@ public class scr_behaviorMoon : MonoBehaviour
 			case 0://normal rotate
 				if (rotateAddition > 0)
 				{
-					transform.Rotate(0, -rotateAddition, 0);
-					rotateAddition -= 0.5f;
+					rotateAddition -= 15f;
 				}
-				transform.Rotate(0, -5.3f, 0);
+				transform.Rotate(0, (-150f + -rotateAddition) * Time.deltaTime, 0);
 				break;
 			case 1://collected
-				if (!bvar0)
-				{
-					scr_main.s.SetFocus(false);
-					anim.Play("get");
-					Transform player = MarioController.s.transform;
-
-					MarioCam.s.confYOffset = 3 + player.position.y - MarioController.s.posGround;
-					MarioCam.s.confRotate = false;
-					MarioCam.s.confStickXmax = 0;
-					MarioCam.s.confStickYmax = 0;
-					MarioCam.s.confSmoothTime = 0.3f;
-					player.rotation = Quaternion.Euler(player.eulerAngles.x, MarioCam.s.transform.eulerAngles.y + 180, player.eulerAngles.z);
-					player.position = new Vector3(player.position.x, transform.position.y, player.position.z);
-					transform.position = player.position;
-					transform.rotation = player.rotation;
-
-					MarioController.s.SetAnim("demoShineGet");
-					MarioController.s.SetVisible(true);
-
-					scr_manAudio.s.PlaySND(eSnd.JnMoonGet);
-
-					string t_date = System.DateTime.UtcNow.ToShortDateString(); //even works on 3ds
-					scr_main.s.moonsCount++;
-					globalCanvas.gameObject.SetActive(true);
-					globalCanvas.GetChild(1).gameObject.GetComponent<Text>().text = moonName;
-					globalCanvas.GetChild(2).gameObject.GetComponent<Text>().text = t_date;
-					bvar0 = true;
-
-					currentState = 2;
-				}
-				break;
-			case 2://finishing
 				if (!scr_manAudio.s.isPlaying(false))
 				{
-					scr_main.s.SetFocus(true);
-					MarioController.s.SetState(eStatePl.Falling);
-					globalCanvas.gameObject.SetActive(false);
-					MarioCam.s.confYOffset = 2;
-					MarioCam.s.confRotate = true;
-					MarioCam.s.confStickXmax = 1;
-					MarioCam.s.confStickYmax = 1;
-					MarioCam.s.confSmoothTime = 0.5f;
-					MarioController.s.GetComponent<Rigidbody>().useGravity = true;
-					if(MarioEvent.s.myEvent == eEventPl.hack) MarioController.s.SetVisible(false);
+					MarioEvent.s.SetEvent(eEventPl.demoMoon, 2);
 					Destroy(gameObject);
 				}
 				break;

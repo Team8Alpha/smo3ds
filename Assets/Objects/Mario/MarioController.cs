@@ -22,19 +22,19 @@ public class MarioController : MonoBehaviour
 	public float jumpForce = 2.5f;
 	public float moveSpeed = 8.06f;
 
-	[HideInInspector] public bool isGrounded 		= true;
-	[HideInInspector] public bool isMoving 			= false;
-	[HideInInspector] public bool wasMoving 		= false;
-	[HideInInspector] public bool lockJump			= false;
-	[HideInInspector] public bool hasJumped 		= false;
-	[HideInInspector] public bool isJumpingSoon		= false;
-	[HideInInspector] public bool isInstTurn		= false;
-	[HideInInspector] public bool isTurning			= false;
-	[HideInInspector] public bool isFreezeFall		= false;
-	[HideInInspector] public bool isInputBlocked	= false;
-	[HideInInspector] public bool isHacking			= false;
-	[HideInInspector] bool isMovingAir				= false; //if falling direction is active
-	[HideInInspector] bool hasTouchedCeiling		= false;
+	[HideInInspector] public bool isGrounded 		= true; // is colliding with floor
+	[HideInInspector] public bool isMoving 			= false; // is pressing move buttons
+	[HideInInspector] public bool wasMoving 		= false; // was moving in last frame
+	[HideInInspector] public bool lockJump			= false; // locks jump for behavior stuff
+	[HideInInspector] public bool hasJumped 		= false; // if has jumped prev.
+	[HideInInspector] public bool isJumpingSoon		= false; // if has pressed jump button just before landing
+	[HideInInspector] public bool isInstTurn		= false; 
+	[HideInInspector] public bool isTurning			= false; 
+	[HideInInspector] public bool isFreezeFall		= false; 
+	[HideInInspector] public bool isInputBlocked	= false; // if process input functions or not
+	[HideInInspector] public bool isHacking			= false; // if is capturing, hacking...
+	[HideInInspector] bool isMovingAir				= false; // if falling direction is active, falling
+	[HideInInspector] bool hasTouchedCeiling		= false; // has touched top
 
 	[HideInInspector] public Animator anim;
 	[HideInInspector] public Rigidbody rb;
@@ -44,13 +44,22 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] public bool key_backR			= false;
 	[HideInInspector] public bool key_cap 			= false;
 
-	float h 										= 0;
-	float v 										= 0;
-	float currentMoveSpeed 							= 0;
-	float jumpVelocity 								= 0;
+	float h											= 0; // controller y
+	float v 										= 0; // controller x
+	float currentMoveSpeed 							= 0; // varying move speed
+	float jumpVelocity 								= 0; 
 	float currentTurnSpeed							= 0;
 	float currentRotation							= 0;
-	float speedSlip									= 0;
+	float speedSlip									= 0; // slipping speed
+	float posLastGround								= 0;
+	float speedJumpH								= 0; //used for falling direction
+	float posLastHigh								= 0;
+	float timeStandTrns								= 0.5f;
+	byte jumpAfterTimer								= 0; //timer till it refuses to execute double jump
+	Vector3 lastPosition;
+	//							 cap, haLb, haLf,  haRb, haRf
+	bool[] meshPartsVisible = { true, true, false, true, false };
+
 
 	[HideInInspector] public string anim_stand 		= "idle";
 	[HideInInspector] public string anim_run 		= "run";
@@ -61,17 +70,9 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] public static MarioController s;
 
 	[HideInInspector] public Vector3 moveAdditional = Vector3.zero;
-	[HideInInspector] public float posGround = 0; // latest floor position
+	[HideInInspector] public float posGround		= 0; // latest floor position
+	[HideInInspector] public byte jumpType			= 0;
 	[HideInInspector] public string animLast 		= "idle";
-	[HideInInspector] public int jumpType			= 0;
-	[HideInInspector] byte jumpAfterTimer 			= 0; //timer till it refuses to execute double jump
-	[HideInInspector] float posLastGround 	= 0;
-	[HideInInspector] float speedJumpH; //used for falling direction
-	[HideInInspector] float posLastHigh				= 0;
-	[HideInInspector] Vector3 lastPosition;
-	[HideInInspector] float timeStandTrns			= 0.5f;
-    [HideInInspector] bool[] meshPartsVisible = { true, true, false, true, false };
-												// cap, haLb, haLf,  haRb, haRf
 
     [HideInInspector] CapsuleCollider capsColl1;
 	[HideInInspector] CapsuleCollider capsColl2;
@@ -223,8 +224,8 @@ public class MarioController : MonoBehaviour
 		movementVector += moveAdditional;
 
 		// Move the character using the Rigidbody
-		rb.velocity = movementVector;
-		rb.AddForce(Vector3.up * jumpVelocity);
+		rb.velocity = movementVector * Time.deltaTime * Application.targetFrameRate;
+		rb.AddForce(Vector3.up * jumpVelocity * Time.deltaTime * Application.targetFrameRate);
 	}
 
 	void HandleInput()
@@ -367,7 +368,6 @@ public class MarioController : MonoBehaviour
 			case eStatePl.Landing: //TODO: FALLING-LANDING HEIGHT STUFF
 				float trnsLand = 0.1f;
 				float height = Mathf.Abs(posLastHigh - transform.position.y);
-				Debug.Log("FALL HEIGHT: "+ height);
 				if (height > 2)
 				{
 					if (height > 6)
@@ -463,13 +463,8 @@ public class MarioController : MonoBehaviour
 
 			if (!isMovingAir)
 			{
-				if (currentMoveSpeed < moveSpeed)
-				{
-					currentMoveSpeed += 0.3f;
-				}
-
-				if (currentMoveSpeed > moveSpeed)
-					currentMoveSpeed = moveSpeed;
+				float acceleration = 10f; // Adjust this value for faster or slower acceleration
+				currentMoveSpeed = Mathf.MoveTowards(currentMoveSpeed, moveSpeed, acceleration * Time.deltaTime);
 			}
 		}
 		else
@@ -591,7 +586,6 @@ public class MarioController : MonoBehaviour
 	{
 		if (!isAnim (animName))
 		{
-			anim.Play("wait");
 			if (transitionTime == -1) transitionTime = 0.1f; // DEFAULT VALUE
 			if (transitionTime == 0 || anim.IsInTransition(0)) anim.Play(animName); // play instant
 			else anim.CrossFade (animName, transitionTime); // play crossfade

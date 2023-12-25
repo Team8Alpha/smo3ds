@@ -14,9 +14,10 @@ public enum eEventPl
 
 public class MarioEvent : MonoBehaviour
 {
-    [HideInInspector] public eEventPl myEvent = eEventPl.wait;
-    [HideInInspector] public eEventPl myPrevEvent = eEventPl.wait;
-    [HideInInspector] public byte mySubEvent = 0;
+    public eEventPl myEvent = eEventPl.wait;
+    public eEventPl myPrevEvent = eEventPl.wait;
+    public byte myPrevSubEvent = 0;
+    public byte mySubEvent = 0;
     [HideInInspector] public static MarioEvent s;
     MarioController mario;
     scrBehaviorCappy cappy;
@@ -63,18 +64,19 @@ public class MarioEvent : MonoBehaviour
         }
     }
 
-    public void SetEvent(eEventPl eventID, byte subEventID = 0) 
+    public void SetEvent(eEventPl eventID, byte subEventID = 0)
     {
         myPrevEvent = myEvent;
+        myPrevSubEvent = mySubEvent;
         myEvent = eventID;
         mySubEvent = subEventID;
-        switch(myEvent)
+        switch (myEvent)
         {
             case eEventPl.wait:
-                MarioController.s.enabled = false;
+                mario.enabled = false;
                 break;
             case eEventPl.control:
-                MarioController.s.enabled = true;
+                mario.enabled = true;
                 mario.SetState(eStatePl.Ground);
                 mario.isInputBlocked = false;
                 break;
@@ -83,7 +85,7 @@ public class MarioEvent : MonoBehaviour
                 {
                     case 0:
                         mario.SetAnim("captureFly");
-                        MarioController.s.enabled = false;
+                        mario.enabled = false;
                         fVar0 = Time.time;
                         mario.isHacking = true;
                         break;
@@ -91,7 +93,7 @@ public class MarioEvent : MonoBehaviour
                         mario.SetState(eStatePl.Ground);
                         cappy.hackedObj.SendMessage("SetState", 6);
                         mario.SetVisible(false);
-                        MarioController.s.enabled = true;
+                        mario.enabled = true;
                         break;
                 }
                 break;
@@ -107,6 +109,66 @@ public class MarioEvent : MonoBehaviour
                 if (mustache.name == "Mustache" || mustache.name == "Mustache__HairMT") mustache.SetActive(false);
                 SetEvent(eEventPl.control);
                 break;
+
+            case eEventPl.demoMoon:
+                switch (mySubEvent)
+                {
+                    case 0: // start
+                        SetDelayEvent(3, myEvent, 1);
+
+                        OnDemo(true);
+                        scr_main.s.SetFocus(false);
+
+                        MarioCam.s.confSmoothTime = 0.3f;
+                        MarioCam.s.confCamDistance -= 2;
+                        MarioCam.s.confYOffset -= 0.8f;
+                        //MarioCam.s.additionalRot.x -= MarioCam.s.transform.eulerAngles.x * 0.8f - 30;
+                        MarioCam.s.confIsWallBlock = false;
+                        MarioCam.s.SetTransPl(true);
+
+                        mario.SetAnim("demoShineGet");
+                        mario.SetVisible(true);
+                        mario.rb.velocity = new Vector3(0, 0, 0);
+                        mario.posGround = mario.transform.position.y;
+                        mario.transform.rotation = Quaternion.Euler(mario.transform.eulerAngles.x, MarioCam.s.transform.eulerAngles.y+180, mario.transform.eulerAngles.x);
+
+                        SetDelayEvent(1.3f, myEvent, 3);
+
+                        scr_manAudio.s.PlaySND(eSnd.JnMoonGet);
+                        break;
+                    case 1: // add moon
+                        scr_main.s.moonsCount++;
+                        scr_manAudio.s.PlaySND(eSnd.CoinCollect);
+                        mySubEvent = 0;
+                        break;
+                    case 2: // destroy
+                        OnDemo(false);
+                        scr_main.s.SetFocus(true);
+                        MarioCam.s.confSmoothTime = MarioCam.s.defSmoothTime;
+                        MarioCam.s.confCamDistance = MarioCam.s.defCamDistance;
+                        MarioCam.s.confYOffset = MarioCam.s.defYOffset;
+                        MarioCam.s.additionalRot.x = 0;
+                        MarioCam.s.confIsWallBlock = true;
+                        MarioCam.s.SetTransPl(false);
+                        mario.transform.Rotate(0, -180, 0);
+                        mario.GetComponent<Rigidbody>().useGravity = true;
+                        if (MarioEvent.s.myEvent == eEventPl.hack) mario.SetVisible(false);
+                        SetDelayEvent(3, myEvent, 4);
+
+                        mario.SetState(eStatePl.Falling);
+                        break;
+                    case 3:
+                        scr_main.s.transform.GetChild(1).transform.GetChild(1).gameObject.SetActive(true);
+                        GoToPrevState(true);
+                        break;
+                    case 4:
+                        if(mario.enabled) scr_main.s.transform.GetChild(1).transform.GetChild(1).gameObject.SetActive(false);
+                        GoToPrevState(true);
+                        break;
+                }
+
+                break;
+
         }
     }
     // Bezier function
@@ -114,5 +176,32 @@ public class MarioEvent : MonoBehaviour
     {
         float s = 1.0f - t;
         return s * s * a + 2.0f * s * t * b + t * t * c;
+    }
+
+    public void SetDelayEvent(float tSec, eEventPl eventID, byte subEventID) { StartCoroutine(delayEvent(tSec, eventID, subEventID)); }
+    IEnumerator delayEvent(float tSec, eEventPl eventID, byte subEventID)
+    {
+        float timer = 0f;
+
+        while (timer < tSec)
+        {
+            timer += Time.unscaledDeltaTime;
+            yield return null;
+        }
+        Debug.Log("MEv Call Event "+eventID+"."+subEventID+" after "+tSec+"s");
+        SetEvent(eventID, subEventID);
+    }
+    void OnDemo(bool state)
+    {
+        mario.enabled = !state;
+    }
+    void GoToPrevState(bool silent = true)
+    {
+        if (silent)
+        {
+            myEvent = myPrevEvent;
+            mySubEvent = myPrevSubEvent;
+        }
+        else SetEvent(myPrevEvent, myPrevSubEvent);
     }
 }
