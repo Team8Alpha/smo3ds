@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: HeadFont
+  fontName: My Font
   fontNames:
   - HeadFont
   fallbackFontReferences: []

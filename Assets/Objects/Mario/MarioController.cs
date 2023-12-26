@@ -49,7 +49,6 @@ public class MarioController : MonoBehaviour
 
 	float h											= 0; // controller y
 	float v 										= 0; // controller x
-	float jumpVelocity 								= 0; 
 	float currentTurnSpeed							= 0;
 	float currentRotation							= 0;
 	float speedSlip									= 0; // slipping speed
@@ -71,13 +70,12 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] public scrBehaviorCappy		cappy;
 	[HideInInspector] public static MarioController s;
 
-	[HideInInspector] public Vector3 moveAdditional = Vector3.zero;
 	[HideInInspector] public float posGround		= 0; // latest floor position
 	[HideInInspector] public byte jumpType			= 0;
+	[HideInInspector] public Vector3 moveAdditional = Vector3.zero;
 	[HideInInspector] public string animLast 		= "idle";
 
-    [HideInInspector] CapsuleCollider capsColl1;
-	[HideInInspector] CapsuleCollider capsColl2;
+	[HideInInspector] CapsuleCollider[] colTrigger;
 
 	void Awake()
 	{
@@ -88,8 +86,7 @@ public class MarioController : MonoBehaviour
 		anim = GetComponent<Animator>();
 		rb = GetComponent<Rigidbody>();
 		charc = GetComponent<CharacterController>();
-		capsColl1 = GetComponents<CapsuleCollider>()[0];
-		capsColl2 = GetComponents<CapsuleCollider>()[1];
+		colTrigger = GetComponents<CapsuleCollider>();
 
 		posGround = transform.position.y;
 		lastPosition = transform.position;
@@ -97,6 +94,8 @@ public class MarioController : MonoBehaviour
 		resetVisibleParts();
 
 		s = this;
+
+		transform.Translate(0, 0.2f, 0);
 	}
 
 	void OnDestroy()
@@ -142,13 +141,12 @@ public class MarioController : MonoBehaviour
 						if (jumpType > 2) jumpAfterTimer = 0;
 						if (jumpAfterTimer > 9)
 						{//maximal
-							jumpAfterTimer = 0;
+							jumpAfterTimer = 0; 
 							jumpType = 0;
 						}
 						jumpAfterTimer++;
 					}
-					if (transform.position.y < posGround - 1f)
-						SetState(eStatePl.Falling, 2);
+					if (!wasGrounded) Debug.Log("Wee");
 					break;
 
 				case eStatePl.Jumping: // Jumping from land normal
@@ -248,7 +246,6 @@ public class MarioController : MonoBehaviour
 
 		// Move the character using the Rigidbody
 		charc.Move(movementVector * Time.deltaTime);
-		rb.AddForce(Vector3.up * jumpVelocity * Time.deltaTime);
 	}
 
 	void HandleInput()
@@ -403,16 +400,25 @@ public class MarioController : MonoBehaviour
 			case eStatePl.Landing: //TODO: FALLING-LANDING HEIGHT STUFF
 				float trnsLand = 0.1f;
 				float height = Mathf.Abs(posLastHigh - transform.position.y);
-				if (height > 2)
+				if (!isMoving)
 				{
-					if (height > 6)
+					if (height > 2)
 					{
-						SetAnim("landDownFall", trnsLand);
-					} else {
-						SetAnim("landShort", trnsLand);
+						if (height > 6)
+						{
+							SetAnim("landDownFall", trnsLand);
+						}
+						else
+						{
+							SetAnim("landShort", trnsLand);
+						}
 					}
-				}
-				else SetAnim(anim_stand, trnsLand);
+					else SetAnim(anim_stand, trnsLand);
+				} else
+                {
+					if (currentMoveSpeed > 1) SetAnim(anim_run);
+					else SetAnim(anim_runStart);
+                }
 				
 
 				hasJumped = false;
@@ -525,7 +531,7 @@ public class MarioController : MonoBehaviour
 	void OnTriggerEnter(Collider collis)
 	{
 		paramObj collisParam;
-		if ((collisParam = collis.GetComponent<paramObj>()) == null) return;
+		if ((collisParam = collis.gameObject.GetComponent<paramObj>()) == null) return;
 
 
 		if (collisParam.isTouch)
@@ -654,11 +660,14 @@ public class MarioController : MonoBehaviour
 	public void SetCollider(float height)
 	{
 		Vector3 center = new Vector3(0, height / 2, 0);
-		//Vector3 size = new Vector3(capsColl1.size.x, height, capsColl1.size.z);
-		capsColl1.center = center;
-		capsColl1.height = height;
-		capsColl2.center = center;
-		capsColl2.height = height;
+		//Vector3 size = new Vector3(colTrigger.size.x, height, colTrigger.size.z);
+		foreach(CapsuleCollider coll in colTrigger)
+		{
+			coll.center = center;
+			coll.height = height;
+		}
+		charc.center = center;
+		charc.height = height;
 	}
 
 	//CHECK
