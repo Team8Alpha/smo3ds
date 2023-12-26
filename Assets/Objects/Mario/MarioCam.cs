@@ -108,7 +108,7 @@ public class MarioCam : MonoBehaviour {
 					//move camera with player									//smoothly calculate y position
 
 
-					if (!MarioController.s.isGrounded) 
+					if (!MarioController.s.charc.isGrounded) 
 						if (MarioController.s.transform.position.y - transform.position.y > 2.4f)
 						{ //JUMPING HIGH CAM
 							MarioController.s.posGround = transform.position.y;

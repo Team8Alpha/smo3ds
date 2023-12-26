@@ -84,29 +84,34 @@ public class MarioEvent : MonoBehaviour
                 switch (mySubEvent)
                 {
                     case 0:
-                        mario.SetAnim("captureFly");
-                        mario.enabled = false;
                         fVar0 = Time.time;
+                        mario.SetAnim("captureFly");
                         mario.isHacking = true;
+                        mario.enabled = false;
                         break;
                     case 1:
-                        mario.SetState(eStatePl.Ground);
                         cappy.hackedObj.SendMessage("SetState", 6);
+                        mario.SetState(eStatePl.Ground);
                         mario.SetVisible(false);
                         mario.enabled = true;
+                        cappy.hackedObj.GetComponent<Collider>().enabled = false;
                         break;
                 }
                 break;
             case eEventPl.unhack:
                 cappy.hackedObj.SendMessage("SetState", 7);
-                cappy.SetState(eStateCap.Return);
-                cappy.isHacking = false;
+                cappy.SetState(eStateCap.UnHack);
+                cappy.hackedObj.GetComponent<Collider>().enabled = true;
+
                 transform.Translate(0, 0, -2); //TODO: jump out of hack obj
+
                 mario.ResetSpeed();
                 mario.SetVisible(true);
                 mario.SetCap(false);
+
                 GameObject mustache = cappy.hackedObj.transform.GetChild(1).GetChild(0).gameObject;
                 if (mustache.name == "Mustache" || mustache.name == "Mustache__HairMT") mustache.SetActive(false);
+
                 SetEvent(eEventPl.control);
                 break;
 
@@ -127,7 +132,12 @@ public class MarioEvent : MonoBehaviour
                         MarioCam.s.SetTransPl(true);
 
                         mario.SetAnim("demoShineGet");
-                        mario.SetVisible(true);
+                        if (mario.isHacking)
+                        {
+                            mario.SetVisible(true);
+                            cappy.transform.GetChild(1).gameObject.layer = 0;
+                            cappy.objCappyEyes.SetActive(false);
+                        }
                         mario.rb.velocity = new Vector3(0, 0, 0);
                         mario.posGround = mario.transform.position.y;
                         mario.transform.rotation = Quaternion.Euler(mario.transform.eulerAngles.x, MarioCam.s.transform.eulerAngles.y+180, mario.transform.eulerAngles.x);
@@ -152,18 +162,25 @@ public class MarioEvent : MonoBehaviour
                         MarioCam.s.SetTransPl(false);
                         mario.transform.Rotate(0, -180, 0);
                         mario.GetComponent<Rigidbody>().useGravity = true;
-                        if (MarioEvent.s.myEvent == eEventPl.hack) mario.SetVisible(false);
+                        if (mario.isHacking)
+                        {
+                            mario.SetVisible(false);
+                            cappy.transform.GetChild(1).gameObject.layer = 18;
+                            cappy.objCappyEyes.SetActive(true);
+                        }
                         SetDelayEvent(3, myEvent, 4);
+
+                        GoToPrevEvent(true);
 
                         mario.SetState(eStatePl.Falling);
                         break;
                     case 3:
                         scr_main.s.transform.GetChild(1).transform.GetChild(1).gameObject.SetActive(true);
-                        GoToPrevState(true);
+                        GoToPrevEvent(true);
                         break;
                     case 4:
                         if(mario.enabled) scr_main.s.transform.GetChild(1).transform.GetChild(1).gameObject.SetActive(false);
-                        GoToPrevState(true);
+                        GoToPrevEvent(true);
                         break;
                 }
 
@@ -194,8 +211,9 @@ public class MarioEvent : MonoBehaviour
     void OnDemo(bool state)
     {
         mario.enabled = !state;
+        mario.rb.isKinematic = state;
     }
-    void GoToPrevState(bool silent = true)
+    void GoToPrevEvent(bool silent = true)
     {
         if (silent)
         {

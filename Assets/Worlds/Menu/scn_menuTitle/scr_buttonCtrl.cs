@@ -83,7 +83,7 @@ public class scr_buttonCtrl : MonoBehaviour {
 		SceneManager.LoadScene ("scn_loadShip", LoadSceneMode.Additive);
 		scr_title.s.GetComponent<Animator>().Play ("titleEnd");
 		transform.GetComponent<Canvas> ().enabled = false;
-		transform.GetChild (0).gameObject.SetActive (false);
+		transform.GetChild (2).gameObject.SetActive (false);
 		this.enabled = false;
 	}
 }

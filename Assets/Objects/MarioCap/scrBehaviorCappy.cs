@@ -8,7 +8,7 @@ public enum eStateCap
     FlyWait,                        // flying static.
     Return,                         // fly back to mario
     Hack,                           // captured, original calls it internally "hacking"
-    HackAfter,                      // uncapturing
+    UnHack,                         // 
     Jump                            // cap jump
 }
 public class scrBehaviorCappy : MonoBehaviour
@@ -25,6 +25,7 @@ public class scrBehaviorCappy : MonoBehaviour
     public GameObject hackedObj;    // object posessed by cappy
    // Rigidbody rb;
     CharacterController charc;
+    public GameObject objCappyEyes;
 
     //private const float numOffsetY = 0.6f; // y offset at marios
 
@@ -145,6 +146,7 @@ public class scrBehaviorCappy : MonoBehaviour
                         SetParent(mario.transform); // follow mario
                         break;
                     case 1:
+                        isHacking = false;
                         SetAnim("default");
                         SetRotate(true);
                         SetParent(); // reset parent
@@ -184,13 +186,10 @@ public class scrBehaviorCappy : MonoBehaviour
                 SetAnim("capture");
                 scr_manAudio.s.PlaySelfSND(ref mAudio, eSnd.CappyHacked, false, true);
                 break;
-            case eStateCap.HackAfter:
-                scr_main.s.capMountPoint = "";
-                var Mustache = hackedObj.transform.GetChild(1).GetChild(0);
-                if (Mustache.name == "Mustache" || Mustache.name == "Mustache__HairMT")
-                    Mustache.gameObject.SetActive(false); //if mustache, place it at index 0
-                isHacking = false;
+            case eStateCap.UnHack:
                 SetCollision(false);
+                isHacking = false;
+                scr_main.s.capMountPoint = "";
                 SetState(eStateCap.Return);
                 break;
         }

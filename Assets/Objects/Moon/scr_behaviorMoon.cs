@@ -65,7 +65,6 @@ public class scr_behaviorMoon : MonoBehaviour
 		anim = GetComponent<Animator>();
 		mat_color = transform.GetChild(1).GetChild(0).GetComponent<SkinnedMeshRenderer>();
 		setColor();
-		transform.rotation = Quaternion.Euler(0, MarioCam.s.transform.eulerAngles.y + 180, 0);
 	}
 	void OnTouch(int numType)
 	{
