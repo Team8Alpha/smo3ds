@@ -110,44 +110,46 @@ public class MarioController : MonoBehaviour
 
 	void Update()
 	{
+		if (charc.isGrounded && !wasGrounded)
+		{
+			isMovingAir = false;
+			isTurning = false;
+			posGround = transform.position.y;
+			SetState(eStatePl.Landing);
+			wasGrounded = true;
+			Debug.Log("M Ground Enter");
+		}
+		else if (!charc.isGrounded && wasGrounded)
+		{
+			wasGrounded = false;
+			posGround = transform.position.y;
+			posLastHigh = transform.position.y;
+			Debug.Log("M Ground Exit");
+		}
+
 		if (scr_main.s.isFocused)
 		{
 			HandleInput();
 			HandleMove();
 
-			if(charc.isGrounded && !wasGrounded)
-			{
-				isMovingAir = false;
-				isTurning = false;
-				posGround = transform.position.y;
-				SetState(eStatePl.Landing);
-				wasGrounded = true;
-				Debug.Log("M Ground Enter");
-            } else if(!charc.isGrounded && wasGrounded)
-            {
-				wasGrounded = false;
-				posGround = transform.position.y;
-				posLastHigh = transform.position.y;
-				Debug.Log("M Ground Exit");
-			}
 
 			// Update Mario's animation and movement based on states
 			switch (myState)
 			{
 				case eStatePl.Ground: // Standing still, wait
 
-					if (jumpAfterTimer > 0)
-					{
-						if (jumpType > 2) jumpAfterTimer = 0;
-						if (jumpAfterTimer > 9)
-						{//maximal
-							jumpAfterTimer = 0; 
-							jumpType = 0;
-						}
-						jumpAfterTimer++;
-					}
-					if (!wasGrounded) Debug.Log("Wee");
-					break;
+                    if (jumpAfterTimer > 0)
+                    {
+                        if (jumpType > 2) jumpAfterTimer = 0;
+                        if (jumpAfterTimer > 9)
+                        {//maximal
+                            jumpAfterTimer = 0;
+                            jumpType = 0;
+                        }
+                        jumpAfterTimer++;
+                    }
+					//TODO: FALLING WHEN NOT GROUNDED
+                    break;
 
 				case eStatePl.Jumping: // Jumping from land normal
 					float jumpedHeight = (transform.position.y - posLastGround) * 1.4f;
@@ -239,8 +241,16 @@ public class MarioController : MonoBehaviour
 		lastPosition = transform.position;
 		wasMoving = isMoving;
 
+		float angleSpeed = 0;
+		RaycastHit hit;
+		if (wasGrounded && Physics.SphereCast(colTrigger[0].center + transform.position, 0.2f, -Vector3.up, out hit, 2f))
+		{
+			angleSpeed = Vector3.Dot(transform.forward, Vector3.Cross(Vector3.up, Vector3.Cross(Vector3.up, hit.normal)));
+			Debug.Log(angleSpeed);
+		}
+
 		float yVel = rb.velocity.y; //store old yvel
-		Vector3 movementVector = transform.rotation * Vector3.forward * currentMoveSpeed;// * Time.deltaTime; //mashed together movement math
+		Vector3 movementVector = transform.rotation * Vector3.forward * (currentMoveSpeed - (angleSpeed * currentMoveSpeed));// * Time.deltaTime; //mashed together movement math
 		movementVector.y = isFreezeFall ? 0 : yVel; //reassign old yvel
 		movementVector += moveAdditional;
 
@@ -312,7 +322,7 @@ public class MarioController : MonoBehaviour
 				}
 				break;
 			case eStatePl.Falling:
-				if (key_jump && Physics.Raycast(transform.position, -Vector3.up, 1)) isJumpingSoon = true;
+				if (key_jump && Physics.Raycast(transform.position, -Vector3.up, 0.8f)) isJumpingSoon = true;
 				break;
 		}
 	}

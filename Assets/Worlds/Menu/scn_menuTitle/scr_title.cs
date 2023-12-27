@@ -45,7 +45,7 @@ public class scr_title : MonoBehaviour {
 		marioPos = transform.position; // to move him back later
 		transform.position = new Vector3(-1000, transform.position.y, transform.position.z); //move to waitzone, works like a timer.
 
-		scr_fadefull.s.Run(true, 0, 0.02f);//fade in
+		if(scr_fadefull.s != null) scr_fadefull.s.Run(true, 0, 0.02f);//fade in
 		mat_rotMap = spr_rotMap.gameObject.GetComponent<MeshRenderer>().material;
 		mat_shade = spr_shade.gameObject.GetComponent<MeshRenderer>().material;//get materials
 
@@ -80,7 +80,7 @@ public class scr_title : MonoBehaviour {
 	{
 		scr_main.s.SetFocus(true);
 		cnv_down.GetChild(2).gameObject.SetActive(true);
-		cnv_down.GetComponent<Canvas>().enabled = true;
+		scr_manButton.s.SetActive(true);
 		EventSystem.current.SetSelectedGameObject(buttonRes);
 		scr_manAudio.s.PlayBGM("Title");
 		scr_manAudio.s.UnloadSND(eSnd.MarioTitleScream);
