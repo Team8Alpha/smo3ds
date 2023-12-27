@@ -124,7 +124,7 @@ public class MarioEvent : MonoBehaviour
                         OnDemo(true);
                         scr_main.s.SetFocus(false);
 
-                        MarioCam.s.confSmoothTime = 0.3f;
+                        MarioCam.s.confSmoothTime = 0.2f;
                         MarioCam.s.confCamDistance -= 2;
                         MarioCam.s.confYOffset -= 0.8f;
                         //MarioCam.s.additionalRot.x -= MarioCam.s.transform.eulerAngles.x * 0.8f - 30;

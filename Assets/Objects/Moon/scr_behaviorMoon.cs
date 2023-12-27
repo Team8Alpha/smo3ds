@@ -91,11 +91,6 @@ public class scr_behaviorMoon : MonoBehaviour
 		}
 	}
 
-	void OnTriggerEnter(Collider collis)
-    {
-		Debug.Log("HUNYAHAAAAA");
-    }
-
 	void Update()
 	{
 		switch (currentState)

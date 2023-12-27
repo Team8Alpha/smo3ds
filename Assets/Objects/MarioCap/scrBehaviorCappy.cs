@@ -121,7 +121,6 @@ public class scrBehaviorCappy : MonoBehaviour
         {
             case eStateCap.Wait:
                 SetRotate(false);
-                SetParent(tMario.parent);
                 SetVisible(false);
                 SetCollision(false);
                 SetAnim("default");
@@ -131,22 +130,25 @@ public class scrBehaviorCappy : MonoBehaviour
                 {
                     case 0:
                         string nameAnim = "spinCapStart";
-                        if (mario.jumpType > 0) nameAnim = "spinCapJumpStart";
+                        if (mario.wasGrounded == false)
+                        {
+                            nameAnim = "spinCapJumpStart";
+                            mario.isFreezeFall = true;
+                        }
                         SetAnim(nameAnim);
                         SetCollision(false);
-                        SetParent(tMario);
                         mario.SetAnim(nameAnim, 0.03f, 0.3f);
                         mario.SetCap(false);
                         mario.SetHand(1, 0, false);
                         mario.SetHand(1, 1, true);
-                        mario.isFreezeFall = true;
+                        transform.position = tMario.position;
+                        transform.rotation = tMario.rotation;
                         break;
                     case 1:
                         isHacking = false;
                         SetAnim("default");
                         SetRotate(true);
                         SetCollision(true);
-                        SetParent();
                         mario.isFreezeFall = false;
                         mario.SetHand(1, 1, false);
                         mario.SetHand(1, 0, true);
@@ -162,12 +164,10 @@ public class scrBehaviorCappy : MonoBehaviour
                 switch (mySubState)
                 {
                     case 0:
-                        SetParent(null, false);
                         SetAnim("default", 0.2f);
                         SetRotate(true);
                         break;
                     case 1:
-                        SetParent();
                         SetAnim("CatchCap");
                         SetRotate(false);
                         mario.SetAnim("CatchCap", 0.05f, 1);
@@ -189,24 +189,28 @@ public class scrBehaviorCappy : MonoBehaviour
             case eStateCap.UnHack:
                 SetCollision(false);
                 scr_main.s.capMountPoint = "";
+                SetParent(tMario.parent, false);
                 SetState(eStateCap.Return);
                 break;
         }
     }
-    public void SetParent(Transform parent = null, bool resetPos = true)
+    public void SetParent(Transform parent, bool resetPos)
     {
-        if (parent != null) transform.SetParent(parent);
-        else
-        {
-            parent = mario.transform;
-            transform.SetParent(tMario.parent);
-        }
-        if (resetPos || parent == null)
+        Vector3 posPrev = parent.position;
+        Quaternion rotPrev = parent.rotation;
+        Vector3 sclPrev = parent.localScale;
+        transform.SetParent(parent);
+        if (resetPos)
         {
             transform.position = parent.position;
             transform.rotation = parent.rotation;
             transform.localScale = Vector3.one;
 
+        } else
+        {
+            transform.position = posPrev;
+            transform.rotation = rotPrev;
+            transform.localScale = sclPrev;
         }
     }
     void SetAnim(string animName, float transitionTime = 0.1f, float animSpeed = 1)
@@ -253,7 +257,6 @@ public class scrBehaviorCappy : MonoBehaviour
     public void SetCollision(bool boolean)
     {
         charc.detectCollisions = boolean;
-        Physics.IgnoreCollision(charc, tMario.GetComponent<Collider>(), boolean);
     }
     float GetAnimTime()
     {
@@ -278,7 +281,7 @@ public class scrBehaviorCappy : MonoBehaviour
         if (hackedObj.GetComponent<Collider>() != null)
             foreach (Collider coll in hackedObj.GetComponents<Collider>())
                 coll.enabled = false;
-        SetParent(mountpoint);
+        SetParent(mountpoint, true);
         SetCollision(false);
 
         hackedObj.SendMessage("OnCapHacked"); //send OnCapHacked call to object

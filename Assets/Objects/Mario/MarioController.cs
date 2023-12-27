@@ -96,6 +96,7 @@ public class MarioController : MonoBehaviour
 		s = this;
 
 		transform.Translate(0, 0.2f, 0);
+
 	}
 
 	void OnDestroy()
@@ -148,6 +149,7 @@ public class MarioController : MonoBehaviour
                         }
                         jumpAfterTimer++;
                     }
+					if (!wasGrounded) SetState(eStatePl.Falling, 2);
 					//TODO: FALLING WHEN NOT GROUNDED
                     break;
 
@@ -174,7 +176,7 @@ public class MarioController : MonoBehaviour
 								SetState(eStatePl.Landing);
 							break;
 						case 1:
-							rb.AddForce(Vector3.down * MarioTable.dataJump[jumpType - 1][0] * 10, ForceMode.Acceleration);
+							rb.AddForce(Vector3.down * MarioTable.dataJump[jumpType - 1][0] * 12, ForceMode.Acceleration);
 							if (hasTouchedCeiling)
 							{
 								rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
@@ -186,6 +188,11 @@ public class MarioController : MonoBehaviour
 					}
 					break;
 				case eStatePl.Falling: //FALLING CAM
+					if (wasGrounded)
+					{
+						SetState(eStatePl.Landing);
+						MarioCam.s.ResetValue();
+					}
 					switch (mySubState)
 					{
 						case 0: //camera follow
@@ -206,14 +213,8 @@ public class MarioController : MonoBehaviour
 						case 2:
 							if (transform.position.y < posGround - 3)
 								SetState(eStatePl.Falling);
-							if (rb.velocity.y > -3) SetState(eStatePl.Landing);
+							if (wasGrounded) SetState(eStatePl.Landing);
 							break;
-					}
-
-					if (charc.isGrounded)
-					{
-						SetState(eStatePl.Landing);
-						MarioCam.s.ResetValue();
 					}
 					break;
 
@@ -251,7 +252,7 @@ public class MarioController : MonoBehaviour
 
 		float yVel = rb.velocity.y; //store old yvel
 		Vector3 movementVector = transform.rotation * Vector3.forward * (currentMoveSpeed - (angleSpeed * currentMoveSpeed));// * Time.deltaTime; //mashed together movement math
-		movementVector.y = isFreezeFall ? 0 : yVel; //reassign old yvel
+		movementVector.y = (isFreezeFall ? 0 : yVel) - 5; //reassign old yvel
 		movementVector += moveAdditional;
 
 		// Move the character using the Rigidbody
@@ -383,7 +384,7 @@ public class MarioController : MonoBehaviour
 				posLastGround = posGround;
 				isInstTurn = true;
 
-				rb.AddForce(MarioTable.dataJump[jumpType - 1][0] * Vector3.up, ForceMode.Impulse);
+				rb.AddForce(MarioTable.dataJump[jumpType - 1][0] * Vector3.up * 1.7f, ForceMode.Impulse);
 				break;
 
 			case eStatePl.Falling:
@@ -398,7 +399,7 @@ public class MarioController : MonoBehaviour
 					case 1://falling after jump, still above posLastGround
 						break;
 					case 2://pos lower than last ground, short fall
-						SetAnim("falling", 0.1f);
+						SetAnim("falling", 0.7f);
 						break;
 				}
 
