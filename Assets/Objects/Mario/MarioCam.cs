@@ -10,7 +10,7 @@ public class MarioCam : MonoBehaviour {
 	public Transform target; // The parent object for the camera
 	public Transform actualCamera; // The actual camera child object
 
-	public bool isInvertCursorY 							= false; // Whether to invert the Y axis of the cursor movement
+	public bool isInvertCursorY 						= false; // Whether to invert the Y axis of the cursor movement
 	public bool isInvertCursorX							= false; // Whether to invert the Y axis of the cursor movement
 	public float cursorSensitivity 						= 10f; // The sensitivity of the cursor movement
 	public float CStickSensitivity 						= 10f; // The sensitivity of the C-Stick movement
@@ -45,6 +45,7 @@ public class MarioCam : MonoBehaviour {
 	[HideInInspector] public float defYOffset 			= 3;
 
 	public static MarioCam s;
+	Camera mCam;
 
 	void Awake() {
 		target = transform; // Set the camera parent to the script's transform
@@ -63,10 +64,10 @@ public class MarioCam : MonoBehaviour {
 		targetedY = MarioController.s.transform.position.y;
 
 		s = this;
+		mCam = actualCamera.GetComponent<Camera>();
 	}
 
 	void Update() {
-		
 		if (!isLocked) {
             if (confIsCtrl)
 			{
@@ -108,12 +109,7 @@ public class MarioCam : MonoBehaviour {
 					//move camera with player									//smoothly calculate y position
 
 
-					if (!MarioController.s.charc.isGrounded) 
-						if (MarioController.s.transform.position.y - transform.position.y > 2.4f)
-						{ //JUMPING HIGH CAM
-							MarioController.s.posGround = transform.position.y;
-							SetCameraVal(0.14f, 4);
-						}
+					mCam.WorldToViewportPoint(MarioController.s.transform.position);
 				}
 				actualCamera.transform.localPosition = new Vector3(0, 0, -targetCamDistance);
 
