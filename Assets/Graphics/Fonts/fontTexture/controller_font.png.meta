@@ -1,7 +1,5 @@
 fileFormatVersion: 2
 guid: 034de9cd001b23649b4d661960b05338
-timeCreated: 1680689075
-licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
     21300000: controller_font_0
@@ -43,6 +41,7 @@ TextureImporter:
     21300072: controller_font_36
     21300074: controller_font_37
     21300076: controller_font_38
+  externalObjects: {}
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -51,6 +50,8 @@ TextureImporter:
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -66,10 +67,13 @@ TextureImporter:
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: 0
     aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -91,6 +95,7 @@ TextureImporter:
   platformSettings:
   - buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -99,6 +104,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Standalone
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -107,6 +113,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Android
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -115,7 +122,8 @@ TextureImporter:
     overridden: 0
   - buildTarget: Nintendo 3DS
     maxTextureSize: 1024
-    textureFormat: 61
+    resizeAlgorithm: 0
+    textureFormat: 13
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -129,509 +137,409 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 939
-        width: 80
+        y: 340
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_1
       rect:
         serializedVersion: 2
-        x: 80
-        y: 939
-        width: 80
+        x: 81
+        y: 340
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_2
       rect:
         serializedVersion: 2
-        x: 160
-        y: 939
-        width: 80
+        x: 162
+        y: 340
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_3
       rect:
         serializedVersion: 2
-        x: 240
-        y: 939
-        width: 80
+        x: 243
+        y: 340
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_4
       rect:
         serializedVersion: 2
-        x: 320
-        y: 939
-        width: 80
+        x: 324
+        y: 340
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_5
       rect:
         serializedVersion: 2
-        x: 400
-        y: 939
-        width: 80
+        x: 405
+        y: 340
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_6
       rect:
         serializedVersion: 2
         x: 0
-        y: 854
-        width: 80
+        y: 255
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_7
       rect:
         serializedVersion: 2
-        x: 80
-        y: 854
-        width: 80
+        x: 81
+        y: 255
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_8
       rect:
         serializedVersion: 2
-        x: 160
-        y: 854
-        width: 80
+        x: 162
+        y: 255
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_9
       rect:
         serializedVersion: 2
-        x: 240
-        y: 854
-        width: 80
+        x: 243
+        y: 255
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_10
       rect:
         serializedVersion: 2
-        x: 320
-        y: 854
-        width: 80
+        x: 324
+        y: 255
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_11
       rect:
         serializedVersion: 2
-        x: 400
-        y: 854
-        width: 80
+        x: 405
+        y: 255
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_12
       rect:
         serializedVersion: 2
         x: 0
-        y: 769
-        width: 80
+        y: 170
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_13
       rect:
         serializedVersion: 2
-        x: 80
-        y: 769
-        width: 80
+        x: 81
+        y: 170
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_14
       rect:
         serializedVersion: 2
-        x: 160
-        y: 769
-        width: 80
+        x: 162
+        y: 170
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_15
       rect:
         serializedVersion: 2
-        x: 240
-        y: 769
-        width: 80
+        x: 243
+        y: 170
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_16
       rect:
         serializedVersion: 2
-        x: 320
-        y: 769
-        width: 80
+        x: 324
+        y: 170
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_17
       rect:
         serializedVersion: 2
-        x: 400
-        y: 769
-        width: 80
+        x: 405
+        y: 170
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_18
       rect:
         serializedVersion: 2
         x: 0
-        y: 684
-        width: 80
+        y: 85
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_19
       rect:
         serializedVersion: 2
-        x: 80
-        y: 684
-        width: 80
+        x: 81
+        y: 85
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_20
       rect:
         serializedVersion: 2
-        x: 160
-        y: 684
-        width: 80
+        x: 162
+        y: 85
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_21
       rect:
         serializedVersion: 2
-        x: 240
-        y: 684
-        width: 80
+        x: 243
+        y: 85
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_22
       rect:
         serializedVersion: 2
-        x: 320
-        y: 684
-        width: 80
+        x: 324
+        y: 85
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_23
       rect:
         serializedVersion: 2
-        x: 400
-        y: 684
-        width: 80
+        x: 405
+        y: 85
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_24
       rect:
         serializedVersion: 2
         x: 0
-        y: 599
-        width: 80
+        y: 0
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_25
       rect:
         serializedVersion: 2
-        x: 80
-        y: 599
-        width: 80
+        x: 81
+        y: 0
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_26
       rect:
         serializedVersion: 2
-        x: 160
-        y: 599
-        width: 80
+        x: 162
+        y: 0
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_27
       rect:
         serializedVersion: 2
-        x: 240
-        y: 599
-        width: 80
+        x: 243
+        y: 0
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: controller_font_28
       rect:
         serializedVersion: 2
-        x: 320
-        y: 599
-        width: 80
+        x: 324
+        y: 0
+        width: 81
         height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: controller_font_29
-      rect:
-        serializedVersion: 2
-        x: 400
-        y: 599
-        width: 80
-        height: 85
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: controller_font_30
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 514
-        width: 80
-        height: 85
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: controller_font_31
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 514
-        width: 80
-        height: 85
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: controller_font_32
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 514
-        width: 80
-        height: 85
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: controller_font_33
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 514
-        width: 80
-        height: 85
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: controller_font_34
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: 514
-        width: 80
-        height: 85
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: controller_font_35
-      rect:
-        serializedVersion: 2
-        x: 400
-        y: 514
-        width: 80
-        height: 85
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: controller_font_36
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 429
-        width: 80
-        height: 85
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: controller_font_37
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 429
-        width: 80
-        height: 85
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: controller_font_38
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 429
-        width: 80
-        height: 85
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
+      physicsShape: []
       tessellationDetail: 0
     outline: []
+    physicsShape: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

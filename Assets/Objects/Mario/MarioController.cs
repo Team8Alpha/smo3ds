@@ -133,7 +133,6 @@ public class MarioController : MonoBehaviour
 			HandleInput();
 			HandleMove();
 
-
 			// Update Mario's animation and movement based on states
 			switch (myState)
 			{
@@ -247,12 +246,10 @@ public class MarioController : MonoBehaviour
 		if (wasGrounded && Physics.SphereCast(colTrigger[0].center + transform.position, 0.2f, -Vector3.up, out hit, 2f))
 		{
 			angleSpeed = Vector3.Dot(transform.forward, Vector3.Cross(Vector3.up, Vector3.Cross(Vector3.up, hit.normal)));
-			Debug.Log(angleSpeed);
 		}
 
-		float yVel = rb.velocity.y; //store old yvel
 		Vector3 movementVector = transform.rotation * Vector3.forward * (currentMoveSpeed - (angleSpeed * currentMoveSpeed));// * Time.deltaTime; //mashed together movement math
-		movementVector.y = (isFreezeFall ? 0 : yVel) - 5; //reassign old yvel
+		movementVector.y = (isFreezeFall ? 0 :  - 5); //reassign old yvel
 		movementVector += moveAdditional;
 
 		// Move the character using the Rigidbody
@@ -691,5 +688,4 @@ public class MarioController : MonoBehaviour
 		}*/
 		return animLast == anmName;
 	}
-
 }

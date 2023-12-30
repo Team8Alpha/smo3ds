@@ -1,7 +1,8 @@
-﻿//#if !isRelease
-#if true
+﻿#if !isRelease
+//#if true
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -33,13 +34,30 @@ public class scr_devMenu: MonoBehaviour {
 		scr_main.s.SetFocus(true);
 	}
 
-	void Update () {
-		if (UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.L) && UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.Start) || Input.GetKey(KeyCode.Escape) && Input.GetKey(KeyCode.Return)) {
+	void Update() {
+#if UNITY_EDITOR
+		bool buttonBack = Input.GetKey(KeyCode.Escape);
+		bool buttonOK = Input.GetKey(KeyCode.Return);
+		if (buttonBack && buttonOK)
+#else
+		bool buttonBack = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B);
+		bool buttonOK = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A);
+		if (UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.L) && UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.Start))
+#endif
+		{
 			isOpen = true;
-			maxOption = 6;
+			maxOption = 7;
 			ResetVal ();
 			scr_main.s.SetFocus(false);
-		} else if (UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.R) && UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.Start) || Input.GetKey(KeyCode.Escape) && Input.GetKey(KeyCode.LeftShift)) {
+		}
+		else if
+#if UNITY_EDITOR
+		(buttonBack && Input.GetKey(KeyCode.LeftShift))
+#else
+
+		(UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.R) && UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.Start))
+#endif
+		{
 			isOpen = false;
 			ResetVal ();
 			scr_main.s.SetFocus(true);
@@ -49,13 +67,14 @@ public class scr_devMenu: MonoBehaviour {
 				if(submenu){
 					if(Input.GetKeyDown(KeyCode.UpArrow)) selectionSub--;
 					if(Input.GetKeyDown(KeyCode.DownArrow)) selectionSub++;
-					if(Input.GetKeyDown(KeyCode.Escape) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B)){ submenu = false; selection = 3; selectionSub = 3; maxOption = 7; canSelect = false;}
+					if(Input.GetKeyDown(KeyCode.Escape) || buttonBack) { submenu = false; selection = 3; selectionSub = 3; maxOption = 7; canSelect = false;}
 				} else {
 					if(Input.GetKeyDown(KeyCode.UpArrow)) selection--;
 					if(Input.GetKeyDown(KeyCode.DownArrow)) selection++;
-					if(Input.GetKeyDown(KeyCode.Escape) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B)){ scr_main.s.SetFocus(true); isOpen = false;}
+					if(Input.GetKeyDown(KeyCode.Escape) || buttonBack) { scr_main.s.SetFocus(true); isOpen = false;}
 				}
-				if(Input.GetKeyDown(KeyCode.Return) || UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A)){
+				if(Input.GetKeyDown(KeyCode.Return) || buttonOK)
+				{
 					switch(selection-3){
 					case 0:
 						isOpen = false;
@@ -80,9 +99,6 @@ public class scr_devMenu: MonoBehaviour {
 							case 3:
 								tmpLvName = "scn_globShipInside";
 								break;
-							case 4:
-								tmpLvName = "scn_fallsMain0";
-								break;
 							case 5:
 								tmpLvName = "scn_capExTower";
 								break;
@@ -90,7 +106,7 @@ public class scr_devMenu: MonoBehaviour {
 							ResetVal ();
 							scr_loadScene.s.StartScene (tmpLvName, 0);
 						}
-						maxOption = 8;
+						maxOption = 7;
 						canSelect = true;
 						break;
 					case 2:
@@ -164,8 +180,7 @@ public class scr_devMenu: MonoBehaviour {
 					DoPrint (4, "TestMap1-Camera", 15);
 					DoPrint (5, "WorldCap-Main", 15);
 					DoPrint (6, "Global-InOdyssey", 15);
-					DoPrint (7, "WorldFalls-Main0", 15);
-					DoPrint (8, "WorldCap-ExTower", 15);
+					DoPrint (7, "WorldCap-ExTower", 15);
 					break;
 				case 2:
 					DoPrint (selectionSub, " > ", 1, 40);
@@ -173,7 +188,7 @@ public class scr_devMenu: MonoBehaviour {
 					DoPrint (3, "Toggle FPS: " + deb_fpsIsShowing, 15);
 					DoPrint (4, "Toggle ENEMY: " + deb_enemyIsShowing, 15);
 					DoPrint (5, "Toggle CMD: " + deb_cmdIsShowing, 15);
-					DoPrint (5, "Toggle STATS: " + deb_statsIsShowing, 15);
+					DoPrint (6, "Toggle STATS: " + deb_statsIsShowing, 15);
 					break;
 				default:
 					submenu = false;
@@ -195,10 +210,12 @@ public class scr_devMenu: MonoBehaviour {
 				DoPrint (4, "COIN: "+scr_main.s.coinsCount, 1, 50);
 				DoPrint (5, "MOON: "+scr_main.s.moonsCount, 1, 50);
 			}
+#if !UNITY_EDITOR
 			if (deb_statsIsShowing){
 				DoPrint(1, "CPU: " + UnityEngine.N3DS.Debug.GetSystemFree(), 1, 50);
 				DoPrint(2, "RAM: A " + UnityEngine.N3DS.Debug.GetVRAMAFree() + ", B "+UnityEngine.N3DS.Debug.GetVRAMBFree(), 1, 50);
 			}
+#endif
 		}
 		if (deb_cmdIsShowing && txt_cmdOut != "")
 			DoPrint (16, txt_cmdOut, -5, 1000);

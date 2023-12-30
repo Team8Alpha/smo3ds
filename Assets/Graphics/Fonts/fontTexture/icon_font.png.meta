@@ -1,7 +1,5 @@
 fileFormatVersion: 2
 guid: 8b1ecaa1201d3d743ac5af0a6b1d901e
-timeCreated: 1680466608
-licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
     21300000: icon_font_0
@@ -52,6 +50,7 @@ TextureImporter:
     21300090: icon_font_45
     21300092: icon_font_46
     21300094: icon_font_47
+  externalObjects: {}
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -60,6 +59,8 @@ TextureImporter:
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -75,10 +76,13 @@ TextureImporter:
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: 0
     aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -100,6 +104,7 @@ TextureImporter:
   platformSettings:
   - buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -108,6 +113,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Standalone
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -116,6 +122,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Android
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -124,7 +131,8 @@ TextureImporter:
     overridden: 0
   - buildTarget: Nintendo 3DS
     maxTextureSize: 1024
-    textureFormat: 61
+    resizeAlgorithm: 0
+    textureFormat: 13
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -137,627 +145,676 @@ TextureImporter:
       name: icon_font_0
       rect:
         serializedVersion: 2
-        x: 388
-        y: 794
+        x: 0
+        y: 460
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_1
       rect:
         serializedVersion: 2
-        x: 485
-        y: 794
+        x: 97
+        y: 460
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_2
       rect:
         serializedVersion: 2
-        x: 582
-        y: 794
+        x: 194
+        y: 460
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_3
       rect:
         serializedVersion: 2
-        x: 679
-        y: 794
+        x: 291
+        y: 460
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_4
       rect:
         serializedVersion: 2
-        x: 776
-        y: 794
+        x: 388
+        y: 460
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_5
       rect:
         serializedVersion: 2
-        x: 873
-        y: 794
+        x: 485
+        y: 460
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_6
       rect:
         serializedVersion: 2
-        x: 0
-        y: 679
+        x: 582
+        y: 460
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_7
       rect:
         serializedVersion: 2
-        x: 97
-        y: 679
+        x: 679
+        y: 460
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_8
       rect:
         serializedVersion: 2
-        x: 194
-        y: 679
+        x: 776
+        y: 460
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_9
       rect:
         serializedVersion: 2
-        x: 291
-        y: 679
+        x: 873
+        y: 460
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_10
       rect:
         serializedVersion: 2
-        x: 388
-        y: 679
+        x: 194
+        y: 345
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_11
       rect:
         serializedVersion: 2
-        x: 485
-        y: 679
+        x: 291
+        y: 345
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_12
       rect:
         serializedVersion: 2
-        x: 582
-        y: 679
+        x: 388
+        y: 345
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_13
       rect:
         serializedVersion: 2
-        x: 194
-        y: 564
+        x: 485
+        y: 345
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_14
       rect:
         serializedVersion: 2
-        x: 291
-        y: 564
+        x: 582
+        y: 345
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_15
       rect:
         serializedVersion: 2
-        x: 388
-        y: 564
+        x: 679
+        y: 345
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_16
       rect:
         serializedVersion: 2
-        x: 485
-        y: 564
+        x: 776
+        y: 345
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_17
       rect:
         serializedVersion: 2
-        x: 582
-        y: 564
+        x: 873
+        y: 345
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_18
       rect:
         serializedVersion: 2
-        x: 679
-        y: 564
+        x: 0
+        y: 230
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_19
       rect:
         serializedVersion: 2
-        x: 776
-        y: 564
+        x: 97
+        y: 230
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_20
       rect:
         serializedVersion: 2
-        x: 873
-        y: 564
+        x: 194
+        y: 230
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_21
       rect:
         serializedVersion: 2
-        x: 0
-        y: 449
+        x: 291
+        y: 230
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_22
       rect:
         serializedVersion: 2
-        x: 97
-        y: 449
+        x: 388
+        y: 230
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_23
       rect:
         serializedVersion: 2
-        x: 194
-        y: 449
+        x: 485
+        y: 230
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_24
       rect:
         serializedVersion: 2
-        x: 291
-        y: 449
+        x: 582
+        y: 230
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_25
       rect:
         serializedVersion: 2
-        x: 388
-        y: 449
+        x: 679
+        y: 230
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_26
       rect:
         serializedVersion: 2
-        x: 485
-        y: 449
+        x: 776
+        y: 230
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_27
       rect:
         serializedVersion: 2
-        x: 582
-        y: 449
+        x: 873
+        y: 230
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_28
       rect:
         serializedVersion: 2
-        x: 679
-        y: 449
+        x: 0
+        y: 115
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_29
       rect:
         serializedVersion: 2
-        x: 776
-        y: 449
+        x: 97
+        y: 115
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_30
       rect:
         serializedVersion: 2
-        x: 873
-        y: 449
+        x: 194
+        y: 115
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_31
       rect:
         serializedVersion: 2
-        x: 0
-        y: 334
+        x: 291
+        y: 115
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_32
       rect:
         serializedVersion: 2
-        x: 97
-        y: 334
+        x: 388
+        y: 115
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_33
       rect:
         serializedVersion: 2
-        x: 194
-        y: 334
+        x: 485
+        y: 115
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_34
       rect:
         serializedVersion: 2
-        x: 291
-        y: 334
+        x: 582
+        y: 115
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_35
       rect:
         serializedVersion: 2
-        x: 388
-        y: 334
+        x: 679
+        y: 115
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_36
       rect:
         serializedVersion: 2
-        x: 485
-        y: 334
+        x: 776
+        y: 115
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_37
       rect:
         serializedVersion: 2
-        x: 582
-        y: 334
+        x: 873
+        y: 115
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_38
       rect:
         serializedVersion: 2
-        x: 679
-        y: 334
+        x: 0
+        y: 0
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_39
       rect:
         serializedVersion: 2
-        x: 776
-        y: 334
+        x: 97
+        y: 0
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_40
       rect:
         serializedVersion: 2
-        x: 873
-        y: 334
+        x: 194
+        y: 0
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_41
       rect:
         serializedVersion: 2
-        x: 0
-        y: 219
+        x: 291
+        y: 0
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_42
       rect:
         serializedVersion: 2
         x: 388
-        y: 219
+        y: 0
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_43
       rect:
         serializedVersion: 2
         x: 485
-        y: 219
+        y: 0
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_44
       rect:
         serializedVersion: 2
         x: 582
-        y: 219
+        y: 0
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_45
       rect:
         serializedVersion: 2
         x: 679
-        y: 219
+        y: 0
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_46
       rect:
         serializedVersion: 2
         x: 776
-        y: 219
+        y: 0
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: icon_font_47
       rect:
         serializedVersion: 2
         x: 873
-        y: 219
+        y: 0
         width: 97
         height: 115
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     outline: []
+    physicsShape: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

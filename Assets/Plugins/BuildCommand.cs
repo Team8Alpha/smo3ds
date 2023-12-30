@@ -4,10 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEditor;
-using UnityEditor;
 using UnityEngine;
 
-#if UNITY_2018 || UNITY_2017
+#if UNITY_2018 || UNITY_2019
 using UnityEditor.Build.Reporting;
 #else
 #endif
@@ -138,7 +137,7 @@ public static class BuildCommand
         HandleApplicationExit(report);
     }
 
-    #if UNITY_2018 || UNITY_2017
+    #if UNITY_2018 || UNITY_2019
     public static BuildReport DoBuild(string[] levels, string locationPathName, BuildTarget target, BuildOptions options = BuildOptions.None)
     #else
     public static string DoBuild(string[] levels, string locationPathName, BuildTarget target, BuildOptions options = BuildOptions.None)
@@ -147,7 +146,7 @@ public static class BuildCommand
         return BuildPipeline.BuildPlayer(levels, locationPathName, target, options);
     }
 
-    #if UNITY_2018 || UNITY_2017
+    #if UNITY_2018 || UNITY_2019
     public static void HandleApplicationExit(BuildReport report)
     {
         int returnCode = 0;
@@ -298,7 +297,7 @@ public static class BuildCommand
             ProvisioningProfileType provisioningProfileType = oIosManualProvisioningProfileType.ToEnum(ProvisioningProfileType.Automatic);
             PlayerSettings.iOS.iOSManualProvisioningProfileType = provisioningProfileType;
             ConsoleWriteLine("PlayerSettings.iOS.iOSManualProvisioningProfileID = {0}", provisioningProfileType.ToString());
-#elif UNITY_2017
+#elif UNITY_2019
 #else
 #endif
         }
@@ -336,7 +335,7 @@ public static class BuildCommand
             throw new ArgumentNullException(ARGS_BUILD_TARGET);
 
 #if UNITY_2018
-#elif UNITY_2017
+#elif UNITY_2019
 #else
         /*
         * A bugfix that occurs in Unity versions 5.6 and lower.
@@ -434,7 +433,7 @@ public static class BuildCommand
                 break;
 #if UNITY_2018
             case BuildTarget.StandaloneOSX:
-#elif UNITY_2017
+#elif UNITY_2019
 #else
             case BuildTarget.StandaloneOSXIntel:
             case BuildTarget.StandaloneOSXIntel64:
@@ -627,7 +626,7 @@ public static class BuildCommandUtils
             case BuildTarget.StandaloneOSX:
             case BuildTarget.StandaloneWindows:
             case BuildTarget.StandaloneWindows64:
-#elif UNITY_2017
+#elif UNITY_2019
 #else
             case BuildTarget.StandaloneLinux:
             case BuildTarget.StandaloneLinux64:

@@ -13,7 +13,7 @@ public class scr_behaviorCapDoor : MonoBehaviour {
 	public void OnTouch(int numType){
 		if (numType == 1) {
 			anim.Play("open");
-			transform.GetChild (5).gameObject.SetActive (false);
+			gameObject.GetComponents<Collider>()[1].enabled = false;
 		}
 	}
 }

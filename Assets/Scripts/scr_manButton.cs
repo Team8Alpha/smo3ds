@@ -25,16 +25,14 @@ public class scr_manButton : MonoBehaviour
 		posOffsetSel = lposOffsetSel;
 		currentButton = firstSelectPos;
 		iconSelect.SetActive(true);
-		EventSystem.current.SetSelectedGameObject(buttons[currentButton]);
-		setPosition(buttons[currentButton].transform.position);
 		this.enabled = true;
+		setPosition(buttons[currentButton].transform.position);
 	}
 	public void SetActive(bool boolean)
     {
 		this.enabled = boolean;
         if (boolean)
         {
-			EventSystem.current.SetSelectedGameObject(buttons[currentButton]);
 			setPosition(buttons[currentButton].transform.position);
 		}
 		iconSelect.SetActive(boolean);
@@ -47,6 +45,7 @@ public class scr_manButton : MonoBehaviour
 	void setPosition(Vector3 position)
 	{
 		iconSelect.transform.position = new Vector3(posOffsetSel.x + position.x - buttons[currentButton].GetComponent<RectTransform>().rect.width/2, posOffsetSel.y + position.y, -300);
+		EventSystem.current.SetSelectedGameObject(buttons[currentButton]);
 	}
 
 	void Start()
@@ -65,27 +64,32 @@ public class scr_manButton : MonoBehaviour
 	{
 		if (scr_main.s.isFocused)
 		{
+#if UNITY_EDITOR
+			float h = Input.GetAxisRaw("Vertical");
+			bool buttonOK = Input.GetKey(KeyCode.Return);
+#else
 			float h = UnityEngine.N3DS.GamePad.CirclePad.y + Input.GetAxisRaw("Vertical");
+			bool buttonOK = UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A);
+#endif
 			if (!buttonPressed && h != 0)
 			{
 				buttonPressed = true;
 				if (h > 0)
 					if (currentButton <= 0)
-						currentButton = buttons.Length - 1; //HERE MAXIMAL BUTTON NUMBER
+						currentButton = buttons.Length - 1;
 					else
 						currentButton--;
 				if (h < 0)
-					if (currentButton >= buttons.Length - 1) //HERE MAXIMAL BUTTON NUMBER
+					if (currentButton >= buttons.Length - 1)
 						currentButton = 0;
 					else
 						currentButton++;
-				EventSystem.current.SetSelectedGameObject(buttons[currentButton]);
 				setPosition(buttons[currentButton].transform.position);
 			}
 			else if (h == 0)
 				buttonPressed = false;
 
-			if (UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A) || Input.GetKey(KeyCode.Return))
+			if (buttonOK)
 			{
 				buttonMan.SendMessage("OnButtonPress", currentButton);
 				iconSelect.SetActive(false);

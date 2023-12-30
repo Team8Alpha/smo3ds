@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class scrMenuConfig : MonoBehaviour {
+public class scrMenuConfig : MonoBehaviour
+{
 	public GameObject[] buttons;
 
 	void Start()
@@ -27,11 +28,17 @@ public class scrMenuConfig : MonoBehaviour {
 		}
 	}
 	void Update()
-    {
-		if (UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B) || Input.GetKey(KeyCode.Escape))
-        {
+	{
+		if (
+#if !UNITY_EDITOR
+			UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.B)
+#else
+			Input.GetKey(KeyCode.Escape)
+#endif
+		) {
 			scr_manButton.s.SwitchPrevMenu();
 			SceneManager.UnloadSceneAsync("scn_menuConfig");
-        }
+			this.enabled = false;
+		}
 	}
 }

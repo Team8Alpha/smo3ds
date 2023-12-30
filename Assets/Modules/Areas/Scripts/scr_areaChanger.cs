@@ -16,7 +16,7 @@ public class scr_areaChanger : MonoBehaviour {
 			scr_main.s.nextSpawn = nextSpawn;
 			scr_main.s.SetFocus(false);
 			scr_loadScene.s.StartScene (nextArea, transitionType);
-			scr_main.s.transform.GetChild (1).GetChild (1).gameObject.SetActive (true); //cuz it was broken, wanted to sleep.
+			scr_main.s.transform.GetChild (1).GetChild (2).gameObject.SetActive (true); //cuz it was broken, wanted to sleep.
 			//PlayerWalkDoor ();
 		}
 	}

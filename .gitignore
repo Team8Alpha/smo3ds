@@ -21,6 +21,8 @@ WEB/
 WEB\
 LOG.txt
 cci2cia.bat
+ADDME/
+ADDME\
 
 # This .gitignore file should be placed at the root of your Unity project directory
 #
@@ -33,6 +35,7 @@ cci2cia.bat
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
+/[Uu]nity[Pp]ackage[Mm]anager/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
