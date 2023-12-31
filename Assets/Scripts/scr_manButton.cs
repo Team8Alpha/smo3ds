@@ -39,7 +39,8 @@ public class scr_manButton : MonoBehaviour
 	}
 	public void SwitchPrevMenu()
     {
-		buttonPrevMan.SendMessage("OnMenu");
+		if(buttonPrevMan == null) buttonPrevMan.SendMessage("OnMenu");
+		else SetActive(false);
 	}
 
 	void setPosition(Vector3 position)
@@ -92,8 +93,7 @@ public class scr_manButton : MonoBehaviour
 			if (buttonOK)
 			{
 				buttonMan.SendMessage("OnButtonPress", currentButton);
-				iconSelect.SetActive(false);
-				this.enabled = false;
+				SetActive(false);
 			}
 		}
 	}

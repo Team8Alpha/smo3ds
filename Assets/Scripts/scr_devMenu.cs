@@ -24,6 +24,7 @@ public class scr_devMenu: MonoBehaviour {
 	private int height = 12;
 	private bool canSelect = false;
 	static public string txt_cmdOut = "";
+	private bool hasOpened = false;
 
 	void ResetVal () {
 		canSelect = false;
@@ -31,6 +32,7 @@ public class scr_devMenu: MonoBehaviour {
 		noButtonPressed = true;
 		submenu = false;
 		selectionSub = -1;
+		hasOpened = false;
 		scr_main.s.SetFocus(true);
 	}
 
@@ -63,7 +65,7 @@ public class scr_devMenu: MonoBehaviour {
 			scr_main.s.SetFocus(true);
 		}
 		if(isOpen){
-			if(noButtonPressed){
+			if(noButtonPressed && hasOpened){
 				if(submenu){
 					if(Input.GetKeyDown(KeyCode.UpArrow)) selectionSub--;
 					if(Input.GetKeyDown(KeyCode.DownArrow)) selectionSub++;
@@ -146,20 +148,20 @@ public class scr_devMenu: MonoBehaviour {
 				if(selectionSub > maxOption) selectionSub = 3;
 			}
 #if UNITY_EDITOR
-				if (Input.GetKeyDown (KeyCode.UpArrow)
-					|| Input.GetKeyDown (KeyCode.DownArrow)
-					|| Input.GetKeyDown (KeyCode.Return)
-					|| Input.GetKeyDown (KeyCode.Escape))
-				noButtonPressed = false;
-				else
-					noButtonPressed = true;
+			if (Input.GetKeyDown(KeyCode.UpArrow)
+				|| Input.GetKeyDown(KeyCode.DownArrow)
+				|| Input.GetKeyDown(KeyCode.Return)
+				|| Input.GetKeyDown(KeyCode.Escape))
 #else
-				if (UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.A)
+			if (UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.A)
 				|| UnityEngine.N3DS.GamePad.GetButtonHold (N3dsButton.B))
-				noButtonPressed = false;
-				else
-				noButtonPressed = true;
 #endif
+				noButtonPressed = false;
+			else
+			{
+				noButtonPressed = true;
+				hasOpened = true;
+			}
 		}
 	}
 

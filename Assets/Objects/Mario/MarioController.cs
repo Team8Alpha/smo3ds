@@ -18,8 +18,6 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] public static eStatePl myState;
 	[HideInInspector] public int mySubState = 0;
 
-	public byte maxJump = 6;
-	public float jumpForce = 2.5f;
 	public float moveSpeed = 8.06f;
 
 	[HideInInspector] public bool wasGrounded 		= true; // is colliding with floor
@@ -30,7 +28,6 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] public bool isJumpingSoon		= false; // if has pressed jump button just before landing
 	[HideInInspector] public bool isInstTurn		= false; 
 	[HideInInspector] public bool isTurning			= false; 
-	[HideInInspector] public bool isFreezeFall		= false; 
 	[HideInInspector] public bool isInputBlocked	= false; // if process input functions or not
 	[HideInInspector] public bool isHacking			= false; // if is capturing, hacking...
 	[HideInInspector] bool isMovingAir				= false; // if falling direction is active, falling
@@ -38,7 +35,6 @@ public class MarioController : MonoBehaviour
 
 	[HideInInspector] public Animator anim;
 	[HideInInspector] public Rigidbody rb;
-	[HideInInspector] public CharacterController charc;
 
 	[HideInInspector] public bool key_jump 			= false;
 	[HideInInspector] public bool key_backL 		= false;
@@ -56,16 +52,11 @@ public class MarioController : MonoBehaviour
 	float speedJumpH								= 0; //used for falling direction
 	float posLastHigh								= 0;
 	float timeStandTrns								= 0.5f;
+	byte runType									= 0;
 	byte jumpAfterTimer								= 0; //timer till it refuses to execute double jump
 	Vector3 lastPosition;
 	//							 cap, haLb, haLf,  haRb, haRf
 	bool[] meshPartsVisible = { true, true, false, true, false };
-
-
-	[HideInInspector] public string anim_stand 		= "idle";
-	[HideInInspector] public string anim_run 		= "run";
-	[HideInInspector] public string anim_runStart 	= "runStart";
-	[HideInInspector] public string anim_land		= "landShort";
 
 	[HideInInspector] public scrBehaviorCappy		cappy;
 	[HideInInspector] public static MarioController s;
@@ -85,7 +76,6 @@ public class MarioController : MonoBehaviour
 		// Store references to Animator and Rigidbody components
 		anim = GetComponent<Animator>();
 		rb = GetComponent<Rigidbody>();
-		charc = GetComponent<CharacterController>();
 		colTrigger = GetComponents<CapsuleCollider>();
 
 		posGround = transform.position.y;
@@ -111,23 +101,7 @@ public class MarioController : MonoBehaviour
 
 	void Update()
 	{
-		if (charc.isGrounded && !wasGrounded)
-		{
-			isMovingAir = false;
-			isTurning = false;
-			posGround = transform.position.y;
-			SetState(eStatePl.Landing);
-			wasGrounded = true;
-			Debug.Log("M Ground Enter");
-		}
-		else if (!charc.isGrounded && wasGrounded)
-		{
-			wasGrounded = false;
-			posGround = transform.position.y;
-			posLastHigh = transform.position.y;
-			Debug.Log("M Ground Exit");
-		}
-
+		Debug.Log(animLast);
 		if (scr_main.s.isFocused)
 		{
 			HandleInput();
@@ -168,10 +142,10 @@ public class MarioController : MonoBehaviour
 
 							}
 							//once left ground, he jumped.
-							if (!charc.isGrounded)
+							if (!wasGrounded)
 								hasJumped = true;
 							//if clipped up without even starting the jumpfall, he landed.
-							if (charc.isGrounded && hasJumped)
+							if (wasGrounded && hasJumped)
 								SetState(eStatePl.Landing);
 							break;
 						case 1:
@@ -240,20 +214,6 @@ public class MarioController : MonoBehaviour
 
 		lastPosition = transform.position;
 		wasMoving = isMoving;
-
-		float angleSpeed = 0;
-		RaycastHit hit;
-		if (wasGrounded && Physics.SphereCast(colTrigger[0].center + transform.position, 0.2f, -Vector3.up, out hit, 2f))
-		{
-			angleSpeed = Vector3.Dot(transform.forward, Vector3.Cross(Vector3.up, Vector3.Cross(Vector3.up, hit.normal)));
-		}
-
-		Vector3 movementVector = transform.rotation * Vector3.forward * (currentMoveSpeed - (angleSpeed * currentMoveSpeed));// * Time.deltaTime; //mashed together movement math
-		movementVector.y = (isFreezeFall ? 0 :  - 5); //reassign old yvel
-		movementVector += moveAdditional;
-
-		// Move the character using the Rigidbody
-		charc.Move(movementVector * Time.deltaTime);
 	}
 
 	void HandleInput()
@@ -339,14 +299,12 @@ public class MarioController : MonoBehaviour
 						//reset some data
 						SetCollider(1.6f);
 						ResetSpeed();
-						ResetAnim();
 						MarioCam.s.ResetValue();
 
 						currentTurnSpeed = MarioTable.speedTurnWalk;
 						isInstTurn = false;
 						break;
 					case 1:
-						if (currentMoveSpeed > 1) SetAnim(anim_run);
 						SetState(eStatePl.Ground);
 						break;
                 }
@@ -355,8 +313,8 @@ public class MarioController : MonoBehaviour
 			case eStatePl.Jumping:
 				jumpType++;
 				jumpAfterTimer = 1;
-				float timeTrnsJump = 0.05f;
-				float timeTrasStand = 0f;
+				float timeTrnsJump = 0.08f;
+				float timeTrasStand = 0.2f;
 				switch (jumpType)
 				{
 					case 2:
@@ -421,11 +379,10 @@ public class MarioController : MonoBehaviour
 							SetAnim("landShort", trnsLand);
 						}
 					}
-					else SetAnim(anim_stand, trnsLand);
+					else SetAnim("idle", trnsLand);
 				} else
                 {
-					if (currentMoveSpeed > 1) SetAnim(anim_run);
-					else SetAnim(anim_runStart);
+					//TODO: LAND AND RUN
                 }
 				
 
@@ -454,8 +411,51 @@ public class MarioController : MonoBehaviour
 
 	void HandleMove()
 	{
+		float angleSpeed = 0;
+		RaycastHit hit;
+
+		// Perform a SphereCast to check the slope angle if the character was grounded
+		if (Physics.SphereCast(colTrigger[0].center + transform.position, 0.2f, -Vector3.up, out hit, 0.8f))
+		{
+			angleSpeed = Vector3.Dot(transform.forward, Vector3.Cross(Vector3.up, Vector3.Cross(Vector3.up, hit.normal)));
+
+			// Check if the angleSpeed is within the slope threshold to consider it as grounded
+			if (Mathf.Abs(angleSpeed) <= 75) // MAX ANGLE
+			{
+				if (!wasGrounded)
+				{
+					isMovingAir = false;
+					isTurning = false;
+					posGround = transform.position.y;
+					SetState(eStatePl.Landing);
+					wasGrounded = true;
+					Debug.Log("M Ground Enter");
+				}
+			}
+			else
+			{
+				if (wasGrounded)
+				{
+					wasGrounded = false;
+					posGround = transform.position.y;
+					posLastHigh = transform.position.y;
+					Debug.Log("M Ground Exit");
+				}
+			}
+		}
+		else
+		{
+			if (wasGrounded)
+			{
+				wasGrounded = false;
+				posGround = transform.position.y;
+				posLastHigh = transform.position.y;
+				Debug.Log("M Ground Exit");
+			}
+		}
+
 		moveAdditional = Vector3.zero;
-		if (!charc.isGrounded)
+		if (!wasGrounded)
 		{
 			if (!isMovingAir && myState == eStatePl.Jumping)
 			{
@@ -471,17 +471,56 @@ public class MarioController : MonoBehaviour
 
 		if ((isMoving || isMovingAir) && !isInputBlocked )
 		{
-			if (charc.isGrounded)
+			if (wasGrounded)
 			{
 				if (!wasMoving)
 				{
 					speedSlip = 0;
 					if (currentMoveSpeed > 1)
-						SetAnim(anim_run);
+						SetAnim("run");
 					else
-						SetAnim(anim_runStart);
+						SetAnim("runStart");
 				}
 				posGround = transform.position.y;
+
+				Debug.Log(rb.velocity.magnitude);
+//				if (rb.velocity.magnitude > 6)
+//				{
+					if (rb.velocity.magnitude > 7)
+					{
+						if (runType != 1)
+						{
+							SetAnim("dashFast", 0.04f, 1);
+							runType = 1;
+						}
+					}
+					else if(runType != 0)
+					{
+						SetAnim("run", 0.01f, 1);
+						runType = 0;
+					}
+/*					else
+						if (runType != 2)
+						{
+							SetAnim("dash", 0.2f);
+							runType = 2;
+						}
+
+				}*/
+				// Adjust acceleration based on angleSpeed
+				float adjustedAcceleration = 10;
+				if (angleSpeed < 0)
+				{
+					// Moving up, decrease acceleration
+					adjustedAcceleration *= (1 - Mathf.Abs(angleSpeed) / 180f);
+				}
+				else
+				{
+					// Moving down, increase acceleration
+					adjustedAcceleration *= (1 + Mathf.Abs(angleSpeed) / 90f);
+				}
+
+				currentMoveSpeed = Mathf.MoveTowards(currentMoveSpeed, moveSpeed, adjustedAcceleration * Time.deltaTime);
 			}
 
 			{
@@ -491,17 +530,21 @@ public class MarioController : MonoBehaviour
 						+ Mathf.Atan2(MarioCam.s.transform.forward.x, MarioCam.s.transform.forward.z) * Mathf.Rad2Deg;
 				}
 
-				if (isInstTurn)
-				{
 					float angleDistance = Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.y, currentRotation));
-					if (isTurning)
+				if (isTurning)
+				{
+					if (angleDistance > 100) currentTurnSpeed = Mathf.Abs(currentTurnSpeed) * 2;
+					else if (angleDistance < 1) isTurning = false;
+				}
+				else
+				{
+					if (angleDistance > 100)
 					{
-						if (angleDistance > 100) currentTurnSpeed = Mathf.Abs(currentTurnSpeed) * 2;
-						else if (angleDistance < 1) isTurning = false;
-					}
-					else
-					{
-						if (angleDistance > 100) isTurning = true;
+						isTurning = true;
+						if (wasGrounded)
+						{
+							SetAnim("turn", 0.06f);
+						}
 					}
 				}
 
@@ -509,34 +552,35 @@ public class MarioController : MonoBehaviour
 					Mathf.MoveTowardsAngle(transform.eulerAngles.y, currentRotation, currentTurnSpeed), 
 					transform.eulerAngles.z);
 			}
-
-			if (!isMovingAir)
-			{
-				float acceleration = 10f; // Adjust this value for faster or slower acceleration
-				currentMoveSpeed = Mathf.MoveTowards(currentMoveSpeed, moveSpeed, acceleration * Time.deltaTime);
-			}
 		}
 		else
 		{
-			if (charc.isGrounded)
+			if (wasGrounded)
 			{
 				//if (currentMoveSpeed > 0.1f) {
 				//currentMoveSpeed -= 0.5f;
-				//if(animLast != "dashBrake" && animLast != anim_land) SetAnim ("dashBrake", 0.3f);
+				//if(animLast != "dashBrake" && animLast != "landShort") SetAnim ("dashBrake", 0.3f);
 				//} else {
 				if (currentMoveSpeed > 0 || currentMoveSpeed < 0) currentMoveSpeed = speedSlip > 0 && currentMoveSpeed > 0 ? currentMoveSpeed - speedSlip : 0;
-				//if (animLast != anim_stand && animLast != anim_land && myState == eStatePl.Ground) {
-				if (animLast != anim_stand)
+				//if (animLast != "idle" && animLast != "landShort" && myState == eStatePl.Ground) {
+				if (animLast != "idle")
 					if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
 					{
-						SetAnim(anim_stand, timeStandTrns);
+						SetAnim("idle", timeStandTrns);
 					}
 				//}
 			}
 		}
+
+		Vector3 movementVector = transform.rotation * Vector3.forward * (currentMoveSpeed - (angleSpeed * (currentMoveSpeed / 2)));// * Time.deltaTime; //mashed together movement math
+		movementVector.y += rb.velocity.y;
+		movementVector += moveAdditional;
+
+		// Move the character using the Rigidbody
+		rb.velocity = movementVector * Time.deltaTime * 1 / Time.deltaTime;
 	}
 
-	void OnTriggerEnter(Collider collis)
+	void OnCollisionEnter(Collision collis)
 	{
 		paramObj collisParam;
 		if ((collisParam = collis.gameObject.GetComponent<paramObj>()) == null) return;
@@ -598,22 +642,12 @@ public class MarioController : MonoBehaviour
 	//RESET
 	public void ResetSpeed()
 	{
-		maxJump			= 4;
 		moveSpeed		= MarioTable.speedRun;
-	}
-
-	public void ResetAnim()
-	{
-		anim_stand 		= "idle";
-		anim_run 		= "run";
-		anim_runStart 	= "runStart";
-		anim_land		= "landShort";
 	}
 
 	//SET
 	public void SetSpeed(byte _maxJump, float _moveSpeed)
 	{
-		maxJump = _maxJump;
 		moveSpeed = _moveSpeed;
 	}
 
@@ -661,10 +695,6 @@ public class MarioController : MonoBehaviour
 		SetHand(1, 0, meshPartsVisible[3]);
 		SetHand(1, 1, meshPartsVisible[4]);
 	}
-	public void SetAnimMove(string stand, string run, string runStart)
-	{
-		anim_runStart = runStart; anim_run = run; anim_stand = stand;
-	}
 	public void SetCollider(float height)
 	{
 		Vector3 center = new Vector3(0, height / 2, 0);
@@ -674,8 +704,6 @@ public class MarioController : MonoBehaviour
 			coll.center = center;
 			coll.height = height;
 		}
-		charc.center = center;
-		charc.height = height;
 	}
 
 	//CHECK
