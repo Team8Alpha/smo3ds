@@ -24,7 +24,9 @@ public class scr_manageEffect : MonoBehaviour {
 			scr_main.DPrint ("E: PRT." + namePrt + "NOT FOUND");
 	}
 	void Update(){
-		if (isRunning) {
+		if (isRunning)
+		{
+			currentPrt.transform.rotation = MarioCam.s.transform.rotation;
 			if (!currentPrt.isPlaying) {
 				Transform tmp_001 = currentPrt.transform;
 				Destroy (currentPrt.gameObject);
@@ -38,7 +40,6 @@ public class scr_manageEffect : MonoBehaviour {
 					currentPrt = null;
 				}
 			}
-			currentPrt.transform.rotation = MarioCam.s.transform.rotation;
 		}
 	}
 }

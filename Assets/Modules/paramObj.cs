@@ -15,7 +15,7 @@ public class paramObj : MonoBehaviour {
 		return posCenterV + transform.position.y;
     }
 	void Awake(){
-		if (isLOD && transform.GetChild(1) != null) transform.GetChild(1).gameObject.SetActive(false);
+		if (isLOD) MarioController.s.SetLOD(gameObject, false);
 		this.enabled = false;
 	}
 }

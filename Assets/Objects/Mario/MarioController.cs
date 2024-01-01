@@ -20,6 +20,12 @@ public class MarioController : MonoBehaviour
 
 	public float moveSpeed = 8.06f;
 
+
+	[HideInInspector] public bool key_jump			= false;
+	[HideInInspector] public bool key_backL			= false;
+	[HideInInspector] public bool key_backR			= false;
+	[HideInInspector] public bool key_cap			= false;
+
 	[HideInInspector] public bool wasGrounded 		= true; // is colliding with floor
 	[HideInInspector] public bool isMoving 			= false; // is pressing move buttons
 	[HideInInspector] public bool wasMoving 		= false; // was moving in last frame
@@ -30,18 +36,15 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] public bool isTurning			= false; 
 	[HideInInspector] public bool isInputBlocked	= false; // if process input functions or not
 	[HideInInspector] public bool isHacking			= false; // if is capturing, hacking...
+	[HideInInspector] public bool isRunReady		= true;
+	[HideInInspector] public bool isFlyFreeze		= false;
 	[HideInInspector] bool isMovingAir				= false; // if falling direction is active, falling
 	[HideInInspector] bool hasTouchedCeiling		= false; // has touched top
 
+	[HideInInspector] public float currentMoveSpeed = 0; // varying move speed
+
 	[HideInInspector] public Animator anim;
 	[HideInInspector] public Rigidbody rb;
-
-	[HideInInspector] public bool key_jump 			= false;
-	[HideInInspector] public bool key_backL 		= false;
-	[HideInInspector] public bool key_backR			= false;
-	[HideInInspector] public bool key_cap 			= false;
-
-	[HideInInspector] public float currentMoveSpeed = 0; // varying move speed
 
 	float h											= 0; // controller y
 	float v 										= 0; // controller x
@@ -52,7 +55,6 @@ public class MarioController : MonoBehaviour
 	float speedJumpH								= 0; //used for falling direction
 	float posLastHigh								= 0;
 	float timeStandTrns								= 0.5f;
-	byte runType									= 0;
 	byte jumpAfterTimer								= 0; //timer till it refuses to execute double jump
 	Vector3 lastPosition;
 	//							 cap, haLb, haLf,  haRb, haRf
@@ -81,6 +83,8 @@ public class MarioController : MonoBehaviour
 		posGround = transform.position.y;
 		lastPosition = transform.position;
 
+		isFlyFreeze = false;
+
 		resetVisibleParts();
 
 		s = this;
@@ -101,7 +105,6 @@ public class MarioController : MonoBehaviour
 
 	void Update()
 	{
-		Debug.Log(animLast);
 		if (scr_main.s.isFocused)
 		{
 			HandleInput();
@@ -339,7 +342,7 @@ public class MarioController : MonoBehaviour
 				posLastGround = posGround;
 				isInstTurn = true;
 
-				rb.AddForce(MarioTable.dataJump[jumpType - 1][0] * Vector3.up * 1.7f, ForceMode.Impulse);
+				rb.AddForce(MarioTable.dataJump[jumpType - 1][0] * Vector3.up * 1.4f, ForceMode.Impulse);
 				break;
 
 			case eStatePl.Falling:
@@ -379,10 +382,10 @@ public class MarioController : MonoBehaviour
 							SetAnim("landShort", trnsLand);
 						}
 					}
-					else SetAnim("idle", trnsLand);
+					else isRunReady = true;
 				} else
                 {
-					//TODO: LAND AND RUN
+					isRunReady = true;
                 }
 				
 
@@ -467,46 +470,21 @@ public class MarioController : MonoBehaviour
 				isMovingAir = true;
 			}
 			moveAdditional += transform.forward * speedJumpH;
+		} else
+        {
+			HandleMoveAnim();
 		}
 
 		if ((isMoving || isMovingAir) && !isInputBlocked )
 		{
 			if (wasGrounded)
 			{
-				if (!wasMoving)
-				{
-					speedSlip = 0;
-					if (currentMoveSpeed > 1)
-						SetAnim("run");
-					else
-						SetAnim("runStart");
-				}
+                if (!wasMoving)
+                {
+					isRunReady = true;
+                }
 				posGround = transform.position.y;
 
-				Debug.Log(rb.velocity.magnitude);
-//				if (rb.velocity.magnitude > 6)
-//				{
-					if (rb.velocity.magnitude > 7)
-					{
-						if (runType != 1)
-						{
-							SetAnim("dashFast", 0.04f, 1);
-							runType = 1;
-						}
-					}
-					else if(runType != 0)
-					{
-						SetAnim("run", 0.01f, 1);
-						runType = 0;
-					}
-/*					else
-						if (runType != 2)
-						{
-							SetAnim("dash", 0.2f);
-							runType = 2;
-						}
-
-				}*/
 				// Adjust acceleration based on angleSpeed
 				float adjustedAcceleration = 10;
 				if (angleSpeed < 0)
@@ -557,30 +535,52 @@ public class MarioController : MonoBehaviour
 		{
 			if (wasGrounded)
 			{
+				if (wasMoving) isRunReady = true;
 				//if (currentMoveSpeed > 0.1f) {
 				//currentMoveSpeed -= 0.5f;
-				//if(animLast != "dashBrake" && animLast != "landShort") SetAnim ("dashBrake", 0.3f);
-				//} else {
 				if (currentMoveSpeed > 0 || currentMoveSpeed < 0) currentMoveSpeed = speedSlip > 0 && currentMoveSpeed > 0 ? currentMoveSpeed - speedSlip : 0;
-				//if (animLast != "idle" && animLast != "landShort" && myState == eStatePl.Ground) {
-				if (animLast != "idle")
-					if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
-					{
-						SetAnim("idle", timeStandTrns);
-					}
-				//}
 			}
 		}
 
 		Vector3 movementVector = transform.rotation * Vector3.forward * (currentMoveSpeed - (angleSpeed * (currentMoveSpeed / 2)));// * Time.deltaTime; //mashed together movement math
-		movementVector.y += rb.velocity.y;
+		if (isFlyFreeze) movementVector.y = 0; else movementVector.y += rb.velocity.y;
 		movementVector += moveAdditional;
 
 		// Move the character using the Rigidbody
 		rb.velocity = movementVector * Time.deltaTime * 1 / Time.deltaTime;
 	}
 
-	void OnCollisionEnter(Collision collis)
+	void HandleMoveAnim()
+	{
+		//Debug.Log(rb.velocity.magnitude);
+		//Debug.Log(anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+		if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1) isRunReady = true; // some number that isnt any run type
+
+		if (isRunReady)
+		{
+			float velSpeed = Mathf.Sqrt(rb.velocity.x * rb.velocity.x + rb.velocity.z * rb.velocity.z);
+			if (velSpeed > 7)
+			{
+				SetAnim("dashFast");
+			}
+			else if (velSpeed > 0.1f)
+			{
+				SetAnim("run");
+			}
+			/*else if (velSpeed > 0)
+			{
+				SetAnim("runStart");
+			}*/
+			else
+			{
+				SetAnim("idle");
+			}
+			isRunReady = false;
+		}
+
+	}
+
+	void OnTriggerEnter(Collider collis)
 	{
 		paramObj collisParam;
 		if ((collisParam = collis.gameObject.GetComponent<paramObj>()) == null) return;
@@ -591,18 +591,14 @@ public class MarioController : MonoBehaviour
 			if (hasTouchedCeiling)
 			{
 				collis.gameObject.SendMessage("OnTouch", 4);
-				return;
 			}
-
-			if (collisParam.posCenterV != 0 && transform.position.y > collisParam.GetPosCenterV())
+			else if (collisParam.posCenterV != 0 && transform.position.y > collisParam.GetPosCenterV())
 			{
 				collis.gameObject.SendMessage("OnTouch", 3);
-				return;
 			}
-			else if (!hasTouchedCeiling)
+			else
 			{
 				collis.gameObject.SendMessage("OnTouch", 2);
-				return;
 			}
 			/*else
             {
@@ -619,7 +615,7 @@ public class MarioController : MonoBehaviour
 		 */
 	}
 	void OnSensorTopEnter(Collider col){
-		hasTouchedCeiling = true;
+    		hasTouchedCeiling = true;
     }
 	public void OnSensorLODEnter(Collider coll)
 	{
@@ -629,13 +625,19 @@ public class MarioController : MonoBehaviour
 	{
 		SetLOD(coll.gameObject, false);
 	}
-	void SetLOD(GameObject coll, bool state)
+	public void SetLOD(GameObject coll, bool state)
 	{
 		if (coll.GetComponent<paramObj>() != null && coll.GetComponent<paramObj>().isLOD)
 		{
 			if (coll.transform.GetChild(1).gameObject.name == "Mesh") coll.transform.GetChild(1).gameObject.SetActive(state);
-			else return;
-			if(coll.GetComponent<Animator>() != null) coll.GetComponent<Animator>().enabled = state;
+			else { Debug.Log("E: INVALID MESH TREE AT " + coll.name); return; }
+			if (coll.GetComponent<Animator>() != null) coll.GetComponent<Animator>().enabled = state;
+			if (coll.GetComponent<AudioSource>() != null) coll.GetComponent<AudioSource>().enabled = state;
+			if (coll.GetComponent<Rigidbody>() != null)
+            {
+				if (state) coll.GetComponent<Rigidbody>().WakeUp();
+				else coll.GetComponent<Rigidbody>().Sleep();
+			}
 		}
 	}
 
@@ -655,11 +657,11 @@ public class MarioController : MonoBehaviour
 	{
 		if (!isAnim (animName))
 		{
-			if (transitionTime == -1) transitionTime = 0.1f; // DEFAULT VALUE
+			if (transitionTime == -1) transitionTime = 0.3f; // DEFAULT VALUE
 			if (transitionTime == 0 || anim.IsInTransition(0)) anim.Play(animName); // play instant
 			else anim.CrossFade (animName, transitionTime); // play crossfade
 
-			//			anim.speed 		= animSpeed;
+			//anim.speed 		= animSpeed;
 			animLast 		= animName;
 			if(standTrnsTime != -1) timeStandTrns = standTrnsTime; //time to transition back to stand, quick of slow
 		}

@@ -133,7 +133,7 @@ public class scrBehaviorCappy : MonoBehaviour
                         if (mario.wasGrounded == false)
                         {
                             nameAnim = "spinCapJumpStart";
-                            mario.rb.useGravity = false;
+                            mario.isFlyFreeze = true;
                         }
                         SetAnim(nameAnim);
                         SetCollision(false);
@@ -149,7 +149,7 @@ public class scrBehaviorCappy : MonoBehaviour
                         SetAnim("default");
                         SetRotate(true);
                         SetCollision(true);
-                        mario.rb.useGravity = true;
+                        mario.isFlyFreeze = false;
                         mario.SetHand(1, 1, false);
                         mario.SetHand(1, 0, true);
                         posOrigin = transform.position;

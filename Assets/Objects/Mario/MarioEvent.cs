@@ -88,6 +88,7 @@ public class MarioEvent : MonoBehaviour
                         mario.SetAnim("captureFly");
                         mario.isHacking = true;
                         mario.enabled = false;
+                        cappy.hackedObj.GetComponent<Rigidbody>().isKinematic = true;
                         break;
                     case 1:
                         cappy.hackedObj.SendMessage("SetState", 6);
@@ -102,6 +103,7 @@ public class MarioEvent : MonoBehaviour
                 cappy.hackedObj.SendMessage("SetState", 7);
                 cappy.SetState(eStateCap.UnHack);
                 cappy.hackedObj.GetComponent<Collider>().enabled = true;
+                cappy.hackedObj.GetComponent<Rigidbody>().isKinematic = false;
 
                 transform.Translate(0, 0, -2); //TODO: jump out of hack obj
 

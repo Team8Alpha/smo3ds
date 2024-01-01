@@ -53,6 +53,7 @@ public class scr_manAudio : MonoBehaviour {
 	}
 	public void PlaySelfSND(ref AudioSource _mAudio, eSnd eIdSnd, bool isLoop = false, bool isOneShot = false, int _volume = 1)
     {
+		_mAudio.enabled = true;
 		_mAudio.volume = _volume;
 		_mAudio.loop = isLoop;
 		AudioClip sndClip = GetSND(eIdSnd);

@@ -11,7 +11,7 @@ public class scr_behaviorBlockQuestion : MonoBehaviour {
 
 	void Start() {
 		anim = GetComponent<Animator> ();
-		FrameLimit *= 30;
+		FrameLimit *= Application.targetFrameRate;
 		this.enabled = false;
 	}
 
@@ -20,10 +20,9 @@ public class scr_behaviorBlockQuestion : MonoBehaviour {
 		Destroy(gameObject);
 	}
 
-	void SpawnCoins(int numCoins) {
+	void SpawnCoins() {
 		Vector3 coinSpawnPos = new Vector3 (transform.position.x, transform.position.y + 0.8f, transform.position.z);
-		var coin = scr_summon.s.s_object (0, coinSpawnPos, transform.eulerAngles).GetComponent<scr_behaviorCoin> ();
-		coin.currentState = 1;
+		var coin = scr_summon.s.s_object (0, coinSpawnPos, transform.eulerAngles).GetComponent<scr_behaviorCoin> ().currentState = 1;
 	}
 
 	void Update() {
@@ -39,7 +38,7 @@ public class scr_behaviorBlockQuestion : MonoBehaviour {
 			if (hitCount == 0)
 				this.enabled = true;
 			anim.Play ("up");
-			SpawnCoins (1);
+			SpawnCoins ();
 			hitCount++;
 			if (!isActive)
 				DoIsEmpty ();
