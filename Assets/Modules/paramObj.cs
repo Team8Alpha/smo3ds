@@ -14,8 +14,8 @@ public class paramObj : MonoBehaviour {
     {
 		return posCenterV + transform.position.y;
     }
-	void Awake(){
-		if (isLOD) MarioController.s.SetLOD(gameObject, false);
+	void Start(){
+		if (isLOD) scr_main.s.SetLOD(gameObject, false);
 		this.enabled = false;
 	}
 }

@@ -13,8 +13,8 @@ public class scr_behaviorCapSwitch : MonoBehaviour{
 		this.enabled = false;
 	}
 
-	public void OnCapTrigger(){
-		scr_main.s.capMountPoint = capMount;
+	public void OnTouch(int num){
+		if(num == 1) scr_main.s.capMountPoint = capMount;
 	}
 	public void OnCapHacked(){//CAP!
 		//MarioController.s.cappy.headHeight = 0f;

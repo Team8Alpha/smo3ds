@@ -105,7 +105,7 @@ public class MarioController : MonoBehaviour
 
 	void Update()
 	{
-		if (scr_main.s.isFocused)
+		if (Time.timeScale > 0)
 		{
 			HandleInput();
 			HandleMove();
@@ -619,26 +619,11 @@ public class MarioController : MonoBehaviour
     }
 	public void OnSensorLODEnter(Collider coll)
 	{
-		SetLOD(coll.gameObject, true);
+		scr_main.s.SetLOD(coll.gameObject, true);
 	}
 	public void OnSensorLODExit(Collider coll)
 	{
-		SetLOD(coll.gameObject, false);
-	}
-	public void SetLOD(GameObject coll, bool state)
-	{
-		if (coll.GetComponent<paramObj>() != null && coll.GetComponent<paramObj>().isLOD)
-		{
-			if (coll.transform.GetChild(1).gameObject.name == "Mesh") coll.transform.GetChild(1).gameObject.SetActive(state);
-			else { Debug.Log("E: INVALID MESH TREE AT " + coll.name); return; }
-			if (coll.GetComponent<Animator>() != null) coll.GetComponent<Animator>().enabled = state;
-			if (coll.GetComponent<AudioSource>() != null) coll.GetComponent<AudioSource>().enabled = state;
-			if (coll.GetComponent<Rigidbody>() != null)
-            {
-				if (state) coll.GetComponent<Rigidbody>().WakeUp();
-				else coll.GetComponent<Rigidbody>().Sleep();
-			}
-		}
+		scr_main.s.SetLOD(coll.gameObject, false);
 	}
 
 	//RESET

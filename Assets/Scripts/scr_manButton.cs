@@ -63,7 +63,7 @@ public class scr_manButton : MonoBehaviour
 
 	void Update()
 	{
-		if (scr_main.s.isFocused)
+		if (Time.timeScale > 0)
 		{
 #if UNITY_EDITOR
 			float h = Input.GetAxisRaw("Vertical");

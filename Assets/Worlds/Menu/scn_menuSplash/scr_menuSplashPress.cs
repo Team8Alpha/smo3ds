@@ -45,7 +45,7 @@ public class scr_menuSplashPress : MonoBehaviour {
 #else
 		if(!exiting && UnityEngine.N3DS.GamePad.GetButtonHold(N3dsButton.A)){ 
 			if(scr_main.s != null){
-			if(scr_main.s.isFocused) timer = 0;
+			if(Time.timeScale > 0) timer = 0;
 			} else timer = 0;
 		}
 #endif

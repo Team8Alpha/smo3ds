@@ -178,7 +178,7 @@ public class scr_behaviorGoomba : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if(scr_main.s.isFocused){
+		if(Time.timeScale > 0){
 			if (dead) {
 				if (anim.GetBool ("flat")) {
 					for (int i = 1; i < 6; i++) {

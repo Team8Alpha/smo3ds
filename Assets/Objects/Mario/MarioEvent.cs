@@ -110,6 +110,7 @@ public class MarioEvent : MonoBehaviour
                 mario.ResetSpeed();
                 mario.SetVisible(true);
                 mario.SetCap(false);
+                mario.isHacking = false;
 
                 GameObject mustache = cappy.hackedObj.transform.GetChild(1).GetChild(0).gameObject;
                 if (mustache.name == "Mustache" || mustache.name == "Mustache__HairMT") mustache.SetActive(false);

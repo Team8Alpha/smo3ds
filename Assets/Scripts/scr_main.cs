@@ -1,4 +1,4 @@
-﻿//#define isRelease // UNCOMMENT FOR RELEASING TO THE PUBLIC!
+﻿#define isRelease // UNCOMMENT FOR RELEASING TO THE PUBLIC!
 
 using System;
 using System.Collections;
@@ -17,7 +17,6 @@ public class scr_main : MonoBehaviour {
 	[HideInInspector] public static LayerMask lyr_def;
 	[HideInInspector] public static LayerMask lyr_player;
 	//modifiable
-	[HideInInspector] public bool isFocused = true; //objects test if this is true, to run.
 	[HideInInspector] public int dbg_enemyCount = 0; 
 	[HideInInspector] public int coinsCount = 0;
 	[HideInInspector] public int moonsCount = 0;
@@ -27,10 +26,24 @@ public class scr_main : MonoBehaviour {
 	[HideInInspector] public bool hasLevelLoaded = false; //used by level loading and data.
 	
 	public void SetFocus(bool boolean){
-		isFocused = boolean;
 		Time.timeScale=boolean?1:0;
 	}
-	
+	public void SetLOD(GameObject coll, bool state)
+	{
+		if (coll.GetComponent<paramObj>() != null && coll.GetComponent<paramObj>().isLOD)
+		{
+			if (coll.transform.GetChild(1).gameObject.name == "Mesh") coll.transform.GetChild(1).gameObject.SetActive(state);
+			else { Debug.Log("E: INVALID MESH TREE AT " + coll.name); return; }
+			if (coll.GetComponent<Animator>() != null) coll.GetComponent<Animator>().enabled = state;
+			if (coll.GetComponent<AudioSource>() != null) coll.GetComponent<AudioSource>().enabled = state;
+			if (coll.GetComponent<Rigidbody>() != null)
+			{
+				if (state) coll.GetComponent<Rigidbody>().WakeUp();
+				else coll.GetComponent<Rigidbody>().Sleep();
+			}
+		}
+	}
+
 	void Awake(){
 		if(s == null)
 		{

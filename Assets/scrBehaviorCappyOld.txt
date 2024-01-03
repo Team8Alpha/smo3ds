@@ -232,7 +232,7 @@ public class scrbehaviorCappyOld : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (scr_main.s.isFocused)
+		if (Time.timeScale > 0)
 		{
 			switch (currentState)
 			{
