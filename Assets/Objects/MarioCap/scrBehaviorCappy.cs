@@ -54,7 +54,7 @@ public class scrBehaviorCappy : MonoBehaviour
 
     void Update()
     {
-        if (Time.timeScale > 0)
+        if (scr_main.s.isFocused)
         {
             switch (myState)
             {
