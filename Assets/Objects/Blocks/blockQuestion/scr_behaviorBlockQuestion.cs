@@ -22,7 +22,7 @@ public class scr_behaviorBlockQuestion : MonoBehaviour {
 
 	void SpawnCoins() {
 		Vector3 coinSpawnPos = new Vector3 (transform.position.x, transform.position.y + 0.8f, transform.position.z);
-		var coin = scr_summon.s.s_object (0, coinSpawnPos, transform.eulerAngles).GetComponent<scr_behaviorCoin> ().currentState = 1;
+		/*var coin = */scr_summon.s.s_object (0, coinSpawnPos, transform.eulerAngles).GetComponent<scr_behaviorCoin> ().currentState = 1;
 	}
 
 	void Update() {

@@ -17,7 +17,6 @@ public class scrBehaviorCappy : MonoBehaviour
     private Transform tMario;       // player reference
     private MarioController mario;  // mario reference
     private AudioSource mAudio;     // audio component
-    private Transform objBone = null;      // bone that is assigned to cap when hacked.
     public static eStateCap myState; // cap state
     [HideInInspector]
     public int mySubState;          // cap states state
@@ -37,13 +36,10 @@ public class scrBehaviorCappy : MonoBehaviour
 
     void Awake()
     {
-
         mAnim = GetComponent<Animator>();
         mAudio = GetComponent<AudioSource>();
         charc = GetComponent<CharacterController>();
 
-
-        objBone = transform.GetChild(0);
         mario = MarioController.s;
         tMario = mario.transform;
         mario.cappy = this;
@@ -54,7 +50,7 @@ public class scrBehaviorCappy : MonoBehaviour
 
     void Update()
     {
-        if (scr_main.s.isFocused)
+        if (Time.timeScale > 0)
         {
             switch (myState)
             {
@@ -248,11 +244,11 @@ public class scrBehaviorCappy : MonoBehaviour
         gameObject.GetComponent<AudioSource>().enabled = boolean;
         SetCollision(boolean);
     }
-    public void SetTransformOffset(float scale, Vector3 pos, Vector3 rot)
+    public void SetTransformOffset(float scale, Vector3? pos = null, Vector3? rot = null)
     {
         transform.localScale = new Vector3(scale, scale, scale);
-        if(pos!=null) transform.localPosition = pos;
-        if(rot!=null) transform.localEulerAngles = rot;
+        if(pos != null) transform.localPosition = pos.Value;
+        if(rot != null) transform.localEulerAngles = rot.Value;
     }
     public void SetCollision(bool boolean)
     {

@@ -21,6 +21,7 @@ public class scr_sensor : MonoBehaviour {
 			return;
 		}
 		sensor.isTrigger = true;
+		if (targetObj == null) targetObj = transform.parent.gameObject;
 	}
 
 	void OnTriggerEnter(Collider coll){
@@ -40,6 +41,6 @@ public class scr_sensor : MonoBehaviour {
 	}
 
 	void DoCall(Collider coll, string func){
-		if(func != "" && coll.gameObject != targetObj) targetObj.SendMessage (func, coll);
+		if(func != "") targetObj.SendMessage (func, coll);
 	}
 }

@@ -21,7 +21,6 @@ public class scr_main : MonoBehaviour {
 	[HideInInspector] public int coinsCount = 0;
 	[HideInInspector] public int moonsCount = 0;
 	[HideInInspector] public int nextSpawn = -1; // next index of spawn point
-	[HideInInspector] public int lastCheckpoint = 0; //TODO: write true checkpoint area code, and use this smh.(used by data saving)
 	[HideInInspector] public string capMountPoint = "missingno"; //used by cap
 	[HideInInspector] public bool hasLevelLoaded = false; //used by level loading and data.
 	
@@ -35,7 +34,10 @@ public class scr_main : MonoBehaviour {
 			if (coll.transform.GetChild(1).gameObject.name == "Mesh") coll.transform.GetChild(1).gameObject.SetActive(state);
 			else { Debug.Log("E: INVALID MESH TREE AT " + coll.name); return; }
 			if (coll.GetComponent<Animator>() != null) coll.GetComponent<Animator>().enabled = state;
-			if (coll.GetComponent<AudioSource>() != null) coll.GetComponent<AudioSource>().enabled = state;
+			if (coll.GetComponent<AudioSource>() != null)
+			{
+				coll.GetComponent<AudioSource>().enabled = state;
+			}
 			if (coll.GetComponent<Rigidbody>() != null)
 			{
 				if (state) coll.GetComponent<Rigidbody>().WakeUp();

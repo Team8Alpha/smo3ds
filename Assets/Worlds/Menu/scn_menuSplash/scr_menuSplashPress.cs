@@ -22,12 +22,11 @@ public class scr_menuSplashPress : MonoBehaviour {
 
 	void Update()
     {
-#if isRelease
-			this.enabled = false;
-#else
-			transform.parent.GetChild(2).GetChild(1).gameObject.SetActive(true);
+#if !isRelease
+		transform.parent.GetChild(2).GetChild(1).gameObject.SetActive(true);
 #endif
-    }
+		this.enabled = false;
+	}
 
     /*void Update () {
 		timer -= 0.1f;

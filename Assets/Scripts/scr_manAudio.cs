@@ -22,7 +22,8 @@ public enum eSnd
 	JnWorldIntro,
 	JnWorldIntro2,
 	JnZeldaItem,
-	MarioTitleScream
+	MarioTitleScream,
+	MoonNearby
 
 }
 
@@ -51,7 +52,7 @@ public class scr_manAudio : MonoBehaviour {
 		mAudioSND.volume = _volume;
 		mAudioSND.PlayOneShot(sndClip);
 	}
-	public void PlaySelfSND(ref AudioSource _mAudio, eSnd eIdSnd, bool isLoop = false, bool isOneShot = false, int _volume = 1)
+	public void PlaySelfSND(ref AudioSource _mAudio, eSnd eIdSnd, bool isLoop = false, bool isOneShot = false, float _volume = 1)
     {
 		_mAudio.enabled = true;
 		_mAudio.volume = _volume;

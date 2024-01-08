@@ -17,10 +17,12 @@ public class scr_behaviorCheckpoint : MonoBehaviour {
 
 		if (type >= 1)
 		{
+            if (!wasActivated)
+			{
+				transform.GetChild(1).GetChild(1).gameObject.GetComponent<Renderer>().material = mat_after;
+				scr_manageData.s.Save();
+			}
 			anim.Play("get");
-			transform.GetChild(1).GetChild(1).gameObject.GetComponent<Renderer>().material = mat_after;
-			scr_main.s.lastCheckpoint = numSpawnPoint;
-			scr_manageData.s.Save();
 			wasActivated = true;
 
 			if (type == 1)

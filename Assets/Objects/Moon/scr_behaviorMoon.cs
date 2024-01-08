@@ -9,6 +9,7 @@ public class scr_behaviorMoon : MonoBehaviour
 	//COLOR ?
 	public int currentState = 0;
 	private Animator anim;
+	AudioSource mAudio;
 	public string moonName = "ERROR";
 	private float rotateAddition = 0;
 	public int color = 0;
@@ -63,8 +64,11 @@ public class scr_behaviorMoon : MonoBehaviour
 	void Start()
 	{
 		anim = GetComponent<Animator>();
+		mAudio = GetComponent<AudioSource>();
 		mat_color = transform.GetChild(1).GetChild(0).GetComponent<SkinnedMeshRenderer>();
 		setColor();
+
+		scr_manAudio.s.PlaySelfSND(ref mAudio, eSnd.MoonNearby, true, false, 0.6f);
 	}
 	void OnTouch(int numType)
 	{
@@ -76,6 +80,7 @@ public class scr_behaviorMoon : MonoBehaviour
 			case 2://mar
 				currentState = 1;
 				GetComponent<Collider>().enabled = false; //or else it literally disables marios collision
+				GetComponent<AudioSource>().enabled = false; //or else it literally disables marios collision
 				MarioEvent.s.SetEvent(eEventPl.demoMoon);
 
 				anim.Play("get");

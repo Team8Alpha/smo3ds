@@ -36,7 +36,6 @@ public class MarioController : MonoBehaviour
 	[HideInInspector] public bool isTurning			= false; 
 	[HideInInspector] public bool isInputBlocked	= false; // if process input functions or not
 	[HideInInspector] public bool isHacking			= false; // if is capturing, hacking...
-	[HideInInspector] public bool isRunReady		= true;
 	[HideInInspector] public bool isFlyFreeze		= false;
 	[HideInInspector] bool isMovingAir				= false; // if falling direction is active, falling
 	[HideInInspector] bool hasTouchedCeiling		= false; // has touched top
@@ -317,23 +316,22 @@ public class MarioController : MonoBehaviour
 				jumpType++;
 				jumpAfterTimer = 1;
 				float timeTrnsJump = 0.08f;
-				float timeTrasStand = 0.2f;
 				switch (jumpType)
 				{
 					case 2:
-						SetAnim("jump2", timeTrnsJump, timeTrasStand);
+						SetAnim("jump2", timeTrnsJump);
 						break;
 					case 3:
 						if (currentMoveSpeed < 6)
 						{
-							SetAnim("jump", timeTrnsJump, timeTrasStand);
+							SetAnim("jump", timeTrnsJump);
 							jumpType = 1;
 							break;
 						}
-						SetAnim("jump3", timeTrnsJump, timeTrasStand);
+						SetAnim("jump3", timeTrnsJump);
 						break;
 					default:
-						SetAnim("jump", timeTrnsJump, timeTrasStand);
+						SetAnim("jump", timeTrnsJump);
 						jumpType = 1;
 						break;
 				}
@@ -382,11 +380,11 @@ public class MarioController : MonoBehaviour
 							SetAnim("landShort", trnsLand);
 						}
 					}
-					else isRunReady = true;
+					else HandleMoveAnim();
 				} else
                 {
-					isRunReady = true;
-                }
+					HandleMoveAnim();
+				}
 				
 
 				hasJumped = false;
@@ -414,49 +412,6 @@ public class MarioController : MonoBehaviour
 
 	void HandleMove()
 	{
-		float angleSpeed = 0;
-		RaycastHit hit;
-
-		// Perform a SphereCast to check the slope angle if the character was grounded
-		if (Physics.SphereCast(colTrigger[0].center + transform.position, 0.2f, -Vector3.up, out hit, 0.8f))
-		{
-			angleSpeed = Vector3.Dot(transform.forward, Vector3.Cross(Vector3.up, Vector3.Cross(Vector3.up, hit.normal)));
-
-			// Check if the angleSpeed is within the slope threshold to consider it as grounded
-			if (Mathf.Abs(angleSpeed) <= 75) // MAX ANGLE
-			{
-				if (!wasGrounded)
-				{
-					isMovingAir = false;
-					isTurning = false;
-					posGround = transform.position.y;
-					SetState(eStatePl.Landing);
-					wasGrounded = true;
-					Debug.Log("M Ground Enter");
-				}
-			}
-			else
-			{
-				if (wasGrounded)
-				{
-					wasGrounded = false;
-					posGround = transform.position.y;
-					posLastHigh = transform.position.y;
-					Debug.Log("M Ground Exit");
-				}
-			}
-		}
-		else
-		{
-			if (wasGrounded)
-			{
-				wasGrounded = false;
-				posGround = transform.position.y;
-				posLastHigh = transform.position.y;
-				Debug.Log("M Ground Exit");
-			}
-		}
-
 		moveAdditional = Vector3.zero;
 		if (!wasGrounded)
 		{
@@ -470,35 +425,13 @@ public class MarioController : MonoBehaviour
 				isMovingAir = true;
 			}
 			moveAdditional += transform.forward * speedJumpH;
-		} else
-        {
-			HandleMoveAnim();
-		}
+		} else if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 || (isMoving)) HandleMoveAnim();
 
 		if ((isMoving || isMovingAir) && !isInputBlocked )
 		{
 			if (wasGrounded)
 			{
-                if (!wasMoving)
-                {
-					isRunReady = true;
-                }
 				posGround = transform.position.y;
-
-				// Adjust acceleration based on angleSpeed
-				float adjustedAcceleration = 10;
-				if (angleSpeed < 0)
-				{
-					// Moving up, decrease acceleration
-					adjustedAcceleration *= (1 - Mathf.Abs(angleSpeed) / 180f);
-				}
-				else
-				{
-					// Moving down, increase acceleration
-					adjustedAcceleration *= (1 + Mathf.Abs(angleSpeed) / 90f);
-				}
-
-				currentMoveSpeed = Mathf.MoveTowards(currentMoveSpeed, moveSpeed, adjustedAcceleration * Time.deltaTime);
 			}
 
 			{
@@ -535,10 +468,69 @@ public class MarioController : MonoBehaviour
 		{
 			if (wasGrounded)
 			{
-				if (wasMoving) isRunReady = true;
 				//if (currentMoveSpeed > 0.1f) {
 				//currentMoveSpeed -= 0.5f;
 				if (currentMoveSpeed > 0 || currentMoveSpeed < 0) currentMoveSpeed = speedSlip > 0 && currentMoveSpeed > 0 ? currentMoveSpeed - speedSlip : 0;
+				if (wasMoving) SetAnim("idle", 0.04f);
+			}
+		}
+		float angleSpeed = 0;
+		RaycastHit hit;
+
+		// Perform a SphereCast to check the slope angle if the character was grounded
+		if (Physics.SphereCast(colTrigger[0].center + transform.position, 0.2f, -Vector3.up, out hit, 0.8f))
+		{
+			angleSpeed = Vector3.Dot(transform.forward, Vector3.Cross(Vector3.up, Vector3.Cross(Vector3.up, hit.normal)));
+
+			// Check if the angleSpeed is within the slope threshold to consider it as grounded
+			if (Mathf.Abs(angleSpeed) <= 75) // MAX ANGLE
+			{
+				if (!wasGrounded)
+				{
+					isMovingAir = false;
+					isTurning = false;
+					posGround = transform.position.y;
+					SetState(eStatePl.Landing);
+					wasGrounded = true;
+					Debug.Log("M Ground Enter");
+				}
+			}
+			else
+			{
+				if (wasGrounded)
+				{
+					wasGrounded = false;
+					posGround = transform.position.y;
+					posLastHigh = transform.position.y;
+					Debug.Log("M Ground Exit");
+				}
+			}
+
+			if (isMoving)
+			{
+				// Adjust acceleration based on angleSpeed
+				float adjustedAcceleration = 10;
+				if (angleSpeed < 0)
+				{
+					// Moving up, decrease acceleration
+					adjustedAcceleration *= (1 - Mathf.Abs(angleSpeed) / 180f);
+				}
+				else
+				{
+					// Moving down, increase acceleration
+					adjustedAcceleration *= (1 + Mathf.Abs(angleSpeed) / 90f);
+				}
+				currentMoveSpeed = Mathf.MoveTowards(currentMoveSpeed, moveSpeed, adjustedAcceleration * Time.deltaTime);
+			}
+		}
+		else
+		{
+			if (wasGrounded)
+			{
+				wasGrounded = false;
+				posGround = transform.position.y;
+				posLastHigh = transform.position.y;
+				Debug.Log("M Ground Exit");
 			}
 		}
 
@@ -554,28 +546,22 @@ public class MarioController : MonoBehaviour
 	{
 		//Debug.Log(rb.velocity.magnitude);
 		//Debug.Log(anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
-		if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1) isRunReady = true; // some number that isnt any run type
-
-		if (isRunReady)
+		float velSpeed = myState == eStatePl.Ground ? Mathf.Sqrt(rb.velocity.x * rb.velocity.x + rb.velocity.z * rb.velocity.z) : -1;
+		if (velSpeed > 7)
 		{
-			float velSpeed = Mathf.Sqrt(rb.velocity.x * rb.velocity.x + rb.velocity.z * rb.velocity.z);
-			if (velSpeed > 7)
-			{
-				SetAnim("dashFast");
-			}
-			else if (velSpeed > 0.1f)
-			{
-				SetAnim("run");
-			}
-			/*else if (velSpeed > 0)
-			{
-				SetAnim("runStart");
-			}*/
-			else
-			{
-				SetAnim("idle");
-			}
-			isRunReady = false;
+			SetAnim("dashFast", timeStandTrns);
+		}
+		else if (velSpeed > 0.03f)
+		{
+			SetAnim("run", timeStandTrns);
+		}
+		/*else if (velSpeed > 0)
+		{
+			SetAnim("runStart");
+		}*/
+		else if (velSpeed >= 0)
+		{
+			SetAnim("idle", timeStandTrns);
 		}
 
 	}

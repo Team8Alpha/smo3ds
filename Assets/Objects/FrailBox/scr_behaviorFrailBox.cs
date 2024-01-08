@@ -15,12 +15,12 @@ public class scr_behaviorFrailBox : MonoBehaviour {
 	public void OnTouch(int num){
 		if (num == 1) {
 			hitCount++;
-			if (hitCount == hitMax) toBreak ();
+			toBreak ();
 		}
 	}
 
 	void Update(){
-		transform.Translate (0, -0.2f, 0);
+		transform.Translate (0, -0.1f, 0);
 	}
 	void OnSensorGroundEnter(Collider coll){
 		if (coll.gameObject.layer != 20)
@@ -29,10 +29,6 @@ public class scr_behaviorFrailBox : MonoBehaviour {
 	void OnSensorGroundExit(Collider coll){
 		if (coll.gameObject.layer != 20)
 			this.enabled = true;
-	}
-	void OnSensorInsideStay(Collider coll){
-		if (coll.gameObject.layer != 20)
-			transform.Translate (0, 0.3f, 0);
 	}
 
 	void toBreak(){
