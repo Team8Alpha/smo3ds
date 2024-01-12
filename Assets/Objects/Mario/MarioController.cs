@@ -129,6 +129,8 @@ public class MarioController : MonoBehaviour
                     break;
 
 				case eStatePl.Jumping: // Jumping from land normal
+					lastPosition = transform.position; //temporarily putting it here, only used for jumping.
+
 					float jumpedHeight = (transform.position.y - posLastGround) * 1.4f;
 					switch (mySubState)
 					{
@@ -214,7 +216,6 @@ public class MarioController : MonoBehaviour
 		}
 		hasTouchedCeiling = false;
 
-		lastPosition = transform.position;
 		wasMoving = isMoving;
 	}
 
@@ -425,7 +426,7 @@ public class MarioController : MonoBehaviour
 				isMovingAir = true;
 			}
 			moveAdditional += transform.forward * speedJumpH;
-		} else if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 || (isMoving)) HandleMoveAnim();
+		} else if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 || (isMoving && !wasMoving)) HandleMoveAnim();
 
 		if ((isMoving || isMovingAir) && !isInputBlocked )
 		{
@@ -538,8 +539,8 @@ public class MarioController : MonoBehaviour
 		if (isFlyFreeze) movementVector.y = 0; else movementVector.y += rb.velocity.y;
 		movementVector += moveAdditional;
 
-		// Move the character using the Rigidbody
-		rb.velocity = movementVector * Time.deltaTime * 1 / Time.deltaTime;
+		// Move the character using the Rigidbod
+		rb.velocity = movementVector * Time.deltaTime *30;
 	}
 
 	void HandleMoveAnim()
