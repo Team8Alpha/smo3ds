@@ -7,6 +7,7 @@ if exist .gitmain\ (
 ) else (
     set GITROOT=.git
 )
+set GITEXE="C:\Program Files\Git\mingw64\libexec\git-core\git.exe"
 echo Looking for remote updates, pulling...
-git --git-dir=%GITROOT% pull
-git --git-dir=%GITROOT% fetch
+%GITEXE% --git-dir=%GITROOT% pull
+%GITEXE% --git-dir=%GITROOT% fetch
