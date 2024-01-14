@@ -45,7 +45,6 @@ public class scr_behaviorTransCap : MonoBehaviour {
 public class scr_behaviorTransCap : MonoBehaviour
 {
     SpriteRenderer mSprite;
-    SpriteMask mMask;
     byte iSprNum = 0;
     [SerializeField] Sprite[] img;
 
@@ -57,7 +56,6 @@ public class scr_behaviorTransCap : MonoBehaviour
     void Awake()
     {
         mSprite = gameObject.GetComponent<SpriteRenderer>();
-        mMask = gameObject.GetComponent<SpriteMask>();
 
         vOrigin = new Vector2(transform.localScale.x, transform.localScale.y);
 
@@ -83,7 +81,6 @@ public class scr_behaviorTransCap : MonoBehaviour
     {
         if (iSprNum >= img.Length) iSprNum = 0;
         mSprite.sprite = img[iSprNum];
-        mMask.sprite = img[iSprNum];
         iSprNum++;
 
         if (!isOpening)
