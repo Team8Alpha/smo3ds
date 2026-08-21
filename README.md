@@ -1,5 +1,7 @@
 > [!NOTE]
-> **Development has stopped, game is left broken and uncomplete.**
+> This is the original project, and has stopped. To see the new project, see https://github.com/orgs/SMO-3DS
+
+**Development has stopped, game is left broken and uncomplete.**
 
 Reason is that the head dev, Moddimation(me) started the codebase in a chaotic way, as this is my first Unity3D project. Now with real life and all, and  issues caused by using Unity for N3DS, I decided to step down, ultimately stopping development.  
 
